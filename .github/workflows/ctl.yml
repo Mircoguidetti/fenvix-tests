@@ -1,0 +1,154 @@
+name: ctl
+# The engine's full control-layer test set (ctl-tests) against compiled binaries, split over parallel jobs.
+# A bundle is a branch bundle/<name> holding MANIFEST.txt and bundle.tar.gz (binaries + that commit's ctl tests).
+# Starts on: a push of a bundle/<name> branch (default mode), a push to main (the bundle in default-bundle.txt),
+# or by hand (workflow_dispatch). The summary goes to the run page, to an artifact, and to the branch results/<name>/<run id>.
+on:
+  workflow_dispatch:
+    inputs:
+      bundle:
+        description: "Bundle name (the branch is bundle/<name>)"
+        required: true
+      engine_commit:
+        description: "Engine commit the bundle must be built from (checked against its manifest; empty: not checked)"
+        required: false
+        default: ""
+      mode:
+        description: "sealed2-derive (default), off, or both"
+        required: false
+        default: "sealed2-derive"
+      jobs:
+        description: "Parallel jobs per mode"
+        required: false
+        default: "10"
+      files:
+        description: "Only these test files, space separated (empty: all)"
+        required: false
+        default: ""
+  push:
+    branches: [main, "bundle/**"]
+
+permissions:
+  contents: write
+
+jobs:
+  plan:
+    runs-on: ubuntu-24.04
+    outputs:
+      bundle: ${{ steps.p.outputs.bundle }}
+      matrix: ${{ steps.p.outputs.matrix }}
+      modes: ${{ steps.p.outputs.modes }}
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: main }
+      - id: p
+        env:
+          IN_BUNDLE: ${{ inputs.bundle }}
+          IN_COMMIT: ${{ inputs.engine_commit }}
+          IN_MODE: ${{ inputs.mode }}
+          IN_JOBS: ${{ inputs.jobs }}
+          IN_FILES: ${{ inputs.files }}
+        run: |
+          set -euo pipefail
+          case "$GITHUB_EVENT_NAME:$GITHUB_REF" in
+            workflow_dispatch:*) B="$IN_BUNDLE" ;;
+            push:refs/heads/bundle/*) B="${GITHUB_REF#refs/heads/bundle/}" ;;
+            *) [ -s default-bundle.txt ] || { echo "no default-bundle.txt: nothing to run"; echo "matrix=" >> "$GITHUB_OUTPUT"; exit 0; }
+               B=$(tr -d ' \n' < default-bundle.txt) ;;
+          esac
+          git clone -q --depth 1 --single-branch --branch "bundle/$B" "https://github.com/$GITHUB_REPOSITORY" bundle
+          cat bundle/MANIFEST.txt
+          # by hand: the mode input; on a push: the bundle's run_modes (set by --mode of publish-test-bundle.sh)
+          [ "$GITHUB_EVENT_NAME" = workflow_dispatch ] || IN_MODE=$(sed -n 's/^run_modes: //p' bundle/MANIFEST.txt)
+          case "${IN_MODE:-sealed2-derive}" in both) MODES=sealed2-derive,off ;; off) MODES=off ;; *) MODES=sealed2-derive ;; esac
+          if [ -n "${IN_COMMIT:-}" ]; then grep -q "^engine_commit: ${IN_COMMIT}" bundle/MANIFEST.txt || { echo "bundle $B is not built from $IN_COMMIT"; exit 1; }; fi
+          mkdir x && tar -xzf bundle/bundle.tar.gz -C x
+          FILES=${IN_FILES:-$(cd x/ctl-tests && ls test_*.py)}
+          M=$(python3 ci/split.py --jobs "${IN_JOBS:-10}" --modes "$MODES" $FILES)
+          echo "$M" | python3 -m json.tool
+          { echo "bundle=$B"; echo "modes=$MODES"; echo "matrix=$M"; } >> "$GITHUB_OUTPUT"
+
+  ctl:
+    needs: plan
+    if: needs.plan.outputs.matrix != ''
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.plan.outputs.matrix) }}
+    name: ctl ${{ matrix.mode }} ${{ matrix.shard }}
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: main }
+      - name: bundle
+        env: { B: "${{ needs.plan.outputs.bundle }}" }
+        run: |
+          set -euo pipefail
+          git clone -q --depth 1 --single-branch --branch "bundle/$B" "https://github.com/$GITHUB_REPOSITORY" bundle-src
+          grep "  bundle.tar.gz$" bundle-src/MANIFEST.txt | (cd bundle-src && sha256sum -c -)
+          mkdir bundle && tar -xzf bundle-src/bundle.tar.gz -C bundle
+          sed -n '/^files:/,$p' bundle-src/MANIFEST.txt | grep -E '^[0-9a-f]{64}  ' | (cd bundle && sha256sum -c --quiet -)
+          echo "every file matches the manifest"
+      - uses: actions/cache@v4
+        with:
+          path: ~/.fenvix-judge
+          key: judge-env-${{ hashFiles('ci/setup-env.sh') }}
+      - run: ci/setup-env.sh
+      - name: node driver (test_40)
+        run: cd bundle/mongo-tests/node && npm ci --silent
+      - name: tests
+        env:
+          CTL_DATA: ${{ runner.temp }}/ctl-data
+          MODE: ${{ matrix.mode }}
+          SHARD: ${{ matrix.shard }}
+          FILES: ${{ matrix.files }}
+        run: |
+          mkdir -p out
+          start=$(date +%s)
+          S=$start python3 -c 'import json,os;json.dump({"mode":os.environ["MODE"],"shard":int(os.environ["SHARD"]),"files":os.environ["FILES"],"start":int(os.environ["S"])},open("out/shard.json","w"))'
+          ci/run-shard.sh bundle "$MODE" out $FILES
+          E=$(date +%s) python3 -c 'import json,os;m=json.load(open("out/shard.json"));m["end"]=int(os.environ["E"]);open("out/shard.json","w").write(json.dumps(m))'
+      - name: server logs
+        if: always()
+        run: mkdir -p out/server && cp -r bundle/ctl-tests/out/. out/server/ 2>/dev/null || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: shard-${{ matrix.mode }}-${{ matrix.shard }}
+          path: out
+          retention-days: 14
+
+  summary:
+    needs: [plan, ctl]
+    if: always() && needs.plan.outputs.matrix != ''
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: main }
+      - uses: actions/download-artifact@v4
+        with: { path: shards }
+      - name: summary
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BUNDLE: ${{ needs.plan.outputs.bundle }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          git clone -q --depth 1 --single-branch --branch "bundle/$BUNDLE" "https://github.com/$GITHUB_REPOSITORY" bundle-src
+          started=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" --jq .run_started_at)
+          export WALL_SECONDS=$(( $(date +%s) - $(date -d "$started" +%s) ))
+          export BUNDLE_MANIFEST="$(cat bundle-src/MANIFEST.txt)"
+          python3 ci/summarize.py shards result > /dev/null
+          cat result/SUMMARY.md >> "$GITHUB_STEP_SUMMARY"
+          for d in shards/*/; do m=$(python3 -c 'import json,sys;print(json.load(open(sys.argv[1]))["mode"])' "$d/shard.json" 2>/dev/null) || continue
+            mkdir -p "result/logs/$m"; cp "$d"/ctl_*.log "result/logs/$m/" 2>/dev/null || true; done
+      - uses: actions/upload-artifact@v4
+        with: { name: summary, path: result }
+      - name: publish to results/<bundle>/<run id>
+        env: { BUNDLE: "${{ needs.plan.outputs.bundle }}" }
+        run: |
+          set -euo pipefail
+          cd result && git init -q && git checkout -q -b r
+          git -c user.name=ctl-ci -c user.email=ctl-ci@users.noreply.github.com add -A
+          git -c user.name=ctl-ci -c user.email=ctl-ci@users.noreply.github.com commit -q -m "ctl results: bundle $BUNDLE, run $GITHUB_RUN_ID"
+          git push -q "https://x-access-token:${{ github.token }}@github.com/$GITHUB_REPOSITORY" "r:refs/heads/results/$BUNDLE/$GITHUB_RUN_ID"
