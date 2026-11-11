@@ -1,0 +1,34 @@
+F.FF........................                                             [100%]
+=================================== FAILURES ===================================
+___ test_unique_build_with_concurrent_writes[ours-two_inserts_behind_cursor] ___
+test_42s_index_build_writes.py:146: in test_unique_build_with_concurrent_writes
+    assert all(w == "ok" for w in out), out        # as on mongod, the writes themselves are accepted
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: ['ok', 11000]
+E   assert False
+E    +  where False = all(<generator object test_unique_build_with_concurrent_writes.<locals>.<genexpr> at 0x7fbe2fe6fc60>)
+__ test_unique_build_with_concurrent_writes[ours-insert_dup_ahead_of_cursor] ___
+test_42s_index_build_writes.py:146: in test_unique_build_with_concurrent_writes
+    assert all(w == "ok" for w in out), out        # as on mongod, the writes themselves are accepted
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: [11000]
+E   assert False
+E    +  where False = all(<generator object test_unique_build_with_concurrent_writes.<locals>.<genexpr> at 0x7fbe2fe85a40>)
+__ test_unique_build_with_concurrent_writes[ours-update_scanned_into_scanned] __
+test_42s_index_build_writes.py:146: in test_unique_build_with_concurrent_writes
+    assert all(w == "ok" for w in out), out        # as on mongod, the writes themselves are accepted
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: [11000]
+E   assert False
+E    +  where False = all(<generator object test_unique_build_with_concurrent_writes.<locals>.<genexpr> at 0x7fbe2fe6f850>)
+=========================== short test summary info ============================
+FAILED test_42s_index_build_writes.py::test_unique_build_with_concurrent_writes[ours-two_inserts_behind_cursor] - AssertionError: ['ok', 11000]
+assert False
+ +  where False = all(<generator object test_unique_build_with_concurrent_writes.<locals>.<genexpr> at 0x7fbe2fe6fc60>)
+FAILED test_42s_index_build_writes.py::test_unique_build_with_concurrent_writes[ours-insert_dup_ahead_of_cursor] - AssertionError: [11000]
+assert False
+ +  where False = all(<generator object test_unique_build_with_concurrent_writes.<locals>.<genexpr> at 0x7fbe2fe85a40>)
+FAILED test_42s_index_build_writes.py::test_unique_build_with_concurrent_writes[ours-update_scanned_into_scanned] - AssertionError: [11000]
+assert False
+ +  where False = all(<generator object test_unique_build_with_concurrent_writes.<locals>.<genexpr> at 0x7fbe2fe6f850>)
+3 failed, 25 passed in 88.48s (0:01:28)
