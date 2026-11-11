@@ -16,7 +16,15 @@ All rights reserved: see `LICENSE`.
 - `results/<name>/<run id>`: the summary of each run (`SUMMARY.md`, `summary.json`) and each test file's pytest log.
   The server logs are in the run's artifacts (14 days).
 
-## Running
+## Built from source (workflow `ctl-build`)
+
+The engine repository is public: `ctl-build` checks it out at a commit on each runner (no token), builds `mongo-server`
+and `pq` with `ci/build-engine.sh` (build output kept off the logs), and runs the same shards and summary. Start it by
+hand (inputs `engine_commit`, `mode` default `both`, `jobs`, `files`) or by a push to `main` from the owner when
+`default-engine-commit.txt` exists. Results go to `results/<7-char commit>/<run id>`; read them with
+`ci/result.sh <7-char commit> --mode sealed2-derive|off`. No binary is pushed anywhere.
+
+## Running (bundles, workflow `ctl`)
 
 - Pushing a `bundle/<name>` branch starts a run in the bundle's `run_modes`.
 - By hand: Actions, workflow `ctl`, inputs `bundle`, `engine_commit` (checked against the manifest), `mode`

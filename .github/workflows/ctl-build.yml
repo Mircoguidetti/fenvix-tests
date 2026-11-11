@@ -1,0 +1,169 @@
+name: ctl-build
+# The engine's full control-layer test set, built from source on the runner: each job checks out the public
+# Mircoguidetti/fenvix-engine at the requested commit (no token), builds mongo-server and pq (ci/build-engine.sh, build
+# output kept off the logs), and runs its share of ctl-tests. No binary leaves the runners: the artifacts and the
+# results branch results/<7-char commit>/<run id> hold only results, pytest logs, server logs and build.json (sha256s).
+# Starts on: workflow_dispatch, or a push to main by the repository owner (the commit in default-engine-commit.txt).
+on:
+  workflow_dispatch:
+    inputs:
+      engine_commit:
+        description: "Engine commit (full sha preferred)"
+        required: true
+      mode:
+        description: "sealed2-derive, off, or both"
+        required: false
+        default: "both"
+      jobs:
+        description: "Parallel jobs per mode"
+        required: false
+        default: "10"
+      files:
+        description: "Only these test files, space separated (empty: all)"
+        required: false
+        default: ""
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+env:
+  ENGINE_REPO: Mircoguidetti/fenvix-engine
+  RUST_VERSION: "1.97.0"
+
+jobs:
+  plan:
+    if: github.actor == github.repository_owner
+    runs-on: ubuntu-24.04
+    outputs:
+      commit: ${{ steps.p.outputs.commit }}
+      name: ${{ steps.p.outputs.name }}
+      matrix: ${{ steps.p.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: main }
+      - id: c
+        env: { IN_COMMIT: "${{ inputs.engine_commit }}" }
+        run: |
+          set -euo pipefail
+          if [ "$GITHUB_EVENT_NAME" = workflow_dispatch ]; then C="$IN_COMMIT"
+          elif [ -s default-engine-commit.txt ]; then C=$(tr -d ' \n' < default-engine-commit.txt)
+          else C=""; fi
+          echo "commit=$C" >> "$GITHUB_OUTPUT"
+      - if: steps.c.outputs.commit != ''
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ env.ENGINE_REPO }}
+          ref: ${{ steps.c.outputs.commit }}
+          path: engine
+          persist-credentials: false
+          sparse-checkout: ctl-tests
+      - id: p
+        env:
+          C: ${{ steps.c.outputs.commit }}
+          IN_MODE: ${{ inputs.mode }}
+          IN_JOBS: ${{ inputs.jobs }}
+          IN_FILES: ${{ inputs.files }}
+        run: |
+          set -euo pipefail
+          [ -n "$C" ] || { echo "no engine commit given and no default-engine-commit.txt: nothing to run"; echo "matrix=" >> "$GITHUB_OUTPUT"; exit 0; }
+          FULL=$(git -C engine rev-parse HEAD)
+          case "${IN_MODE:-both}" in off) MODES=off ;; sealed2-derive) MODES=sealed2-derive ;; *) MODES=sealed2-derive,off ;; esac
+          FILES=${IN_FILES:-$(cd engine/ctl-tests && ls test_*.py)}
+          M=$(python3 ci/split.py --jobs "${IN_JOBS:-10}" --modes "$MODES" $FILES)
+          echo "$M" | python3 -m json.tool
+          { echo "commit=$FULL"; echo "name=${FULL:0:7}"; echo "matrix=$M"; } >> "$GITHUB_OUTPUT"
+
+  ctl:
+    needs: plan
+    if: needs.plan.outputs.matrix != ''
+    runs-on: ubuntu-24.04
+    timeout-minutes: 150
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.plan.outputs.matrix) }}
+    name: ctl ${{ matrix.mode }} ${{ matrix.shard }}
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: main }
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ env.ENGINE_REPO }}
+          ref: ${{ needs.plan.outputs.commit }}
+          path: engine
+          persist-credentials: false
+      - name: rust
+        run: rustup toolchain install "$RUST_VERSION" --profile minimal -q && rustup default "$RUST_VERSION" && rustc --version
+      # only crates.io downloads are cached (public crates); never the engine's source or target
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry/index
+            ~/.cargo/registry/cache
+          key: cargo-registry-${{ hashFiles('engine/Cargo.lock', 'engine/proto/quaderno/Cargo.lock') }}
+      - uses: actions/cache@v4
+        with:
+          path: ~/.fenvix-judge
+          key: judge-env-${{ hashFiles('ci/setup-env.sh') }}
+      - name: build
+        run: mkdir -p out && ci/build-engine.sh engine "${{ needs.plan.outputs.commit }}" out
+      - run: ci/setup-env.sh
+      - name: node driver (test_40)
+        run: cd engine/mongo-tests/node && npm ci --silent
+      - name: tests
+        env:
+          CTL_DATA: ${{ runner.temp }}/ctl-data
+          MODE: ${{ matrix.mode }}
+          SHARD: ${{ matrix.shard }}
+          FILES: ${{ matrix.files }}
+        run: |
+          start=$(date +%s)
+          S=$start python3 -c 'import json,os;json.dump({"mode":os.environ["MODE"],"shard":int(os.environ["SHARD"]),"files":os.environ["FILES"],"start":int(os.environ["S"])},open("out/shard.json","w"))'
+          ci/run-shard.sh engine "$MODE" out $FILES
+          E=$(date +%s) python3 -c 'import json,os;m=json.load(open("out/shard.json"));m["end"]=int(os.environ["E"]);open("out/shard.json","w").write(json.dumps(m))'
+      - name: server logs
+        if: always()
+        run: mkdir -p out/server && cp -r engine/ctl-tests/out/. out/server/ 2>/dev/null || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: shard-${{ matrix.mode }}-${{ matrix.shard }}
+          path: out
+          retention-days: 14
+
+  summary:
+    needs: [plan, ctl]
+    if: always() && needs.plan.outputs.matrix != ''
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: main }
+      - uses: actions/download-artifact@v4
+        with: { path: shards }
+      - name: summary
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BUNDLE: ${{ needs.plan.outputs.name }}
+          COMMIT: ${{ needs.plan.outputs.commit }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          started=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" --jq .run_started_at)
+          export WALL_SECONDS=$(( $(date +%s) - $(date -d "$started" +%s) ))
+          # built from source in every job: the manifest lists each job's toolchain and binaries' sha256 (all must agree)
+          export BUNDLE_MANIFEST="$(echo "engine_commit: $COMMIT (built from source on each runner)"; for f in shards/*/build.json; do echo "$(basename "$(dirname "$f")"): $(python3 -c 'import json,sys;d=json.load(open(sys.argv[1]));print(d["rustc"],"| mongo-server",d["mongo_server_sha256"],"| pq",d["pq_sha256"])' "$f")"; done)"
+          python3 ci/summarize.py shards result > /dev/null
+          cat result/SUMMARY.md >> "$GITHUB_STEP_SUMMARY"
+          for d in shards/*/; do m=$(python3 -c 'import json,sys;print(json.load(open(sys.argv[1]))["mode"])' "$d/shard.json" 2>/dev/null) || continue
+            mkdir -p "result/logs/$m"; cp "$d"/ctl_*.log "result/logs/$m/" 2>/dev/null || true; done
+      - uses: actions/upload-artifact@v4
+        with: { name: summary, path: result }
+      - name: publish to results/<commit>/<run id>
+        env: { NAME: "${{ needs.plan.outputs.name }}" }
+        run: |
+          set -euo pipefail
+          cd result && git init -q && git checkout -q -b r
+          git -c user.name=ctl-ci -c user.email=ctl-ci@users.noreply.github.com add -A
+          git -c user.name=ctl-ci -c user.email=ctl-ci@users.noreply.github.com commit -q -m "ctl results: engine $NAME, run $GITHUB_RUN_ID"
+          git push -q "https://x-access-token:${{ github.token }}@github.com/$GITHUB_REPOSITORY" "r:refs/heads/results/$NAME/$GITHUB_RUN_ID"
