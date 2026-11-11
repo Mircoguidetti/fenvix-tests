@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Build the engine's two binaries from a checkout of the private engine repository, printing nothing of the source.
+# Build the engine's binaries (all of the workspace; mongo-server and pq are recorded) from a checkout of the private engine repository, printing nothing of the source.
 # Rust warnings and errors quote source lines and the job logs are public: the whole build output goes to a file
 # outside the checkout that is never printed or uploaded. Only "build ok" or "build failed, N errors" is printed, then the
 # toolchain and the sha256 of the two stripped binaries (written to OUT/build.json for the summary).
@@ -11,7 +11,9 @@ HEAD=$(git -C "$E" rev-parse HEAD)
 [ "$HEAD" = "$WANT" ] || [ "${HEAD:0:${#WANT}}" = "$WANT" ] || { echo "checkout is at $HEAD, not $WANT"; exit 1; }
 export RUSTFLAGS=-Awarnings CARGO_TERM_COLOR=never CARGO_TERM_PROGRESS_WHEN=never
 fail() { echo "build failed ($1), $(grep -c '^error' "$LOG") errors; the output is not shown because it quotes source"; exit 1; }
-(cd "$E" && cargo build --release --locked --quiet -p mongo-server) >> "$LOG" 2>&1 || fail mongo-server
+# every binary of the workspace, as the judge has them after its unit phase (some ctl tests run helper binaries,
+# e.g. test_52 runs fx_erase_proof)
+(cd "$E" && cargo build --release --locked --quiet --workspace --bins) >> "$LOG" 2>&1 || fail workspace
 (cd "$E/proto/quaderno" && cargo build --release --locked --quiet --bin pq) >> "$LOG" 2>&1 || fail pq
 cp "$E/proto/quaderno/target/release/pq" "$E/target/release/pq"
 strip "$E/target/release/mongo-server" "$E/target/release/pq"

@@ -42,7 +42,7 @@ jobs:
       matrix: ${{ steps.p.outputs.matrix }}
     steps:
       - uses: actions/checkout@v4
-        with: { ref: main }
+        with: { ref: "${{ github.sha }}" }
       - id: c
         env: { IN_COMMIT: "${{ inputs.engine_commit }}" }
         run: |
@@ -86,7 +86,7 @@ jobs:
     name: ctl ${{ matrix.mode }} ${{ matrix.shard }}
     steps:
       - uses: actions/checkout@v4
-        with: { ref: main }
+        with: { ref: "${{ github.sha }}" }
       - uses: actions/checkout@v4
         with:
           repository: ${{ env.ENGINE_REPO }}
@@ -138,7 +138,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
-        with: { ref: main }
+        with: { ref: "${{ github.sha }}" }
       - uses: actions/download-artifact@v4
         with: { path: shards }
       - name: summary
