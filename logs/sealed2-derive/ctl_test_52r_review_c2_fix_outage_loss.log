@@ -1,0 +1,68 @@
+....FsF.                                                                 [100%]
+=================================== FAILURES ===================================
+__________________ test_split_insert_many_with_driver_retries __________________
+test_52r_review_c2_fix_outage_loss.py:441: in test_split_insert_many_with_driver_retries
+    scanned = scan_ids(c.d.t)
+              ^^^^^^^^^^^^^^^
+test_52r_review_c2_fix_outage_loss.py:66: in scan_ids
+    return [d["_id"] for d in col.find({}, {"_id": 1}).hint([("$natural", 1)])]
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/runner/.fenvix-judge/env/lib/python3.12/site-packages/pymongo/synchronous/cursor.py:404: in __next__
+    return self.next()
+           ^^^^^^^^^^^
+/home/runner/.fenvix-judge/env/lib/python3.12/site-packages/pymongo/synchronous/cursor.py:383: in next
+    if len(self._data) or self._refresh():
+                          ^^^^^^^^^^^^^^^
+/home/runner/.fenvix-judge/env/lib/python3.12/site-packages/pymongo/synchronous/cursor.py:334: in _refresh
+    self._send_message(q)
+/home/runner/.fenvix-judge/env/lib/python3.12/site-packages/pymongo/synchronous/cursor.py:237: in _send_message
+    response = client._run_operation(operation, self._run_with_conn, address=self._address)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/runner/.fenvix-judge/env/lib/python3.12/site-packages/pymongo/_csot.py:126: in csot_wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/runner/.fenvix-judge/env/lib/python3.12/site-packages/pymongo/synchronous/mongo_client.py:1994: in _run_operation
+    return self._retryable_read(
+/home/runner/.fenvix-judge/env/lib/python3.12/site-packages/pymongo/synchronous/mongo_client.py:2116: in _retryable_read
+    return self._retry_internal(
+/home/runner/.fenvix-judge/env/lib/python3.12/site-packages/pymongo/_csot.py:126: in csot_wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/runner/.fenvix-judge/env/lib/python3.12/site-packages/pymongo/synchronous/mongo_client.py:2077: in _retry_internal
+    ).run()
+      ^^^^^
+/home/runner/.fenvix-judge/env/lib/python3.12/site-packages/pymongo/synchronous/mongo_client.py:2947: in run
+    res = self._read() if self._is_read else self._write()
+          ^^^^^^^^^^^^
+/home/runner/.fenvix-judge/env/lib/python3.12/site-packages/pymongo/synchronous/mongo_client.py:3187: in _read
+    return self._func(self._session, self._server, conn, read_pref)  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/runner/.fenvix-judge/env/lib/python3.12/site-packages/pymongo/synchronous/mongo_client.py:1992: in _cmd
+    return run_with_conn(conn, operation, read_preference)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/runner/.fenvix-judge/env/lib/python3.12/site-packages/pymongo/synchronous/helpers.py:50: in inner
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+/home/runner/.fenvix-judge/env/lib/python3.12/site-packages/pymongo/synchronous/cursor_base.py:120: in _run_with_conn
+    docs, reply, duration = run_cursor_command(
+/home/runner/.fenvix-judge/env/lib/python3.12/site-packages/pymongo/synchronous/command_runner.py:329: in run_cursor_command
+    docs, reply, duration_s = _run_command(
+/home/runner/.fenvix-judge/env/lib/python3.12/site-packages/pymongo/synchronous/command_runner.py:214: in _run_command
+    helpers_shared._check_command_response(
+/home/runner/.fenvix-judge/env/lib/python3.12/site-packages/pymongo/helpers_shared.py:327: in _check_command_response
+    raise OperationFailure(errmsg, code, response, max_wire_version)
+E   pymongo.errors.OperationFailure: database d: this process's serving lease expired; it begins no new read (F7); retry, full error: {'ok': 0.0, 'errmsg': "database d: this process's serving lease expired; it begins no new read (F7); retry", 'code': 134, 'codeName': 'SealedRunsRetry', 'errorLabels': ['TransientTransactionError', 'RetryableWriteError'], '$clusterTime': {'clusterTime': Timestamp(1794452298, 20000), 'signature': {'hash': b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00', 'keyId': 0}}, 'operationTime': Timestamp(1794452298, 20000)}
+____________ test_index_commands_keep_answering_across_lease_losses ____________
+test_52r_review_c2_fix_outage_loss.py:583: in test_index_commands_keep_answering_across_lease_losses
+    assert not hung, f"an index command did not answer within 60 s: {hung}"
+E   AssertionError: an index command did not answer within 60 s: ['2 drop NetworkTimeout None after 60.0 s: 127.0.0.1:35972: timed out (configured timeouts: socketTimeoutMS: 60000.0ms, connectTimeou']
+E   assert not ['2 drop NetworkTimeout None after 60.0 s: 127.0.0.1:35972: timed out (configured timeouts: socketTimeoutMS: 60000.0ms, connectTimeou']
+----------------------------- Captured stdout call -----------------------------
+cycles 2; lease losses 20; commands that failed 1: ['2 drop NetworkTimeout None after 60.0 s: 127.0.0.1:35972: timed out (configured timeouts: socketTimeoutMS: 60000.0ms, connectTimeou']
+hung: ['2 drop NetworkTimeout None after 60.0 s: 127.0.0.1:35972: timed out (configured timeouts: socketTimeoutMS: 60000.0ms, connectTimeou']
+server log, index commands: SLOW dropIndexes db=d ms=39828 ok=true | SLOW createIndexes db=d ms=3563 ok=true
+=========================== short test summary info ============================
+FAILED test_52r_review_c2_fix_outage_loss.py::test_split_insert_many_with_driver_retries - pymongo.errors.OperationFailure: database d: this process's serving lease expired; it begins no new read (F7); retry, full error: {'ok': 0.0, 'errmsg': "database d: this process's serving lease expired; it begins no new read (F7); retry", 'code': 134, 'codeName': 'SealedRunsRetry', 'errorLabels': ['TransientTransactionError', 'RetryableWriteError'], '$clusterTime': {'clusterTime': Timestamp(1794452298, 20000), 'signature': {'hash': b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00', 'keyId': 0}}, 'operationTime': Timestamp(1794452298, 20000)}
+FAILED test_52r_review_c2_fix_outage_loss.py::test_index_commands_keep_answering_across_lease_losses - AssertionError: an index command did not answer within 60 s: ['2 drop NetworkTimeout None after 60.0 s: 127.0.0.1:35972: timed out (configured timeouts: socketTimeoutMS: 60000.0ms, connectTimeou']
+assert not ['2 drop NetworkTimeout None after 60.0 s: 127.0.0.1:35972: timed out (configured timeouts: socketTimeoutMS: 60000.0ms, connectTimeou']
+2 failed, 5 passed, 1 skipped in 347.87s (0:05:47)
