@@ -156,7 +156,9 @@ jobs:
           python3 ci/summarize.py shards result > /dev/null
           cat result/SUMMARY.md >> "$GITHUB_STEP_SUMMARY"
           for d in shards/*/; do m=$(python3 -c 'import json,sys;print(json.load(open(sys.argv[1]))["mode"])' "$d/shard.json" 2>/dev/null) || continue
-            mkdir -p "result/logs/$m"; cp "$d"/ctl_*.log "result/logs/$m/" 2>/dev/null || true; done
+            mkdir -p "result/logs/$m"; cp "$d"/ctl_*.log "result/logs/$m/" 2>/dev/null || true
+            # the server logs (ctl-tests/out) go to the results branch too, so they can be read with git alone
+            if [ -d "$d/server" ]; then mkdir -p "result/logs/$m/server/$(basename "$d")"; cp -r "$d/server/." "result/logs/$m/server/$(basename "$d")/"; fi; done
       - uses: actions/upload-artifact@v4
         with: { name: summary, path: result }
       - name: publish to results/<commit>/<run id>
