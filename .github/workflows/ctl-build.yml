@@ -152,7 +152,7 @@ jobs:
           started=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" --jq .run_started_at)
           export WALL_SECONDS=$(( $(date +%s) - $(date -d "$started" +%s) ))
           # built from source in every job: the manifest lists each job's toolchain and binaries' sha256 (all must agree)
-          export BUNDLE_MANIFEST="$(echo "engine_commit: $COMMIT (built from source on each runner)"; for f in shards/*/build.json; do echo "$(basename "$(dirname "$f")"): $(python3 -c 'import json,sys;d=json.load(open(sys.argv[1]));print(d["rustc"],"| mongo-server",d["mongo_server_sha256"],"| pq",d["pq_sha256"])' "$f")"; done)"
+          export BUNDLE_MANIFEST="$(echo "engine_commit: $COMMIT (built from source on each runner)"; for f in shards/*/build.json; do echo "$(basename "$(dirname "$f")"): $(python3 -c 'import json,sys;d=json.load(open(sys.argv[1]));print(d["rustc"],"| unstripped mongo-server",d.get("mongo_server_sha256_unstripped","-"),"pq",d.get("pq_sha256_unstripped","-"),"| stripped mongo-server",d["mongo_server_sha256"],"pq",d["pq_sha256"])' "$f")"; done)"
           python3 ci/summarize.py shards result > /dev/null
           cat result/SUMMARY.md >> "$GITHUB_STEP_SUMMARY"
           for d in shards/*/; do m=$(python3 -c 'import json,sys;print(json.load(open(sys.argv[1]))["mode"])' "$d/shard.json" 2>/dev/null) || continue
