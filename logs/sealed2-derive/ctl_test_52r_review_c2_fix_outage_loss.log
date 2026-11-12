@@ -1,0 +1,16 @@
+..F..s..                                                                 [100%]
+=================================== FAILURES ===================================
+___________________ test_mixed_writes_spanning_lease_losses ____________________
+test_52r_review_c2_fix_outage_loss.py:299: in test_mixed_writes_spanning_lease_losses
+    problems += retry_until_ok(lambda: check(srv2.client(), acked, incs, "after a restart"), "the read after a restart", 300)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+test_52r_review_c2_fix_outage_loss.py:77: in retry_until_ok
+    raise AssertionError(f"{what} never succeeded: {last}")
+E   AssertionError: the read after a restart never succeeded: database d: our manifest was last read 1.005024788s ago, more than T_pin; retry, full error: {'ok': 0.0, 'errmsg': 'database d: our manifest was last read 1.005024788s ago, more than T_pin; retry', 'code': 134, 'codeName': 'SealedRunsRetry', 'errorLabels': ['TransientTransactionError', 'RetryableWriteError']}
+----------------------------- Captured stdout call -----------------------------
+lease losses 6; reopenedWritesRefused 4; errors {'OperationFailure 1': 19, 'OperationFailure 251': 2, 'OperationFailure 134': 2}; samples ["OperationFailure 1 Closed error: db is closed, full error: {'ok': 0.0, 'errmsg': 'Closed error: db is closed', 'code': 1, 'codeName': 'Inte", "OperationFailure 1 Closed error: db is closed, full error: {'ok': 0.0, 'errmsg': 'Closed error: db is closed', 'code': 1, 'codeName': 'Inte", "OperationFailure 1 Closed error: db is closed, full error: {'ok': 0.0, 'errmsg': 'Closed error: db is closed', 'code': 1, 'codeName': 'Inte"]
+now: acknowledged inserts 87581, scanned 87581, by _id index 87581, by k index 87581
+now: OK
+=========================== short test summary info ============================
+FAILED test_52r_review_c2_fix_outage_loss.py::test_mixed_writes_spanning_lease_losses - AssertionError: the read after a restart never succeeded: database d: our manifest was last read 1.005024788s ago, more than T_pin; retry, full error: {'ok': 0.0, 'errmsg': 'database d: our manifest was last read 1.005024788s ago, more than T_pin; retry', 'code': 134, 'codeName': 'SealedRunsRetry', 'errorLabels': ['TransientTransactionError', 'RetryableWriteError']}
+1 failed, 6 passed, 1 skipped in 601.86s (0:10:01)
