@@ -1,0 +1,30 @@
+TEST FAULT INJECTION ON (/tmp/tmp8fhc_2yv.faults): never use this in production
+admin interface listening on 127.0.0.1:39674 (bearer token required)
+mongo-server listening on 127.0.0.1:30616 (idle close after 600 s, holder T1, lease ttl 2 s)
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:59628
+LEASE process_lease tenant=- holder=T1 unix_ms=1794506422886 inc=e2e392e8d3d5abc2 gen=1
+LEASE acquired tenant=d holder=T1 unix_ms=1794506422888 takeover_from=-
+LEASE acquired tenant=d holder=T1 unix_ms=1794506422894 takeover_from=-
+LEASE acquired tenant=d holder=T1 unix_ms=1794506422899 takeover_from=- new=true
+LEASE writer_open tenant=d holder=T1 unix_ms=1794506422909 
+FAULT delay_put processes/T1/_lease 3500
+LEASE process_lease_late tenant=- holder=T1 unix_ms=1794506427105 abandoned=1
+LEASE lost tenant=d holder=T1 unix_ms=1794506427105 process_lease_late
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=2 closed=true
+LEASE writer_close tenant=d holder=T1 unix_ms=1794506427107 
+LEASE process_lease_lapsed tenant=- holder=T1 unix_ms=1794506427200 gen=2 abandoned=0
+LEASE acquired tenant=d holder=T1 unix_ms=1794506430123 takeover_from=-
+LEASE takeover_wake tenant=d holder=T1 unix_ms=1794506430133 unclean=true takeover_from=-
+LEASE writer_open tenant=d holder=T1 unix_ms=1794506430143 
+shutting down: closing tenants cleanly
+LEASE writer_close tenant=d holder=T1 unix_ms=1794506430158 
+LEASE release_begin tenant=d holder=T1 unix_ms=1794506430158 
+LEASE release tenant=d holder=T1 unix_ms=1794506430160 ok=true
+tenants closed; stopping maintenance
+maintenance shutdown: waiting for the L0 watch unix_ms=1794506430167
+maintenance shutdown: waiting for the dispatcher unix_ms=1794506430807
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794506430807
+maintenance shutdown: waiting for the GC task unix_ms=1794506430807
+maintenance shutdown: done unix_ms=1794506432805
+maintenance stopped (2654 ms)

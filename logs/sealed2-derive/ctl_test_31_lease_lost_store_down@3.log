@@ -1,0 +1,15 @@
+F.                                                                       [100%]
+=================================== FAILURES ===================================
+____________ test_engine_recovers_after_lease_lost_to_store_outage _____________
+test_31_lease_lost_store_down.py:129: in test_engine_recovers_after_lease_lost_to_store_outage
+    assert not late, f"every acknowledged insert there ({len(acked)}), but: " + "; ".join(late)
+E   AssertionError: every acknowledged insert there (35001), but: insert after the store came back failed after 30.0 s: NetworkTimeout('127.0.0.1:30768: timed out (configured timeouts: socketTimeoutMS: 30000.0ms, connectTimeoutMS: 20000.0ms)')
+E   assert not ["insert after the store came back failed after 30.0 s: NetworkTimeout('127.0.0.1:30768: timed out (configured timeouts: socketTimeoutMS: 30000.0ms, connectTimeoutMS: 20000.0ms)')"]
+----------------------------- Captured stdout call -----------------------------
+acknowledged 35001 documents; abandonCloseTimeouts 0
+SIGTERM stopped the server in 25.0 s
+after a restart: 35001 acknowledged, 0 missing
+=========================== short test summary info ============================
+FAILED test_31_lease_lost_store_down.py::test_engine_recovers_after_lease_lost_to_store_outage - AssertionError: every acknowledged insert there (35001), but: insert after the store came back failed after 30.0 s: NetworkTimeout('127.0.0.1:30768: timed out (configured timeouts: socketTimeoutMS: 30000.0ms, connectTimeoutMS: 20000.0ms)')
+assert not ["insert after the store came back failed after 30.0 s: NetworkTimeout('127.0.0.1:30768: timed out (configured timeouts: socketTimeoutMS: 30000.0ms, connectTimeoutMS: 20000.0ms)')"]
+1 failed, 1 passed in 251.39s (0:04:11)

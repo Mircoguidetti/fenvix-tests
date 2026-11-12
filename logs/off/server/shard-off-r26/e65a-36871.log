@@ -1,0 +1,28 @@
+TEST FAULT INJECTION ON (/tmp/tmpp8hihyp6.faults): never use this in production
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+admin interface listening on 127.0.0.1:33351 (bearer token required)
+mongo-server listening on 127.0.0.1:36871 (idle close after 300 s, holder e65a-36871, lease ttl 6 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:40318
+LEASE process_lease tenant=- holder=e65a-36871 unix_ms=1794508458255 inc=16c87b2e295caf34 gen=1
+LEASE acquired tenant=infla holder=e65a-36871 unix_ms=1794508458257 takeover_from=-
+LEASE acquired tenant=infla holder=e65a-36871 unix_ms=1794508458281 takeover_from=-
+LEASE acquired tenant=infla holder=e65a-36871 unix_ms=1794508458289 takeover_from=- new=true
+LEASE writer_open tenant=infla holder=e65a-36871 unix_ms=1794508458299 
+FAULT delay_put tenants/infla/wal/00000000000000000003.sst 1500
+SLOW insert db=infla ms=1504 ok=true
+TIMING abandon db=infla stop_fxc_ms=0 tenant_abandon_ms=1199 closed=true
+LEASE writer_close tenant=infla holder=e65a-36871 unix_ms=1794508459813 
+LEASE acquired tenant=admin holder=e65a-36871 unix_ms=1794508459823 takeover_from=-
+LEASE acquired tenant=admin holder=e65a-36871 unix_ms=1794508459829 takeover_from=-
+ADMIN DELETE /v1/databases/infla -> 200 1251 ms peer=127.0.0.1:40322
+LEASE acquired tenant=infla holder=e65a-36871 unix_ms=1794508462883 takeover_from=-
+LEASE acquired tenant=infla holder=e65a-36871 unix_ms=1794508462889 takeover_from=-
+LEASE acquired tenant=infla holder=e65a-36871 unix_ms=1794508462895 takeover_from=-
+shutting down: closing tenants cleanly
+tenants closed; stopping maintenance
+maintenance shutdown: waiting for the L0 watch unix_ms=1794508462903
+maintenance shutdown: waiting for the dispatcher unix_ms=1794508463171
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794508463171
+maintenance shutdown: waiting for the GC task unix_ms=1794508463171
+maintenance shutdown: done unix_ms=1794508464169
+maintenance stopped (1270 ms)

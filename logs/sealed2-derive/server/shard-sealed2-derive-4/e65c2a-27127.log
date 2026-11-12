@@ -1,0 +1,21 @@
+TEST FAULT INJECTION ON (/tmp/tmpsxw871cn.faults): never use this in production
+admin interface listening on 127.0.0.1:27567 (bearer token required)
+mongo-server listening on 127.0.0.1:27127 (idle close after 300 s, holder P65a, lease ttl 3 s)
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:34862
+LEASE process_lease tenant=- holder=P65a unix_ms=1794505807386 inc=5588b5e52a6762cf gen=1
+LEASE acquired tenant=inflc2 holder=P65a unix_ms=1794505807387 takeover_from=-
+LEASE acquired tenant=inflc2 holder=P65a unix_ms=1794505807392 takeover_from=-
+LEASE acquired tenant=inflc2 holder=P65a unix_ms=1794505807397 takeover_from=- new=true
+LEASE writer_open tenant=inflc2 holder=P65a unix_ms=1794505807406 
+FAULT delay_put tenants/inflc2/wal/00000000000000000004.sst 15000
+FAULT delay_put processes/P65a/_lease 4000
+LEASE process_lease_lost tenant=- holder=P65a unix_ms=1794505812408 abandoned=1
+LEASE lost tenant=inflc2 holder=P65a unix_ms=1794505812408 process_lease_lost
+fx drop: SlateDB compactor of inflc2: Closed error: detected newer DB client
+SLOW hello db=admin ms=10001 ok=true
+SLOW hello db=admin ms=10001 ok=true
+abandon of tenant inflc2: close did not finish in 10s; left behind (it goes on in the background)
+TIMING abandon db=inflc2 stop_fxc_ms=0 tenant_abandon_ms=10001 closed=false
+LEASE writer_close tenant=inflc2 holder=P65a unix_ms=1794505822409 
+SLOW insert db=inflc2 ms=15110 ok=false

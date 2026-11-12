@@ -1,0 +1,32 @@
+TEST FAULT INJECTION ON (/tmp/tmpr_2f5a0f.faults): never use this in production
+local log: restart applied 0 records to 0 databases in 0.0 s
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+admin interface listening on 127.0.0.1:38458 (bearer token required)
+mongo-server listening on 127.0.0.1:39588 (idle close after 600 s, holder L1, lease ttl 4 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:49194
+LEASE process_lease tenant=- holder=L1 unix_ms=1794507012002 inc=150b1b24c6538a75 gen=1
+LEASE acquired tenant=d holder=L1 unix_ms=1794507012004 takeover_from=-
+LEASE acquired tenant=d holder=L1 unix_ms=1794507012008 takeover_from=-
+LEASE acquired tenant=d holder=L1 unix_ms=1794507012012 takeover_from=- new=true
+LEASE writer_open tenant=d holder=L1 unix_ms=1794507012020 
+FAULT delay_put processes/L1/_lease 3000
+LEASE invalid tenant=d holder=L1 unix_ms=1794507015352 
+local log: ownership of d lost with writes not yet in object storage; they are lost
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=103 closed=true
+LEASE writer_close tenant=d holder=L1 unix_ms=1794507015456 
+LEASE process_lease_lost tenant=- holder=L1 unix_ms=1794507016424 abandoned=0
+FAULT delay_put processes/L1/_lease 3000
+LEASE process_lease tenant=- holder=L1 unix_ms=1794507019492 inc=d7e8f9ed89d01165 gen=2
+SLOW insert db=d ms=3005 ok=false
+FAULT delay_put processes/L1/_lease 3000
+SLOW hello db=admin ms=10000 ok=true
+shutting down: closing tenants cleanly
+FAULT delay_put processes/L1/_lease 3000
+LEASE process_lease_late tenant=- holder=L1 unix_ms=1794507022625 abandoned=0
+tenants closed; stopping maintenance
+maintenance shutdown: waiting for the L0 watch unix_ms=1794507025056
+maintenance shutdown: waiting for the dispatcher unix_ms=1794507025835
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794507025835
+maintenance shutdown: waiting for the GC task unix_ms=1794507025835
+maintenance shutdown: done unix_ms=1794507027829
+maintenance stopped (5777 ms)

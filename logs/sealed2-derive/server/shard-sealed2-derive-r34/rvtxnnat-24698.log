@@ -1,0 +1,33 @@
+TEST FAULT INJECTION ON (/tmp/tmpysfh2gu7.faults): never use this in production
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+admin interface listening on 127.0.0.1:21760 (bearer token required)
+mongo-server listening on 127.0.0.1:24698 (idle close after 600 s, holder T1, lease ttl 2 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:35972
+LEASE process_lease tenant=- holder=T1 unix_ms=1794506631407 inc=8ffefb573b2e192c gen=1
+LEASE acquired tenant=d holder=T1 unix_ms=1794506631427 takeover_from=-
+LEASE acquired tenant=d holder=T1 unix_ms=1794506631487 takeover_from=-
+LEASE acquired tenant=d holder=T1 unix_ms=1794506631637 takeover_from=- new=true
+LEASE writer_open tenant=d holder=T1 unix_ms=1794506631899 
+SLOW insert db=d ms=784 ok=true
+FAULT delay_put processes/T1/_lease 3500
+LEASE process_lease_late tenant=- holder=T1 unix_ms=1794506636406 abandoned=1
+LEASE lost tenant=d holder=T1 unix_ms=1794506636406 process_lease_late
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=1 closed=true
+LEASE writer_close tenant=d holder=T1 unix_ms=1794506636408 
+LEASE process_lease_lapsed tenant=- holder=T1 unix_ms=1794506636503 gen=2 abandoned=0
+LEASE acquired tenant=d holder=T1 unix_ms=1794506639480 takeover_from=-
+LEASE takeover_wake tenant=d holder=T1 unix_ms=1794506639488 unclean=true takeover_from=-
+LEASE writer_open tenant=d holder=T1 unix_ms=1794506639498 
+shutting down: closing tenants cleanly
+SLOW hello db=admin ms=10000 ok=true
+TIMING stop_fxc db=d ms=10001
+LEASE writer_close tenant=d holder=T1 unix_ms=1794506649518 
+LEASE release_begin tenant=d holder=T1 unix_ms=1794506649518 
+LEASE release tenant=d holder=T1 unix_ms=1794506649519 ok=true
+tenants closed; stopping maintenance
+maintenance shutdown: waiting for the L0 watch unix_ms=1794506649526
+maintenance shutdown: waiting for the dispatcher unix_ms=1794506650325
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794506650325
+maintenance shutdown: waiting for the GC task unix_ms=1794506650325
+maintenance shutdown: done unix_ms=1794506651313
+maintenance stopped (11810 ms)
