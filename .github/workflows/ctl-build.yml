@@ -134,7 +134,7 @@ jobs:
 
   summary:
     needs: [plan, ctl]
-    if: always() && needs.plan.outputs.matrix != ''
+    if: always() && !cancelled() && needs.plan.outputs.matrix != ''
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
