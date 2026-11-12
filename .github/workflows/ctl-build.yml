@@ -30,6 +30,10 @@ on:
         description: "Most jobs one repeat item is spread over (default 10)"
         required: false
         default: "10"
+      extra_tests:
+        description: "Folder under extra-tests/ in this repo whose test_*.py files are copied into ctl-tests for this run (empty: none)"
+        required: false
+        default: ""
   push:
     branches: [main]
 
@@ -67,6 +71,14 @@ jobs:
           path: engine
           persist-credentials: false
           sparse-checkout: ctl-tests
+      - name: extra tests
+        if: inputs.extra_tests != ''
+        env: { X: "${{ inputs.extra_tests }}" }
+        run: |
+          set -euo pipefail
+          case "$X" in *..*|/*) echo "bad extra_tests"; exit 1 ;; esac
+          ls extra-tests/"$X"/test_*.py
+          cp extra-tests/"$X"/test_*.py engine/ctl-tests/
       - id: p
         env:
           C: ${{ steps.c.outputs.commit }}
@@ -123,6 +135,14 @@ jobs:
       - run: ci/setup-env.sh
       - name: node driver (test_40)
         run: cd engine/mongo-tests/node && npm ci --silent
+      - name: extra tests
+        if: inputs.extra_tests != ''
+        env: { X: "${{ inputs.extra_tests }}" }
+        run: |
+          set -euo pipefail
+          case "$X" in *..*|/*) echo "bad extra_tests"; exit 1 ;; esac
+          ls extra-tests/"$X"/test_*.py
+          cp extra-tests/"$X"/test_*.py engine/ctl-tests/
       - name: tests
         env:
           CTL_DATA: ${{ runner.temp }}/ctl-data
