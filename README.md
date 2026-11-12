@@ -39,3 +39,9 @@ They come in the same run as the full set (`mode`), or alone with `mode: none`. 
 
 Each job: a fresh runner, the reference mongod (replica set `rs0`, port 27020) and MinIO (port 9000), then its files one
 after the other with `timeout 1500 python -m pytest -q`, deleting the buckets each file leaves.
+
+## Cargo unit tests
+
+Input `unit_tests` (`FILTER:RUNS,...`) adds one job that runs `cargo test --locked -p <root package> --lib -- FILTER`,
+RUNS times per filter, on the same engine commit. Results go to the summary's "cargo unit tests" section and to
+`unit/` on the results branch. A filter that matches no test is reported as MATCHED-NONE, never as a pass.

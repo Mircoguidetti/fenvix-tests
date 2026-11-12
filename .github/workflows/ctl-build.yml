@@ -30,6 +30,10 @@ on:
         description: "Most jobs one repeat item is spread over (default 10)"
         required: false
         default: "10"
+      unit_tests:
+        description: "Cargo unit tests of the engine's root package, each N times in one job: FILTER:RUNS,... (e.g. compactor_tests::some_test:5)"
+        required: false
+        default: ""
       extra_tests:
         description: "Folder under extra-tests/ in this repo whose test_*.py files are copied into ctl-tests for this run (empty: none)"
         required: false
@@ -165,9 +169,41 @@ jobs:
           path: out
           retention-days: 14
 
+  unit:
+    needs: plan
+    if: needs.plan.outputs.commit != '' && inputs.unit_tests != ''
+    runs-on: ubuntu-24.04
+    timeout-minutes: 150
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: "${{ github.sha }}" }
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ env.ENGINE_REPO }}
+          ref: ${{ needs.plan.outputs.commit }}
+          path: engine
+          persist-credentials: false
+      - name: rust
+        run: rustup toolchain install "$RUST_VERSION" --profile minimal > /dev/null && rustup default "$RUST_VERSION" && rustc --version
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry/index
+            ~/.cargo/registry/cache
+          key: cargo-registry-${{ hashFiles('engine/Cargo.lock', 'engine/proto/quaderno/Cargo.lock') }}
+      - name: unit tests
+        env: { SPEC: "${{ inputs.unit_tests }}" }
+        run: ci/run-unit.sh engine "$PWD/unit" "$SPEC"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: unit
+          path: unit
+          retention-days: 14
+
   summary:
-    needs: [plan, ctl]
-    if: always() && !cancelled() && needs.plan.outputs.matrix != ''
+    needs: [plan, ctl, unit]
+    if: always() && !cancelled() && (needs.plan.outputs.matrix != '' || inputs.unit_tests != '')
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
@@ -187,6 +223,7 @@ jobs:
           # built from source in every job: the manifest lists each job's toolchain and binaries' sha256 (all must agree)
           export BUNDLE_MANIFEST="$(echo "engine_commit: $COMMIT (built from source on each runner)"; for f in shards/*/build.json; do echo "$(basename "$(dirname "$f")"): $(python3 -c 'import json,sys;d=json.load(open(sys.argv[1]));print(d["rustc"],"| unstripped mongo-server",d.get("mongo_server_sha256_unstripped","-"),"pq",d.get("pq_sha256_unstripped","-"),"| stripped mongo-server",d["mongo_server_sha256"],"pq",d["pq_sha256"])' "$f")"; done)"
           python3 ci/summarize.py shards result > /dev/null
+          if [ -f shards/unit/UNIT.md ]; then { echo; cat shards/unit/UNIT.md; } >> result/SUMMARY.md; mkdir -p result/unit; cp shards/unit/*.log shards/unit/unit.jsonl shards/unit/UNIT.md result/unit/ 2>/dev/null || true; fi
           cat result/SUMMARY.md >> "$GITHUB_STEP_SUMMARY"
           for d in shards/*/; do m=$(python3 -c 'import json,sys;print(json.load(open(sys.argv[1]))["mode"])' "$d/shard.json" 2>/dev/null) || continue
             mkdir -p "result/logs/$m"; cp "$d"/ctl_*.log "result/logs/$m/" 2>/dev/null || true
