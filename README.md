@@ -24,6 +24,12 @@ hand (inputs `engine_commit`, `mode` default `both`, `jobs`, `files`) or by a pu
 `default-engine-commit.txt` exists. Results go to `results/<7-char commit>/<run id>`; read them with
 `ci/result.sh <7-char commit> --mode sealed2-derive|off`. No binary is pushed anywhere.
 
+Repeat runs, in parallel: input `repeats` = `FILE:RUNS:MODE,...` (MODE `sealed2-derive`, `off` or `both`), for example
+`test_05_erase:5:both,test_52r_review_c2_fix_outage_loss:10:sealed2-derive`. Each run is its own entry (`FILE@K`, log
+`ctl_FILE@K.log`); the runs of one item are spread over up to `repeat_jobs` jobs (default 10), each on its own runner.
+They come in the same run as the full set (`mode`), or alone with `mode: none`. The summary adds, per mode, a line
+`FILE: P of N PASS` with every failing run's pytest line. GitHub runs at most 20 jobs at once; more jobs queue.
+
 ## Running (bundles, workflow `ctl`)
 
 - Pushing a `bundle/<name>` branch starts a run in the bundle's `run_modes`.

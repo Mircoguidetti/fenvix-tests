@@ -11,7 +11,7 @@ on:
         description: "Engine commit (full sha preferred)"
         required: true
       mode:
-        description: "sealed2-derive, off, or both"
+        description: "Full set: sealed2-derive, off, both, or none (repeats only)"
         required: false
         default: "both"
       jobs:
@@ -22,6 +22,14 @@ on:
         description: "Only these test files, space separated (empty: all)"
         required: false
         default: ""
+      repeats:
+        description: "Repeat runs, in parallel: FILE:RUNS:MODE,... (MODE sealed2-derive, off or both), e.g. test_05_erase:5:both"
+        required: false
+        default: ""
+      repeat_jobs:
+        description: "Most jobs one repeat item is spread over (default 10)"
+        required: false
+        default: "10"
   push:
     branches: [main]
 
@@ -65,13 +73,17 @@ jobs:
           IN_MODE: ${{ inputs.mode }}
           IN_JOBS: ${{ inputs.jobs }}
           IN_FILES: ${{ inputs.files }}
+          IN_REPEATS: ${{ inputs.repeats }}
+          IN_REPEAT_JOBS: ${{ inputs.repeat_jobs }}
         run: |
           set -euo pipefail
           [ -n "$C" ] || { echo "no engine commit given and no default-engine-commit.txt: nothing to run"; echo "matrix=" >> "$GITHUB_OUTPUT"; exit 0; }
           FULL=$(git -C engine rev-parse HEAD)
-          case "${IN_MODE:-both}" in off) MODES=off ;; sealed2-derive) MODES=sealed2-derive ;; *) MODES=sealed2-derive,off ;; esac
+          case "${IN_MODE:-both}" in off) MODES=off ;; sealed2-derive) MODES=sealed2-derive ;; none) MODES= ;; *) MODES=sealed2-derive,off ;; esac
           FILES=${IN_FILES:-$(cd engine/ctl-tests && ls test_*.py)}
-          M=$(python3 ci/split.py --jobs "${IN_JOBS:-10}" --modes "$MODES" $FILES)
+          # every repeated file must exist at this commit
+          for item in $(echo "${IN_REPEATS:-}" | tr ',' ' '); do f=${item%%:*}; f=${f%.py}; [ -f "engine/ctl-tests/$f.py" ] || { echo "repeat file $f.py is not in ctl-tests at this commit"; exit 1; }; done
+          M=$(python3 ci/split.py --jobs "${IN_JOBS:-10}" --modes "$MODES" --repeats "${IN_REPEATS:-}" --repeat-jobs "${IN_REPEAT_JOBS:-10}" $FILES)
           echo "$M" | python3 -m json.tool
           { echo "commit=$FULL"; echo "name=${FULL:0:7}"; echo "matrix=$M"; } >> "$GITHUB_OUTPUT"
 
@@ -116,10 +128,11 @@ jobs:
           CTL_DATA: ${{ runner.temp }}/ctl-data
           MODE: ${{ matrix.mode }}
           SHARD: ${{ matrix.shard }}
+          KIND: ${{ matrix.kind }}
           FILES: ${{ matrix.files }}
         run: |
           start=$(date +%s)
-          S=$start python3 -c 'import json,os;json.dump({"mode":os.environ["MODE"],"shard":int(os.environ["SHARD"]),"files":os.environ["FILES"],"start":int(os.environ["S"])},open("out/shard.json","w"))'
+          S=$start python3 -c 'import json,os;json.dump({"mode":os.environ["MODE"],"shard":os.environ["SHARD"],"kind":os.environ["KIND"],"files":os.environ["FILES"],"start":int(os.environ["S"])},open("out/shard.json","w"))'
           ci/run-shard.sh engine "$MODE" out $FILES
           E=$(date +%s) python3 -c 'import json,os;m=json.load(open("out/shard.json"));m["end"]=int(os.environ["E"]);open("out/shard.json","w").write(json.dumps(m))'
       - name: server logs

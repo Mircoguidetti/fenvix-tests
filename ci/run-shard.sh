@@ -6,7 +6,7 @@
 # Each file runs under `timeout 1500` with pytest -q, as the judge does; the MinIO buckets a file leaves are deleted after it
 # (the tests do not delete theirs). Writes OUT/results.jsonl (one line per file) and OUT/ctl_<file>.log.
 # The mongod and MinIO data go under $CTL_DATA (default $JUDGE_HOME/data).
-# Usage: ci/run-shard.sh BUNDLE_DIR MODE OUT_DIR FILE...
+# Usage: ci/run-shard.sh BUNDLE_DIR MODE OUT_DIR FILE[@RUN]...
 set -uo pipefail
 B=$(cd "$1" && pwd); MODE=$2; mkdir -p "$3"; OUT=$(cd "$3" && pwd); shift 3
 JH=${JUDGE_HOME:-$HOME/.fenvix-judge}; ENV="$JH/env"; PY="$ENV/bin/python"
@@ -39,19 +39,23 @@ MINIO_ROOT_USER=minioadmin MINIO_ROOT_PASSWORD=minioadmin nohup minio server "$D
 for _ in $(seq 1 60); do (exec 3<>/dev/tcp/127.0.0.1/9000) 2>/dev/null && break; sleep 0.5; done
 
 cd "$B/ctl-tests" || exit 2
-for n in "$@"; do
+for spec in "$@"; do
+  # "test_x" runs the file once; "test_x@K" is run K of a repeat (its own log, ctl_test_x@K.log)
+  n=${spec%%@*}; k=""; [ "$spec" != "$n" ] && k=${spec#*@}
   t0=$(date +%s)
-  timeout 1500 "$PY" -m pytest -q -p no:cacheprovider --tb=short "$n.py" > "$OUT/ctl_$n.log" 2>&1; rc=$?
+  timeout 1500 "$PY" -m pytest -q -p no:cacheprovider --tb=short "$n.py" > "$OUT/ctl_$spec.log" 2>&1; rc=$?
   t1=$(date +%s)
-  "$PY" - "$n" "$rc" "$((t1 - t0))" "$OUT" <<'Q'
+  "$PY" - "$n" "$rc" "$((t1 - t0))" "$OUT" "$spec" "$k" <<'Q'
 import json, sys
-n, rc, secs, out = sys.argv[1], int(sys.argv[2]), int(sys.argv[3]), sys.argv[4]
-lines = [l.strip() for l in open(f"{out}/ctl_{n}.log", errors="replace") if l.strip()]
+n, rc, secs, out, spec, k = sys.argv[1], int(sys.argv[2]), int(sys.argv[3]), sys.argv[4], sys.argv[5], sys.argv[6]
+lines = [l.strip() for l in open(f"{out}/ctl_{spec}.log", errors="replace") if l.strip()]
 last = lines[-1] if lines else ""
 status = "pass" if rc == 0 else ("timeout" if rc == 124 else "fail")
 rec = {"file": n, "status": status, "rc": rc, "seconds": secs, "pytest": last[-300:]}
+if k:
+    rec["run"] = int(k)
 open(f"{out}/results.jsonl", "a").write(json.dumps(rec) + "\n")
-print(f"{n}: {status} in {secs}s | {last[-200:]}", flush=True)
+print(f"{spec}: {status} in {secs}s | {last[-200:]}", flush=True)
 Q
   # delete the buckets this file left
   "$PY" - <<'Q'
