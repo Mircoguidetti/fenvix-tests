@@ -1,0 +1,32 @@
+TEST FAULT INJECTION ON (/tmp/tmpzgz445ny.faults): never use this in production
+local log: restart applied 0 records to 0 databases in 0.0 s
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+admin interface listening on 127.0.0.1:32395 (bearer token required)
+mongo-server listening on 127.0.0.1:38967 (idle close after 600 s, holder L1, lease ttl 4 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:57502
+LEASE process_lease tenant=- holder=L1 unix_ms=1794472295974 inc=4e6c81fd7c7c74d9 gen=1
+LEASE acquired tenant=d holder=L1 unix_ms=1794472295975 takeover_from=-
+LEASE acquired tenant=d holder=L1 unix_ms=1794472295979 takeover_from=-
+LEASE acquired tenant=d holder=L1 unix_ms=1794472295982 takeover_from=- new=true
+LEASE writer_open tenant=d holder=L1 unix_ms=1794472295990 
+FAULT delay_put processes/L1/_lease 3000
+LEASE invalid tenant=d holder=L1 unix_ms=1794472299323 
+local log: ownership of d lost with writes not yet in object storage; they are lost
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=0 closed=true
+LEASE writer_close tenant=d holder=L1 unix_ms=1794472299323 
+LEASE process_lease_lost tenant=- holder=L1 unix_ms=1794472300397 abandoned=0
+FAULT delay_put processes/L1/_lease 3000
+LEASE process_lease tenant=- holder=L1 unix_ms=1794472303847 inc=4189bfaebd425889 gen=2
+SLOW insert db=d ms=3004 ok=false
+FAULT delay_put processes/L1/_lease 3000
+SLOW hello db=admin ms=10000 ok=true
+shutting down: closing tenants cleanly
+FAULT delay_put processes/L1/_lease 3000
+LEASE process_lease_late tenant=- holder=L1 unix_ms=1794472306998 abandoned=0
+tenants closed; stopping maintenance
+maintenance shutdown: waiting for the L0 watch unix_ms=1794472309039
+maintenance shutdown: waiting for the dispatcher unix_ms=1794472309809
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794472309809
+maintenance shutdown: waiting for the GC task unix_ms=1794472309809
+maintenance shutdown: done unix_ms=1794472311802
+maintenance stopped

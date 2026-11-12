@@ -1,0 +1,31 @@
+TEST FAULT INJECTION ON (/tmp/tmpql2l1gft.faults): never use this in production
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+LEASE process_lease tenant=- holder=H1 unix_ms=1794472061454 inc=2d7a4d446a392615 gen=1
+LEASE acquired tenant=h1 holder=H1 unix_ms=1794472061456 takeover_from=-
+LEASE takeover_wake tenant=h1 holder=H1 unix_ms=1794472061463 unclean=true takeover_from=-
+FAULT fail_put tenants/h1/wal/00000000000000000002.sst
+FAULT fail_put tenants/h1/wal/00000000000000000002.sst
+FAULT fail_put tenants/h1/wal/00000000000000000002.sst
+FAULT fail_put tenants/h1/wal/00000000000000000002.sst
+FAULT fail_put tenants/h1/wal/00000000000000000002.sst
+FAULT fail_put tenants/h1/wal/00000000000000000002.sst
+FAULT fail_put tenants/h1/wal/00000000000000000002.sst
+FAULT fail_put tenants/h1/wal/00000000000000000002.sst
+local log: replay of database h1 failed (no progress after 5 s); its 6 records are kept, the database is refused until they are applied
+local log: 1 databases kept their records; retried in the background
+local log: restart applied 0 records to 0 databases in 5.0 s
+admin interface listening on 127.0.0.1:37869 (bearer token required)
+mongo-server listening on 127.0.0.1:24684 (idle close after 600 s, holder H1, lease ttl 4 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:54538
+local log: retry of database h1 failed (closed); retried later
+local log: retry of database h1 failed (closed); retried later
+shutting down: closing tenants cleanly
+LEASE release_begin tenant=h1 holder=H1 unix_ms=1794472069547 
+LEASE release tenant=h1 holder=H1 unix_ms=1794472069549 ok=true
+tenants closed; stopping maintenance
+maintenance shutdown: waiting for the L0 watch unix_ms=1794472069552
+maintenance shutdown: waiting for the dispatcher unix_ms=1794472070458
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794472070458
+maintenance shutdown: waiting for the GC task unix_ms=1794472070458
+maintenance shutdown: done unix_ms=1794472071454
+maintenance stopped
