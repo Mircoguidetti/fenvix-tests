@@ -1,0 +1,34 @@
+admin interface listening on 127.0.0.1:22723 (bearer token required)
+mongo-server listening on 127.0.0.1:36090 (idle close after 300 s, holder ec-36090, lease ttl 6 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:50340
+LEASE process_lease tenant=- holder=ec-36090 unix_ms=1794470704983 inc=a25061f37e6fbc41 gen=1
+LEASE acquired tenant=victim holder=ec-36090 unix_ms=1794470704984 takeover_from=-
+LEASE acquired tenant=victim holder=ec-36090 unix_ms=1794470704989 takeover_from=-
+LEASE acquired tenant=victim holder=ec-36090 unix_ms=1794470705004 takeover_from=- new=true
+LEASE writer_open tenant=victim holder=ec-36090 unix_ms=1794470705011 
+LEASE writer_close tenant=victim holder=ec-36090 unix_ms=1794470705037 
+LEASE release_begin tenant=victim holder=ec-36090 unix_ms=1794470705037 
+LEASE release tenant=victim holder=ec-36090 unix_ms=1794470705039 ok=true
+LEASE acquired tenant=bystander holder=ec-36090 unix_ms=1794470705041 takeover_from=-
+LEASE acquired tenant=bystander holder=ec-36090 unix_ms=1794470705045 takeover_from=-
+LEASE acquired tenant=bystander holder=ec-36090 unix_ms=1794470705049 takeover_from=- new=true
+LEASE writer_open tenant=bystander holder=ec-36090 unix_ms=1794470705055 
+LEASE acquired tenant=admin holder=ec-36090 unix_ms=1794470705073 takeover_from=-
+LEASE acquired tenant=admin holder=ec-36090 unix_ms=1794470705076 takeover_from=-
+FAILPOINT erase.after_tenant reached
+ctl recovery: erase of victim was interrupted; finishing it
+LEASE process_lease tenant=- holder=ec-36090 unix_ms=1794470705299 inc=17c95828ea3fccf2 gen=1
+LEASE acquired tenant=admin holder=ec-36090 unix_ms=1794470705301 takeover_from=-
+LEASE acquired tenant=admin holder=ec-36090 unix_ms=1794470705305 takeover_from=-
+ctl recovery: erase of victim finished
+admin interface listening on 127.0.0.1:22723 (bearer token required)
+mongo-server listening on 127.0.0.1:36090 (idle close after 300 s, holder ec-36090, lease ttl 6 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:50382
+ADMIN GET /v1/databases/victim -> 404 0 ms peer=127.0.0.1:50390
+LEASE acquired tenant=bystander holder=ec-36090 unix_ms=1794470705409 takeover_from=-
+LEASE takeover_wake tenant=bystander holder=ec-36090 unix_ms=1794470705417 unclean=true takeover_from=-
+shutting down: closing tenants cleanly
+LEASE release_begin tenant=bystander holder=ec-36090 unix_ms=1794470705420 
+LEASE release tenant=bystander holder=ec-36090 unix_ms=1794470705422 ok=true
+tenants closed; stopping maintenance
+maintenance stopped

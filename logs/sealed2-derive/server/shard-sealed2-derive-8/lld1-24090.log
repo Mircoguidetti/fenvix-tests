@@ -1,0 +1,22 @@
+TEST FAULT INJECTION ON (/tmp/tmp_pgo2yrc.faults): never use this in production
+local log: restart applied 0 records to 0 databases in 0.0 s
+admin interface listening on 127.0.0.1:39810 (bearer token required)
+mongo-server listening on 127.0.0.1:24090 (idle close after 600 s, holder D1, lease ttl 4 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:50422
+LEASE process_lease tenant=- holder=D1 unix_ms=1794471154804 inc=84cc55c06be3e87c gen=1
+LEASE acquired tenant=d holder=D1 unix_ms=1794471154805 takeover_from=-
+LEASE acquired tenant=d holder=D1 unix_ms=1794471154810 takeover_from=-
+LEASE acquired tenant=d holder=D1 unix_ms=1794471154814 takeover_from=- new=true
+LEASE writer_open tenant=d holder=D1 unix_ms=1794471154824 
+FAULT stall_local_ack 3000
+LEASE process_lease_lapsed tenant=- holder=D1 unix_ms=1794471162799 gen=2 abandoned=1
+LEASE lost tenant=d holder=D1 unix_ms=1794471162799 process_lease_lapsed
+SLOW insert db=d ms=7964 ok=false
+local log: ownership of d lost with writes not yet in object storage; they are lost
+FAULT stall_local_ack 3000
+LEASE process_lease_lost tenant=- holder=D1 unix_ms=1794471162800 abandoned=0
+shutting down: closing tenants cleanly
+SLOW hello db=admin ms=10001 ok=true
+LEASE writer_close tenant=d holder=D1 unix_ms=1794471165800 
+tenants closed; stopping maintenance
+maintenance stopped

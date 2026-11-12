@@ -1,0 +1,17 @@
+TEST FAULT INJECTION ON (/tmp/tmpbp1vn6xr.faults): never use this in production
+LEASE process_lease tenant=- holder=E1 unix_ms=1794471167022 inc=67eecfcb42df5476 gen=1
+LEASE acquired tenant=e holder=E1 unix_ms=1794471167024 takeover_from=-
+LEASE takeover_wake tenant=e holder=E1 unix_ms=1794471167034 unclean=true takeover_from=-
+FAULT hang_put tenants/e/wal/00000000000000000003.sst
+LEASE writer_open tenant=e holder=E1 unix_ms=1794471167251 
+local log: database e: 5 records applied again (after record 1099511627777)
+local log: restart applied 5 records to 1 databases in 0.2 s
+admin interface listening on 127.0.0.1:22348 (bearer token required)
+mongo-server listening on 127.0.0.1:36749 (idle close after 600 s, holder E1, lease ttl 4 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:36410
+shutting down: closing tenants cleanly
+LEASE writer_close tenant=e holder=E1 unix_ms=1794471167301 
+LEASE release_begin tenant=e holder=E1 unix_ms=1794471167301 
+LEASE release tenant=e holder=E1 unix_ms=1794471167303 ok=true
+tenants closed; stopping maintenance
+maintenance stopped

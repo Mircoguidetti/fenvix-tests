@@ -1,0 +1,46 @@
+admin interface listening on 127.0.0.1:21607 (bearer token required)
+mongo-server listening on 127.0.0.1:34040 (idle close after 300 s, holder ec-34040, lease ttl 6 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:39326
+LEASE process_lease tenant=- holder=ec-34040 unix_ms=1794470702483 inc=ddb7a4af61cc2e7a gen=1
+LEASE acquired tenant=victim holder=ec-34040 unix_ms=1794470702484 takeover_from=-
+LEASE acquired tenant=victim holder=ec-34040 unix_ms=1794470702488 takeover_from=-
+LEASE acquired tenant=victim holder=ec-34040 unix_ms=1794470702501 takeover_from=- new=true
+LEASE writer_open tenant=victim holder=ec-34040 unix_ms=1794470702508 
+LEASE writer_close tenant=victim holder=ec-34040 unix_ms=1794470702537 
+LEASE release_begin tenant=victim holder=ec-34040 unix_ms=1794470702537 
+LEASE release tenant=victim holder=ec-34040 unix_ms=1794470702539 ok=true
+LEASE acquired tenant=bystander holder=ec-34040 unix_ms=1794470702542 takeover_from=-
+LEASE acquired tenant=bystander holder=ec-34040 unix_ms=1794470702545 takeover_from=-
+LEASE acquired tenant=bystander holder=ec-34040 unix_ms=1794470702550 takeover_from=- new=true
+LEASE writer_open tenant=bystander holder=ec-34040 unix_ms=1794470702556 
+LEASE acquired tenant=admin holder=ec-34040 unix_ms=1794470702565 takeover_from=-
+LEASE acquired tenant=admin holder=ec-34040 unix_ms=1794470702569 takeover_from=-
+LEASE release_begin tenant=victim holder=ec-34040 unix_ms=1794470702594 
+LEASE release tenant=victim holder=ec-34040 unix_ms=1794470702595 ok=true
+LEASE release_begin tenant=victim2 holder=ec-34040 unix_ms=1794470702598 
+LEASE release tenant=victim2 holder=ec-34040 unix_ms=1794470702599 ok=true
+ADMIN POST /v1/databases/victim/fork -> 201 37 ms peer=127.0.0.1:39330
+LEASE acquired tenant=admin holder=ec-34040 unix_ms=1794470702611 takeover_from=-
+LEASE acquired tenant=admin holder=ec-34040 unix_ms=1794470702614 takeover_from=-
+FAILPOINT erase.after_manifests reached
+ctl recovery: erase of victim2 was interrupted; finishing it
+LEASE process_lease tenant=- holder=ec-34040 unix_ms=1794470702839 inc=28fbf7feb2aeb86f gen=1
+LEASE acquired tenant=admin holder=ec-34040 unix_ms=1794470702840 takeover_from=-
+LEASE acquired tenant=admin holder=ec-34040 unix_ms=1794470702844 takeover_from=-
+ctl recovery: erase of victim2 finished
+admin interface listening on 127.0.0.1:21607 (bearer token required)
+mongo-server listening on 127.0.0.1:34040 (idle close after 300 s, holder ec-34040, lease ttl 6 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:39368
+ADMIN GET /v1/databases/victim2 -> 404 0 ms peer=127.0.0.1:39370
+LEASE acquired tenant=bystander holder=ec-34040 unix_ms=1794470702945 takeover_from=-
+LEASE takeover_wake tenant=bystander holder=ec-34040 unix_ms=1794470702952 unclean=true takeover_from=-
+ADMIN GET /v1/databases/victim/checkpoints -> 200 1 ms peer=127.0.0.1:39372
+LEASE acquired tenant=victim holder=ec-34040 unix_ms=1794470702963 takeover_from=-
+LEASE acquired tenant=admin holder=ec-34040 unix_ms=1794470702993 takeover_from=-
+LEASE acquired tenant=admin holder=ec-34040 unix_ms=1794470702997 takeover_from=-
+ADMIN DELETE /v1/databases/victim -> 200 34 ms peer=127.0.0.1:39378
+shutting down: closing tenants cleanly
+LEASE release_begin tenant=bystander holder=ec-34040 unix_ms=1794470703047 
+LEASE release tenant=bystander holder=ec-34040 unix_ms=1794470703050 ok=true
+tenants closed; stopping maintenance
+maintenance stopped

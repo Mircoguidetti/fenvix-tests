@@ -1,0 +1,28 @@
+TEST FAULT INJECTION ON (/tmp/tmp46igfpba.faults): never use this in production
+FAULT fail_get tenants/g1/manifest/00000000000000000003.manifest
+FAULT fail_get tenants/g1/manifest/00000000000000000003.manifest
+FAULT fail_get tenants/g1/manifest/00000000000000000003.manifest
+FAULT fail_get tenants/g1/manifest/00000000000000000003.manifest
+FAULT fail_get tenants/g1/manifest/00000000000000000003.manifest
+FAULT fail_get tenants/g1/manifest/00000000000000000003.manifest
+FAULT fail_get tenants/g1/manifest/00000000000000000003.manifest
+FAULT fail_get tenants/g1/manifest/00000000000000000003.manifest
+local log: replay of database g1 failed (no progress after 5 s); its 6 records are kept, the database is refused until they are applied
+local log: 1 databases kept their records; retried in the background
+local log: restart applied 0 records to 0 databases in 5.0 s
+admin interface listening on 127.0.0.1:31973 (bearer token required)
+mongo-server listening on 127.0.0.1:39692 (idle close after 600 s, holder G1, lease ttl 4 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:41660
+LEASE process_lease tenant=- holder=G1 unix_ms=1794471182738 inc=454558321654e45c gen=1
+LEASE acquired tenant=g1 holder=G1 unix_ms=1794471182740 takeover_from=-
+LEASE takeover_wake tenant=g1 holder=G1 unix_ms=1794471182750 unclean=true takeover_from=-
+LEASE writer_open tenant=g1 holder=G1 unix_ms=1794471182763 
+local log: database g1: 5 records applied again (after record 1099511627777)
+local log: database g1: kept records applied by the retry; the database is open again
+shutting down: closing tenants cleanly
+SLOW hello db=admin ms=10001 ok=true
+LEASE writer_close tenant=g1 holder=G1 unix_ms=1794471192891 
+LEASE release_begin tenant=g1 holder=G1 unix_ms=1794471192891 
+LEASE release tenant=g1 holder=G1 unix_ms=1794471192892 ok=true
+tenants closed; stopping maintenance
+maintenance stopped
