@@ -1,0 +1,86 @@
+FFF.FFFFF.........F.........                                             [100%]
+=================================== FAILURES ===================================
+___ test_unique_build_with_concurrent_writes[ours-two_inserts_behind_cursor] ___
+test_42s_index_build_writes.py:146: in test_unique_build_with_concurrent_writes
+    assert all(w == "ok" for w in out), out        # as on mongod, the writes themselves are accepted
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: ['ok', 11000]
+E   assert False
+E    +  where False = all(<generator object test_unique_build_with_concurrent_writes.<locals>.<genexpr> at 0x7f356d113e00>)
+___ test_unique_build_with_concurrent_writes[ours-insert_dup_of_scanned_doc] ___
+test_42s_index_build_writes.py:146: in test_unique_build_with_concurrent_writes
+    assert all(w == "ok" for w in out), out        # as on mongod, the writes themselves are accepted
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: [11000]
+E   assert False
+E    +  where False = all(<generator object test_unique_build_with_concurrent_writes.<locals>.<genexpr> at 0x7f356d12e4d0>)
+__ test_unique_build_with_concurrent_writes[ours-insert_dup_ahead_of_cursor] ___
+test_42s_index_build_writes.py:146: in test_unique_build_with_concurrent_writes
+    assert all(w == "ok" for w in out), out        # as on mongod, the writes themselves are accepted
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: [11000]
+E   assert False
+E    +  where False = all(<generator object test_unique_build_with_concurrent_writes.<locals>.<genexpr> at 0x7f356d08d8a0>)
+____ test_unique_build_with_concurrent_writes[ours-insert_many_same_value] _____
+test_42s_index_build_writes.py:146: in test_unique_build_with_concurrent_writes
+    assert all(w == "ok" for w in out), out        # as on mongod, the writes themselves are accepted
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: [65]
+E   assert False
+E    +  where False = all(<generator object test_unique_build_with_concurrent_writes.<locals>.<genexpr> at 0x7f356dca9700>)
+__________ test_unique_build_with_concurrent_writes[ours-upsert_dup] ___________
+test_42s_index_build_writes.py:146: in test_unique_build_with_concurrent_writes
+    assert all(w == "ok" for w in out), out        # as on mongod, the writes themselves are accepted
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: [11000]
+E   assert False
+E    +  where False = all(<generator object test_unique_build_with_concurrent_writes.<locals>.<genexpr> at 0x7f356d12e670>)
+_______ test_unique_build_with_concurrent_writes[ours-dup_then_deleted] ________
+test_42s_index_build_writes.py:146: in test_unique_build_with_concurrent_writes
+    assert all(w == "ok" for w in out), out        # as on mongod, the writes themselves are accepted
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: ['ok', 11000, 'ok']
+E   assert False
+E    +  where False = all(<generator object test_unique_build_with_concurrent_writes.<locals>.<genexpr> at 0x7f356d113ed0>)
+________ test_unique_build_with_concurrent_writes[ours-dup_then_moved] _________
+test_42s_index_build_writes.py:146: in test_unique_build_with_concurrent_writes
+    assert all(w == "ok" for w in out), out        # as on mongod, the writes themselves are accepted
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: [11000, 'ok']
+E   assert False
+E    +  where False = all(<generator object test_unique_build_with_concurrent_writes.<locals>.<genexpr> at 0x7f356d08cba0>)
+____________ test_unique_build_with_concurrent_writes[ours-no_dup] _____________
+test_42s_index_build_writes.py:149: in test_unique_build_with_concurrent_writes
+    pytest.fail("the build finished before the writes: the test did not exercise the window")
+E   Failed: the build finished before the writes: the test did not exercise the window
+_______________ test_unique_build_duplicate_in_transaction[ours] _______________
+test_42s_index_build_writes.py:181: in test_unique_build_duplicate_in_transaction
+    assert res["txn"] in ("ok", 112), res
+E   AssertionError: {'txn': 11000}
+E   assert 11000 in ('ok', 112)
+=========================== short test summary info ============================
+FAILED test_42s_index_build_writes.py::test_unique_build_with_concurrent_writes[ours-two_inserts_behind_cursor] - AssertionError: ['ok', 11000]
+assert False
+ +  where False = all(<generator object test_unique_build_with_concurrent_writes.<locals>.<genexpr> at 0x7f356d113e00>)
+FAILED test_42s_index_build_writes.py::test_unique_build_with_concurrent_writes[ours-insert_dup_of_scanned_doc] - AssertionError: [11000]
+assert False
+ +  where False = all(<generator object test_unique_build_with_concurrent_writes.<locals>.<genexpr> at 0x7f356d12e4d0>)
+FAILED test_42s_index_build_writes.py::test_unique_build_with_concurrent_writes[ours-insert_dup_ahead_of_cursor] - AssertionError: [11000]
+assert False
+ +  where False = all(<generator object test_unique_build_with_concurrent_writes.<locals>.<genexpr> at 0x7f356d08d8a0>)
+FAILED test_42s_index_build_writes.py::test_unique_build_with_concurrent_writes[ours-insert_many_same_value] - AssertionError: [65]
+assert False
+ +  where False = all(<generator object test_unique_build_with_concurrent_writes.<locals>.<genexpr> at 0x7f356dca9700>)
+FAILED test_42s_index_build_writes.py::test_unique_build_with_concurrent_writes[ours-upsert_dup] - AssertionError: [11000]
+assert False
+ +  where False = all(<generator object test_unique_build_with_concurrent_writes.<locals>.<genexpr> at 0x7f356d12e670>)
+FAILED test_42s_index_build_writes.py::test_unique_build_with_concurrent_writes[ours-dup_then_deleted] - AssertionError: ['ok', 11000, 'ok']
+assert False
+ +  where False = all(<generator object test_unique_build_with_concurrent_writes.<locals>.<genexpr> at 0x7f356d113ed0>)
+FAILED test_42s_index_build_writes.py::test_unique_build_with_concurrent_writes[ours-dup_then_moved] - AssertionError: [11000, 'ok']
+assert False
+ +  where False = all(<generator object test_unique_build_with_concurrent_writes.<locals>.<genexpr> at 0x7f356d08cba0>)
+FAILED test_42s_index_build_writes.py::test_unique_build_with_concurrent_writes[ours-no_dup] - Failed: the build finished before the writes: the test did not exercise the window
+FAILED test_42s_index_build_writes.py::test_unique_build_duplicate_in_transaction[ours] - AssertionError: {'txn': 11000}
+assert 11000 in ('ok', 112)
+9 failed, 19 passed in 66.37s (0:01:06)
