@@ -1,0 +1,22 @@
+FF..                                                                     [100%]
+=================================== FAILURES ===================================
+______________________ test_no_stale_answer_after_a_close ______________________
+test_51_c2_fix_clone_uploads.py:66: in test_no_stale_answer_after_a_close
+    asleep(srv, "g")
+test_51_c2_fix_clone_uploads.py:33: in asleep
+    wait_until(lambda: srv.admin.get(f"/v1/databases/{db}?storage=0")[1]["state"] == "asleep", 15, what="asleep")
+lib.py:246: in wait_until
+    raise AssertionError(f"timed out waiting for {what}: {last}")
+E   AssertionError: timed out waiting for asleep: False
+----------------------------- Captured stdout call -----------------------------
+round 0: wrong 0 []
+_____________________ test_a_closed_database_reads_nothing _____________________
+test_51_c2_fix_clone_uploads.py:95: in test_a_closed_database_reads_nothing
+    assert c.admin.command("serverStatus")["fenvix"]["compactor"]["started"] > 0, "no compactor ran: the test did not exercise it"
+E   AssertionError: no compactor ran: the test did not exercise it
+E   assert 0 > 0
+=========================== short test summary info ============================
+FAILED test_51_c2_fix_clone_uploads.py::test_no_stale_answer_after_a_close - AssertionError: timed out waiting for asleep: False
+FAILED test_51_c2_fix_clone_uploads.py::test_a_closed_database_reads_nothing - AssertionError: no compactor ran: the test did not exercise it
+assert 0 > 0
+2 failed, 2 passed in 80.15s (0:01:20)

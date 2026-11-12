@@ -1,0 +1,20 @@
+TEST FAULT INJECTION ON (/tmp/tmp62u4lnfa.faults): never use this in production
+admin interface listening on 127.0.0.1:29104 (bearer token required)
+mongo-server listening on 127.0.0.1:22046 (idle close after 300 s, holder P65a, lease ttl 3 s)
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:39042
+LEASE process_lease tenant=- holder=P65a unix_ms=1794502341598 inc=6303dcbcfe98651a gen=1
+LEASE acquired tenant=inflc2 holder=P65a unix_ms=1794502341600 takeover_from=-
+LEASE acquired tenant=inflc2 holder=P65a unix_ms=1794502341604 takeover_from=-
+LEASE acquired tenant=inflc2 holder=P65a unix_ms=1794502341610 takeover_from=- new=true
+LEASE writer_open tenant=inflc2 holder=P65a unix_ms=1794502341618 
+FAULT delay_put tenants/inflc2/wal/00000000000000000003.sst 15000
+FAULT delay_put processes/P65a/_lease 4000
+LEASE process_lease_lost tenant=- holder=P65a unix_ms=1794502346620 abandoned=1
+LEASE lost tenant=inflc2 holder=P65a unix_ms=1794502346620 process_lease_lost
+SLOW hello db=admin ms=10001 ok=true
+SLOW hello db=admin ms=10000 ok=true
+abandon of tenant inflc2: close did not finish in 10s; left behind (it goes on in the background)
+TIMING abandon db=inflc2 stop_fxc_ms=0 tenant_abandon_ms=10015 closed=false
+LEASE writer_close tenant=inflc2 holder=P65a unix_ms=1794502356636 
+SLOW insert db=inflc2 ms=15114 ok=false

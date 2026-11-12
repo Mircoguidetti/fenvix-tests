@@ -1,0 +1,42 @@
+TEST FAULT INJECTION ON (/tmp/tmp6u93hx2l.faults): never use this in production
+admin interface listening on 127.0.0.1:24095 (bearer token required)
+mongo-server listening on 127.0.0.1:36279 (idle close after 300 s, holder H65, lease ttl 3 s)
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:52418
+LEASE process_lease tenant=- holder=H65 unix_ms=1794504209188 inc=98935cad97d08656 gen=1
+LEASE acquired tenant=inflc holder=H65 unix_ms=1794504209189 takeover_from=-
+LEASE acquired tenant=inflc holder=H65 unix_ms=1794504209193 takeover_from=-
+LEASE acquired tenant=inflc holder=H65 unix_ms=1794504209198 takeover_from=- new=true
+LEASE writer_open tenant=inflc holder=H65 unix_ms=1794504209205 
+FAULT delay_put tenants/inflc/wal/00000000000000000004.sst 12000
+FAULT delay_put processes/H65/_lease 4000
+LEASE process_lease_late tenant=- holder=H65 unix_ms=1794504214313 abandoned=1
+LEASE lost tenant=inflc holder=H65 unix_ms=1794504214313 process_lease_late
+LEASE process_lease_lapsed tenant=- holder=H65 unix_ms=1794504214510 gen=2 abandoned=0
+FAULT delay_put processes/H65/_lease 4000
+LEASE process_lease_lapsed tenant=- holder=H65 unix_ms=1794504218710 gen=3 abandoned=0
+FAULT delay_put processes/H65/_lease 4000
+SLOW hello db=admin ms=10001 ok=true
+SLOW hello db=admin ms=10000 ok=true
+SLOW insert db=inflc ms=12011 ok=true
+TIMING abandon db=inflc stop_fxc_ms=0 tenant_abandon_ms=6917 closed=true
+LEASE writer_close tenant=inflc holder=H65 unix_ms=1794504221231 
+LEASE process_lease_lapsed tenant=- holder=H65 unix_ms=1794504222910 gen=4 abandoned=0
+TEST FAULT INJECTION ON (/tmp/tmp6u93hx2l.faults): never use this in production
+admin interface listening on 127.0.0.1:24095 (bearer token required)
+mongo-server listening on 127.0.0.1:36279 (idle close after 300 s, holder H65, lease ttl 3 s)
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:51232
+LEASE process_lease tenant=- holder=H65 unix_ms=1794504223338 inc=9013864d86c80adb gen=1
+LEASE acquired tenant=inflc holder=H65 unix_ms=1794504223340 takeover_from=-
+LEASE takeover_wake tenant=inflc holder=H65 unix_ms=1794504223349 unclean=true takeover_from=-
+shutting down: closing tenants cleanly
+LEASE release_begin tenant=inflc holder=H65 unix_ms=1794504223354 
+LEASE release tenant=inflc holder=H65 unix_ms=1794504223355 ok=true
+tenants closed; stopping maintenance
+maintenance shutdown: waiting for the L0 watch unix_ms=1794504223358
+maintenance shutdown: waiting for the dispatcher unix_ms=1794504224260
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794504224260
+maintenance shutdown: waiting for the GC task unix_ms=1794504224260
+maintenance shutdown: done unix_ms=1794504225260
+maintenance stopped (1906 ms)

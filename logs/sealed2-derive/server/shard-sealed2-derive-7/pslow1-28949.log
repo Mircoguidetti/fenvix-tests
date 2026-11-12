@@ -1,0 +1,42 @@
+TEST FAULT INJECTION ON (/tmp/tmprom6z8sd.faults): never use this in production
+admin interface listening on 127.0.0.1:32487 (bearer token required)
+mongo-server listening on 127.0.0.1:28949 (idle close after 600 s, holder S1, lease ttl 4 s)
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:54132
+LEASE process_lease tenant=- holder=S1 unix_ms=1794504462817 inc=255061b90fe6da12 gen=1
+LEASE acquired tenant=d holder=S1 unix_ms=1794504462819 takeover_from=-
+LEASE acquired tenant=d holder=S1 unix_ms=1794504462823 takeover_from=-
+LEASE acquired tenant=d holder=S1 unix_ms=1794504462827 takeover_from=- new=true
+LEASE writer_open tenant=d holder=S1 unix_ms=1794504462836 
+FAULT delay_put processes/S1/_lease 1000
+FAULT delay_put processes/S1/_lease 1000
+FAULT delay_put processes/S1/_lease 1000
+FAULT delay_put processes/S1/_lease 1000
+FAULT delay_put processes/S1/_lease 1000
+FAULT delay_put processes/S1/_lease 1000
+FAULT delay_put processes/S1/_lease 1000
+SLOW hello db=admin ms=10000 ok=true
+FAULT delay_put processes/S1/_lease 1000
+FAULT delay_put processes/S1/_lease 1000
+FAULT delay_put processes/S1/_lease 1000
+shutting down: closing tenants cleanly
+FAULT delay_put processes/S1/_lease 1000
+FAULT delay_put processes/S1/_lease 1000
+FAULT delay_put processes/S1/_lease 1000
+FAULT delay_put processes/S1/_lease 1000
+SLOW hello db=admin ms=10001 ok=true
+FAULT delay_put processes/S1/_lease 1000
+FAULT delay_put processes/S1/_lease 1000
+FAULT delay_put processes/S1/_lease 1000
+TIMING stop_fxc db=d ms=10000
+LEASE writer_close tenant=d holder=S1 unix_ms=1794504487967 
+LEASE release_begin tenant=d holder=S1 unix_ms=1794504487967 
+LEASE release tenant=d holder=S1 unix_ms=1794504487969 ok=true
+FAULT delay_put processes/S1/_lease 1000
+tenants closed; stopping maintenance
+maintenance shutdown: waiting for the L0 watch unix_ms=1794504488973
+maintenance shutdown: waiting for the dispatcher unix_ms=1794504489765
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794504489765
+maintenance shutdown: waiting for the GC task unix_ms=1794504489765
+maintenance shutdown: done unix_ms=1794504490755
+maintenance stopped (12803 ms)
