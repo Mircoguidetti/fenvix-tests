@@ -1,0 +1,337 @@
+..F........                                                              [100%]
+=================================== FAILURES ===================================
+_______________ test_other_databases_are_untouched_byte_for_byte _______________
+test_03_restore.py:138: in test_other_databases_are_untouched_byte_for_byte
+    assert after[p] == before[p], f"objects under {p} changed during the restore of another database"
+E   AssertionError: objects under tenants/by1/ changed during the restore of another database
+E   assert {'tenants/by1...ocal())), ...} == {'tenants/by1...ocal())), ...}
+E     
+E     Omitting 11 identical items, use -vv to show
+E     Left contains 2 more items:
+E     {'tenants/by1/gc/compactions.boundary': (1,
+E                                              '"c81e728d9d4c2f636f067f89cc14862c"',
+E                                              datetime.datetime(2026, 11, 12, 19, 45, 31, 881000, tzinfo=tzlocal())),
+E      'tenants/by1/gc/manifest.boundary': (1,
+E                                           '"a87ff679a2f3e71d9181a67b7542122c"',
+E                                           datetime.datetime(2026, 11, 12, 19, 45, 31, 868000, tzinfo=tzlocal()))}
+E     Right contains 10 more items:
+E     {'tenants/by1/compactions/00000000000000000001.compactions': (26,
+E                                                                   '"a587fdbf3f091a3f6d4dce876a858ff4"',
+E                                                                   datetime.datetime(2026, 11, 12, 19, 44, 59, 982000, tzinfo=tzlocal())),
+E      'tenants/by1/compactions/00000000000000000002.compactions': (42,
+E                                                                   '"a6971b581ffd20038aed2fe44816a12a"',
+E                                                                   datetime.datetime(2026, 11, 12, 19, 44, 59, 983000, tzinfo=tzlocal())),
+E      'tenants/by1/fx/manifest/00000000000000000001': (523,
+E                                                       '"e8325a376f7e7dbd046bbe671f85f5c8"',
+E                                                       datetime.datetime(2026, 11, 12, 19, 44, 59, 960000, tzinfo=tzlocal())),
+E      'tenants/by1/fx/manifest/00000000000000000002': (769,
+E                                                       '"f8ed6c78b6957ae39a83b70ee0f79f6a"',
+E                                                       datetime.datetime(2026, 11, 12, 19, 44, 59, 973000, tzinfo=tzlocal())),
+E      'tenants/by1/manifest/00000000000000000001.manifest': (130,
+E                                                             '"8b1fe8c9cb1717146d0e5d5125ca945f"',
+E                                                             datetime.datetime(2026, 11, 12, 19, 44, 59, 939000, tzinfo=tzlocal())),
+E      'tenants/by1/manifest/00000000000000000002.manifest': (138,
+E                                                             '"94abfe4f3de0a08e5c8b96ee64fb693d"',
+E                                                             datetime.datetime(2026, 11, 12, 19, 44, 59, 943000, tzinfo=tzlocal())),
+E      'tenants/by1/manifest/00000000000000000003.manifest': (146,
+E                                                             '"2c50b3bb5753e58073dafb13f7a91167"',
+E                                                             datetime.datetime(2026, 11, 12, 19, 44, 59, 979000, tzinfo=tzlocal())),
+E      'tenants/by1/manifest/00000000000000000004.manifest': (474,
+E                                                             '"f65aef1bf43492d424d4c3eb282f049a"',
+E                                                             datetime.datetime(2026, 11, 12, 19, 45, 0, 112000, tzinfo=tzlocal())),
+E      'tenants/by1/wal/00000000000000000001.sst': (0,
+E                                                   '"d41d8cd98f00b204e9800998ecf8427e"',
+E                                                   datetime.datetime(2026, 11, 12, 19, 44, 59, 945000, tzinfo=tzlocal())),
+E      'tenants/by1/wal/00000000000000000002.sst': (25520,
+E                                                   '"b9a69b4b5d725b5128b8ec8e8691dfe1"',
+E                                                   datetime.datetime(2026, 11, 12, 19, 44, 59, 952000, tzinfo=tzlocal()))}
+E     
+E     Full diff: (-: missing in left side, +: extra in left side)
+E       {
+E           'tenants/by1/_clean': (
+E               5,
+E               '"123402c04dcfb6625f688f771a5fc05d"',
+E               datetime.datetime(2026, 11, 12, 19, 45, 0, 119000, tzinfo=tzlocal()),
+E           ),
+E           'tenants/by1/_lease': (
+E               50,
+E               '"bb674b9fe9646cc916fa3d6b18d59c17"',
+E               datetime.datetime(2026, 11, 12, 19, 45, 0, 120000, tzinfo=tzlocal()),
+E           ),
+E           'tenants/by1/compacted/01M78MNGJ7A8Q3VA5FG6P8PR3N.sst': (
+E               31667,
+E               '"e24d6be12462b5a3ac543988101e1e03"',
+E               datetime.datetime(2026, 11, 12, 19, 44, 59, 978000, tzinfo=tzlocal()),
+E           ),
+E     -     'tenants/by1/compactions/00000000000000000001.compactions': (
+E     -         26,
+E     -         '"a587fdbf3f091a3f6d4dce876a858ff4"',
+E     -         datetime.datetime(2026, 11, 12, 19, 44, 59, 982000, tzinfo=tzlocal()),
+E     -     ),
+E     -     'tenants/by1/compactions/00000000000000000002.compactions': (
+E     -         42,
+E     -         '"a6971b581ffd20038aed2fe44816a12a"',
+E     -         datetime.datetime(2026, 11, 12, 19, 44, 59, 983000, tzinfo=tzlocal()),
+E     -     ),
+E           'tenants/by1/compactions/00000000000000000003.compactions': (
+E               42,
+E               '"a6971b581ffd20038aed2fe44816a12a"',
+E               datetime.datetime(2026, 11, 12, 19, 44, 59, 985000, tzinfo=tzlocal()),
+E           ),
+E           'tenants/by1/fx/caught-up': (
+E               23,
+E               '"6e4f02beb279e68f2eb7e21fcbc7c779"',
+E               datetime.datetime(2026, 11, 12, 19, 44, 59, 975000, tzinfo=tzlocal()),
+E           ),
+E           'tenants/by1/fx/e1-announced': (
+E               20,
+E               '"3d8d6f3c5fc1a406945c9ff33c9eda15"',
+E               datetime.datetime(2026, 11, 12, 19, 44, 59, 950000, tzinfo=tzlocal()),
+E     -     ),
+E     -     'tenants/by1/fx/manifest/00000000000000000001': (
+E     -         523,
+E     -         '"e8325a376f7e7dbd046bbe671f85f5c8"',
+E     -         datetime.datetime(2026, 11, 12, 19, 44, 59, 960000, tzinfo=tzlocal()),
+E     -     ),
+E     -     'tenants/by1/fx/manifest/00000000000000000002': (
+E     -         769,
+E     -         '"f8ed6c78b6957ae39a83b70ee0f79f6a"',
+E     -         datetime.datetime(2026, 11, 12, 19, 44, 59, 973000, tzinfo=tzlocal()),
+E           ),
+E           'tenants/by1/fx/manifest/00000000000000000003': (
+E               769,
+E               '"079bdf1064b3e57f2ff9905be0a3b800"',
+E               datetime.datetime(2026, 11, 12, 19, 45, 0, 28000, tzinfo=tzlocal()),
+E           ),
+E           'tenants/by1/fx/run/delta/00000000000000000003-1-dc5a825d': (
+E               242,
+E               '"e3d75130a465aea0790a0e4ee9f99a6d-1"',
+E               datetime.datetime(2026, 11, 12, 19, 44, 59, 971000, tzinfo=tzlocal()),
+E           ),
+E           'tenants/by1/fx/run/g0/00000000000000000002-1-dfd93b1b': (
+E               21175,
+E               '"16442b8579b7ef1cbd3049823eefc055-1"',
+E               datetime.datetime(2026, 11, 12, 19, 44, 59, 958000, tzinfo=tzlocal()),
+E           ),
+E     -     'tenants/by1/manifest/00000000000000000001.manifest': (
+E     +     'tenants/by1/gc/compactions.boundary': (
+E     -         130,
+E     ?          --
+E     +         1,
+E     -         '"8b1fe8c9cb1717146d0e5d5125ca945f"',
+E     +         '"c81e728d9d4c2f636f067f89cc14862c"',
+E     -         datetime.datetime(2026, 11, 12, 19, 44, 59, 939000, tzinfo=tzlocal()),
+E     ?                                              ^  ^^  ^^^
+E     +         datetime.datetime(2026, 11, 12, 19, 45, 31, 881000, tzinfo=tzlocal()),
+E     ?                                              ^  ^^  ^^^
+E           ),
+E     -     'tenants/by1/manifest/00000000000000000002.manifest': (
+E     +     'tenants/by1/gc/manifest.boundary': (
+E     -         138,
+E     ?          --
+E     +         1,
+E     +         '"a87ff679a2f3e71d9181a67b7542122c"',
+E     -         '"94abfe4f3de0a08e5c8b96ee64fb693d"',
+E     -         datetime.datetime(2026, 11, 12, 19, 44, 59, 943000, tzinfo=tzlocal()),
+E     -     ),
+E     -     'tenants/by1/manifest/00000000000000000003.manifest': (
+E     -         146,
+E     -         '"2c50b3bb5753e58073dafb13f7a91167"',
+E     -         datetime.datetime(2026, 11, 12, 19, 44, 59, 979000, tzinfo=tzlocal()),
+E     -     ),
+E     -     'tenants/by1/manifest/00000000000000000004.manifest': (
+E     -         474,
+E     -         '"f65aef1bf43492d424d4c3eb282f049a"',
+E     -         datetime.datetime(2026, 11, 12, 19, 45, 0, 112000, tzinfo=tzlocal()),
+E     ?                                                 ^  ^^^
+E     +         datetime.datetime(2026, 11, 12, 19, 45, 31, 868000, tzinfo=tzlocal()),
+E     ?                                                 ^^  ^^^
+E           ),
+E           'tenants/by1/manifest/00000000000000000005.manifest': (
+E               474,
+E               '"f65aef1bf43492d424d4c3eb282f049a"',
+E               datetime.datetime(2026, 11, 12, 19, 45, 0, 117000, tzinfo=tzlocal()),
+E     -     ),
+E     -     'tenants/by1/wal/00000000000000000001.sst': (
+E     -         0,
+E     -         '"d41d8cd98f00b204e9800998ecf8427e"',
+E     -         datetime.datetime(2026, 11, 12, 19, 44, 59, 945000, tzinfo=tzlocal()),
+E     -     ),
+E     -     'tenants/by1/wal/00000000000000000002.sst': (
+E     -         25520,
+E     -         '"b9a69b4b5d725b5128b8ec8e8691dfe1"',
+E     -         datetime.datetime(2026, 11, 12, 19, 44, 59, 952000, tzinfo=tzlocal()),
+E           ),
+E           'tenants/by1/wal/00000000000000000003.sst': (
+E               220,
+E               '"c71ad49e051599800854bd4f48a23d02"',
+E               datetime.datetime(2026, 11, 12, 19, 44, 59, 965000, tzinfo=tzlocal()),
+E           ),
+E       }
+=========================== short test summary info ============================
+FAILED test_03_restore.py::test_other_databases_are_untouched_byte_for_byte - AssertionError: objects under tenants/by1/ changed during the restore of another database
+assert {'tenants/by1...ocal())), ...} == {'tenants/by1...ocal())), ...}
+  
+  Omitting 11 identical items, use -vv to show
+  Left contains 2 more items:
+  {'tenants/by1/gc/compactions.boundary': (1,
+                                           '"c81e728d9d4c2f636f067f89cc14862c"',
+                                           datetime.datetime(2026, 11, 12, 19, 45, 31, 881000, tzinfo=tzlocal())),
+   'tenants/by1/gc/manifest.boundary': (1,
+                                        '"a87ff679a2f3e71d9181a67b7542122c"',
+                                        datetime.datetime(2026, 11, 12, 19, 45, 31, 868000, tzinfo=tzlocal()))}
+  Right contains 10 more items:
+  {'tenants/by1/compactions/00000000000000000001.compactions': (26,
+                                                                '"a587fdbf3f091a3f6d4dce876a858ff4"',
+                                                                datetime.datetime(2026, 11, 12, 19, 44, 59, 982000, tzinfo=tzlocal())),
+   'tenants/by1/compactions/00000000000000000002.compactions': (42,
+                                                                '"a6971b581ffd20038aed2fe44816a12a"',
+                                                                datetime.datetime(2026, 11, 12, 19, 44, 59, 983000, tzinfo=tzlocal())),
+   'tenants/by1/fx/manifest/00000000000000000001': (523,
+                                                    '"e8325a376f7e7dbd046bbe671f85f5c8"',
+                                                    datetime.datetime(2026, 11, 12, 19, 44, 59, 960000, tzinfo=tzlocal())),
+   'tenants/by1/fx/manifest/00000000000000000002': (769,
+                                                    '"f8ed6c78b6957ae39a83b70ee0f79f6a"',
+                                                    datetime.datetime(2026, 11, 12, 19, 44, 59, 973000, tzinfo=tzlocal())),
+   'tenants/by1/manifest/00000000000000000001.manifest': (130,
+                                                          '"8b1fe8c9cb1717146d0e5d5125ca945f"',
+                                                          datetime.datetime(2026, 11, 12, 19, 44, 59, 939000, tzinfo=tzlocal())),
+   'tenants/by1/manifest/00000000000000000002.manifest': (138,
+                                                          '"94abfe4f3de0a08e5c8b96ee64fb693d"',
+                                                          datetime.datetime(2026, 11, 12, 19, 44, 59, 943000, tzinfo=tzlocal())),
+   'tenants/by1/manifest/00000000000000000003.manifest': (146,
+                                                          '"2c50b3bb5753e58073dafb13f7a91167"',
+                                                          datetime.datetime(2026, 11, 12, 19, 44, 59, 979000, tzinfo=tzlocal())),
+   'tenants/by1/manifest/00000000000000000004.manifest': (474,
+                                                          '"f65aef1bf43492d424d4c3eb282f049a"',
+                                                          datetime.datetime(2026, 11, 12, 19, 45, 0, 112000, tzinfo=tzlocal())),
+   'tenants/by1/wal/00000000000000000001.sst': (0,
+                                                '"d41d8cd98f00b204e9800998ecf8427e"',
+                                                datetime.datetime(2026, 11, 12, 19, 44, 59, 945000, tzinfo=tzlocal())),
+   'tenants/by1/wal/00000000000000000002.sst': (25520,
+                                                '"b9a69b4b5d725b5128b8ec8e8691dfe1"',
+                                                datetime.datetime(2026, 11, 12, 19, 44, 59, 952000, tzinfo=tzlocal()))}
+  
+  Full diff: (-: missing in left side, +: extra in left side)
+    {
+        'tenants/by1/_clean': (
+            5,
+            '"123402c04dcfb6625f688f771a5fc05d"',
+            datetime.datetime(2026, 11, 12, 19, 45, 0, 119000, tzinfo=tzlocal()),
+        ),
+        'tenants/by1/_lease': (
+            50,
+            '"bb674b9fe9646cc916fa3d6b18d59c17"',
+            datetime.datetime(2026, 11, 12, 19, 45, 0, 120000, tzinfo=tzlocal()),
+        ),
+        'tenants/by1/compacted/01M78MNGJ7A8Q3VA5FG6P8PR3N.sst': (
+            31667,
+            '"e24d6be12462b5a3ac543988101e1e03"',
+            datetime.datetime(2026, 11, 12, 19, 44, 59, 978000, tzinfo=tzlocal()),
+        ),
+  -     'tenants/by1/compactions/00000000000000000001.compactions': (
+  -         26,
+  -         '"a587fdbf3f091a3f6d4dce876a858ff4"',
+  -         datetime.datetime(2026, 11, 12, 19, 44, 59, 982000, tzinfo=tzlocal()),
+  -     ),
+  -     'tenants/by1/compactions/00000000000000000002.compactions': (
+  -         42,
+  -         '"a6971b581ffd20038aed2fe44816a12a"',
+  -         datetime.datetime(2026, 11, 12, 19, 44, 59, 983000, tzinfo=tzlocal()),
+  -     ),
+        'tenants/by1/compactions/00000000000000000003.compactions': (
+            42,
+            '"a6971b581ffd20038aed2fe44816a12a"',
+            datetime.datetime(2026, 11, 12, 19, 44, 59, 985000, tzinfo=tzlocal()),
+        ),
+        'tenants/by1/fx/caught-up': (
+            23,
+            '"6e4f02beb279e68f2eb7e21fcbc7c779"',
+            datetime.datetime(2026, 11, 12, 19, 44, 59, 975000, tzinfo=tzlocal()),
+        ),
+        'tenants/by1/fx/e1-announced': (
+            20,
+            '"3d8d6f3c5fc1a406945c9ff33c9eda15"',
+            datetime.datetime(2026, 11, 12, 19, 44, 59, 950000, tzinfo=tzlocal()),
+  -     ),
+  -     'tenants/by1/fx/manifest/00000000000000000001': (
+  -         523,
+  -         '"e8325a376f7e7dbd046bbe671f85f5c8"',
+  -         datetime.datetime(2026, 11, 12, 19, 44, 59, 960000, tzinfo=tzlocal()),
+  -     ),
+  -     'tenants/by1/fx/manifest/00000000000000000002': (
+  -         769,
+  -         '"f8ed6c78b6957ae39a83b70ee0f79f6a"',
+  -         datetime.datetime(2026, 11, 12, 19, 44, 59, 973000, tzinfo=tzlocal()),
+        ),
+        'tenants/by1/fx/manifest/00000000000000000003': (
+            769,
+            '"079bdf1064b3e57f2ff9905be0a3b800"',
+            datetime.datetime(2026, 11, 12, 19, 45, 0, 28000, tzinfo=tzlocal()),
+        ),
+        'tenants/by1/fx/run/delta/00000000000000000003-1-dc5a825d': (
+            242,
+            '"e3d75130a465aea0790a0e4ee9f99a6d-1"',
+            datetime.datetime(2026, 11, 12, 19, 44, 59, 971000, tzinfo=tzlocal()),
+        ),
+        'tenants/by1/fx/run/g0/00000000000000000002-1-dfd93b1b': (
+            21175,
+            '"16442b8579b7ef1cbd3049823eefc055-1"',
+            datetime.datetime(2026, 11, 12, 19, 44, 59, 958000, tzinfo=tzlocal()),
+        ),
+  -     'tenants/by1/manifest/00000000000000000001.manifest': (
+  +     'tenants/by1/gc/compactions.boundary': (
+  -         130,
+  ?          --
+  +         1,
+  -         '"8b1fe8c9cb1717146d0e5d5125ca945f"',
+  +         '"c81e728d9d4c2f636f067f89cc14862c"',
+  -         datetime.datetime(2026, 11, 12, 19, 44, 59, 939000, tzinfo=tzlocal()),
+  ?                                              ^  ^^  ^^^
+  +         datetime.datetime(2026, 11, 12, 19, 45, 31, 881000, tzinfo=tzlocal()),
+  ?                                              ^  ^^  ^^^
+        ),
+  -     'tenants/by1/manifest/00000000000000000002.manifest': (
+  +     'tenants/by1/gc/manifest.boundary': (
+  -         138,
+  ?          --
+  +         1,
+  +         '"a87ff679a2f3e71d9181a67b7542122c"',
+  -         '"94abfe4f3de0a08e5c8b96ee64fb693d"',
+  -         datetime.datetime(2026, 11, 12, 19, 44, 59, 943000, tzinfo=tzlocal()),
+  -     ),
+  -     'tenants/by1/manifest/00000000000000000003.manifest': (
+  -         146,
+  -         '"2c50b3bb5753e58073dafb13f7a91167"',
+  -         datetime.datetime(2026, 11, 12, 19, 44, 59, 979000, tzinfo=tzlocal()),
+  -     ),
+  -     'tenants/by1/manifest/00000000000000000004.manifest': (
+  -         474,
+  -         '"f65aef1bf43492d424d4c3eb282f049a"',
+  -         datetime.datetime(2026, 11, 12, 19, 45, 0, 112000, tzinfo=tzlocal()),
+  ?                                                 ^  ^^^
+  +         datetime.datetime(2026, 11, 12, 19, 45, 31, 868000, tzinfo=tzlocal()),
+  ?                                                 ^^  ^^^
+        ),
+        'tenants/by1/manifest/00000000000000000005.manifest': (
+            474,
+            '"f65aef1bf43492d424d4c3eb282f049a"',
+            datetime.datetime(2026, 11, 12, 19, 45, 0, 117000, tzinfo=tzlocal()),
+  -     ),
+  -     'tenants/by1/wal/00000000000000000001.sst': (
+  -         0,
+  -         '"d41d8cd98f00b204e9800998ecf8427e"',
+  -         datetime.datetime(2026, 11, 12, 19, 44, 59, 945000, tzinfo=tzlocal()),
+  -     ),
+  -     'tenants/by1/wal/00000000000000000002.sst': (
+  -         25520,
+  -         '"b9a69b4b5d725b5128b8ec8e8691dfe1"',
+  -         datetime.datetime(2026, 11, 12, 19, 44, 59, 952000, tzinfo=tzlocal()),
+        ),
+        'tenants/by1/wal/00000000000000000003.sst': (
+            220,
+            '"c71ad49e051599800854bd4f48a23d02"',
+            datetime.datetime(2026, 11, 12, 19, 44, 59, 965000, tzinfo=tzlocal()),
+        ),
+    }
+1 failed, 10 passed in 203.24s (0:03:23)
