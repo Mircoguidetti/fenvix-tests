@@ -1,0 +1,56 @@
+admin interface listening on 127.0.0.1:28736 (bearer token required)
+mongo-server listening on 127.0.0.1:21405 (idle close after 300 s, holder ec-21405, lease ttl 6 s)
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:53032
+LEASE process_lease tenant=- holder=ec-21405 unix_ms=1794491980757 inc=7cb0507d165970d2 gen=1
+LEASE acquired tenant=victim holder=ec-21405 unix_ms=1794491980816 takeover_from=-
+LEASE acquired tenant=victim holder=ec-21405 unix_ms=1794491980820 takeover_from=-
+LEASE acquired tenant=victim holder=ec-21405 unix_ms=1794491980837 takeover_from=- new=true
+LEASE writer_open tenant=victim holder=ec-21405 unix_ms=1794491980845 
+LEASE writer_close tenant=victim holder=ec-21405 unix_ms=1794491980886 
+LEASE release_begin tenant=victim holder=ec-21405 unix_ms=1794491980886 
+LEASE release tenant=victim holder=ec-21405 unix_ms=1794491980887 ok=true
+LEASE acquired tenant=bystander holder=ec-21405 unix_ms=1794491980890 takeover_from=-
+LEASE acquired tenant=bystander holder=ec-21405 unix_ms=1794491980894 takeover_from=-
+LEASE acquired tenant=bystander holder=ec-21405 unix_ms=1794491980899 takeover_from=- new=true
+LEASE writer_open tenant=bystander holder=ec-21405 unix_ms=1794491980905 
+LEASE acquired tenant=admin holder=ec-21405 unix_ms=1794491980914 takeover_from=-
+LEASE acquired tenant=admin holder=ec-21405 unix_ms=1794491980918 takeover_from=-
+LEASE release_begin tenant=victim holder=ec-21405 unix_ms=1794491980944 
+LEASE release tenant=victim holder=ec-21405 unix_ms=1794491980945 ok=true
+LEASE release_begin tenant=victim2 holder=ec-21405 unix_ms=1794491980948 
+LEASE release tenant=victim2 holder=ec-21405 unix_ms=1794491980952 ok=true
+ADMIN POST /v1/databases/victim/fork -> 201 40 ms peer=127.0.0.1:53036
+TIMING abandon db=victim2 stop_fxc_ms=0 tenant_abandon_ms=0 closed=true
+LEASE acquired tenant=admin holder=ec-21405 unix_ms=1794491980964 takeover_from=-
+LEASE acquired tenant=admin holder=ec-21405 unix_ms=1794491980968 takeover_from=-
+FAILPOINT erase.after_manifests reached
+ctl recovery: erase of victim2 was interrupted; finishing it
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+TIMING abandon db=victim2 stop_fxc_ms=0 tenant_abandon_ms=0 closed=true
+LEASE process_lease tenant=- holder=ec-21405 unix_ms=1794491981193 inc=268594e97c5a5b6c gen=1
+LEASE acquired tenant=admin holder=ec-21405 unix_ms=1794491981194 takeover_from=-
+LEASE acquired tenant=admin holder=ec-21405 unix_ms=1794491981199 takeover_from=-
+ctl recovery: erase of victim2 finished
+admin interface listening on 127.0.0.1:28736 (bearer token required)
+mongo-server listening on 127.0.0.1:21405 (idle close after 300 s, holder ec-21405, lease ttl 6 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:53050
+ADMIN GET /v1/databases/victim2 -> 404 0 ms peer=127.0.0.1:53066
+LEASE acquired tenant=bystander holder=ec-21405 unix_ms=1794491981306 takeover_from=-
+LEASE takeover_wake tenant=bystander holder=ec-21405 unix_ms=1794491981315 unclean=true takeover_from=-
+ADMIN GET /v1/databases/victim/checkpoints -> 200 2 ms peer=127.0.0.1:53076
+LEASE acquired tenant=victim holder=ec-21405 unix_ms=1794491981326 takeover_from=-
+TIMING abandon db=victim stop_fxc_ms=0 tenant_abandon_ms=0 closed=true
+LEASE acquired tenant=admin holder=ec-21405 unix_ms=1794491981359 takeover_from=-
+LEASE acquired tenant=admin holder=ec-21405 unix_ms=1794491981363 takeover_from=-
+ADMIN DELETE /v1/databases/victim -> 200 38 ms peer=127.0.0.1:53086
+shutting down: closing tenants cleanly
+LEASE release_begin tenant=bystander holder=ec-21405 unix_ms=1794491981425 
+LEASE release tenant=bystander holder=ec-21405 unix_ms=1794491981427 ok=true
+tenants closed; stopping maintenance
+maintenance shutdown: waiting for the L0 watch unix_ms=1794491981432
+maintenance shutdown: waiting for the dispatcher unix_ms=1794491982186
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794491982186
+maintenance shutdown: waiting for the GC task unix_ms=1794491982186
+maintenance shutdown: done unix_ms=1794491983185
+maintenance stopped

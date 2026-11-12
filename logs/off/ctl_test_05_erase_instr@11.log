@@ -1,0 +1,20 @@
+.........F.........                                                      [100%]
+=================================== FAILURES ===================================
+________________________ test_erase_while_clients_write ________________________
+test_05_erase_instr.py:208: in test_erase_while_clients_write
+    assert set(after) <= set(ids)
+E   assert {10463, 10464...7, 10468, ...} <= {10464, 10465...8, 10469, ...}
+E     
+E     Extra items in the left set:
+E     10463
+----------------------------- Captured stdout call -----------------------------
+LOSTID 10463: sent -0.098 acked +0.000 s rel. erase reply; erase took 0.119 s; by _id now: None; neighbours in db: False, True; min new id 10464
+LOSTID-ABS 10463: sent_ms=1794492031074 acked_ms=1794492031172 prev_acked_ms=1794492031074 erase_sent_ms=1794492031053 erase_reply_ms=1794492031172 writer_close_ms=[1794492031077] writer_open_ms=[1794492030246, 1794492031188]
+LOSTID-VERDICT 10463: sent BEFORE the erase took the entry lock: it may have been applied to the old database (erased with it): not a loss by itself
+LOSTID errors near the erase: []
+=========================== short test summary info ============================
+FAILED test_05_erase_instr.py::test_erase_while_clients_write - assert {10463, 10464...7, 10468, ...} <= {10464, 10465...8, 10469, ...}
+  
+  Extra items in the left set:
+  10463
+1 failed, 18 passed in 38.29s
