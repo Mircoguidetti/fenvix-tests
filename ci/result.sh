@@ -22,6 +22,7 @@ D=$(mktemp -d)
 newest() {
   for br in $(git ls-remote "$TESTS_REPO" "refs/heads/results/$NAME/*" | awk '{print $2}' | sed 's|refs/heads/||' | sort -t/ -k3 -nr); do
     rm -rf "$D/r"; git clone -q --depth 1 --single-branch --branch "$br" "$TESTS_REPO" "$D/r" 2>/dev/null || continue
+    grep -q ': NOT-RUN in' "$D/r/SUMMARY.md" && continue    # a run cut short (cancelled or a job lost): not a result
     grep -q "^## mode $MODE\$" "$D/r/SUMMARY.md" && { echo "$br"; return; }
   done
 }
