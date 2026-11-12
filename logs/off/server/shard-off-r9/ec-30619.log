@@ -1,0 +1,64 @@
+admin interface listening on 127.0.0.1:39968 (bearer token required)
+mongo-server listening on 127.0.0.1:30619 (idle close after 300 s, holder ec-30619, lease ttl 6 s)
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:53586
+LEASE process_lease tenant=- holder=ec-30619 unix_ms=1794493140479 inc=a57b9060f666211b gen=1
+LEASE acquired tenant=victim holder=ec-30619 unix_ms=1794493140481 takeover_from=-
+LEASE acquired tenant=victim holder=ec-30619 unix_ms=1794493140487 takeover_from=-
+LEASE acquired tenant=victim holder=ec-30619 unix_ms=1794493140508 takeover_from=- new=true
+LEASE writer_open tenant=victim holder=ec-30619 unix_ms=1794493140518 
+LEASE writer_close tenant=victim holder=ec-30619 unix_ms=1794493140563 
+LEASE release_begin tenant=victim holder=ec-30619 unix_ms=1794493140563 
+LEASE release tenant=victim holder=ec-30619 unix_ms=1794493140565 ok=true
+LEASE acquired tenant=bystander holder=ec-30619 unix_ms=1794493140569 takeover_from=-
+LEASE acquired tenant=bystander holder=ec-30619 unix_ms=1794493140575 takeover_from=-
+LEASE acquired tenant=bystander holder=ec-30619 unix_ms=1794493140583 takeover_from=- new=true
+LEASE writer_open tenant=bystander holder=ec-30619 unix_ms=1794493140592 
+LEASE acquired tenant=admin holder=ec-30619 unix_ms=1794493140603 takeover_from=-
+LEASE acquired tenant=admin holder=ec-30619 unix_ms=1794493140609 takeover_from=-
+LEASE release_begin tenant=victim holder=ec-30619 unix_ms=1794493140646 
+LEASE release tenant=victim holder=ec-30619 unix_ms=1794493140648 ok=true
+LEASE release_begin tenant=victim2 holder=ec-30619 unix_ms=1794493140653 
+LEASE release tenant=victim2 holder=ec-30619 unix_ms=1794493140655 ok=true
+ADMIN POST /v1/databases/victim/fork -> 201 55 ms peer=127.0.0.1:53602
+TRACE erase db=victim2 lock_wait_begin unix_ms=1794493140664
+TRACE erase db=victim2 lock_taken wakes=0 closes=0 abandons=0 seq=0 writer=false unix_ms=1794493140664
+TIMING abandon db=victim2 stop_fxc_ms=0 tenant_abandon_ms=0 closed=true
+LEASE acquired tenant=admin holder=ec-30619 unix_ms=1794493140676 takeover_from=-
+LEASE acquired tenant=admin holder=ec-30619 unix_ms=1794493140681 takeover_from=-
+FAILPOINT erase.after_control reached
+ctl recovery: erase of victim2 was interrupted; finishing it
+TRACE erase db=victim2 lock_wait_begin unix_ms=1794493140894
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+TRACE erase db=victim2 lock_taken wakes=0 closes=0 abandons=0 seq=0 writer=false unix_ms=1794493140894
+TIMING abandon db=victim2 stop_fxc_ms=0 tenant_abandon_ms=0 closed=true
+LEASE process_lease tenant=- holder=ec-30619 unix_ms=1794493140901 inc=47af6dfea547992c gen=1
+LEASE acquired tenant=admin holder=ec-30619 unix_ms=1794493140903 takeover_from=-
+LEASE acquired tenant=admin holder=ec-30619 unix_ms=1794493140909 takeover_from=-
+TRACE erase db=victim2 lock_released wakes=0 closes=0 abandons=1 unix_ms=1794493140934
+ctl recovery: erase of victim2 finished
+admin interface listening on 127.0.0.1:39968 (bearer token required)
+mongo-server listening on 127.0.0.1:30619 (idle close after 300 s, holder ec-30619, lease ttl 6 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:59724
+ADMIN GET /v1/databases/victim2 -> 404 0 ms peer=127.0.0.1:59728
+LEASE acquired tenant=bystander holder=ec-30619 unix_ms=1794493141079 takeover_from=-
+LEASE takeover_wake tenant=bystander holder=ec-30619 unix_ms=1794493141091 unclean=true takeover_from=-
+ADMIN GET /v1/databases/victim/checkpoints -> 200 3 ms peer=127.0.0.1:59734
+LEASE acquired tenant=victim holder=ec-30619 unix_ms=1794493141107 takeover_from=-
+TRACE erase db=victim lock_wait_begin unix_ms=1794493141143
+TRACE erase db=victim lock_taken wakes=1 closes=0 abandons=0 seq=0 writer=false unix_ms=1794493141143
+TIMING abandon db=victim stop_fxc_ms=0 tenant_abandon_ms=0 closed=true
+LEASE acquired tenant=admin holder=ec-30619 unix_ms=1794493141152 takeover_from=-
+LEASE acquired tenant=admin holder=ec-30619 unix_ms=1794493141157 takeover_from=-
+TRACE erase db=victim lock_released wakes=1 closes=1 abandons=1 unix_ms=1794493141188
+ADMIN DELETE /v1/databases/victim -> 200 53 ms peer=127.0.0.1:59740
+shutting down: closing tenants cleanly
+LEASE release_begin tenant=bystander holder=ec-30619 unix_ms=1794493141249 
+LEASE release tenant=bystander holder=ec-30619 unix_ms=1794493141252 ok=true
+tenants closed; stopping maintenance
+maintenance shutdown: waiting for the L0 watch unix_ms=1794493141260
+maintenance shutdown: waiting for the dispatcher unix_ms=1794493141890
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794493141890
+maintenance shutdown: waiting for the GC task unix_ms=1794493141890
+maintenance shutdown: done unix_ms=1794493142890
+maintenance stopped
