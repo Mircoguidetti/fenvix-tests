@@ -1,0 +1,42 @@
+cpu: the process may use 2 core(s) and runs on CPU(s) [2, 3]
+uploads: 2 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+memory budget: limit 8192 MiB (cgroup2), caches 3584 MiB (block 1612, meta 537, sealed 1433), memtable 8 MiB, first course 512 MiB, change log 32 MiB, L0 reads at once 4
+box disk floor: 4096 MiB in /tmp/fenvix-box-floor-27018
+memory budget (review round): box 179 MiB per customer, 358 MiB in flight; memtables of every database 1024 MiB (writes wait past 1536 MiB); merge read-ahead 256 MiB; absorption 16 L0 SSTs
+quaderno: writes are acknowledged by the replicated log at 172.18.0.2:7200,172.18.0.4:7200,172.18.0.5:7200
+quaderno: restart read 800 records of 1 databases from the log
+LEASE process_lease tenant=- holder=tk-spare-22 unix_ms=1794588581926 inc=b46066b9291a538f gen=1
+local log: replay of database tk_app failed (tenant tk_app is owned by server process tk-server-1-22 (lease valid for another 2931 ms); retry); its 800 records are kept, the database is refused until they are applied
+local log: 1 databases kept their records; retried in the background
+quaderno: restart applied 0 records to 0 databases in 1.3 s
+mongo-server listening on 0.0.0.0:27018 (idle close after 60 s, holder tk-spare-22, lease ttl 4 s)
+local log: retry of database tk_app failed (tenant tk_app is owned by server process tk-server-1-22 (lease valid for another 3608 ms); retry); retried later
+local log: retry of database tk_app failed (tenant tk_app is owned by server process tk-server-1-22 (lease valid for another 2674 ms); retry); retried later
+local log: retry of database tk_app failed (tenant tk_app is owned by server process tk-server-1-22 (lease valid for another 0 ms); retry); retried later
+SLOW hello db=admin ms=10001 ok=true
+SLOW hello db=admin ms=10001 ok=true
+SLOW hello db=admin ms=10002 ok=true
+SLOW hello db=admin ms=10001 ok=true
+LEASE process_lease_revoked tenant=tk_app holder=tk-spare-22 unix_ms=1794588598950 of=tk-server-1-22
+LEASE acquired tenant=tk_app holder=tk-spare-22 unix_ms=1794588598954 takeover_from=tk-server-1-22
+LEASE acquired tenant=admin holder=tk-spare-22 unix_ms=1794588598959 takeover_from=tk-server-1-22
+LEASE takeover_wake tenant=admin holder=tk-spare-22 unix_ms=1794588598980 unclean=true takeover_from=tk-server-1-22
+LEASE takeover_wake tenant=tk_app holder=tk-spare-22 unix_ms=1794588599167 unclean=true takeover_from=tk-server-1-22
+FXC not started db=tk_app reason=not_writer unix_ms=1794588599251
+LEASE writer_open tenant=tk_app holder=tk-spare-22 unix_ms=1794588599466 
+quaderno: takeover of tk_app: 9846 records applied from the log (after record 117610156268060672)
+SLOW insert db=tk_app ms=661 ok=false
+SLOW insert db=tk_app ms=661 ok=false
+SLOW insert db=tk_app ms=648 ok=false
+SLOW insert db=tk_app ms=647 ok=false
+SLOW insert db=tk_app ms=640 ok=false
+SLOW insert db=tk_app ms=631 ok=false
+local log: database tk_app: kept records applied by the retry; the database is open again
+SLOW insert db=tk_app ms=645 ok=true
+SLOW insert db=tk_app ms=641 ok=true
+L0_TRACE u=1794588600508.864 db=tk_app l0=3 unabs=1 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794588601557.2197 db=tk_app l0=3 unabs=1 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794588602594.418 db=tk_app l0=3 unabs=1 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794588603630.72 db=tk_app l0=3 unabs=1 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794588604669.13 db=tk_app l0=3 unabs=1 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794588605701.4592 db=tk_app l0=3 unabs=1 absorbing=0 slate_jobs=0/0 slate_job=-
