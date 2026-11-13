@@ -42,6 +42,10 @@ on:
         description: "Optional cargo test name filter for the lib suite runs (e.g. gc); empty = the whole suite"
         required: false
         default: ""
+      lib_suite_package:
+        description: "Optional package for the lib suite runs (e.g. mongo-server): cargo test --release -p NAME over all its targets; empty = the root package, --lib"
+        required: false
+        default: ""
       lib_suite_timeout:
         description: "Timeout of one lib suite run, seconds (the build is not counted)"
         required: false
@@ -263,8 +267,8 @@ jobs:
             ~/.cargo/registry/cache
           key: cargo-registry-${{ hashFiles('engine/Cargo.lock', 'engine/proto/quaderno/Cargo.lock') }}
       - name: lib suite
-        env: { RUN: "${{ matrix.run }}", TO: "${{ inputs.lib_suite_timeout }}", FILTER: "${{ inputs.lib_suite_filter }}" }
-        run: ci/run-lib-suite.sh engine "$PWD/lib" "$RUN" "${TO:-1200}" "$FILTER"
+        env: { RUN: "${{ matrix.run }}", TO: "${{ inputs.lib_suite_timeout }}", FILTER: "${{ inputs.lib_suite_filter }}", PKGN: "${{ inputs.lib_suite_package }}" }
+        run: ci/run-lib-suite.sh engine "$PWD/lib" "$RUN" "${TO:-1200}" "$FILTER" "$PKGN"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
