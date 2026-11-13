@@ -1,0 +1,61 @@
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+admin interface listening on 127.0.0.1:29436 (bearer token required)
+mongo-server listening on 127.0.0.1:36287 (idle close after 300 s, holder ec-36287, lease ttl 6 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:60724
+LEASE process_lease tenant=- holder=ec-36287 unix_ms=1794583505874 inc=f06bf3265f759e33 gen=1
+LEASE acquired tenant=victim holder=ec-36287 unix_ms=1794583505876 takeover_from=-
+LEASE acquired tenant=victim holder=ec-36287 unix_ms=1794583505881 takeover_from=-
+LEASE acquired tenant=victim holder=ec-36287 unix_ms=1794583505895 takeover_from=- new=true
+LEASE writer_open tenant=victim holder=ec-36287 unix_ms=1794583505903 
+FXC not started db=victim reason=no_version_of_our_manifest unix_ms=1794583505903
+FIRST_PUBLISH u=1794583505920 db=victim version=1 x_d=3 rows=4005 build_ms=12 off_lock=1
+LEASE writer_close tenant=victim holder=ec-36287 unix_ms=1794583505932 
+LEASE release_begin tenant=victim holder=ec-36287 unix_ms=1794583505932 
+LEASE release tenant=victim holder=ec-36287 unix_ms=1794583505934 ok=true
+LEASE acquired tenant=bystander holder=ec-36287 unix_ms=1794583505937 takeover_from=-
+LEASE acquired tenant=bystander holder=ec-36287 unix_ms=1794583505941 takeover_from=-
+LEASE acquired tenant=bystander holder=ec-36287 unix_ms=1794583505947 takeover_from=- new=true
+LEASE writer_open tenant=bystander holder=ec-36287 unix_ms=1794583505954 
+FXC not started db=bystander reason=no_version_of_our_manifest unix_ms=1794583505954
+FIRST_PUBLISH u=1794583505963 db=bystander version=1 x_d=2 rows=604 build_ms=7 off_lock=1
+LEASE acquired tenant=admin holder=ec-36287 unix_ms=1794583505966 takeover_from=-
+LEASE acquired tenant=admin holder=ec-36287 unix_ms=1794583505971 takeover_from=-
+LEASE release_begin tenant=victim holder=ec-36287 unix_ms=1794583506009 
+LEASE release tenant=victim holder=ec-36287 unix_ms=1794583506010 ok=true
+LEASE release_begin tenant=victim2 holder=ec-36287 unix_ms=1794583506014 
+LEASE release tenant=victim2 holder=ec-36287 unix_ms=1794583506016 ok=true
+ADMIN POST /v1/databases/victim/fork -> 201 54 ms peer=127.0.0.1:60732
+TIMING abandon db=victim2 stop_fxc_ms=0 tenant_abandon_ms=0 closed=true
+LEASE acquired tenant=admin holder=ec-36287 unix_ms=1794583506037 takeover_from=-
+LEASE acquired tenant=admin holder=ec-36287 unix_ms=1794583506042 takeover_from=-
+FAILPOINT erase.after_tenant reached
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+ctl recovery: erase of victim2 was interrupted; finishing it
+TIMING abandon db=victim2 stop_fxc_ms=0 tenant_abandon_ms=0 closed=true
+LEASE process_lease tenant=- holder=ec-36287 unix_ms=1794583506262 inc=8f02b05c0e0007d0 gen=1
+LEASE acquired tenant=admin holder=ec-36287 unix_ms=1794583506263 takeover_from=-
+LEASE acquired tenant=admin holder=ec-36287 unix_ms=1794583506269 takeover_from=-
+ctl recovery: erase of victim2 finished
+admin interface listening on 127.0.0.1:29436 (bearer token required)
+mongo-server listening on 127.0.0.1:36287 (idle close after 300 s, holder ec-36287, lease ttl 6 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:60770
+ADMIN GET /v1/databases/victim2 -> 404 1 ms peer=127.0.0.1:60774
+LEASE acquired tenant=bystander holder=ec-36287 unix_ms=1794583506370 takeover_from=-
+LEASE takeover_wake tenant=bystander holder=ec-36287 unix_ms=1794583506379 unclean=true takeover_from=-
+ADMIN GET /v1/databases/victim/checkpoints -> 200 2 ms peer=127.0.0.1:60782
+LEASE acquired tenant=victim holder=ec-36287 unix_ms=1794583506393 takeover_from=-
+TIMING abandon db=victim stop_fxc_ms=0 tenant_abandon_ms=0 closed=true
+LEASE acquired tenant=admin holder=ec-36287 unix_ms=1794583506428 takeover_from=-
+LEASE acquired tenant=admin holder=ec-36287 unix_ms=1794583506432 takeover_from=-
+ADMIN DELETE /v1/databases/victim -> 200 38 ms peer=127.0.0.1:60796
+shutting down: closing tenants cleanly
+FXC not started db=bystander reason=not_writer unix_ms=1794583506486
+LEASE release_begin tenant=bystander holder=ec-36287 unix_ms=1794583506486 
+LEASE release tenant=bystander holder=ec-36287 unix_ms=1794583506488 ok=true
+tenants closed; stopping maintenance
+maintenance shutdown: waiting for the L0 watch unix_ms=1794583506494
+maintenance shutdown: waiting for the dispatcher unix_ms=1794583507252
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794583507253
+maintenance shutdown: waiting for the GC task unix_ms=1794583507253
+maintenance shutdown: done unix_ms=1794583508253
+maintenance stopped (1766 ms)

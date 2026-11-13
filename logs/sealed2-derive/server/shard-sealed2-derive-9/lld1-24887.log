@@ -1,0 +1,35 @@
+TEST FAULT INJECTION ON (/tmp/tmpfnnqgzeh.faults): never use this in production
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+local log: restart applied 0 records to 0 databases in 0.0 s
+admin interface listening on 127.0.0.1:37909 (bearer token required)
+mongo-server listening on 127.0.0.1:24887 (idle close after 600 s, holder D1, lease ttl 4 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:51700
+LEASE process_lease tenant=- holder=D1 unix_ms=1794584082908 inc=f26191429174655d gen=1
+LEASE acquired tenant=d holder=D1 unix_ms=1794584082911 takeover_from=-
+LEASE acquired tenant=d holder=D1 unix_ms=1794584082919 takeover_from=-
+LEASE acquired tenant=d holder=D1 unix_ms=1794584082926 takeover_from=- new=true
+LEASE writer_open tenant=d holder=D1 unix_ms=1794584082941 
+FXC not started db=d reason=no_version_of_our_manifest unix_ms=1794584082941
+FAULT stall_local_ack 3000
+FIRST_PUBLISH u=1794584082955 db=d version=1 x_d=3 rows=8 build_ms=10 off_lock=1
+LEASE process_lease_lapsed tenant=- holder=D1 unix_ms=1794584090893 gen=2 abandoned=1
+LEASE lost tenant=d holder=D1 unix_ms=1794584090893 process_lease_lapsed
+SLOW insert db=d ms=7947 ok=false
+local log: ownership of d lost with writes not yet in object storage; they are lost
+L0_TRACE u=1794584090893.8584 db=d l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+LEASE process_lease_lost tenant=- holder=D1 unix_ms=1794584090895 abandoned=0
+FAULT stall_local_ack 3000
+L0_TRACE u=1794584091920.3398 db=d l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+shutting down: closing tenants cleanly
+SLOW hello db=admin ms=10001 ok=true
+L0_TRACE u=1794584092945.0518 db=d l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+fx drop: SlateDB compactor of d: Closed error: detected newer DB client
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=0 closed=true
+LEASE writer_close tenant=d holder=D1 unix_ms=1794584093895 
+tenants closed; stopping maintenance
+maintenance shutdown: waiting for the L0 watch unix_ms=1794584093902
+maintenance shutdown: waiting for the dispatcher unix_ms=1794584094897
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794584094897
+maintenance shutdown: waiting for the GC task unix_ms=1794584094897
+maintenance shutdown: done unix_ms=1794584096896
+maintenance stopped (4082 ms)

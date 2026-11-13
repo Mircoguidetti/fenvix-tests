@@ -1,0 +1,28 @@
+TEST FAULT INJECTION ON (/tmp/tmp9uma8958.faults): never use this in production
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+admin interface listening on 127.0.0.1:34091 (bearer token required)
+mongo-server listening on 127.0.0.1:24805 (idle close after 300 s, holder P65a, lease ttl 3 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:53566
+LEASE process_lease tenant=- holder=P65a unix_ms=1794583850509 inc=30cc22d0826a7f38 gen=1
+LEASE acquired tenant=inflc2 holder=P65a unix_ms=1794583850511 takeover_from=-
+LEASE acquired tenant=inflc2 holder=P65a unix_ms=1794583850522 takeover_from=-
+LEASE acquired tenant=inflc2 holder=P65a unix_ms=1794583850528 takeover_from=- new=true
+LEASE writer_open tenant=inflc2 holder=P65a unix_ms=1794583850537 
+FXC not started db=inflc2 reason=no_version_of_our_manifest unix_ms=1794583850537
+FAULT delay_put tenants/inflc2/wal/00000000000000000003.sst 15000
+FIRST_PUBLISH u=1794583850548 db=inflc2 version=1 x_d=3 rows=405 build_ms=8 off_lock=1
+FAULT delay_put processes/P65a/_lease 4000
+L0_TRACE u=1794583851576.2556 db=inflc2 l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794583852600.0242 db=inflc2 l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794583853624.9275 db=inflc2 l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794583854646.5693 db=inflc2 l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+LEASE process_lease_lost tenant=- holder=P65a unix_ms=1794583855533 abandoned=1
+LEASE lost tenant=inflc2 holder=P65a unix_ms=1794583855533 process_lease_lost
+fx drop: SlateDB compactor of inflc2: Closed error: detected newer DB client
+SLOW hello db=admin ms=10001 ok=true
+SLOW hello db=admin ms=10001 ok=true
+abandon of tenant inflc2: close did not finish in 10s; left behind (it goes on in the background)
+TIMING abandon db=inflc2 stop_fxc_ms=0 tenant_abandon_ms=10001 closed=false
+LEASE writer_close tenant=inflc2 holder=P65a unix_ms=1794583865534 
+SLOW_PUT u=1794583865547 db=inflc2 kind=wal ms=15001 bytes=327
+SLOW insert db=inflc2 ms=15103 ok=false

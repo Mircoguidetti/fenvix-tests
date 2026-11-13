@@ -1,0 +1,25 @@
+TEST FAULT INJECTION ON (/tmp/tmp25ac8802.faults): never use this in production
+uploads: 1 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+LEASE process_lease tenant=- holder=E1 unix_ms=1794584097136 inc=1e6ca605f792ecf5 gen=1
+LEASE acquired tenant=e holder=E1 unix_ms=1794584097140 takeover_from=-
+LEASE takeover_wake tenant=e holder=E1 unix_ms=1794584097151 unclean=true takeover_from=-
+FXC not started db=e reason=not_writer unix_ms=1794584097151
+FAULT hang_put tenants/e/wal/00000000000000000003.sst
+LEASE writer_open tenant=e holder=E1 unix_ms=1794584097373 
+FXC not started db=e reason=no_version_of_our_manifest unix_ms=1794584097375
+local log: database e: 4 records applied again (after record 1099511627778)
+local log: restart applied 4 records to 1 databases in 0.2 s
+admin interface listening on 127.0.0.1:39616 (bearer token required)
+mongo-server listening on 127.0.0.1:28633 (idle close after 600 s, holder E1, lease ttl 4 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:51720
+shutting down: closing tenants cleanly
+LEASE writer_close tenant=e holder=E1 unix_ms=1794584097415 
+LEASE release_begin tenant=e holder=E1 unix_ms=1794584097415 
+LEASE release tenant=e holder=E1 unix_ms=1794584097417 ok=true
+tenants closed; stopping maintenance
+maintenance shutdown: waiting for the L0 watch unix_ms=1794584097425
+maintenance shutdown: waiting for the dispatcher unix_ms=1794584098131
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794584098131
+maintenance shutdown: waiting for the GC task unix_ms=1794584098131
+maintenance shutdown: done unix_ms=1794584099131
+maintenance stopped (1727 ms)

@@ -1,0 +1,29 @@
+TEST FAULT INJECTION ON (/tmp/tmpges51guo.faults): never use this in production
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+admin interface listening on 127.0.0.1:26478 (bearer token required)
+mongo-server listening on 127.0.0.1:29310 (idle close after 300 s, holder e65a-29310, lease ttl 6 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:45840
+LEASE process_lease tenant=- holder=e65a-29310 unix_ms=1794582740519 inc=757db15db39516ee gen=1
+LEASE acquired tenant=infla holder=e65a-29310 unix_ms=1794582740521 takeover_from=-
+LEASE acquired tenant=infla holder=e65a-29310 unix_ms=1794582740525 takeover_from=-
+LEASE acquired tenant=infla holder=e65a-29310 unix_ms=1794582740530 takeover_from=- new=true
+LEASE writer_open tenant=infla holder=e65a-29310 unix_ms=1794582740537 
+FAULT delay_put tenants/infla/wal/00000000000000000003.sst 1500
+SLOW_PUT u=1794582742045 db=infla kind=wal ms=1503 bytes=324
+SLOW insert db=infla ms=1503 ok=true
+TIMING abandon db=infla stop_fxc_ms=0 tenant_abandon_ms=1200 closed=true
+LEASE writer_close tenant=infla holder=e65a-29310 unix_ms=1794582742047 
+LEASE acquired tenant=admin holder=e65a-29310 unix_ms=1794582742056 takeover_from=-
+LEASE acquired tenant=admin holder=e65a-29310 unix_ms=1794582742061 takeover_from=-
+ADMIN DELETE /v1/databases/infla -> 200 1236 ms peer=127.0.0.1:45852
+LEASE acquired tenant=infla holder=e65a-29310 unix_ms=1794582745099 takeover_from=-
+LEASE acquired tenant=infla holder=e65a-29310 unix_ms=1794582745104 takeover_from=-
+LEASE acquired tenant=infla holder=e65a-29310 unix_ms=1794582745108 takeover_from=-
+shutting down: closing tenants cleanly
+tenants closed; stopping maintenance
+maintenance shutdown: waiting for the L0 watch unix_ms=1794582745113
+maintenance shutdown: waiting for the dispatcher unix_ms=1794582745441
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794582745441
+maintenance shutdown: waiting for the GC task unix_ms=1794582745441
+maintenance shutdown: done unix_ms=1794582746440
+maintenance stopped (1328 ms)
