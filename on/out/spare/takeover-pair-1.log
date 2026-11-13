@@ -1,0 +1,50 @@
+cpu: the process may use 2 core(s) and runs on CPU(s) [0, 1]
+memory budget: limit 8192 MiB (cgroup2), caches 3584 MiB (block 1612, meta 537, sealed 1433), memtable 8 MiB, first course 512 MiB, change log 32 MiB, L0 reads at once 4
+box disk floor: 4096 MiB in /tmp/fenvix-box-floor-27018
+memory budget (review round): box 179 MiB per customer, 358 MiB in flight; memtables of every database 1024 MiB (writes wait past 1536 MiB); merge read-ahead 256 MiB; absorption 16 L0 SSTs
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+quaderno: writes are acknowledged by the replicated log at 172.18.0.2:7200,172.18.0.4:7200,172.18.0.5:7200
+quaderno: restart read 4 records of 2 databases from the log
+LEASE process_lease tenant=- holder=tk-spare-1 unix_ms=1794597843619 inc=2442457fb277d831 gen=1
+local log: replay of database tk_app failed (tenant tk_app is owned by server process tk-server-1-1 (lease valid for another 3979 ms); retry); its 2 records are kept, the database is refused until they are applied
+quaderno: database tk_app: its replay was refused before it took the lease; its 2 records stay in the log as they are (no copies)
+local log: replay of database admin failed (tenant admin is owned by server process tk-server-1-1 (lease valid for another 3979 ms); retry); its 2 records are kept, the database is refused until they are applied
+quaderno: database admin: its replay was refused before it took the lease; its 2 records stay in the log as they are (no copies)
+local log: 2 databases kept their records; retried in the background
+quaderno: restart applied 0 records to 0 databases in 0.3 s
+mongo-server listening on 0.0.0.0:27018 (idle close after 60 s, holder tk-spare-1, lease ttl 4 s)
+local log: retry of database tk_app failed (tenant tk_app is owned by server process tk-server-1-1 (lease valid for another 2814 ms); retry); retried later
+local log: retry of database admin failed (tenant admin is owned by server process tk-server-1-1 (lease valid for another 2805 ms); retry); retried later
+local log: retry of database tk_app failed (tenant tk_app is owned by server process tk-server-1-1 (lease valid for another 3590 ms); retry); retried later
+local log: retry of database admin failed (tenant admin is owned by server process tk-server-1-1 (lease valid for another 3577 ms); retry); retried later
+local log: retry of database tk_app failed (tenant tk_app is owned by server process tk-server-1-1 (lease valid for another 3768 ms); retry); retried later
+local log: retry of database admin failed (tenant admin is owned by server process tk-server-1-1 (lease valid for another 3761 ms); retry); retried later
+SLOW hello db=admin ms=10001 ok=true
+SLOW hello db=admin ms=10000 ok=true
+SLOW hello db=admin ms=10000 ok=true
+local log: retry of database tk_app failed (tenant tk_app is owned by server process tk-server-1-1 (lease valid for another 2752 ms); retry); retried later
+local log: retry of database admin failed (tenant admin is owned by server process tk-server-1-1 (lease valid for another 2746 ms); retry); retried later
+SLOW hello db=admin ms=10001 ok=true
+SLOW hello db=admin ms=10001 ok=true
+SLOW hello db=admin ms=10001 ok=true
+SLOW hello db=admin ms=10001 ok=true
+quaderno: database tk_app: not the lease holder: the log is told only up to position 117610764260081664, the highest this process read at its start
+local log: database tk_app: kept records applied by the retry; the database is open again
+quaderno: database admin: not the lease holder: the log is told only up to position 117610764181110784, the highest this process read at its start
+local log: database admin: kept records applied by the retry; the database is open again
+SLOW hello db=admin ms=10001 ok=true
+SLOW hello db=admin ms=10001 ok=true
+SLOW hello db=admin ms=10001 ok=true
+SLOW hello db=admin ms=10000 ok=true
+LEASE process_lease_revoked tenant=admin holder=tk-spare-1 unix_ms=1794597902999 of=tk-server-1-1
+LEASE acquired tenant=admin holder=tk-spare-1 unix_ms=1794597903002 takeover_from=tk-server-1-1
+LEASE takeover_wake tenant=admin holder=tk-spare-1 unix_ms=1794597903011 unclean=true takeover_from=tk-server-1-1
+LEASE acquired tenant=tk_app holder=tk-spare-1 unix_ms=1794597903025 takeover_from=tk-server-1-1
+LEASE takeover_wake tenant=tk_app holder=tk-spare-1 unix_ms=1794597903038 unclean=true takeover_from=tk-server-1-1
+FXC not started db=tk_app reason=not_writer unix_ms=1794597903086
+LEASE writer_open tenant=tk_app holder=tk-spare-1 unix_ms=1794597903101 
+quaderno: takeover of tk_app: 10144 records applied from the log (after record 117610766976090112)
+L0_TRACE u=1794597904132.3267 db=tk_app l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794597905157.9417 db=tk_app l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794597906190.45 db=tk_app l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794597907219.5544 db=tk_app l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
