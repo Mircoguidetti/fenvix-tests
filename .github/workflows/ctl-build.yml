@@ -116,6 +116,8 @@ jobs:
           FILES=${IN_FILES:-$(cd engine/ctl-tests && ls test_*.py)}
           # every repeated file must exist at this commit
           for item in $(echo "${IN_REPEATS:-}" | tr ',' ' '); do f=${item%%:*}; f=${f%.py}; [ -f "engine/ctl-tests/$f.py" ] || { echo "repeat file $f.py is not in ctl-tests at this commit"; exit 1; }; done
+          # no full set and no repeats (only unit_tests or lib_suite_runs): no ctl matrix
+          if [ -z "$MODES" ] && [ -z "${IN_REPEATS:-}" ]; then { echo "commit=$FULL"; echo "name=${FULL:0:7}"; echo "matrix="; } >> "$GITHUB_OUTPUT"; exit 0; fi
           M=$(python3 ci/split.py --jobs "${IN_JOBS:-10}" --modes "$MODES" --repeats "${IN_REPEATS:-}" --repeat-jobs "${IN_REPEAT_JOBS:-10}" $FILES)
           echo "$M" | python3 -m json.tool
           { echo "commit=$FULL"; echo "name=${FULL:0:7}"; echo "matrix=$M"; } >> "$GITHUB_OUTPUT"
