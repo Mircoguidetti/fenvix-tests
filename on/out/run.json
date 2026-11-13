@@ -1,0 +1,138 @@
+{
+ "outcome": "FINITO",
+ "outcomes": {
+  "load": "LOADED",
+  "client": "LOADED_ONLY",
+  "extras": "takeovers:rc=0 takeovers-logoff:rc=1"
+ },
+ "minutes": 9.6,
+ "estimated_spend_upper_bound": 0.7772,
+ "cap": 5.0,
+ "command": {
+  "data": "atlas",
+  "phases": [
+   "load",
+   "measure",
+   "extras"
+  ],
+  "pantry": "new",
+  "ballast_slice": null,
+  "engine": "integration",
+  "atlas_states": "501c8fd",
+  "cook": "m7i.large",
+  "spare": "m7i.large",
+  "log": "m7i.large",
+  "compactor": null,
+  "compactor_options": "",
+  "loader": "c7i.xlarge",
+  "loader_options": "",
+  "client": "c7i.xlarge",
+  "filler": null,
+  "extras_client": "c7i.large",
+  "log_colocate": true,
+  "pgbox": "m7i.large",
+  "network": "default-sg",
+  "server_options": "",
+  "prepare": false,
+  "programs": [
+   "takeovers"
+  ],
+  "takeovers_args": "--n 3 --writers 8 --between-s 3 --lease-ttl 4 --log on",
+  "takeovers_off_args": "--n 3 --writers 8 --between-s 3 --lease-ttl 4 --log off --label logoff",
+  "log_ack_args": "--n 300 --conc 8 --secs 10",
+  "s3_first_byte_args": "--objects 4 --reads 30 --sizes-kib 1,64,1024 --range-kib 64,256 --big-mib 16",
+  "agent_bench_args": "--profile small --workers 1 --local",
+  "sealed_run_args": "--run-mib 64 --block-kib 256 --reads 60",
+  "ballast_rounds_args": "--n-q2 6 --n-q3 6 --n-q1 6 --n-q1d 6 --n-q4 4 --dorm-q2 3 --dorm-q3 3 --dorm-q1 3 --dorm-q1d 3 --dorm-q4 3 --pausa-s 2 --min-secondi-fase 2",
+  "spend_cap": 5,
+  "cap_approved": "",
+  "ceiling_min": 150,
+  "keep_days": 7,
+  "kept_max_days": 5,
+  "s3_fallback_dollars": 1.5,
+  "mode": "run",
+  "pantry_mode": "new",
+  "pantry_name": "fenvix-coldread-s9d-198694",
+  "atlas_load": true,
+  "ballast": {
+   "parallel": 2,
+   "lines": []
+  },
+  "data_gb_upper": 1,
+  "vcpu_peaks": {
+   "load": 8,
+   "measure (m30)": 6,
+   "extras": 10
+  },
+  "vcpu_peak": 10,
+  "arches": [
+   "x86_64"
+  ],
+  "loader_uses_log": false
+ },
+ "machines": [
+  {
+   "name": "server-0",
+   "role": "loader",
+   "type": "c7i.xlarge",
+   "zone": "eu-west-1a",
+   "start": 1794580008.1147523,
+   "end": 1794580246.614732,
+   "id": "644413db4410"
+  },
+  {
+   "name": "client",
+   "role": "client",
+   "type": "c7i.xlarge",
+   "zone": "eu-west-1a",
+   "start": 1794580010.0895047,
+   "end": 1794580297.359524,
+   "id": "3007a1e5270d"
+  },
+  {
+   "name": "server-1",
+   "role": "cooklog",
+   "type": "m7i.large",
+   "zone": "eu-west-1a",
+   "start": 1794580246.7972107,
+   "end": 1794580579.6615753,
+   "id": "72b4d4dd1996"
+  },
+  {
+   "name": "log-1",
+   "role": "log",
+   "type": "m7i.large",
+   "zone": "eu-west-1b",
+   "start": 1794580248.6339986,
+   "end": 1794580557.869772,
+   "id": "26e93e35b63e"
+  },
+  {
+   "name": "log-2",
+   "role": "log",
+   "type": "m7i.large",
+   "zone": "eu-west-1c",
+   "start": 1794580249.2748888,
+   "end": 1794580568.6278553,
+   "id": "61777f018ab7"
+  },
+  {
+   "name": "spare",
+   "role": "spare",
+   "type": "m7i.large",
+   "zone": "eu-west-1b",
+   "start": 1794580297.5718021,
+   "end": 1794580547.2613816,
+   "id": "d70ecf4398e3"
+  },
+  {
+   "name": "extras",
+   "role": "extras",
+   "type": "c7i.large",
+   "zone": "eu-west-1a",
+   "start": 1794580313.0385482,
+   "end": 1794580526.1388319,
+   "id": "16915910440e"
+  }
+ ]
+}
