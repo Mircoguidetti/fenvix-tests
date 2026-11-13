@@ -1,0 +1,40 @@
+cpu: the process may use 2 core(s) and runs on CPU(s) [2, 3]
+memory budget: limit 8192 MiB (cgroup2), caches 3584 MiB (block 1612, meta 537, sealed 1433), memtable 8 MiB, first course 512 MiB, change log 32 MiB, L0 reads at once 4
+box disk floor: 4096 MiB in /tmp/fenvix-box-floor-27018
+memory budget (review round): box 179 MiB per customer, 358 MiB in flight; memtables of every database 1024 MiB (writes wait past 1536 MiB); merge read-ahead 256 MiB; absorption 16 L0 SSTs
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+quaderno: writes are acknowledged by the replicated log at 172.18.0.2:7200,172.18.0.4:7200,172.18.0.5:7200
+quaderno: restart read 919 records of 1 databases from the log
+LEASE process_lease tenant=- holder=tk-spare-13 unix_ms=1794593093850 inc=041c09703d064514 gen=1
+local log: replay of database tk_app failed (tenant tk_app is owned by server process tk-server-1-13 (lease valid for another 3410 ms); retry); its 919 records are kept, the database is refused until they are applied
+local log: 1 databases kept their records; retried in the background
+quaderno: restart applied 0 records to 0 databases in 0.6 s
+mongo-server listening on 0.0.0.0:27018 (idle close after 60 s, holder tk-spare-13, lease ttl 4 s)
+local log: retry of database tk_app failed (tenant tk_app is owned by server process tk-server-1-13 (lease valid for another 3212 ms); retry); retried later
+local log: retry of database tk_app failed (tenant tk_app is owned by server process tk-server-1-13 (lease valid for another 3813 ms); retry); retried later
+local log: retry of database tk_app failed (tenant tk_app is owned by server process tk-server-1-13 (lease valid for another 0 ms); retry); retried later
+SLOW hello db=admin ms=10001 ok=true
+SLOW hello db=admin ms=10001 ok=true
+SLOW hello db=admin ms=10001 ok=true
+SLOW hello db=admin ms=10000 ok=true
+LEASE process_lease_revoked tenant=tk_app holder=tk-spare-13 unix_ms=1794593109907 of=tk-server-1-13
+LEASE acquired tenant=tk_app holder=tk-spare-13 unix_ms=1794593109909 takeover_from=tk-server-1-13
+LEASE takeover_wake tenant=tk_app holder=tk-spare-13 unix_ms=1794593110021 unclean=true takeover_from=tk-server-1-13
+FXC not started db=tk_app reason=not_writer unix_ms=1794593110093
+LEASE writer_open tenant=tk_app holder=tk-spare-13 unix_ms=1794593110235 
+LEASE acquired tenant=admin holder=tk-spare-13 unix_ms=1794593110252 takeover_from=tk-server-1-13
+LEASE takeover_wake tenant=admin holder=tk-spare-13 unix_ms=1794593110268 unclean=true takeover_from=tk-server-1-13
+quaderno: takeover of tk_app: 14594 records applied from the log (after record 117610452186759168)
+local log: database tk_app: kept records applied by the retry; the database is open again
+L0_RECOGNISE db=tk_app read=1 absorbed=0 ms=232 off_lock=1
+SLATE_JOB start u=1794593110497.4724 db=tk_app l0_srcs=4 l0_mib=7 srs_mib=[] l0_now=6 runs_now=0 job=1794593110497 beside_merge=0
+L0_TRACE u=1794593111277.4514 db=tk_app l0=6 unabs=2 absorbing=1 slate_jobs=0/1 slate_job=779ms l0_srcs=4 l0_mib=7 srs_mib=[] l0_now=6 runs_now=0 job=1794593110497 beside_merge=0
+SLATE_JOB end u=1794593111608.0562 db=tk_app ms=1110 rows=96093 l0_srcs=4 l0_mib=7 srs_mib=[] l0_now=6 runs_now=0 job=1794593110497 beside_merge=0
+ABSORB u=1794593111696.558 db=tk_app ssts=2 rows=232165 raw_kib=11336 committed=1 l0_start=6 l0_end=6 lock_ms=0 read_ms=1071 write_ms=120 commit_ms=6 total_ms=1198
+SLATE_JOB end u=1794593111750.9468 db=tk_app ms=1253 rows=94115 l0_srcs=4 l0_mib=7 srs_mib=[] l0_now=6 runs_now=0 job=1794593110497 beside_merge=0
+SLATE_JOB end u=1794593111788.1638 db=tk_app ms=1290 rows=115881 l0_srcs=4 l0_mib=7 srs_mib=[] l0_now=6 runs_now=0 job=1794593110497 beside_merge=0
+SLATE_JOB end u=1794593111886.8591 db=tk_app ms=1389 rows=162625 l0_srcs=4 l0_mib=7 srs_mib=[] l0_now=6 runs_now=0 job=1794593110497 beside_merge=0
+L0_TRACE u=1794593112303.3386 db=tk_app l0=2 unabs=0 absorbing=0 slate_jobs=4/1 slate_job=1805ms l0_srcs=4 l0_mib=7 srs_mib=[] l0_now=6 runs_now=0 job=1794593110497 beside_merge=0
+L0_TRACE u=1794593113336.9504 db=tk_app l0=2 unabs=0 absorbing=0 slate_jobs=4/1 slate_job=2838ms l0_srcs=4 l0_mib=7 srs_mib=[] l0_now=6 runs_now=0 job=1794593110497 beside_merge=0
+L0_TRACE u=1794593114371.9087 db=tk_app l0=2 unabs=0 absorbing=0 slate_jobs=4/1 slate_job=3874ms l0_srcs=4 l0_mib=7 srs_mib=[] l0_now=6 runs_now=0 job=1794593110497 beside_merge=0
+L0_TRACE u=1794593115402.8484 db=tk_app l0=2 unabs=0 absorbing=0 slate_jobs=4/1 slate_job=4905ms l0_srcs=4 l0_mib=7 srs_mib=[] l0_now=6 runs_now=0 job=1794593110497 beside_merge=0
