@@ -1,0 +1,25 @@
+...F.F.........                                                          [100%]
+=================================== FAILURES ===================================
+_____ test_a_write_the_store_does_not_take_gets_a_retryable_error_in_time ______
+test_90_fix_slow_store.py:300: in test_a_write_the_store_does_not_take_gets_a_retryable_error_in_time
+    assert err.code == 134 and err.details.get("codeName") == "WriteOutcomeUnknown" and err.has_error_label("RetryableWriteError"), f"wrong error: {err.details}"
+E   AssertionError: wrong error: {'ok': 0.0, 'errmsg': 'the write was not acknowledged within 2000 ms: it may still be applied', 'code': 262, 'codeName': 'ExceededTimeLimit', 'errorLabels': ['RetryableWriteError']}
+E   assert (262 == 134)
+E    +  where 262 = OperationFailure("the write was not acknowledged within 2000 ms: it may still be applied, full error: {'ok': 0.0, 'err...0 ms: it may still be applied', 'code': 262, 'codeName': 'ExceededTimeLimit', 'errorLabels': ['RetryableWriteError']}").code
+----------------------------- Captured stdout call -----------------------------
+insert with the WAL PUT held: OperationFailure after 4.0 s: {'ok': 0.0, 'errmsg': 'the write was not acknowledged within 2000 ms: it may still be applied', 'code': 262, 'codeName': 'ExceededTimeLimit', 'errorLabels': ['RetryableWriteError']}
+___ test_a_write_answered_by_the_deadline_with_retry_writes_off_is_labelled ____
+test_90_fix_slow_store.py:381: in test_a_write_answered_by_the_deadline_with_retry_writes_off_is_labelled
+    assert labelled or n == 0, f"a write answered with an unlabelled error (code {err.code}) was applied: n = {n}"
+E   AssertionError: a write answered with an unlabelled error (code 262) was applied: n = 1
+E   assert (False or 1 == 0)
+----------------------------- Captured stdout call -----------------------------
+$inc with the WAL held, retryWrites off: code 262, labelled False: the write was not acknowledged within 2000 ms: it may still be applied
+after the store answers: n = 1; log: ['WRITE_DEADLINE update db=rrwdl conn=3 ms=2000 retryable=false: answered with an error, the command goes on', 'WRITE_DEADLINE_END update db=rrwdl conn=3 ms=2005 ok=true']
+=========================== short test summary info ============================
+FAILED test_90_fix_slow_store.py::test_a_write_the_store_does_not_take_gets_a_retryable_error_in_time - AssertionError: wrong error: {'ok': 0.0, 'errmsg': 'the write was not acknowledged within 2000 ms: it may still be applied', 'code': 262, 'codeName': 'ExceededTimeLimit', 'errorLabels': ['RetryableWriteError']}
+assert (262 == 134)
+ +  where 262 = OperationFailure("the write was not acknowledged within 2000 ms: it may still be applied, full error: {'ok': 0.0, 'err...0 ms: it may still be applied', 'code': 262, 'codeName': 'ExceededTimeLimit', 'errorLabels': ['RetryableWriteError']}").code
+FAILED test_90_fix_slow_store.py::test_a_write_answered_by_the_deadline_with_retry_writes_off_is_labelled - AssertionError: a write answered with an unlabelled error (code 262) was applied: n = 1
+assert (False or 1 == 0)
+2 failed, 13 passed in 201.04s (0:03:21)
