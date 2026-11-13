@@ -85,6 +85,8 @@ is public). Starting a workflow needs write access to this repository (the `plan
   suite `cargo test --release --locked -p <root package> --lib` (the test harness's default parallel threads; the build
   is not under the timeout). Summary section "lib unit suite" with each run's result line and failing test names;
   logs in `libsuite/` on the results branch.
+- `test_env`: extra environment for the ctl tests, `NAME=VALUE` items (capital names; GITHUB_*, RUNNER_*, AWS_*,
+  PATH, HOME, LD_* refused), e.g. `CTL82_CONTROL=1` to run test_82's negative control.
 - `extra_tests`: a folder under `extra-tests/` whose `test_*.py` are copied into `ctl-tests` before the run (test code
   only: a reviewer's test that the engine commit does not carry). See `extra-tests/README.md`.
 
@@ -120,6 +122,13 @@ is public). Starting a workflow needs write access to this repository (the `plan
   "CI done: <7>, <path>" with the run id, pass/fail and rule-8 signal, copied to the coordinator.
 - Labels: MEASURED, ESTIMATED, NOT KNOWN. No reruns unless asked. A failure that does not happen locally is a CI problem
   until explained, not an engine result.
+
+### Memory cgroup tests
+
+Tests that import `ctl-tests/memcg.py` (test_81, test_82, test_83) need a memory cgroup. When a job's files include
+one, `ci/memcg-setup.sh` (with sudo) moves the job's shell into the cgroup v2 root group, keeps the memory controller on
+for its children and hands the root group's directory, `cgroup.procs` and `cgroup.subtree_control` to the runner user,
+so the tests create their own limited child groups. Other jobs are unchanged.
 
 ### Isolation
 

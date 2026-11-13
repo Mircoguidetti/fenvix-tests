@@ -46,6 +46,10 @@ on:
         description: "Timeout of one lib suite run, seconds (the build is not counted)"
         required: false
         default: "1200"
+      test_env:
+        description: "Extra environment for the ctl tests, space separated NAME=VALUE (names in capitals, e.g. CTL82_CONTROL=1)"
+        required: false
+        default: ""
       extra_tests:
         description: "Folder under extra-tests/ in this repo whose test_*.py files are copied into ctl-tests for this run (empty: none)"
         required: false
@@ -174,7 +178,15 @@ jobs:
           SHARD: ${{ matrix.shard }}
           KIND: ${{ matrix.kind }}
           FILES: ${{ matrix.files }}
+          TEST_ENV: ${{ inputs.test_env }}
         run: |
+          # tests that need a memory cgroup (they import memcg.py) get one: this shell moves into a usable group
+          need=0; for spec in $FILES; do f=engine/ctl-tests/${spec%%@*}.py; grep -qE '^from memcg import|^import memcg' "$f" 2>/dev/null && need=1; done
+          if [ $need = 1 ]; then sudo ci/memcg-setup.sh $$ "$(id -un)"; fi
+          for kv in $TEST_ENV; do
+            case "$kv" in [A-Z]*=*) n=${kv%%=*}; case "$n" in *[!A-Z0-9_]*|GITHUB_*|RUNNER_*|AWS_*|PATH|HOME|LD_*) echo "test_env: $n not allowed"; exit 1 ;; esac; export "$kv"; echo "test_env: $n set" ;;
+              *) echo "test_env: bad item"; exit 1 ;; esac
+          done
           start=$(date +%s)
           S=$start python3 -c 'import json,os;json.dump({"mode":os.environ["MODE"],"shard":os.environ["SHARD"],"kind":os.environ["KIND"],"files":os.environ["FILES"],"start":int(os.environ["S"])},open("out/shard.json","w"))'
           ci/run-shard.sh engine "$MODE" out $FILES
