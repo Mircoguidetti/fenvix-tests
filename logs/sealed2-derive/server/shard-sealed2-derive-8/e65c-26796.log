@@ -1,0 +1,56 @@
+TEST FAULT INJECTION ON (/tmp/tmptx139uxi.faults): never use this in production
+memory budget: limit 15983 MiB (memtotal), caches 7479 MiB (block 3365, meta 1121, sealed 2991), memtable 8 MiB, first course 998 MiB, change log 32 MiB, L0 reads at once 4
+box disk floor: 4096 MiB in /tmp/fenvix-box-floor-26796
+memory budget (review round): box 373 MiB per customer, 747 MiB in flight; memtables of every database 1997 MiB (writes wait past 2996 MiB); merge read-ahead 499 MiB; absorption 16 L0 SSTs
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+admin interface listening on 127.0.0.1:26644 (bearer token required)
+mongo-server listening on 127.0.0.1:26796 (idle close after 300 s, holder H65, lease ttl 3 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:41520
+LEASE process_lease tenant=- holder=H65 unix_ms=1794591084176 inc=53b41f5337b77777 gen=1
+LEASE acquired tenant=inflc holder=H65 unix_ms=1794591084230 takeover_from=-
+LEASE acquired tenant=inflc holder=H65 unix_ms=1794591084235 takeover_from=-
+LEASE acquired tenant=inflc holder=H65 unix_ms=1794591084314 takeover_from=- new=true
+LEASE writer_open tenant=inflc holder=H65 unix_ms=1794591084344 
+FXC not started db=inflc reason=no_version_of_our_manifest unix_ms=1794591084344
+FAULT delay_put tenants/inflc/wal/00000000000000000003.sst 12000
+FIRST_PUBLISH u=1794591084356 db=inflc version=1 x_d=3 rows=405 build_ms=9 off_lock=1
+FAULT delay_put processes/H65/_lease 4000
+L0_TRACE u=1794591085382.0674 db=inflc l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794591086406.1538 db=inflc l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794591087432.066 db=inflc l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794591088455.648 db=inflc l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+LEASE process_lease_late tenant=- holder=H65 unix_ms=1794591089264 abandoned=1
+LEASE lost tenant=inflc holder=H65 unix_ms=1794591089264 process_lease_late
+LEASE process_lease_lapsed tenant=- holder=H65 unix_ms=1794591089461 gen=2 abandoned=0
+FAULT delay_put processes/H65/_lease 4000
+LEASE process_lease_lapsed tenant=- holder=H65 unix_ms=1794591093661 gen=3 abandoned=0
+FAULT delay_put processes/H65/_lease 4000
+SLOW hello db=admin ms=10000 ok=true
+SLOW hello db=admin ms=10001 ok=true
+SLOW_PUT u=1794591096355 db=inflc kind=wal ms=12002 bytes=327
+SLOW insert db=inflc ms=12003 ok=true
+TIMING abandon db=inflc stop_fxc_ms=0 tenant_abandon_ms=7091 closed=true
+LEASE writer_close tenant=inflc holder=H65 unix_ms=1794591096356 
+LEASE process_lease_lapsed tenant=- holder=H65 unix_ms=1794591097861 gen=4 abandoned=0
+TEST FAULT INJECTION ON (/tmp/tmptx139uxi.faults): never use this in production
+memory budget: limit 15983 MiB (memtotal), caches 7479 MiB (block 3365, meta 1121, sealed 2991), memtable 8 MiB, first course 998 MiB, change log 32 MiB, L0 reads at once 4
+box disk floor: 4096 MiB in /tmp/fenvix-box-floor-26796
+memory budget (review round): box 373 MiB per customer, 747 MiB in flight; memtables of every database 1997 MiB (writes wait past 2996 MiB); merge read-ahead 499 MiB; absorption 16 L0 SSTs
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+admin interface listening on 127.0.0.1:26644 (bearer token required)
+mongo-server listening on 127.0.0.1:26796 (idle close after 300 s, holder H65, lease ttl 3 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:42772
+LEASE process_lease tenant=- holder=H65 unix_ms=1794591098466 inc=db0d07fe50c53f5b gen=1
+LEASE acquired tenant=inflc holder=H65 unix_ms=1794591098469 takeover_from=-
+LEASE takeover_wake tenant=inflc holder=H65 unix_ms=1794591098480 unclean=true takeover_from=-
+shutting down: closing tenants cleanly
+FXC not started db=inflc reason=not_writer unix_ms=1794591098487
+LEASE release_begin tenant=inflc holder=H65 unix_ms=1794591098487 
+LEASE release tenant=inflc holder=H65 unix_ms=1794591098489 ok=true
+tenants closed; stopping maintenance
+maintenance shutdown: waiting for the L0 watch unix_ms=1794591098495
+maintenance shutdown: waiting for the dispatcher unix_ms=1794591099391
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794591099391
+maintenance shutdown: waiting for the GC task unix_ms=1794591099391
+maintenance shutdown: done unix_ms=1794591100391
+maintenance stopped (1903 ms)
