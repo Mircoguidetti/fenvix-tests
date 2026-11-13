@@ -1,0 +1,351 @@
+SEED 102260 (steps 124): 22 violations; replays failing 2 of 2
+events 124 writes issued 12 key-writes acked 103 requests 17487 faults 16; points 3 restores 0 (applied 0) forks 2 generated 0 slate-gc 0 drops 1 scrubs 1 storms 2 groups-profile true
+
+VIOLATIONS
+  reader: c00msgs/d/00003 acknowledged write lost: expected s102260-e2-4-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx (event 2, slot 0), read absent
+  reader: c00msgs/d/00004 acknowledged write lost: expected s102260-e28-6-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx (event 28, slot 1), read absent
+  reader: c00msgs/d/00019 acknowledged write lost: expected s102260-e28-1-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx (event 28, slot 1), read absent
+  reader: c00msgs/d/00023 acknowledged write lost: expected s102260-e28-5-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx (event 28, slot 1), read absent
+  reader: c02msgs/d/00001 acknowledged write lost: expected s102260-e2-3-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx (event 2, slot 0), read absent
+  reader: c02msgs/d/00005 acknowledged write lost: expected s102260-e2-2-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx (event 2, slot 0), read absent
+  reader: c02msgs/d/00009 acknowledged write lost: expected s102260-e2-0-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx (event 2, slot 0), read absent
+  reader: c02msgs/d/00018 acknowledged write lost: expected s102260-e2-8-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx (event 2, slot 0), read absent
+  reader: c02msgs/d/00020 acknowledged write lost: expected s102260-e29-0-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx (event 29, slot 1), read absent
+  reader: c02msgs/d/00023 acknowledged write lost: expected s102260-e2-5-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx (event 2, slot 0), read absent
+  reader: c04msgs/d/00004 acknowledged write lost: expected s102260-e2-1-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx (event 2, slot 0), read absent
+  writer: c00msgs/d/00003 acknowledged write lost: expected s102260-e2-4-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx (event 2, slot 0), read absent
+  writer: c00msgs/d/00004 acknowledged write lost: expected s102260-e28-6-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx (event 28, slot 1), read absent
+  writer: c00msgs/d/00019 acknowledged write lost: expected s102260-e28-1-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx (event 28, slot 1), read absent
+  writer: c00msgs/d/00023 acknowledged write lost: expected s102260-e28-5-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx (event 28, slot 1), read absent
+  writer: c02msgs/d/00001 acknowledged write lost: expected s102260-e2-3-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx (event 2, slot 0), read absent
+  writer: c02msgs/d/00005 acknowledged write lost: expected s102260-e2-2-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx (event 2, slot 0), read absent
+  writer: c02msgs/d/00009 acknowledged write lost: expected s102260-e2-0-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx (event 2, slot 0), read absent
+  writer: c02msgs/d/00018 acknowledged write lost: expected s102260-e2-8-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx (event 2, slot 0), read absent
+  writer: c02msgs/d/00020 acknowledged write lost: expected s102260-e29-0-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx (event 29, slot 1), read absent
+  writer: c02msgs/d/00023 acknowledged write lost: expected s102260-e2-5-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx (event 2, slot 0), read absent
+  writer: c04msgs/d/00004 acknowledged write lost: expected s102260-e2-1-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx (event 2, slot 0), read absent
+
+MINIMAL SCRIPT (79 events; SIM_KEEP=0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93), its run: 42 violations
+seed 102260 knobs 2 profile Profile { delay_ppm: 0, delay_max_ms: 0, fail_ppm: 0, timeout_before_ppm: 0, timeout_after_ppm: 0, timeout_ms: 0 }
+    0 Open { p: 0, writer: true }
+    1 Sleep { ms: 263 }
+    2 Write { p: 0, ops: [(2, 9, false), (4, 4, false), (2, 5, false), (2, 1, false), (0, 3, false), (2, 23, false), (1, 13, false), (5, 10, false), (2, 18, false), (1, 10, false), (1, 6, false)] }
+    3 Kill { p: 0 }
+    4 Open { p: 0, writer: true }
+    5 Hold { p: 0, class: FxOther, op: Some(Put), skip: 2, land: true, all: false, rid: 1 }
+    6 Write { p: 0, ops: [(5, 5, false), (3, 17, false), (2, 20, false)] }
+    7 Retire { p: 1 }
+    8 Fork { p: 0, copy: true, tag: 1 }
+    9 Write { p: 0, ops: [(4, 5, false), (1, 3, false), (0, 21, false), (3, 17, false), (4, 7, false), (3, 6, false), (5, 0, true), (4, 1, false), (1, 18, false)] }
+   10 Hold { p: 0, class: FxVersion, op: Some(Get), skip: 1, land: true, all: false, rid: 2 }
+   11 Retire { p: 1 }
+   12 Retire { p: 1 }
+   13 Flush { p: 0 }
+   14 Mark { tag: 2 }
+   15 Flush { p: 0 }
+   16 Mark { tag: 3 }
+   17 Retire { p: 2 }
+   18 FirstPoll { p: 0 }
+   19 Sleep { ms: 379 }
+   20 Close { p: 0 }
+   21 Open { p: 1, writer: true }
+   22 FirstStart { p: 1 }
+   23 Mark { tag: 4 }
+   24 CompStart { p: 1 }
+   25 CompDrain { p: 1 }
+   26 Restore { p: 1, mark: 2, apply: true }
+   27 Write { p: 1, ops: [(5, 0, true)] }
+   28 Write { p: 1, ops: [(4, 1, true), (0, 19, false), (3, 19, false), (1, 0, false), (5, 17, false), (0, 23, false), (0, 4, false), (3, 0, false), (3, 18, true)] }
+   29 Write { p: 1, ops: [(2, 20, false), (5, 9, false), (3, 5, false)] }
+   30 Restore { p: 1, mark: 4, apply: true }
+   31 Flush { p: 1 }
+   32 Write { p: 1, ops: [(5, 1, false), (1, 23, true), (5, 20, false), (5, 18, false)] }
+   33 Close { p: 1 }
+   34 Open { p: 1, writer: true }
+   35 Mark { tag: 5 }
+   36 CompStart { p: 1 }
+   37 Erase { p: 1, cust: 1 }
+   38 ErasePass { p: 1 }
+   39 Gc { p: 1 }
+   40 Hold { p: 1, class: FxVersion, op: Some(Delete), skip: 2, land: true, all: false, rid: 3 }
+   41 Retire { p: 0 }
+   42 Hold { p: 1, class: Wal, op: Some(Get), skip: 0, land: true, all: true, rid: 4 }
+   43 Point { p: 0, tag: 6 }
+   44 Retire { p: 0 }
+   45 Gc { p: 1 }
+   61 Release { rid: 3 }
+   62 Open { p: 2, writer: true }
+   63 CompStart { p: 2 }
+   64 DropThrough { p: 2 }
+   65 Open { p: 0, writer: true }
+   66 Erase { p: 0, cust: 1 }
+   67 ErasePass { p: 0 }
+   68 Sleep { ms: 570 }
+   69 Storm { on: true }
+   70 Flush { p: 0 }
+   71 Restore { p: 0, mark: 5, apply: true }
+   72 Hold { p: 0, class: FxVersion, op: Some(Put), skip: 2, land: true, all: false, rid: 5 }
+   73 Release { rid: 2 }
+   74 Erase { p: 0, cust: 3 }
+   75 ErasePass { p: 0 }
+   76 Gc { p: 2 }
+   77 Point { p: 2, tag: 8 }
+   78 Open { p: 1, writer: true }
+   79 Point { p: 1, tag: 9 }
+   80 ErasePass { p: 2 }
+   81 Write { p: 1, ops: [(5, 19, true), (5, 22, true), (3, 1, false), (2, 3, true), (2, 6, false), (1, 4, false), (0, 1, false), (2, 22, false), (3, 12, false), (0, 19, false)] }
+   82 CompStart { p: 1 }
+   83 Storm { on: false }
+   84 Write { p: 1, ops: [(3, 10, true), (0, 19, false), (5, 18, true)] }
+   85 Fork { p: 1, copy: true, tag: 10 }
+   86 Publish { p: 0 }
+   87 ErasePass { p: 2 }
+   88 Release { rid: 4 }
+   89 Close { p: 0 }
+   90 Gc { p: 1 }
+   91 Flush { p: 1 }
+   92 Gc { p: 1 }
+   93 Kill { p: 1 }
+  ! reader: c00msgs/d/00003 acknowledged write lost: expected s102260-e2-4-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx (event 2, slot 0), read absent
+  ! reader: c00msgs/d/00004 acknowledged write lost: expected s102260-e28-6-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx (event 28, slot 1), read absent
+  ! reader: c00msgs/d/00019 acknowledged write lost: expected s102260-e28-1-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx (event 28, slot 1), read absent
+  ! reader: c00msgs/d/00023 acknowledged write lost: expected s102260-e28-5-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx (event 28, slot 1), read absent
+  ! reader: c02msgs/d/00001 acknowledged write lost: expected s102260-e2-3-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx (event 2, slot 0), read absent
+  ! reader: c02msgs/d/00005 acknowledged write lost: expected s102260-e2-2-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx (event 2, slot 0), read absent
+  ! reader: c02msgs/d/00009 acknowledged write lost: expected s102260-e2-0-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx (event 2, slot 0), read absent
+  ! reader: c02msgs/d/00018 acknowledged write lost: expected s102260-e2-8-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx (event 2, slot 0), read absent
+  ! reader: c02msgs/d/00020 acknowledged write lost: expected s102260-e29-0-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx (event 29, slot 1), read absent
+  ! reader: c02msgs/d/00023 acknowledged write lost: expected s102260-e2-5-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx (event 2, slot 0), read absent
+  ! reader: c04msgs/d/00004 acknowledged write lost: expected s102260-e2-1-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx (event 2, slot 0), read absent
+  ! reader: c05msgs/d/00001 acknowledged write lost: expected s102260-e32-0-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx (event 32, slot 1), read absent
+  ! reader: c05msgs/d/00005 acknowledged write lost: expected s102260-e6-0-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx (event 6, slot 0), read absent
+  ! reader: c05msgs/d/00009 acknowledged write lost: expected s102260-e29-1-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx (event 29, slot 1), read absent
+  ! reader: c05msgs/d/00010 acknowledged write lost: expected s102260-e2-7-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx (event 2, slot 0), read absent
+  ! reader: c05msgs/d/00017 acknowledged write lost: expected s102260-e28-4-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx (event 28, slot 1), read absent
+  ! reader: c05msgs/d/00020 acknowledged write lost: expected s102260-e32-2-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx (event 32, slot 1), read absent
+  ! writer: c00msgs/d/00003 acknowledged write lost: expected s102260-e2-4-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx (event 2, slot 0), read absent
+  ! writer: c00msgs/d/00004 acknowledged write lost: expected s102260-e28-6-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx (event 28, slot 1), read absent
+  ! writer: c00msgs/d/00019 acknowledged write lost: expected s102260-e28-1-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx (event 28, slot 1), read absent
+
+TRACE OF THE MINIMAL RUN
+  [0] seed 102260 knobs 2 profile Profile { delay_ppm: 0, delay_max_ms: 0, fail_ppm: 0, timeout_before_ppm: 0, timeout_after_ppm: 0, timeout_ms: 0 }
+  [0] [0] Open { p: 0, writer: true } -> opened (life 0, writer epoch Some(1))
+  [2] [2] Write { p: 0, ops: [(2, 9, false), (4, 4, false), (2, 5, false), (2, 1, false), (0, 3, false), (2, 23, false), (1, 13, f -> acked 11 keys
+  [3] kill -9 slot 0 (life 0)
+  [4] [4] Open { p: 0, writer: true } -> opened (life 3, writer epoch Some(2))
+  [5] hold rule 1 armed: life 3 Some(Put) FxOther skip 2 land true all false
+  [6] [6] Write { p: 0, ops: [(5, 5, false), (3, 17, false), (2, 20, false)] } -> acked 3 keys
+  [7] [7] Retire { p: 1 } -> nothing to retire
+  [8] [8] Fork { p: 0, copy: true, tag: 1 } -> fork 1 done (copy): sim-102260-65-fork1, its first version None, pairing checkpoint deleted true, pair deleted true
+  [9] [9] Write { p: 0, ops: [(4, 5, false), (1, 3, false), (0, 21, false), (3, 17, false), (4, 7, false), (3, 6, false), (5, 0, t -> not open (skipped)
+  [10] hold rule 2 armed: life 3 Some(Get) FxVersion skip 1 land true all false
+  [11] [11] Retire { p: 1 } -> nothing to retire
+  [12] [12] Retire { p: 1 } -> nothing to retire
+  [13] [13] Flush { p: 0 } -> not open (skipped)
+  [14] mark 2 at 1794598577101
+  [15] [15] Flush { p: 0 } -> not open (skipped)
+  [16] mark 3 at 1794598577109
+  [17] [17] Retire { p: 2 } -> nothing to retire
+  [18] [18] FirstPoll { p: 0 } -> not open (skipped)
+  [20] [20] Close { p: 0 } -> not open (skipped)
+  [21] [21] Open { p: 1, writer: true } -> opened (life 1, writer epoch Some(3))
+  [22] [22] FirstStart { p: 1 } -> first build started
+  [23] mark 4 at 1794598577701
+  [24] [24] CompStart { p: 1 } -> no writer, no version, or a first build running (skipped)
+  [25] [25] CompDrain { p: 1 } -> no compactor (skipped)
+  [26] [26] Restore { p: 1, mark: 2, apply: true } -> restore to mark 2: no restore point before it (skipped)
+  [27] [27] Write { p: 1, ops: [(5, 0, true)] } -> acked 1 keys
+  [28] [28] Write { p: 1, ops: [(4, 1, true), (0, 19, false), (3, 19, false), (1, 0, false), (5, 17, false), (0, 23, false), (0, 4,  -> acked 9 keys
+  [29] [29] Write { p: 1, ops: [(2, 20, false), (5, 9, false), (3, 5, false)] } -> acked 3 keys
+  [30] [30] Restore { p: 1, mark: 4, apply: true } -> restore to mark 4: no restore point before it (skipped)
+  [31] [31] Flush { p: 1 } -> flushed
+  [32] [32] Write { p: 1, ops: [(5, 1, false), (1, 23, true), (5, 20, false), (5, 18, false)] } -> acked 4 keys
+  [33] [33] Close { p: 1 } -> closed
+  [34] [34] Open { p: 1, writer: true } -> opened (life 1, writer epoch Some(4))
+  [35] mark 5 at 1794598577713
+  [36] [36] CompStart { p: 1 } -> compactor started 
+  [37] [37] Erase { p: 1, cust: 1 } -> deletes acked; erasure 00000000000000000008-75281328 registered, S_e 8
+  [38] [38] ErasePass { p: 1 } -> no erasure ready
+  [39] [39] Gc { p: 1 } -> gc pass
+  [40] hold rule 3 armed: life 1 Some(Delete) FxVersion skip 2 land true all false
+  [41] [41] Retire { p: 0 } -> nothing to retire
+  [42] hold rule 4 armed: life 1 Some(Get) Wal skip 0 land true all true
+  [43] held by rule 1: life 3 Put tenants/sim-102260-65/fx/drop-lease
+  [43] rule 1 lets go after 1001 ms: life 3 Put tenants/sim-102260-65/fx/drop-lease lands
+  [43] held by rule 2: life 3 Get tenants/sim-102260-65/fx/manifest/00000000000000000004
+  [43] event 43 still in flight after 1.5s
+  [44] [44] Retire { p: 0 } -> nothing to retire
+  [45] [45] Gc { p: 1 } -> gc pass
+  [61] hold rule 3 released (0 waiting)
+  [62] [62] Open { p: 2, writer: true } -> opened (life 2, writer epoch Some(5))
+  [63] [63] CompStart { p: 2 } -> compactor started 
+  [64] rule 2 lets go after 4000 ms: life 3 Get tenants/sim-102260-65/fx/manifest/00000000000000000004 lands
+  [64] [43] Point { p: 0, tag: 6 } -> restore point 6: checkpoint fc963118-4b33-4e2b-83f1-5fa8c7e216e3 (manifest 14) paired with version Some(5) at 1794598582720
+  [64] [64] DropThrough { p: 2 } -> dropped through 7 (30, 7)
+  [65] [65] Open { p: 0, writer: true } -> opened (life 3, writer epoch Some(6))
+  [66] [66] Erase { p: 0, cust: 1 } -> deletes acked; erasure 00000000000000000009-edf0b668 registered, S_e 9
+  [67] [67] ErasePass { p: 0 } -> no compactor (skipped)
+  [69] storm on
+  [70] fault TimeoutAfter: life 3 Put tenants/sim-102260-65/manifest/00000000000000000020.manifest
+  [70] fault Fail: life 2 Get tenants/sim-102260-65/compactions/00000000000000000016.compactions
+  [70] fault Fail: life 2 Get tenants/sim-102260-65/compactions/00000000000000000016.compactions
+  [70] [70] Flush { p: 0 } -> flushed
+  [71] [71] Restore { p: 0, mark: 5, apply: true } -> restore to mark 5: no restore point before it (skipped)
+  [72] hold rule 5 armed: life 3 Some(Put) FxVersion skip 2 land true all false
+  [73] hold rule 2 released (0 waiting)
+  [74] [74] Erase { p: 0, cust: 3 } -> deletes acked; erasure 00000000000000000010-a456a73f registered, S_e 10
+  [75] [75] ErasePass { p: 0 } -> no compactor (skipped)
+  [76] fault TimeoutBefore: life 1 Get tenants/sim-102260-65/gc/compactions.boundary
+  [76] fault Fail: life 2 Get tenants/sim-102260-65/fx/manifest/00000000000000000003
+  [76] [76] Gc { p: 2 } -> gc failed: Generic sim error: 503 slow down (simulated): 503 slow down (simulated)
+  [77] fault TimeoutBefore: life 2 Put tenants/sim-102260-65/fx/drop-lease
+  [77] fault Fail: life 2 Get tenants/sim-102260-65/gc/manifest.boundary
+  [77] [77] Point { p: 2, tag: 8 } -> restore point 8 failed: Generic sim error: timeout before the store (simulated): timeout before the store (simulated)
+  [78] [78] Open { p: 1, writer: true } -> already open (skipped)
+  [79] fault Fail: life 1 Get tenants/sim-102260-65/gc/manifest.boundary
+  [79] fault Fail: life 1 Get tenants/sim-102260-65/fx/drop-lease
+  [79] fault TimeoutBefore: life 2 Get tenants/sim-102260-65/manifest/00000000000000000023.manifest
+  [79] fault Fail: life 1 List tenants/sim-102260-65/fx/manifest/
+  [79] [79] Point { p: 1, tag: 9 } -> restore point 9 failed: Generic sim error: 503 slow down (simulated): 503 slow down (simulated)
+  [80] [80] ErasePass { p: 2 } -> no erasure ready
+  [81] [81] Write { p: 1, ops: [(5, 19, true), (5, 22, true), (3, 1, false), (2, 3, true), (2, 6, false), (1, 4, false), (0, 1, fals -> failed: Closed error: detected newer DB client
+  [82] [82] CompStart { p: 1 } -> compactor already running
+  [83] storm off
+  [84] [84] Write { p: 1, ops: [(3, 10, true), (0, 19, false), (5, 18, true)] } -> failed: Closed error: detected newer DB client
+  [85] [85] Fork { p: 1, copy: true, tag: 10 } -> fork 10 done (copy): sim-102260-65-fork10, its first version Some(7), pairing checkpoint deleted true, pair deleted true
+  [86] [86] Publish { p: 0 } -> published (x_d 10)
+  [87] [87] ErasePass { p: 2 } -> no erasure ready
+  [88] hold rule 4 released (0 waiting)
+  [89] [89] Close { p: 0 } -> closed
+  [90] [90] Gc { p: 1 } -> no compactor (skipped)
+  [91] [91] Flush { p: 1 } -> not open (skipped)
+  [92] [92] Gc { p: 1 } -> no compactor (skipped)
+  [93] kill -9 slot 1 (life 1)
+  [4294967295] settle: slot 2 close Ok(Ok(()))
+
+FULL SCRIPT
+seed 102260 knobs 2 profile Profile { delay_ppm: 0, delay_max_ms: 0, fail_ppm: 0, timeout_before_ppm: 0, timeout_after_ppm: 0, timeout_ms: 0 }
+    0 Open { p: 0, writer: true }
+    1 Sleep { ms: 263 }
+    2 Write { p: 0, ops: [(2, 9, false), (4, 4, false), (2, 5, false), (2, 1, false), (0, 3, false), (2, 23, false), (1, 13, false), (5, 10, false), (2, 18, false), (1, 10, false), (1, 6, false)] }
+    3 Kill { p: 0 }
+    4 Open { p: 0, writer: true }
+    5 Hold { p: 0, class: FxOther, op: Some(Put), skip: 2, land: true, all: false, rid: 1 }
+    6 Write { p: 0, ops: [(5, 5, false), (3, 17, false), (2, 20, false)] }
+    7 Retire { p: 1 }
+    8 Fork { p: 0, copy: true, tag: 1 }
+    9 Write { p: 0, ops: [(4, 5, false), (1, 3, false), (0, 21, false), (3, 17, false), (4, 7, false), (3, 6, false), (5, 0, true), (4, 1, false), (1, 18, false)] }
+   10 Hold { p: 0, class: FxVersion, op: Some(Get), skip: 1, land: true, all: false, rid: 2 }
+   11 Retire { p: 1 }
+   12 Retire { p: 1 }
+   13 Flush { p: 0 }
+   14 Mark { tag: 2 }
+   15 Flush { p: 0 }
+   16 Mark { tag: 3 }
+   17 Retire { p: 2 }
+   18 FirstPoll { p: 0 }
+   19 Sleep { ms: 379 }
+   20 Close { p: 0 }
+   21 Open { p: 1, writer: true }
+   22 FirstStart { p: 1 }
+   23 Mark { tag: 4 }
+   24 CompStart { p: 1 }
+   25 CompDrain { p: 1 }
+   26 Restore { p: 1, mark: 2, apply: true }
+   27 Write { p: 1, ops: [(5, 0, true)] }
+   28 Write { p: 1, ops: [(4, 1, true), (0, 19, false), (3, 19, false), (1, 0, false), (5, 17, false), (0, 23, false), (0, 4, false), (3, 0, false), (3, 18, true)] }
+   29 Write { p: 1, ops: [(2, 20, false), (5, 9, false), (3, 5, false)] }
+   30 Restore { p: 1, mark: 4, apply: true }
+   31 Flush { p: 1 }
+   32 Write { p: 1, ops: [(5, 1, false), (1, 23, true), (5, 20, false), (5, 18, false)] }
+   33 Close { p: 1 }
+   34 Open { p: 1, writer: true }
+   35 Mark { tag: 5 }
+   36 CompStart { p: 1 }
+   37 Erase { p: 1, cust: 1 }
+   38 ErasePass { p: 1 }
+   39 Gc { p: 1 }
+   40 Hold { p: 1, class: FxVersion, op: Some(Delete), skip: 2, land: true, all: false, rid: 3 }
+   41 Retire { p: 0 }
+   42 Hold { p: 1, class: Wal, op: Some(Get), skip: 0, land: true, all: true, rid: 4 }
+   43 Point { p: 0, tag: 6 }
+   44 Retire { p: 0 }
+   45 Gc { p: 1 }
+   46 Open { p: 0, writer: false }
+   47 Fork { p: 1, copy: false, tag: 7 }
+   48 Release { rid: 1 }
+   49 Restore { p: 1, mark: 2, apply: true }
+   50 ErasePass { p: 1 }
+   51 Erase { p: 1, cust: 3 }
+   52 Write { p: 1, ops: [(0, 16, true), (3, 16, false), (0, 17, false), (0, 10, false), (2, 7, false), (5, 12, false), (0, 15, false)] }
+   53 Write { p: 1, ops: [(5, 6, false), (4, 4, false), (0, 12, false), (3, 7, false), (3, 8, false), (2, 22, false), (1, 6, false), (5, 22, false)] }
+   54 CompStop { p: 1 }
+   55 Upgrade { p: 0 }
+   56 Close { p: 1 }
+   57 DropThrough { p: 0 }
+   58 CompStart { p: 0 }
+   59 Abandon { p: 0 }
+   60 Retire { p: 1 }
+   61 Release { rid: 3 }
+   62 Open { p: 2, writer: true }
+   63 CompStart { p: 2 }
+   64 DropThrough { p: 2 }
+   65 Open { p: 0, writer: true }
+   66 Erase { p: 0, cust: 1 }
+   67 ErasePass { p: 0 }
+   68 Sleep { ms: 570 }
+   69 Storm { on: true }
+   70 Flush { p: 0 }
+   71 Restore { p: 0, mark: 5, apply: true }
+   72 Hold { p: 0, class: FxVersion, op: Some(Put), skip: 2, land: true, all: false, rid: 5 }
+   73 Release { rid: 2 }
+   74 Erase { p: 0, cust: 3 }
+   75 ErasePass { p: 0 }
+   76 Gc { p: 2 }
+   77 Point { p: 2, tag: 8 }
+   78 Open { p: 1, writer: true }
+   79 Point { p: 1, tag: 9 }
+   80 ErasePass { p: 2 }
+   81 Write { p: 1, ops: [(5, 19, true), (5, 22, true), (3, 1, false), (2, 3, true), (2, 6, false), (1, 4, false), (0, 1, false), (2, 22, false), (3, 12, false), (0, 19, false)] }
+   82 CompStart { p: 1 }
+   83 Storm { on: false }
+   84 Write { p: 1, ops: [(3, 10, true), (0, 19, false), (5, 18, true)] }
+   85 Fork { p: 1, copy: true, tag: 10 }
+   86 Publish { p: 0 }
+   87 ErasePass { p: 2 }
+   88 Release { rid: 4 }
+   89 Close { p: 0 }
+   90 Gc { p: 1 }
+   91 Flush { p: 1 }
+   92 Gc { p: 1 }
+   93 Kill { p: 1 }
+   94 Hold { p: 2, class: Wal, op: Some(Put), skip: 0, land: true, all: true, rid: 6 }
+   95 Open { p: 1, writer: true }
+   96 Hold { p: 1, class: SlateManifest, op: None, skip: 2, land: true, all: false, rid: 7 }
+   97 Retire { p: 1 }
+   98 Hold { p: 2, class: FxRun, op: Some(Delete), skip: 2, land: true, all: true, rid: 8 }
+   99 Gc { p: 2 }
+  100 CompDrain { p: 2 }
+  101 Gc { p: 1 }
+  102 Erase { p: 2, cust: 5 }
+  103 Close { p: 2 }
+  104 Restore { p: 1, mark: 4, apply: false }
+  105 Hold { p: 1, class: FxErasure, op: Some(Put), skip: 1, land: true, all: true, rid: 9 }
+  106 CompStart { p: 1 }
+  107 Storm { on: true }
+  108 Open { p: 0, writer: false }
+  109 Storm { on: false }
+  110 Upgrade { p: 0 }
+  111 Retire { p: 0 }
+  112 CompStart { p: 0 }
+  113 ErasePass { p: 1 }
+  114 Close { p: 0 }
+  115 Erase { p: 1, cust: 1 }
+  116 Gc { p: 0 }
+  117 Release { rid: 5 }
+  118 ErasePass { p: 1 }
+  119 Mark { tag: 11 }
+  120 Write { p: 1, ops: [(0, 15, false), (2, 9, false)] }
+  121 Retire { p: 0 }
+  122 Restore { p: 1, mark: 5, apply: false }
+  123 Flush { p: 1 }

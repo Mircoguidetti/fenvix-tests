@@ -1,0 +1,634 @@
+SEED 100875 (steps 137): 15 violations; replays failing 2 of 2
+events 137 writes issued 37 key-writes acked 373 requests 19078 faults 262; points 6 restores 3 (applied 1) forks 1 generated 0 slate-gc 4 drops 0 scrubs 1 storms 1 groups-profile false
+
+VIOLATIONS
+  reader: c00msgs/d/00006 acknowledged write lost: expected s100875-e111-2 (event 111, slot 0, issue 33), read the older s100875-e1-6 (event 1, slot 0)
+  reader: c00msgs/d/00020 acknowledged write lost: expected s100875-e111-4 (event 111, slot 0, issue 33), read the older s100875-e1-20 (event 1, slot 0)
+  reader: c01msgs/d/00007 acknowledged write lost: expected s100875-e111-6 (event 111, slot 0, issue 33), read the older absent (event 68, slot 2)
+  reader: c02msgs/d/00015 acknowledged write lost: expected s100875-e111-3 (event 111, slot 0, issue 33), read the older absent (event 32, slot 2)
+  reader: c02msgs/d/00021 acknowledged write lost: expected s100875-e111-1 (event 111, slot 0, issue 33), read the older absent (event 32, slot 2)
+  reader: c03msgs/d/00002 acknowledged write lost: expected s100875-e111-5 (event 111, slot 0, issue 33), read the older s100875-e90-4 (event 90, slot 1)
+  reader: c03msgs/d/00003 acknowledged write lost: expected s100875-e111-7 (event 111, slot 0, issue 33), read the older s100875-e26-3 (event 26, slot 2)
+  reader and writer differ on c00msgs/d/00006: reader s100875-e1-6, writer s100875-e111-2
+  reader and writer differ on c00msgs/d/00020: reader s100875-e1-20, writer s100875-e111-4
+  reader and writer differ on c01msgs/d/00007: reader absent, writer s100875-e111-6
+  reader and writer differ on c02msgs/d/00015: reader absent, writer s100875-e111-3
+  reader and writer differ on c02msgs/d/00021: reader absent, writer s100875-e111-1
+  reader and writer differ on c03msgs/d/00002: reader s100875-e90-4, writer s100875-e111-5
+  reader and writer differ on c03msgs/d/00003: reader s100875-e26-3, writer s100875-e111-7
+  reader and writer differ on c03msgs/d/00013: reader absent, writer s100875-e111-0
+
+MINIMAL SCRIPT (103 events; SIM_KEEP=0,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136), its run: 14 violations
+seed 100875 knobs 0 profile Profile { delay_ppm: 100000, delay_max_ms: 120, fail_ppm: 15000, timeout_before_ppm: 5000, timeout_after_ppm: 8000, timeout_ms: 400 }
+    0 Open { p: 0, writer: true }
+   18 Flush { p: 1 }
+   19 Write { p: 1, ops: [(2, 13, false), (2, 17, false), (2, 21, false)] }
+   20 Flush { p: 1 }
+   21 Write { p: 1, ops: [(2, 11, false), (2, 8, false), (2, 8, false)] }
+   22 Flush { p: 1 }
+   23 Write { p: 1, ops: [(0, 21, false)] }
+   24 Open { p: 2, writer: true }
+   25 Open { p: 2, writer: true }
+   26 Write { p: 2, ops: [(3, 18, true), (2, 9, false), (4, 10, false), (3, 3, false), (5, 14, false), (0, 2, false), (4, 4, false), (3, 15, true), (5, 4, false), (0, 18, true)] }
+   27 SlateGc { p: 2 }
+   28 FirstStart { p: 2 }
+   29 Point { p: 1, tag: 2 }
+   30 Hold { p: 1, class: FxVersion, op: Some(List), skip: 2, land: false, all: false, rid: 1 }
+   31 Write { p: 2, ops: [(0, 2, true), (2, 9, false), (0, 13, false)] }
+   32 Erase { p: 2, cust: 2 }
+   33 Flush { p: 2 }
+   34 Publish { p: 2 }
+   35 Abandon { p: 1 }
+   36 Abandon { p: 0 }
+   37 Release { rid: 1 }
+   38 Gc { p: 2 }
+   39 Publish { p: 2 }
+   40 Mark { tag: 3 }
+   41 Write { p: 2, ops: [(3, 16, false), (2, 6, false), (2, 15, false)] }
+   42 Retire { p: 2 }
+   43 Write { p: 2, ops: [(4, 16, false), (5, 6, false), (5, 16, false), (3, 21, false)] }
+   44 SlateGc { p: 2 }
+   45 Retire { p: 2 }
+   46 CompStart { p: 2 }
+   47 Erase { p: 2, cust: 4 }
+   48 Hold { p: 2, class: Other, op: Some(Put), skip: 0, land: true, all: false, rid: 2 }
+   49 Hold { p: 2, class: FxVersion, op: Some(Get), skip: 0, land: true, all: false, rid: 3 }
+   50 Hold { p: 2, class: FxVersion, op: Some(List), skip: 0, land: false, all: false, rid: 4 }
+   51 Point { p: 2, tag: 4 }
+   52 Hold { p: 2, class: FxVersion, op: Some(Put), skip: 1, land: false, all: false, rid: 5 }
+   53 Open { p: 0, writer: false }
+   54 SlateGc { p: 0 }
+   55 ErasePass { p: 2 }
+   56 DropThrough { p: 2 }
+   57 DropThrough { p: 2 }
+   58 Write { p: 2, ops: [(3, 10, false), (3, 5, false), (0, 9, false), (0, 2, false)] }
+   59 DropThrough { p: 2 }
+   60 Point { p: 1, tag: 5 }
+   61 Flush { p: 2 }
+   62 Gc { p: 2 }
+   63 Sleep { ms: 217 }
+   64 Write { p: 2, ops: [(2, 8, false), (4, 16, false), (2, 14, false), (5, 18, true), (2, 5, false), (0, 19, false), (4, 10, false)] }
+   65 Sleep { ms: 280 }
+   66 Erase { p: 2, cust: 3 }
+   67 Flush { p: 2 }
+   68 Restore { p: 2, mark: 3, apply: true }
+   69 Write { p: 2, ops: [(4, 16, true), (0, 18, false), (1, 14, false), (1, 17, false)] }
+   70 CompDrain { p: 2 }
+   71 Release { rid: 5 }
+   72 Hold { p: 2, class: FxVersion, op: Some(Put), skip: 2, land: false, all: true, rid: 6 }
+   73 Restore { p: 2, mark: 3, apply: false }
+   74 Write { p: 2, ops: [(2, 3, false), (0, 3, true), (4, 14, true)] }
+   75 Write { p: 2, ops: [(5, 21, true)] }
+   76 Write { p: 2, ops: [(2, 9, false), (3, 12, true), (2, 6, false), (1, 11, true), (2, 19, false), (4, 22, false), (4, 10, false)] }
+   77 Sleep { ms: 294 }
+   78 Fork { p: 2, copy: false, tag: 6 }
+   79 Write { p: 2, ops: [(0, 6, false), (4, 5, false), (0, 1, false), (4, 16, false), (0, 0, false), (0, 10, false)] }
+   80 Write { p: 2, ops: [(1, 16, false), (4, 0, false), (2, 0, false), (2, 13, false), (2, 3, true), (4, 18, false), (3, 8, false), (0, 21, false)] }
+   81 Open { p: 1, writer: true }
+   82 Retire { p: 0 }
+   83 Write { p: 1, ops: [(4, 21, false), (5, 13, false), (2, 9, false), (5, 5, false)] }
+   84 Erase { p: 1, cust: 2 }
+   85 Write { p: 1, ops: [(4, 19, false), (4, 10, false), (5, 4, false), (2, 13, false)] }
+  103 Storm { on: false }
+  104 CompStart { p: 1 }
+  105 Upgrade { p: 0 }
+  106 Write { p: 1, ops: [(0, 2, false)] }
+  107 Hold { p: 1, class: Wal, op: Some(Put), skip: 1, land: true, all: false, rid: 8 }
+  108 Point { p: 2, tag: 9 }
+  109 Publish { p: 0 }
+  110 Hold { p: 0, class: FxVersion, op: Some(Put), skip: 2, land: true, all: false, rid: 9 }
+  111 Write { p: 0, ops: [(3, 13, false), (2, 21, false), (0, 6, false), (2, 15, false), (0, 20, false), (3, 2, false), (1, 7, false), (3, 3, false)] }
+  112 Hold { p: 1, class: FxVersion, op: Some(Put), skip: 2, land: true, all: false, rid: 10 }
+  113 Open { p: 2, writer: true }
+  114 Publish { p: 2 }
+  115 Flush { p: 0 }
+  116 SlateGc { p: 0 }
+  117 Write { p: 0, ops: [(0, 18, false), (0, 10, false), (5, 9, false), (1, 16, true), (0, 19, false), (2, 11, false), (3, 3, false)] }
+  118 Hold { p: 0, class: FxVersion, op: Some(List), skip: 0, land: true, all: true, rid: 11 }
+  119 CompDrain { p: 1 }
+  120 Point { p: 0, tag: 10 }
+  121 Write { p: 2, ops: [(0, 20, false), (4, 8, false), (4, 0, true), (2, 14, false), (1, 2, false), (4, 18, false), (5, 20, false)] }
+  122 ErasePass { p: 1 }
+  123 Write { p: 2, ops: [(1, 23, false), (4, 4, false), (3, 17, false), (4, 21, false), (5, 21, true), (5, 8, false), (3, 17, false), (4, 21, false), (2, 22, false)] }
+  124 DropThrough { p: 2 }
+  125 Erase { p: 0, cust: 3 }
+  126 Write { p: 2, ops: [(3, 20, false), (5, 12, true), (1, 15, false), (1, 0, false), (3, 18, false), (2, 1, false), (2, 13, true), (1, 21, false)] }
+  127 Write { p: 2, ops: [(2, 3, false), (3, 11, false), (4, 1, false), (1, 8, false), (2, 23, false), (0, 21, false)] }
+  128 FirstPoll { p: 2 }
+  129 Fork { p: 2, copy: false, tag: 11 }
+  130 Write { p: 1, ops: [(4, 14, false), (5, 21, false), (5, 5, false), (5, 6, false), (2, 7, false)] }
+  131 Sleep { ms: 376 }
+  132 Retire { p: 1 }
+  133 Kill { p: 0 }
+  134 Write { p: 1, ops: [(0, 12, false)] }
+  135 Mark { tag: 12 }
+  136 Restore { p: 2, mark: 12, apply: false }
+  ! reader: c00msgs/d/00006 acknowledged write lost: expected s100875-e111-2 (event 111, slot 0, issue 19), read the older absent (event 68, slot 2)
+  ! reader: c00msgs/d/00020 acknowledged write lost: expected s100875-e111-4 (event 111, slot 0, issue 19), read the older absent (event 68, slot 2)
+  ! reader: c01msgs/d/00007 acknowledged write lost: expected s100875-e111-6 (event 111, slot 0, issue 19), read the older absent (event 68, slot 2)
+  ! reader: c02msgs/d/00015 acknowledged write lost: expected s100875-e111-3 (event 111, slot 0, issue 19), read the older absent (event 32, slot 2)
+  ! reader: c02msgs/d/00021 acknowledged write lost: expected s100875-e111-1 (event 111, slot 0, issue 19), read the older absent (event 32, slot 2)
+  ! reader: c03msgs/d/00003 acknowledged write lost: expected s100875-e111-7 (event 111, slot 0, issue 19), read the older s100875-e26-3 (event 26, slot 2)
+  ! reader and writer differ on c00msgs/d/00006: reader absent, writer s100875-e111-2
+  ! reader and writer differ on c00msgs/d/00020: reader absent, writer s100875-e111-4
+  ! reader and writer differ on c01msgs/d/00007: reader absent, writer s100875-e111-6
+  ! reader and writer differ on c02msgs/d/00015: reader absent, writer s100875-e111-3
+  ! reader and writer differ on c02msgs/d/00021: reader absent, writer s100875-e111-1
+  ! reader and writer differ on c03msgs/d/00002: reader absent, writer s100875-e111-5
+  ! reader and writer differ on c03msgs/d/00003: reader s100875-e26-3, writer s100875-e111-7
+  ! reader and writer differ on c03msgs/d/00013: reader absent, writer s100875-e111-0
+
+TRACE OF THE MINIMAL RUN
+  [0] seed 100875 knobs 0 profile Profile { delay_ppm: 100000, delay_max_ms: 120, fail_ppm: 15000, timeout_before_ppm: 5000, timeout_after_ppm: 8000, timeout_ms: 400 }
+  [0] [0] Open { p: 0, writer: true } -> opened (life 0, writer epoch Some(1))
+  [18] [18] Flush { p: 1 } -> not open (skipped)
+  [19] [19] Write { p: 1, ops: [(2, 13, false), (2, 17, false), (2, 21, false)] } -> not open (skipped)
+  [20] [20] Flush { p: 1 } -> not open (skipped)
+  [21] [21] Write { p: 1, ops: [(2, 11, false), (2, 8, false), (2, 8, false)] } -> not open (skipped)
+  [22] [22] Flush { p: 1 } -> not open (skipped)
+  [23] [23] Write { p: 1, ops: [(0, 21, false)] } -> not open (skipped)
+  [24] fault TimeoutBefore: life 2 Get tenants/sim-100875-80/gc/manifest.boundary
+  [24] fault Fail: life 2 Get tenants/sim-100875-80/wal/00000000000000000128.sst
+  [24] [24] Open { p: 2, writer: true } -> opened (life 2, writer epoch Some(2))
+  [25] [25] Open { p: 2, writer: true } -> already open (skipped)
+  [26] [26] Write { p: 2, ops: [(3, 18, true), (2, 9, false), (4, 10, false), (3, 3, false), (5, 14, false), (0, 2, false), (4, 4, f -> acked 10 keys
+  [27] [27] SlateGc { p: 2 } -> slate gc pass
+  [28] [28] FirstStart { p: 2 } -> first build started
+  [29] fault Fail: life 1 Get tenants/sim-100875-80/manifest/00000000000000000003.manifest
+  [29] fault Fail: life 2 List tenants/sim-100875-80/fx/manifest/
+  [29] [29] Point { p: 1, tag: 2 } -> restore point 2: checkpoint 31a93b7f-fa8e-4ffb-8ae0-85746da4d26b (manifest 4) paired with version None at 1794609419363
+  [30] hold rule 1 armed: life 1 Some(List) FxVersion skip 2 land false all false
+  [31] [31] Write { p: 2, ops: [(0, 2, true), (2, 9, false), (0, 13, false)] } -> acked 3 keys
+  [32] [32] Erase { p: 2, cust: 2 } -> deletes acked; register failed: Generic sim error: 503 slow down (simulated): 503 slow down (simulated)
+  [33] fault Fail: life 2 Get tenants/sim-100875-80/gc/manifest.boundary
+  [33] [33] Flush { p: 2 } -> flushed
+  [34] [34] Publish { p: 2 } -> published (x_d 4)
+  [35] [35] Abandon { p: 1 } -> not open (skipped)
+  [36] [36] Abandon { p: 0 } -> abandoned (close done true)
+  [37] hold rule 1 released (0 waiting)
+  [38] [38] Gc { p: 2 } -> no compactor (skipped)
+  [39] fault Fail: life 2 Get tenants/sim-100875-80/compacted/01M7BGX5344HHZ06SA6XMZG5M2.sst
+  [39] [39] Publish { p: 2 } -> published (x_d 4)
+  [40] mark 3 at 1794609419621
+  [41] [41] Write { p: 2, ops: [(3, 16, false), (2, 6, false), (2, 15, false)] } -> acked 3 keys
+  [42] [42] Retire { p: 2 } -> nothing to retire
+  [43] [43] Write { p: 2, ops: [(4, 16, false), (5, 6, false), (5, 16, false), (3, 21, false)] } -> acked 4 keys
+  [44] [44] SlateGc { p: 2 } -> slate gc pass
+  [45] fault TimeoutBefore: life 2 List tenants/sim-100875-80/fx/erasures/
+  [45] [45] Retire { p: 2 } -> retire failed: Generic sim error: timeout before the store (simulated): timeout before the store (simulated)
+  [46] [46] CompStart { p: 2 } -> compactor started after a catch-up publish; 
+  [47] [47] Erase { p: 2, cust: 4 } -> deletes acked; erasure 00000000000000000007-b341d16e registered, S_e 7
+  [48] hold rule 2 armed: life 2 Some(Put) Other skip 0 land true all false
+  [49] hold rule 3 armed: life 2 Some(Get) FxVersion skip 0 land true all false
+  [50] hold rule 4 armed: life 2 Some(List) FxVersion skip 0 land false all false
+  [51] held by rule 4: life 2 List tenants/sim-100875-80/fx/manifest/
+  [51] held by rule 2: life 2 Put tenants/sim-100875-80/compactions/00000000000000000001.compactions
+  [51] fault Fail: life 2 List tenants/sim-100875-80/compactions/
+  [51] fault Fail: life 2 Get tenants/sim-100875-80/fx/drop-lease
+  [51] rule 2 lets go after 1001 ms: life 2 Put tenants/sim-100875-80/compactions/00000000000000000001.compactions lands
+  [51] event 51 still in flight after 1.5s
+  [52] hold rule 5 armed: life 2 Some(Put) FxVersion skip 1 land false all false
+  [53] fault TimeoutBefore: life 0 Get tenants/sim-100875-80/manifest/00000000000000000008.manifest
+  [53] fault Fail: life 2 Get tenants/sim-100875-80/manifest/00000000000000000008.manifest
+  [53] fault Fail: life 0 Get tenants/sim-100875-80/wal/00000000000000000008.sst
+  [53] [53] Open { p: 0, writer: false } -> opened (life 0, writer epoch None)
+  [54] fault Fail: life 0 Get tenants/sim-100875-80/manifest/00000000000000000008.manifest
+  [54] fault TimeoutBefore: life 2 Get tenants/sim-100875-80/gc/manifest.boundary
+  [54] [54] SlateGc { p: 0 } -> slate gc pass
+  [55] [55] ErasePass { p: 2 } -> no erasure ready
+  [56] fault Fail: life 2 Get tenants/sim-100875-80/gc/compactions.boundary
+  [56] fault Fail: life 2 Get tenants/sim-100875-80/compactions/00000000000000000004.compactions
+  [56] rule 4 lets go after 4000 ms: life 2 List tenants/sim-100875-80/fx/manifest/ dropped
+  [56] fault Fail: life 2 Put tenants/sim-100875-80/manifest/00000000000000000008.manifest
+  [56] fault Fail: life 2 Get tenants/sim-100875-80/gc/compactions.boundary
+  [56] [51] Point { p: 2, tag: 4 } -> restore point 4 failed: Generic sim error: held request dropped: held request dropped
+  [56] fault TimeoutBefore: life 2 Get tenants/sim-100875-80/compactions/00000000000000000006.compactions
+  [56] fault TimeoutBefore: life 2 List tenants/sim-100875-80/fx/manifest/
+  [56] fault TimeoutBefore: life 2 Get tenants/sim-100875-80/manifest/00000000000000000009.manifest
+  [56] fault Fail: life 2 Get tenants/sim-100875-80/manifest/00000000000000000009.manifest
+  [56] fault TimeoutBefore: life 2 Get tenants/sim-100875-80/manifest/00000000000000000009.manifest
+  [56] fault TimeoutBefore: life 2 Get tenants/sim-100875-80/manifest/00000000000000000009.manifest
+  [56] fault Fail: life 2 Get tenants/sim-100875-80/compactions/00000000000000000006.compactions
+  [56] fault Fail: life 2 Get tenants/sim-100875-80/compactions/00000000000000000006.compactions
+  [56] fault Fail: life 2 Get tenants/sim-100875-80/compactions/00000000000000000006.compactions
+  [56] fault Fail: life 2 Get tenants/sim-100875-80/gc/compactions.boundary
+  [56] fault Fail: life 2 Get tenants/sim-100875-80/gc/compactions.boundary
+  [56] fault Fail: life 2 Get tenants/sim-100875-80/gc/compactions.boundary
+  [56] fault Fail: life 2 Get tenants/sim-100875-80/compactions/00000000000000000006.compactions
+  [56] fault Fail: life 2 Get tenants/sim-100875-80/compactions/00000000000000000006.compactions
+  [56] fault Fail: life 2 Get tenants/sim-100875-80/compactions/00000000000000000006.compactions
+  [56] fault TimeoutBefore: life 2 Get tenants/sim-100875-80/manifest/00000000000000000009.manifest
+  [56] fault Fail: life 2 Get tenants/sim-100875-80/compactions/00000000000000000006.compactions
+  [56] fault Fail: life 2 Get tenants/sim-100875-80/manifest/00000000000000000009.manifest
+  [56] fault TimeoutBefore: life 2 List tenants/sim-100875-80/fx/manifest/
+  [56] fault TimeoutBefore: life 2 Get tenants/sim-100875-80/gc/manifest.boundary
+  [56] fault Fail: life 2 Get tenants/sim-100875-80/gc/compactions.boundary
+  [56] fault Fail: life 2 Get tenants/sim-100875-80/gc/compactions.boundary
+  [56] fault Fail: life 2 Get tenants/sim-100875-80/compactions/00000000000000000006.compactions
+  [56] fault Fail: life 2 Get tenants/sim-100875-80/manifest/00000000000000000009.manifest
+  [56] fault Fail: life 2 Get tenants/sim-100875-80/gc/compactions.boundary
+  [56] fault Fail: life 2 Get tenants/sim-100875-80/gc/manifest.boundary
+  [56] fault Fail: life 2 Get tenants/sim-100875-80/manifest/00000000000000000009.manifest
+  [56] fault TimeoutBefore: life 2 Get tenants/sim-100875-80/compactions/00000000000000000006.compactions
+  [56] fault Fail: life 2 Get tenants/sim-100875-80/gc/compactions.boundary
+  [56] fault TimeoutBefore: life 2 Get tenants/sim-100875-80/gc/manifest.boundary
+  [56] fault Fail: life 2 Get tenants/sim-100875-80/gc/compactions.boundary
+  [56] fault Fail: life 2 Get tenants/sim-100875-80/gc/manifest.boundary
+  [56] fault Fail: life 2 Get tenants/sim-100875-80/gc/manifest.boundary
+  [56] fault Fail: life 2 Get tenants/sim-100875-80/gc/manifest.boundary
+  [56] fault TimeoutBefore: life 2 Get tenants/sim-100875-80/compactions/00000000000000000006.compactions
+  [56] fault Fail: life 2 Get tenants/sim-100875-80/gc/manifest.boundary
+  [56] fault Fail: life 2 Get tenants/sim-100875-80/gc/manifest.boundary
+  [56] fault Fail: life 2 Get tenants/sim-100875-80/compactions/00000000000000000006.compactions
+  [56] fault TimeoutBefore: life 2 Get tenants/sim-100875-80/gc/manifest.boundary
+  [56] fault Fail: life 2 Get tenants/sim-100875-80/manifest/00000000000000000009.manifest
+  [56] fault Fail: life 2 Get tenants/sim-100875-80/gc/compactions.boundary
+  [56] fault Fail: life 2 Get tenants/sim-100875-80/manifest/00000000000000000009.manifest
+  [56] fault TimeoutBefore: life 2 Get tenants/sim-100875-80/manifest/00000000000000000009.manifest
+  [56] fault Fail: life 2 Get tenants/sim-100875-80/gc/compactions.boundary
+  [56] fault Fail: life 2 Get tenants/sim-100875-80/manifest/00000000000000000009.manifest
+  [56] fault Fail: life 2 Get tenants/sim-100875-80/gc/manifest.boundary
+  [56] fault Fail: life 2 Get tenants/sim-100875-80/gc/manifest.boundary
+  [56] fault TimeoutBefore: life 2 Get tenants/sim-100875-80/gc/manifest.boundary
+  [56] fault Fail: life 2 Get tenants/sim-100875-80/compactions/00000000000000000006.compactions
+  [56] fault Fail: life 2 Get tenants/sim-100875-80/manifest/00000000000000000009.manifest
+  [56] fault Fail: life 2 Get tenants/sim-100875-80/gc/compactions.boundary
+  [56] fault Fail: life 2 Get tenants/sim-100875-80/gc/compactions.boundary
+  [56] fault Fail: life 2 Get tenants/sim-100875-80/gc/manifest.boundary
+  [56] fault TimeoutBefore: life 2 Get tenants/sim-100875-80/gc/compactions.boundary
+  [56] fault Fail: life 2 Get tenants/sim-100875-80/gc/manifest.boundary
+  [56] fault Fail: life 2 Get tenants/sim-100875-80/compactions/00000000000000000006.compactions
+  [56] fault Fail: life 2 Get tenants/sim-100875-80/gc/manifest.boundary
+  [56] fault TimeoutBefore: life 2 Get tenants/sim-100875-80/compactions/00000000000000000006.compactions
+  [56] fault Fail: life 2 Get tenants/sim-100875-80/compactions/00000000000000000006.compactions
+  [56] [56] DropThrough { p: 2 } -> drop failed: the drop did not reach X_d 6 in 40s: floor 6, 1 SSTs or runs at or below it left
+  [57] fault TimeoutBefore: life 2 Get tenants/sim-100875-80/gc/manifest.boundary
+  [57] fault TimeoutBefore: life 2 Get tenants/sim-100875-80/manifest/00000000000000000009.manifest
+  [57] fault Fail: life 2 List tenants/sim-100875-80/fx/manifest/
+  [57] fault Fail: life 2 Get tenants/sim-100875-80/gc/compactions.boundary
+  [57] fault Fail: life 2 Get tenants/sim-100875-80/gc/manifest.boundary
+  [57] fault Fail: life 2 List tenants/sim-100875-80/fx/manifest/
+  [57] fault Fail: life 2 Get tenants/sim-100875-80/gc/compactions.boundary
+  [57] fault Fail: life 2 Get tenants/sim-100875-80/manifest/00000000000000000009.manifest
+  [57] fault Fail: life 2 Get tenants/sim-100875-80/gc/compactions.boundary
+  [57] fault Fail: life 2 Get tenants/sim-100875-80/manifest/00000000000000000009.manifest
+  [57] fault Fail: life 2 Get tenants/sim-100875-80/gc/manifest.boundary
+  [57] fault Fail: life 2 Get tenants/sim-100875-80/gc/manifest.boundary
+  [57] fault Fail: life 2 Get tenants/sim-100875-80/gc/compactions.boundary
+  [57] fault TimeoutBefore: life 2 Get tenants/sim-100875-80/gc/manifest.boundary
+  [57] fault Fail: life 2 Get tenants/sim-100875-80/gc/manifest.boundary
+  [57] fault Fail: life 2 Get tenants/sim-100875-80/compactions/00000000000000000006.compactions
+  [57] fault Fail: life 2 Get tenants/sim-100875-80/manifest/00000000000000000009.manifest
+  [57] fault Fail: life 2 Get tenants/sim-100875-80/compactions/00000000000000000006.compactions
+  [57] fault Fail: life 2 Get tenants/sim-100875-80/compactions/00000000000000000006.compactions
+  [57] fault Fail: life 2 List tenants/sim-100875-80/fx/manifest/
+  [57] fault TimeoutBefore: life 2 Get tenants/sim-100875-80/fx/drop-lease
+  [57] fault Fail: life 2 Get tenants/sim-100875-80/gc/compactions.boundary
+  [57] fault Fail: life 2 Get tenants/sim-100875-80/gc/manifest.boundary
+  [57] fault Fail: life 2 Get tenants/sim-100875-80/gc/compactions.boundary
+  [57] fault TimeoutBefore: life 2 Get tenants/sim-100875-80/manifest/00000000000000000009.manifest
+  [57] fault TimeoutBefore: life 2 Get tenants/sim-100875-80/compactions/00000000000000000006.compactions
+  [57] fault Fail: life 2 Get tenants/sim-100875-80/gc/compactions.boundary
+  [57] fault TimeoutBefore: life 2 Get tenants/sim-100875-80/manifest/00000000000000000009.manifest
+  [57] fault Fail: life 2 Get tenants/sim-100875-80/manifest/00000000000000000009.manifest
+  [57] fault Fail: life 2 Get tenants/sim-100875-80/gc/manifest.boundary
+  [57] fault TimeoutBefore: life 2 Get tenants/sim-100875-80/gc/manifest.boundary
+  [57] fault TimeoutBefore: life 2 Get tenants/sim-100875-80/manifest/00000000000000000009.manifest
+  [57] fault Fail: life 2 Get tenants/sim-100875-80/gc/manifest.boundary
+  [57] fault TimeoutBefore: life 2 Get tenants/sim-100875-80/manifest/00000000000000000009.manifest
+  [57] fault Fail: life 2 Get tenants/sim-100875-80/fx/drop-lease
+  [57] fault TimeoutBefore: life 2 Get tenants/sim-100875-80/compactions/00000000000000000006.compactions
+  [57] fault Fail: life 2 Get tenants/sim-100875-80/manifest/00000000000000000009.manifest
+  [57] fault Fail: life 2 Get tenants/sim-100875-80/gc/manifest.boundary
+  [57] fault TimeoutBefore: life 2 Get tenants/sim-100875-80/gc/compactions.boundary
+  [57] fault Fail: life 2 Get tenants/sim-100875-80/gc/compactions.boundary
+  [57] fault Fail: life 2 Get tenants/sim-100875-80/manifest/00000000000000000009.manifest
+  [57] fault TimeoutBefore: life 2 Get tenants/sim-100875-80/gc/manifest.boundary
+  [57] fault TimeoutBefore: life 2 Get tenants/sim-100875-80/compactions/00000000000000000006.compactions
+  [57] fault Fail: life 2 Get tenants/sim-100875-80/compactions/00000000000000000006.compactions
+  [57] fault TimeoutBefore: life 2 Get tenants/sim-100875-80/compactions/00000000000000000006.compactions
+  [57] fault Fail: life 2 List tenants/sim-100875-80/fx/manifest/
+  [57] fault Fail: life 2 Get tenants/sim-100875-80/gc/compactions.boundary
+  [57] fault Fail: life 2 Get tenants/sim-100875-80/gc/compactions.boundary
+  [57] fault Fail: life 2 Get tenants/sim-100875-80/manifest/00000000000000000009.manifest
+  [57] fault Fail: life 2 Get tenants/sim-100875-80/manifest/00000000000000000009.manifest
+  [57] fault Fail: life 2 Get tenants/sim-100875-80/manifest/00000000000000000009.manifest
+  [57] fault Fail: life 2 Get tenants/sim-100875-80/compactions/00000000000000000006.compactions
+  [57] fault Fail: life 2 Get tenants/sim-100875-80/gc/compactions.boundary
+  [57] fault Fail: life 2 Get tenants/sim-100875-80/gc/compactions.boundary
+  [57] fault Fail: life 2 Get tenants/sim-100875-80/gc/manifest.boundary
+  [57] fault TimeoutBefore: life 2 Get tenants/sim-100875-80/gc/manifest.boundary
+  [57] fault Fail: life 2 Get tenants/sim-100875-80/compactions/00000000000000000006.compactions
+  [57] fault TimeoutBefore: life 2 Get tenants/sim-100875-80/manifest/00000000000000000009.manifest
+  [57] fault TimeoutBefore: life 2 Get tenants/sim-100875-80/fx/drop-lease
+  [57] fault Fail: life 2 List tenants/sim-100875-80/fx/manifest/
+  [57] fault TimeoutBefore: life 2 Get tenants/sim-100875-80/compactions/00000000000000000006.compactions
+  [57] [57] DropThrough { p: 2 } -> drop failed: the drop did not reach X_d 6 in 40s: floor 6, 1 SSTs or runs at or below it left
+  [58] [58] Write { p: 2, ops: [(3, 10, false), (3, 5, false), (0, 9, false), (0, 2, false)] } -> acked 4 keys
+  [59] fault Fail: life 2 Get tenants/sim-100875-80/gc/compactions.boundary
+  [59] fault Fail: life 2 Get tenants/sim-100875-80/manifest/00000000000000000009.manifest
+  [59] fault TimeoutBefore: life 2 Get tenants/sim-100875-80/gc/compactions.boundary
+  [59] fault TimeoutBefore: life 2 Get tenants/sim-100875-80/gc/manifest.boundary
+  [59] fault Fail: life 2 Get tenants/sim-100875-80/gc/manifest.boundary
+  [59] fault Fail: life 2 Get tenants/sim-100875-80/compactions/00000000000000000006.compactions
+  [59] fault TimeoutBefore: life 2 Get tenants/sim-100875-80/fx/drop-lease
+  [59] fault Fail: life 2 List tenants/sim-100875-80/fx/manifest/
+  [59] fault Fail: life 2 Get tenants/sim-100875-80/gc/manifest.boundary
+  [59] fault Fail: life 2 Get tenants/sim-100875-80/gc/compactions.boundary
+  [59] fault Fail: life 2 Get tenants/sim-100875-80/gc/compactions.boundary
+  [59] fault Fail: life 2 Get tenants/sim-100875-80/gc/manifest.boundary
+  [59] fault TimeoutBefore: life 2 Get tenants/sim-100875-80/manifest/00000000000000000009.manifest
+  [59] fault Fail: life 2 Get tenants/sim-100875-80/gc/compactions.boundary
+  [59] fault Fail: life 2 Get tenants/sim-100875-80/gc/compactions.boundary
+  [59] fault TimeoutBefore: life 2 Get tenants/sim-100875-80/compactions/00000000000000000006.compactions
+  [59] fault TimeoutBefore: life 2 Get tenants/sim-100875-80/gc/manifest.boundary
+  [59] fault Fail: life 2 Get tenants/sim-100875-80/gc/manifest.boundary
+  [59] fault Fail: life 2 Get tenants/sim-100875-80/compactions/00000000000000000006.compactions
+  [59] fault Fail: life 2 Get tenants/sim-100875-80/manifest/00000000000000000009.manifest
+  [59] fault Fail: life 2 Get tenants/sim-100875-80/gc/compactions.boundary
+  [59] fault Fail: life 2 Get tenants/sim-100875-80/gc/manifest.boundary
+  [59] fault Fail: life 2 Get tenants/sim-100875-80/fx/drop-lease
+  [59] fault Fail: life 2 Get tenants/sim-100875-80/manifest/00000000000000000009.manifest
+  [59] fault Fail: life 2 Get tenants/sim-100875-80/manifest/00000000000000000009.manifest
+  [59] fault Fail: life 2 Get tenants/sim-100875-80/compactions/00000000000000000006.compactions
+  [59] fault TimeoutBefore: life 2 Get tenants/sim-100875-80/manifest/00000000000000000009.manifest
+  [59] fault Fail: life 2 Get tenants/sim-100875-80/manifest/00000000000000000009.manifest
+  [59] fault TimeoutBefore: life 2 Get tenants/sim-100875-80/gc/compactions.boundary
+  [59] fault Fail: life 2 Get tenants/sim-100875-80/gc/manifest.boundary
+  [59] fault Fail: life 2 Get tenants/sim-100875-80/gc/manifest.boundary
+  [59] fault Fail: life 2 Get tenants/sim-100875-80/gc/manifest.boundary
+  [59] fault Fail: life 2 Get tenants/sim-100875-80/gc/manifest.boundary
+  [59] fault Fail: life 2 Get tenants/sim-100875-80/manifest/00000000000000000009.manifest
+  [59] fault Fail: life 2 Get tenants/sim-100875-80/manifest/00000000000000000009.manifest
+  [59] fault Fail: life 2 Get tenants/sim-100875-80/manifest/00000000000000000009.manifest
+  [59] fault TimeoutBefore: life 2 Get tenants/sim-100875-80/compactions/00000000000000000006.compactions
+  [59] fault Fail: life 2 Get tenants/sim-100875-80/compactions/00000000000000000006.compactions
+  [59] fault Fail: life 2 Get tenants/sim-100875-80/compactions/00000000000000000006.compactions
+  [59] fault Fail: life 2 Get tenants/sim-100875-80/manifest/00000000000000000009.manifest
+  [59] fault TimeoutBefore: life 2 Get tenants/sim-100875-80/compactions/00000000000000000006.compactions
+  [59] fault TimeoutBefore: life 2 Get tenants/sim-100875-80/compactions/00000000000000000006.compactions
+  [59] fault TimeoutBefore: life 2 Get tenants/sim-100875-80/gc/manifest.boundary
+  [59] fault Fail: life 2 Get tenants/sim-100875-80/manifest/00000000000000000009.manifest
+  [59] fault Fail: life 2 Get tenants/sim-100875-80/compactions/00000000000000000006.compactions
+  [59] fault TimeoutBefore: life 2 Get tenants/sim-100875-80/gc/compactions.boundary
+  [59] fault Fail: life 2 Get tenants/sim-100875-80/gc/compactions.boundary
+  [59] fault Fail: life 2 Get tenants/sim-100875-80/gc/compactions.boundary
+  [59] fault Fail: life 2 Get tenants/sim-100875-80/gc/manifest.boundary
+  [59] fault TimeoutBefore: life 2 Get tenants/sim-100875-80/gc/manifest.boundary
+  [59] fault Fail: life 2 Get tenants/sim-100875-80/gc/manifest.boundary
+  [59] fault Fail: life 2 Get tenants/sim-100875-80/manifest/00000000000000000009.manifest
+  [59] fault Fail: life 2 Get tenants/sim-100875-80/manifest/00000000000000000009.manifest
+  [59] fault Fail: life 2 Get tenants/sim-100875-80/compactions/00000000000000000006.compactions
+  [59] fault Fail: life 2 Get tenants/sim-100875-80/gc/manifest.boundary
+  [59] fault Fail: life 2 Get tenants/sim-100875-80/gc/manifest.boundary
+  [59] fault Fail: life 2 Get tenants/sim-100875-80/gc/compactions.boundary
+  [59] fault Fail: life 2 Get tenants/sim-100875-80/gc/manifest.boundary
+  [59] fault Fail: life 2 Get tenants/sim-100875-80/compactions/00000000000000000006.compactions
+  [59] fault TimeoutBefore: life 2 Get tenants/sim-100875-80/gc/compactions.boundary
+  [59] fault Fail: life 2 Get tenants/sim-100875-80/gc/compactions.boundary
+  [59] fault TimeoutBefore: life 2 Get tenants/sim-100875-80/gc/compactions.boundary
+  [59] fault Fail: life 2 Get tenants/sim-100875-80/gc/compactions.boundary
+  [59] fault Fail: life 2 Get tenants/sim-100875-80/compactions/00000000000000000006.compactions
+  [59] fault Fail: life 2 List tenants/sim-100875-80/fx/manifest/
+  [59] fault Fail: life 2 Get tenants/sim-100875-80/manifest/00000000000000000009.manifest
+  [59] fault Fail: life 2 Get tenants/sim-100875-80/manifest/00000000000000000009.manifest
+  [59] fault Fail: life 2 Get tenants/sim-100875-80/gc/manifest.boundary
+  [59] fault TimeoutBefore: life 2 Get tenants/sim-100875-80/gc/compactions.boundary
+  [59] fault Fail: life 2 Get tenants/sim-100875-80/manifest/00000000000000000009.manifest
+  [59] [59] DropThrough { p: 2 } -> drop failed: the drop did not reach X_d 6 in 40s: floor 6, 1 SSTs or runs at or below it left
+  [60] [60] Point { p: 1, tag: 5 } -> restore point 5: checkpoint 85eca110-3c19-47f6-be79-03e8b0a0a213 (manifest 9) paired with version Some(4) at 1794609543253
+  [61] fault Fail: life 2 Get tenants/sim-100875-80/compactions/00000000000000000006.compactions
+  [61] held by rule 3: life 2 Get tenants/sim-100875-80/fx/manifest/00000000000000000006
+  [61] fault Fail: life 2 Get tenants/sim-100875-80/compactions/00000000000000000006.compactions
+  [61] [61] Flush { p: 2 } -> flushed
+  [62] [62] Gc { p: 2 } -> gc pass
+  [64] [64] Write { p: 2, ops: [(2, 8, false), (4, 16, false), (2, 14, false), (5, 18, true), (2, 5, false), (0, 19, false), (4, 10, -> acked 7 keys
+  [66] [66] Erase { p: 2, cust: 3 } -> deletes acked; erasure 00000000000000000010-2d4dee35 registered, S_e 10
+  [67] [67] Flush { p: 2 } -> flushed
+  [68] held by rule 5: life 2 Put tenants/sim-100875-80/fx/manifest/00000000000000000007
+  [68] [68] Restore { p: 2, mark: 3, apply: true } -> restore checked and applied: mark 3, point 2, version None, 6 WAL objects forward
+  [69] [69] Write { p: 2, ops: [(4, 16, true), (0, 18, false), (1, 14, false), (1, 17, false)] } -> acked 4 keys
+  [70] fault TimeoutBefore: life 2 Get tenants/sim-100875-80/compactions/00000000000000000006.compactions
+  [70] rule 5 lets go after 1001 ms: life 2 Put tenants/sim-100875-80/fx/manifest/00000000000000000007 dropped
+  [70] [70] CompDrain { p: 2 } -> drained (version 8)
+  [71] hold rule 5 released (0 waiting)
+  [72] hold rule 6 armed: life 2 Some(Put) FxVersion skip 2 land false all true
+  [73] fault TimeoutBefore: life 2 Get control/staging/sim-100875-80/73/manifest/00000000000000000003.manifest
+  [73] fault TimeoutBefore: life 2 Get tenants/sim-100875-80/manifest/00000000000000000015.manifest
+  [73] fault Fail: life 2 Get control/staging/sim-100875-80/73/wal/00000000000000000006.sst
+  [73] [73] Restore { p: 2, mark: 3, apply: false } -> restore checked: mark 3, point 2, version None, 6 WAL objects forward, 0 wrong
+  [74] [74] Write { p: 2, ops: [(2, 3, false), (0, 3, true), (4, 14, true)] } -> acked 3 keys
+  [75] [75] Write { p: 2, ops: [(5, 21, true)] } -> acked 1 keys
+  [76] [76] Write { p: 2, ops: [(2, 9, false), (3, 12, true), (2, 6, false), (1, 11, true), (2, 19, false), (4, 22, false), (4, 10,  -> acked 7 keys
+  [77] fault Fail: life 2 Get tenants/sim-100875-80/gc/manifest.boundary
+  [78] fault Fail: life 2 Put tenants/sim-100875-80/compacted/01M7BH11945JGBM84G12T3TGPW.sst
+  [78] fault Fail: life 2 Get tenants/sim-100875-80/gc/manifest.boundary
+  [78] [78] Fork { p: 2, copy: false, tag: 6 } -> fork 6 done (clone): sim-100875-80-fork6, its first version Some(9), pairing checkpoint deleted true, pair deleted true
+  [79] [79] Write { p: 2, ops: [(0, 6, false), (4, 5, false), (0, 1, false), (4, 16, false), (0, 0, false), (0, 10, false)] } -> not open (skipped)
+  [80] [80] Write { p: 2, ops: [(1, 16, false), (4, 0, false), (2, 0, false), (2, 13, false), (2, 3, true), (4, 18, false), (3, 8, f -> not open (skipped)
+  [81] fault Fail: life 1 Get tenants/sim-100875-80/manifest/00000000000000000020.manifest
+  [81] rule 3 lets go after 4001 ms: life 2 Get tenants/sim-100875-80/fx/manifest/00000000000000000006 lands
+  [81] [81] Open { p: 1, writer: true } -> opened (life 1, writer epoch Some(3))
+  [82] [82] Retire { p: 0 } -> nothing to retire
+  [83] [83] Write { p: 1, ops: [(4, 21, false), (5, 13, false), (2, 9, false), (5, 5, false)] } -> acked 4 keys
+  [84] [84] Erase { p: 1, cust: 2 } -> deletes acked; erasure 00000000000000000017-3e4308cf registered, S_e 17
+  [85] [85] Write { p: 1, ops: [(4, 19, false), (4, 10, false), (5, 4, false), (2, 13, false)] } -> acked 4 keys
+  [103] storm off
+  [104] [104] CompStart { p: 1 } -> compactor started 
+  [105] fault TimeoutBefore: life 1 Get tenants/sim-100875-80/gc/compactions.boundary
+  [105] fault Fail: life 0 Get tenants/sim-100875-80/compacted/01M7BGX5344HHZ06SA6XMZG5M2.sst
+  [105] fault Fail: life 1 Get tenants/sim-100875-80/gc/compactions.boundary
+  [105] [105] Upgrade { p: 0 } -> upgraded (epoch Some(4))
+  [106] [106] Write { p: 1, ops: [(0, 2, false)] } -> failed: Closed error: detected newer DB client
+  [107] hold rule 8 armed: life 1 Some(Put) Wal skip 1 land true all false
+  [108] [108] Point { p: 2, tag: 9 } -> restore point 9: checkpoint c55ca4d2-4800-4433-94ab-6ae6fc4f054c (manifest 23) paired with version Some(12) at 1794609548041
+  [109] fault Fail: life 0 Get tenants/sim-100875-80/compacted/01M7BH0Y2NV1GH2C3ZAT2H3JQK.sst
+  [109] [109] Publish { p: 0 } -> published (x_d 18)
+  [110] hold rule 9 armed: life 0 Some(Put) FxVersion skip 2 land true all false
+  [111] [111] Write { p: 0, ops: [(3, 13, false), (2, 21, false), (0, 6, false), (2, 15, false), (0, 20, false), (3, 2, false), (1, 7, -> acked 8 keys
+  [112] hold rule 10 armed: life 1 Some(Put) FxVersion skip 2 land true all false
+  [113] fault Fail: life 2 Get tenants/sim-100875-80/compacted/01M7BGX5344HHZ06SA6XMZG5M2.sst
+  [113] fault TimeoutBefore: life 1 Get tenants/sim-100875-80/gc/compactions.boundary
+  [113] fault Fail: life 2 Put tenants/sim-100875-80/wal/00000000000000000024.sst
+  [113] fault TimeoutBefore: life 2 Get tenants/sim-100875-80/compacted/01M7BGX5344HHZ06SA6XMZG5M2.sst
+  [113] fault Fail: life 1 Get tenants/sim-100875-80/gc/compactions.boundary
+  [113] held by rule 6: life 2 Put tenants/sim-100875-80/fx/manifest/00000000000000000014
+  [113] fault TimeoutBefore: life 1 Get tenants/sim-100875-80/gc/compactions.boundary
+  [113] event 113 still in flight after 1.5s
+  [114] [114] Publish { p: 2 } -> busy (skipped)
+  [115] [115] Flush { p: 0 } -> flush failed: Closed error: detected newer DB client
+  [116] fault TimeoutBefore: life 0 Get tenants/sim-100875-80/gc/manifest.boundary
+  [116] fault Fail: life 0 Get tenants/sim-100875-80/gc/manifest.boundary
+  [116] rule 6 lets go after 1001 ms: life 2 Put tenants/sim-100875-80/fx/manifest/00000000000000000014 dropped
+  [116] [113] Open { p: 2, writer: true } -> open failed: Generic sim error: held request dropped: held request dropped
+  [116] [116] SlateGc { p: 0 } -> slate gc pass
+  [117] [117] Write { p: 0, ops: [(0, 18, false), (0, 10, false), (5, 9, false), (1, 16, true), (0, 19, false), (2, 11, false), (3, 3, -> failed: Closed error: detected newer DB client
+  [118] hold rule 11 armed: life 0 Some(List) FxVersion skip 0 land true all true
+  [119] [119] CompDrain { p: 1 } -> drained (version 11)
+  [120] held by rule 11: life 0 List tenants/sim-100875-80/fx/manifest/
+  [120] fault Fail: life 1 Get tenants/sim-100875-80/manifest/00000000000000000027.manifest
+  [120] fault Fail: life 1 Get tenants/sim-100875-80/fx/drop-lease
+  [120] fault TimeoutBefore: life 1 Get tenants/sim-100875-80/gc/manifest.boundary
+  [120] event 120 still in flight after 1.5s
+  [121] [121] Write { p: 2, ops: [(0, 20, false), (4, 8, false), (4, 0, true), (2, 14, false), (1, 2, false), (4, 18, false), (5, 20,  -> not open (skipped)
+  [122] fault Fail: life 1 List tenants/sim-100875-80/fx/erasures/
+  [122] [122] ErasePass { p: 1 } -> erase pass failed: Generic sim error: 503 slow down (simulated): 503 slow down (simulated)
+  [123] [123] Write { p: 2, ops: [(1, 23, false), (4, 4, false), (3, 17, false), (4, 21, false), (5, 21, true), (5, 8, false), (3, 17, -> not open (skipped)
+  [124] [124] DropThrough { p: 2 } -> no compactor (skipped)
+  [125] [125] Erase { p: 0, cust: 3 } -> deletes failed: Closed error: detected newer DB client
+  [126] [126] Write { p: 2, ops: [(3, 20, false), (5, 12, true), (1, 15, false), (1, 0, false), (3, 18, false), (2, 1, false), (2, 13, -> not open (skipped)
+  [127] [127] Write { p: 2, ops: [(2, 3, false), (3, 11, false), (4, 1, false), (1, 8, false), (2, 23, false), (0, 21, false)] } -> not open (skipped)
+  [128] [128] FirstPoll { p: 2 } -> not open (skipped)
+  [129] [129] Fork { p: 2, copy: false, tag: 11 } -> not open (skipped)
+  [130] [130] Write { p: 1, ops: [(4, 14, false), (5, 21, false), (5, 5, false), (5, 6, false), (2, 7, false)] } -> failed: Closed error: detected newer DB client
+  [132] [132] Retire { p: 1 } -> nothing to retire
+  [133] kill -9 slot 0 (life 0)
+  [134] [134] Write { p: 1, ops: [(0, 12, false)] } -> failed: Closed error: detected newer DB client
+  [135] mark 12 at 1794609552406
+  [136] fault Fail: life 2 Put control/staging/sim-100875-80/136/manifest/00000000000000000001.manifest
+  [136] fault Fail: life 1 Get tenants/sim-100875-80/gc/compactions.boundary
+  [136] fault Fail: life 1 Get tenants/sim-100875-80/gc/compactions.boundary
+  [136] [136] Restore { p: 2, mark: 12, apply: false } -> restore checked: mark 12, point 9, version Some(12), 7 WAL objects forward, 0 wrong
+  [4294967295] rule 11 lets go after 3767 ms: life 0 List tenants/sim-100875-80/fx/manifest/ lands
+  [4294967295] settle: event 120 did not end
+  [4294967295] settle: slot 1 close Ok(Ok(()))
+
+FULL SCRIPT
+seed 100875 knobs 0 profile Profile { delay_ppm: 100000, delay_max_ms: 120, fail_ppm: 15000, timeout_before_ppm: 5000, timeout_after_ppm: 8000, timeout_ms: 400 }
+    0 Open { p: 0, writer: true }
+    1 Write { p: 0, ops: [(0, 0, false), (0, 1, false), (0, 2, false), (0, 3, false), (0, 4, false), (0, 5, false), (0, 6, false), (0, 7, false), (0, 8, false), (0, 9, false), (0, 10, false), (0, 11, false), (0, 12, false), (0, 13, false), (0, 14, false), (0, 15, false), (0, 16, false), (0, 17, false), (0, 18, false), (0, 19, false), (0, 20, false), (0, 21, false), (0, 22, false), (0, 23, false)] }
+    2 Flush { p: 0 }
+    3 Point { p: 0, tag: 1 }
+    4 Write { p: 0, ops: [(2, 10, false), (3, 20, false), (2, 11, false), (1, 11, false), (0, 10, false), (3, 14, false), (1, 6, false)] }
+    5 Open { p: 1, writer: true }
+    6 Erase { p: 0, cust: 5 }
+    7 Write { p: 1, ops: [(1, 6, false), (1, 4, false), (1, 9, false)] }
+    8 Flush { p: 1 }
+    9 Write { p: 1, ops: [(5, 13, false), (5, 16, false), (5, 7, false)] }
+   10 Flush { p: 1 }
+   11 Write { p: 1, ops: [(4, 10, false), (4, 19, false), (4, 0, false)] }
+   12 Flush { p: 1 }
+   13 Write { p: 1, ops: [(5, 2, false), (5, 23, false), (5, 3, false)] }
+   14 Flush { p: 1 }
+   15 Write { p: 1, ops: [(2, 23, false), (2, 6, false), (2, 8, false)] }
+   16 Flush { p: 1 }
+   17 Write { p: 1, ops: [(2, 3, false), (2, 17, false), (2, 20, false)] }
+   18 Flush { p: 1 }
+   19 Write { p: 1, ops: [(2, 13, false), (2, 17, false), (2, 21, false)] }
+   20 Flush { p: 1 }
+   21 Write { p: 1, ops: [(2, 11, false), (2, 8, false), (2, 8, false)] }
+   22 Flush { p: 1 }
+   23 Write { p: 1, ops: [(0, 21, false)] }
+   24 Open { p: 2, writer: true }
+   25 Open { p: 2, writer: true }
+   26 Write { p: 2, ops: [(3, 18, true), (2, 9, false), (4, 10, false), (3, 3, false), (5, 14, false), (0, 2, false), (4, 4, false), (3, 15, true), (5, 4, false), (0, 18, true)] }
+   27 SlateGc { p: 2 }
+   28 FirstStart { p: 2 }
+   29 Point { p: 1, tag: 2 }
+   30 Hold { p: 1, class: FxVersion, op: Some(List), skip: 2, land: false, all: false, rid: 1 }
+   31 Write { p: 2, ops: [(0, 2, true), (2, 9, false), (0, 13, false)] }
+   32 Erase { p: 2, cust: 2 }
+   33 Flush { p: 2 }
+   34 Publish { p: 2 }
+   35 Abandon { p: 1 }
+   36 Abandon { p: 0 }
+   37 Release { rid: 1 }
+   38 Gc { p: 2 }
+   39 Publish { p: 2 }
+   40 Mark { tag: 3 }
+   41 Write { p: 2, ops: [(3, 16, false), (2, 6, false), (2, 15, false)] }
+   42 Retire { p: 2 }
+   43 Write { p: 2, ops: [(4, 16, false), (5, 6, false), (5, 16, false), (3, 21, false)] }
+   44 SlateGc { p: 2 }
+   45 Retire { p: 2 }
+   46 CompStart { p: 2 }
+   47 Erase { p: 2, cust: 4 }
+   48 Hold { p: 2, class: Other, op: Some(Put), skip: 0, land: true, all: false, rid: 2 }
+   49 Hold { p: 2, class: FxVersion, op: Some(Get), skip: 0, land: true, all: false, rid: 3 }
+   50 Hold { p: 2, class: FxVersion, op: Some(List), skip: 0, land: false, all: false, rid: 4 }
+   51 Point { p: 2, tag: 4 }
+   52 Hold { p: 2, class: FxVersion, op: Some(Put), skip: 1, land: false, all: false, rid: 5 }
+   53 Open { p: 0, writer: false }
+   54 SlateGc { p: 0 }
+   55 ErasePass { p: 2 }
+   56 DropThrough { p: 2 }
+   57 DropThrough { p: 2 }
+   58 Write { p: 2, ops: [(3, 10, false), (3, 5, false), (0, 9, false), (0, 2, false)] }
+   59 DropThrough { p: 2 }
+   60 Point { p: 1, tag: 5 }
+   61 Flush { p: 2 }
+   62 Gc { p: 2 }
+   63 Sleep { ms: 217 }
+   64 Write { p: 2, ops: [(2, 8, false), (4, 16, false), (2, 14, false), (5, 18, true), (2, 5, false), (0, 19, false), (4, 10, false)] }
+   65 Sleep { ms: 280 }
+   66 Erase { p: 2, cust: 3 }
+   67 Flush { p: 2 }
+   68 Restore { p: 2, mark: 3, apply: true }
+   69 Write { p: 2, ops: [(4, 16, true), (0, 18, false), (1, 14, false), (1, 17, false)] }
+   70 CompDrain { p: 2 }
+   71 Release { rid: 5 }
+   72 Hold { p: 2, class: FxVersion, op: Some(Put), skip: 2, land: false, all: true, rid: 6 }
+   73 Restore { p: 2, mark: 3, apply: false }
+   74 Write { p: 2, ops: [(2, 3, false), (0, 3, true), (4, 14, true)] }
+   75 Write { p: 2, ops: [(5, 21, true)] }
+   76 Write { p: 2, ops: [(2, 9, false), (3, 12, true), (2, 6, false), (1, 11, true), (2, 19, false), (4, 22, false), (4, 10, false)] }
+   77 Sleep { ms: 294 }
+   78 Fork { p: 2, copy: false, tag: 6 }
+   79 Write { p: 2, ops: [(0, 6, false), (4, 5, false), (0, 1, false), (4, 16, false), (0, 0, false), (0, 10, false)] }
+   80 Write { p: 2, ops: [(1, 16, false), (4, 0, false), (2, 0, false), (2, 13, false), (2, 3, true), (4, 18, false), (3, 8, false), (0, 21, false)] }
+   81 Open { p: 1, writer: true }
+   82 Retire { p: 0 }
+   83 Write { p: 1, ops: [(4, 21, false), (5, 13, false), (2, 9, false), (5, 5, false)] }
+   84 Erase { p: 1, cust: 2 }
+   85 Write { p: 1, ops: [(4, 19, false), (4, 10, false), (5, 4, false), (2, 13, false)] }
+   86 Storm { on: true }
+   87 Flush { p: 1 }
+   88 FirstStart { p: 1 }
+   89 FirstPoll { p: 1 }
+   90 Write { p: 1, ops: [(0, 13, false), (1, 3, false), (0, 15, true), (0, 4, false), (3, 2, false), (2, 16, false), (3, 17, false)] }
+   91 Publish { p: 1 }
+   92 Gc { p: 2 }
+   93 Restore { p: 1, mark: 3, apply: false }
+   94 FirstPoll { p: 1 }
+   95 FirstStart { p: 1 }
+   96 Write { p: 1, ops: [(2, 15, true), (5, 15, false), (5, 11, false), (0, 10, false), (3, 6, true), (3, 21, true), (5, 22, false), (2, 7, false), (3, 19, true)] }
+   97 Flush { p: 1 }
+   98 Mark { tag: 7 }
+   99 Hold { p: 2, class: FxVersion, op: Some(List), skip: 1, land: true, all: false, rid: 7 }
+  100 Point { p: 2, tag: 8 }
+  101 Sleep { ms: 179 }
+  102 Abandon { p: 2 }
+  103 Storm { on: false }
+  104 CompStart { p: 1 }
+  105 Upgrade { p: 0 }
+  106 Write { p: 1, ops: [(0, 2, false)] }
+  107 Hold { p: 1, class: Wal, op: Some(Put), skip: 1, land: true, all: false, rid: 8 }
+  108 Point { p: 2, tag: 9 }
+  109 Publish { p: 0 }
+  110 Hold { p: 0, class: FxVersion, op: Some(Put), skip: 2, land: true, all: false, rid: 9 }
+  111 Write { p: 0, ops: [(3, 13, false), (2, 21, false), (0, 6, false), (2, 15, false), (0, 20, false), (3, 2, false), (1, 7, false), (3, 3, false)] }
+  112 Hold { p: 1, class: FxVersion, op: Some(Put), skip: 2, land: true, all: false, rid: 10 }
+  113 Open { p: 2, writer: true }
+  114 Publish { p: 2 }
+  115 Flush { p: 0 }
+  116 SlateGc { p: 0 }
+  117 Write { p: 0, ops: [(0, 18, false), (0, 10, false), (5, 9, false), (1, 16, true), (0, 19, false), (2, 11, false), (3, 3, false)] }
+  118 Hold { p: 0, class: FxVersion, op: Some(List), skip: 0, land: true, all: true, rid: 11 }
+  119 CompDrain { p: 1 }
+  120 Point { p: 0, tag: 10 }
+  121 Write { p: 2, ops: [(0, 20, false), (4, 8, false), (4, 0, true), (2, 14, false), (1, 2, false), (4, 18, false), (5, 20, false)] }
+  122 ErasePass { p: 1 }
+  123 Write { p: 2, ops: [(1, 23, false), (4, 4, false), (3, 17, false), (4, 21, false), (5, 21, true), (5, 8, false), (3, 17, false), (4, 21, false), (2, 22, false)] }
+  124 DropThrough { p: 2 }
+  125 Erase { p: 0, cust: 3 }
+  126 Write { p: 2, ops: [(3, 20, false), (5, 12, true), (1, 15, false), (1, 0, false), (3, 18, false), (2, 1, false), (2, 13, true), (1, 21, false)] }
+  127 Write { p: 2, ops: [(2, 3, false), (3, 11, false), (4, 1, false), (1, 8, false), (2, 23, false), (0, 21, false)] }
+  128 FirstPoll { p: 2 }
+  129 Fork { p: 2, copy: false, tag: 11 }
+  130 Write { p: 1, ops: [(4, 14, false), (5, 21, false), (5, 5, false), (5, 6, false), (2, 7, false)] }
+  131 Sleep { ms: 376 }
+  132 Retire { p: 1 }
+  133 Kill { p: 0 }
+  134 Write { p: 1, ops: [(0, 12, false)] }
+  135 Mark { tag: 12 }
+  136 Restore { p: 2, mark: 12, apply: false }

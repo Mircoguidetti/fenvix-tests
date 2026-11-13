@@ -1,0 +1,700 @@
+SEED 100246 (steps 126): 22 violations; replays failing 2 of 2
+events 126 writes issued 24 key-writes acked 192 requests 3725 faults 268; points 2 restores 0 (applied 0) forks 0 generated 0 slate-gc 0 drops 0 scrubs 0 storms 1 groups-profile false
+
+VIOLATIONS
+  reader: c00msgs/d/00002 acknowledged write lost: expected absent (event 116, slot 0, issue 22), read the older s100246-e76-3 (event 76, slot 1) [a deleted or erased row is readable]
+  reader: c00msgs/d/00005 acknowledged write lost: expected absent (event 116, slot 0, issue 22), read the older s100246-e114-3 (event 114, slot 0) [a deleted or erased row is readable]
+  reader: c00msgs/d/00008 acknowledged write lost: expected absent (event 116, slot 0, issue 22), read the older s100246-e114-0 (event 114, slot 0) [a deleted or erased row is readable]
+  reader: c00msgs/d/00019 acknowledged write lost: expected absent (event 116, slot 0, issue 22), read the older s100246-e76-0 (event 76, slot 1) [a deleted or erased row is readable]
+  reader: c00msgs/d/00020 acknowledged write lost: expected absent (event 116, slot 0, issue 22), read the older s100246-e15-5 (event 15, slot 2) [a deleted or erased row is readable]
+  reader: c05msgs/d/00004 acknowledged write lost: expected absent (event 118, slot 0, issue 23), read the older s100246-e88-1 (event 88, slot 0) [a deleted or erased row is readable]
+  reader: c05msgs/d/00008 acknowledged write lost: expected absent (event 118, slot 0, issue 23), read the older s100246-e114-1 (event 114, slot 0) [a deleted or erased row is readable]
+  reader: c05msgs/d/00011 acknowledged write lost: expected absent (event 118, slot 0, issue 23), read the older s100246-e76-1 (event 76, slot 1) [a deleted or erased row is readable]
+  reader: c05msgs/d/00014 acknowledged write lost: expected absent (event 118, slot 0, issue 23), read the older s100246-e88-3 (event 88, slot 0) [a deleted or erased row is readable]
+  reader: c05msgs/d/00015 acknowledged write lost: expected absent (event 118, slot 0, issue 23), read the older s100246-e114-5 (event 114, slot 0) [a deleted or erased row is readable]
+  reader: c05msgs/d/00021 acknowledged write lost: expected absent (event 118, slot 0, issue 23), read the older s100246-e3-2 (event 3, slot 0) [a deleted or erased row is readable]
+  reader and writer differ on c00msgs/d/00002: reader s100246-e76-3, writer absent
+  reader and writer differ on c00msgs/d/00005: reader s100246-e114-3, writer absent
+  reader and writer differ on c00msgs/d/00008: reader s100246-e114-0, writer absent
+  reader and writer differ on c00msgs/d/00019: reader s100246-e76-0, writer absent
+  reader and writer differ on c00msgs/d/00020: reader s100246-e15-5, writer absent
+  reader and writer differ on c05msgs/d/00004: reader s100246-e88-1, writer absent
+  reader and writer differ on c05msgs/d/00008: reader s100246-e114-1, writer absent
+  reader and writer differ on c05msgs/d/00011: reader s100246-e76-1, writer absent
+  reader and writer differ on c05msgs/d/00014: reader s100246-e88-3, writer absent
+  reader and writer differ on c05msgs/d/00015: reader s100246-e114-5, writer absent
+  reader and writer differ on c05msgs/d/00021: reader s100246-e3-2, writer absent
+
+MINIMAL SCRIPT (126 events; SIM_KEEP=0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125), its run: 22 violations
+seed 100246 knobs 1 profile Profile { delay_ppm: 100000, delay_max_ms: 120, fail_ppm: 15000, timeout_before_ppm: 5000, timeout_after_ppm: 8000, timeout_ms: 400 }
+    0 Open { p: 0, writer: true }
+    1 Erase { p: 0, cust: 5 }
+    2 Erase { p: 0, cust: 5 }
+    3 Write { p: 0, ops: [(1, 13, false), (3, 3, false), (5, 21, false)] }
+    4 Hold { p: 0, class: FxErasure, op: Some(Put), skip: 1, land: false, all: false, rid: 1 }
+    5 Kill { p: 0 }
+    6 Sleep { ms: 22 }
+    7 Mark { tag: 1 }
+    8 GcClosed { p: 0 }
+    9 Sleep { ms: 97 }
+   10 Open { p: 2, writer: true }
+   11 Release { rid: 1 }
+   12 Publish { p: 2 }
+   13 CompStart { p: 2 }
+   14 Restore { p: 2, mark: 1, apply: true }
+   15 Write { p: 2, ops: [(3, 4, false), (3, 23, false), (4, 17, true), (4, 13, false), (2, 8, false), (0, 20, false), (3, 17, false), (2, 18, false), (3, 20, false)] }
+   16 CompDrain { p: 2 }
+   17 Gc { p: 2 }
+   18 Write { p: 2, ops: [(3, 5, false), (3, 23, false), (4, 1, false), (2, 17, false), (4, 17, false)] }
+   19 Hold { p: 2, class: Other, op: Some(Put), skip: 2, land: true, all: true, rid: 2 }
+   20 Gc { p: 2 }
+   21 Write { p: 2, ops: [(4, 17, false), (1, 5, false)] }
+   22 Sleep { ms: 304 }
+   23 Flush { p: 2 }
+   24 Close { p: 2 }
+   25 Open { p: 1, writer: true }
+   26 Storm { on: true }
+   27 Abandon { p: 1 }
+   28 ClosePass { p: 1 }
+   29 Open { p: 1, writer: false }
+   30 Point { p: 0, tag: 2 }
+   31 Retire { p: 2 }
+   32 Upgrade { p: 1 }
+   33 Flush { p: 1 }
+   34 CompStart { p: 1 }
+   35 Sleep { ms: 119 }
+   36 Open { p: 0, writer: true }
+   37 Mark { tag: 3 }
+   38 Erase { p: 0, cust: 5 }
+   39 Open { p: 2, writer: true }
+   40 CompDrain { p: 1 }
+   41 Hold { p: 1, class: FxVersion, op: Some(Put), skip: 0, land: true, all: false, rid: 3 }
+   42 DropThrough { p: 2 }
+   43 Write { p: 0, ops: [(5, 23, false), (5, 1, false), (2, 22, false), (0, 21, false), (0, 2, true), (2, 15, false)] }
+   44 CompStart { p: 2 }
+   45 Gc { p: 2 }
+   46 Release { rid: 2 }
+   47 Write { p: 2, ops: [(3, 8, false), (3, 14, false), (1, 7, false), (4, 22, false), (1, 13, false), (1, 16, false), (4, 9, false), (2, 12, false)] }
+   48 Kill { p: 1 }
+   49 Sleep { ms: 168 }
+   50 Gc { p: 2 }
+   51 Sleep { ms: 40 }
+   52 Write { p: 0, ops: [(1, 6, false), (2, 9, false), (1, 19, false), (4, 14, false), (1, 2, false), (5, 8, false), (2, 11, true), (4, 17, false), (0, 9, false), (1, 16, false), (0, 17, false)] }
+   53 Release { rid: 3 }
+   54 Restore { p: 2, mark: 3, apply: false }
+   55 CompDrain { p: 2 }
+   56 Gc { p: 2 }
+   57 Kill { p: 2 }
+   58 Open { p: 1, writer: true }
+   59 Sleep { ms: 75 }
+   60 Retire { p: 0 }
+   61 Mark { tag: 4 }
+   62 Write { p: 1, ops: [(5, 1, false), (2, 18, false), (3, 10, false), (5, 0, false), (5, 15, true), (2, 13, false)] }
+   63 Abandon { p: 0 }
+   64 FirstPoll { p: 1 }
+   65 Flush { p: 1 }
+   66 FirstPoll { p: 1 }
+   67 Restore { p: 1, mark: 3, apply: false }
+   68 Write { p: 1, ops: [(0, 17, false), (4, 8, false), (5, 8, false)] }
+   69 Erase { p: 1, cust: 5 }
+   70 Retire { p: 2 }
+   71 Retire { p: 0 }
+   72 Publish { p: 1 }
+   73 Write { p: 1, ops: [(1, 20, false), (3, 1, false), (1, 2, false), (5, 8, true), (0, 8, false), (3, 16, false), (2, 10, false), (3, 17, false), (5, 23, true), (2, 5, false), (4, 8, false)] }
+   74 CompStart { p: 1 }
+   75 Flush { p: 1 }
+   76 Write { p: 1, ops: [(0, 19, false), (5, 11, false), (2, 23, false), (0, 2, false), (1, 2, false), (5, 2, true)] }
+   77 Close { p: 1 }
+   78 Sleep { ms: 128 }
+   79 Open { p: 0, writer: true }
+   80 Erase { p: 0, cust: 1 }
+   81 CompStart { p: 0 }
+   82 Retire { p: 2 }
+   83 CompDrain { p: 0 }
+   84 Retire { p: 1 }
+   85 ErasePass { p: 0 }
+   86 Gc { p: 0 }
+   87 Hold { p: 0, class: Wal, op: Some(Put), skip: 2, land: true, all: false, rid: 4 }
+   88 Write { p: 0, ops: [(1, 22, false), (5, 4, false), (1, 13, false), (5, 14, false), (2, 5, false), (1, 5, false), (3, 1, false), (3, 3, true), (2, 4, false)] }
+   89 PointPrune { p: 0, tag: 2 }
+   90 CompDrain { p: 0 }
+   91 Write { p: 0, ops: [(2, 0, false), (2, 13, false), (2, 13, false)] }
+   92 Flush { p: 0 }
+   93 Write { p: 0, ops: [(1, 16, false), (1, 3, false), (1, 20, false)] }
+   94 Flush { p: 0 }
+   95 Write { p: 0, ops: [(2, 0, false), (2, 7, false), (2, 10, false)] }
+   96 Flush { p: 0 }
+   97 Write { p: 0, ops: [(4, 15, false), (4, 23, false), (4, 20, false)] }
+   98 Flush { p: 0 }
+   99 Write { p: 0, ops: [(2, 7, false), (2, 18, false), (2, 3, false)] }
+  100 Flush { p: 0 }
+  101 Write { p: 0, ops: [(4, 16, false), (4, 15, false), (4, 23, false)] }
+  102 Flush { p: 0 }
+  103 Write { p: 0, ops: [(1, 7, false), (1, 16, false), (1, 12, false)] }
+  104 Flush { p: 0 }
+  105 Write { p: 0, ops: [(3, 18, false), (3, 7, false), (3, 18, false)] }
+  106 Flush { p: 0 }
+  107 Release { rid: 4 }
+  108 Flush { p: 0 }
+  109 Restore { p: 0, mark: 3, apply: false }
+  110 DropThrough { p: 0 }
+  111 Hold { p: 0, class: Other, op: Some(Put), skip: 2, land: false, all: false, rid: 5 }
+  112 Gc { p: 0 }
+  113 Flush { p: 0 }
+  114 Write { p: 0, ops: [(0, 8, false), (5, 8, false), (2, 20, false), (0, 5, false), (5, 15, true), (5, 15, false)] }
+  115 Flush { p: 0 }
+  116 Erase { p: 0, cust: 0 }
+  117 Gc { p: 0 }
+  118 Erase { p: 0, cust: 5 }
+  119 Open { p: 1, writer: true }
+  120 Fork { p: 1, copy: false, tag: 5 }
+  121 Open { p: 2, writer: false }
+  122 Hold { p: 1, class: Wal, op: Some(Put), skip: 0, land: true, all: false, rid: 6 }
+  123 Flush { p: 1 }
+  124 Erase { p: 0, cust: 4 }
+  125 Restore { p: 1, mark: 4, apply: false }
+  ! reader: c00msgs/d/00002 acknowledged write lost: expected absent (event 116, slot 0, issue 22), read the older s100246-e76-3 (event 76, slot 1) [a deleted or erased row is readable]
+  ! reader: c00msgs/d/00005 acknowledged write lost: expected absent (event 116, slot 0, issue 22), read the older s100246-e114-3 (event 114, slot 0) [a deleted or erased row is readable]
+  ! reader: c00msgs/d/00008 acknowledged write lost: expected absent (event 116, slot 0, issue 22), read the older s100246-e114-0 (event 114, slot 0) [a deleted or erased row is readable]
+  ! reader: c00msgs/d/00019 acknowledged write lost: expected absent (event 116, slot 0, issue 22), read the older s100246-e76-0 (event 76, slot 1) [a deleted or erased row is readable]
+  ! reader: c00msgs/d/00020 acknowledged write lost: expected absent (event 116, slot 0, issue 22), read the older s100246-e15-5 (event 15, slot 2) [a deleted or erased row is readable]
+  ! reader: c05msgs/d/00004 acknowledged write lost: expected absent (event 118, slot 0, issue 23), read the older s100246-e88-1 (event 88, slot 0) [a deleted or erased row is readable]
+  ! reader: c05msgs/d/00008 acknowledged write lost: expected absent (event 118, slot 0, issue 23), read the older s100246-e114-1 (event 114, slot 0) [a deleted or erased row is readable]
+  ! reader: c05msgs/d/00011 acknowledged write lost: expected absent (event 118, slot 0, issue 23), read the older s100246-e76-1 (event 76, slot 1) [a deleted or erased row is readable]
+  ! reader: c05msgs/d/00014 acknowledged write lost: expected absent (event 118, slot 0, issue 23), read the older s100246-e88-3 (event 88, slot 0) [a deleted or erased row is readable]
+  ! reader: c05msgs/d/00015 acknowledged write lost: expected absent (event 118, slot 0, issue 23), read the older s100246-e114-5 (event 114, slot 0) [a deleted or erased row is readable]
+  ! reader: c05msgs/d/00021 acknowledged write lost: expected absent (event 118, slot 0, issue 23), read the older s100246-e3-2 (event 3, slot 0) [a deleted or erased row is readable]
+  ! reader and writer differ on c00msgs/d/00002: reader s100246-e76-3, writer absent
+  ! reader and writer differ on c00msgs/d/00005: reader s100246-e114-3, writer absent
+  ! reader and writer differ on c00msgs/d/00008: reader s100246-e114-0, writer absent
+  ! reader and writer differ on c00msgs/d/00019: reader s100246-e76-0, writer absent
+  ! reader and writer differ on c00msgs/d/00020: reader s100246-e15-5, writer absent
+  ! reader and writer differ on c05msgs/d/00004: reader s100246-e88-1, writer absent
+  ! reader and writer differ on c05msgs/d/00008: reader s100246-e114-1, writer absent
+  ! reader and writer differ on c05msgs/d/00011: reader s100246-e76-1, writer absent
+  ! reader and writer differ on c05msgs/d/00014: reader s100246-e88-3, writer absent
+
+TRACE OF THE MINIMAL RUN
+  [0] seed 100246 knobs 1 profile Profile { delay_ppm: 100000, delay_max_ms: 120, fail_ppm: 15000, timeout_before_ppm: 5000, timeout_after_ppm: 8000, timeout_ms: 400 }
+  [0] fault Fail: life 0 Put tenants/sim-100246-107/wal/00000000000000000001.sst
+  [0] [0] Open { p: 0, writer: true } -> opened (life 0, writer epoch Some(1))
+  [1] [1] Erase { p: 0, cust: 5 } -> deletes acked; erasure 00000000000000000001-8c2a5a07 registered, S_e 1
+  [2] [2] Erase { p: 0, cust: 5 } -> deletes acked; erasure 00000000000000000002-1419b22a registered, S_e 2
+  [3] [3] Write { p: 0, ops: [(1, 13, false), (3, 3, false), (5, 21, false)] } -> acked 3 keys
+  [4] hold rule 1 armed: life 0 Some(Put) FxErasure skip 1 land false all false
+  [5] kill -9 slot 0 (life 0)
+  [7] mark 1 at 1794605367326
+  [8] [8] GcClosed { p: 0 } -> closed gc pass
+  [10] fault Fail: life 2 Get tenants/sim-100246-107/wal/00000000000000000004.sst
+  [10] fault TimeoutBefore: life 2 Get tenants/sim-100246-107/wal/00000000000000000004.sst
+  [10] [10] Open { p: 2, writer: true } -> opened (life 2, writer epoch Some(2))
+  [11] hold rule 1 released (0 waiting)
+  [12] fault Fail: life 2 Put tenants/sim-100246-107/wal/00000000000000000006.sst
+  [12] [12] Publish { p: 2 } -> published (x_d 4)
+  [13] [13] CompStart { p: 2 } -> catch-up published nothing: no compactor yet
+  [14] [14] Restore { p: 2, mark: 1, apply: true } -> restore to mark 1: no restore point before it (skipped)
+  [15] [15] Write { p: 2, ops: [(3, 4, false), (3, 23, false), (4, 17, true), (4, 13, false), (2, 8, false), (0, 20, false), (3, 17, -> acked 9 keys
+  [16] [16] CompDrain { p: 2 } -> no compactor (skipped)
+  [17] [17] Gc { p: 2 } -> no compactor (skipped)
+  [18] [18] Write { p: 2, ops: [(3, 5, false), (3, 23, false), (4, 1, false), (2, 17, false), (4, 17, false)] } -> acked 5 keys
+  [19] hold rule 2 armed: life 2 Some(Put) Other skip 2 land true all true
+  [20] [20] Gc { p: 2 } -> no compactor (skipped)
+  [21] [21] Write { p: 2, ops: [(4, 17, false), (1, 5, false)] } -> acked 2 keys
+  [23] [23] Flush { p: 2 } -> flushed
+  [24] [24] Close { p: 2 } -> closed
+  [25] [25] Open { p: 1, writer: true } -> opened (life 1, writer epoch Some(3))
+  [26] storm on
+  [27] [27] Abandon { p: 1 } -> abandoned (close done true)
+  [28] [28] ClosePass { p: 1 } -> close-time pass: nothing
+  [29] fault Fail: life 1 Get tenants/sim-100246-107/gc/manifest.boundary
+  [29] fault Fail: life 1 Get tenants/sim-100246-107/wal/00000000000000000025.sst
+  [29] [29] Open { p: 1, writer: false } -> opened (life 1, writer epoch None)
+  [30] fault Fail: life 1 Get tenants/sim-100246-107/wal/00000000000000000025.sst
+  [30] fault Fail: life 3 Get tenants/sim-100246-107/manifest/00000000000000000009.manifest
+  [30] [30] Point { p: 0, tag: 2 } -> restore point 2: checkpoint f1bc6c52-9008-48a1-aea7-d76764c0618f (manifest 9) paired with version Some(2) at 1794605369745
+  [31] [31] Retire { p: 2 } -> nothing to retire
+  [32] fault Fail: life 1 Get tenants/sim-100246-107/compacted/01M7BD1H31K8WQGH6T484RZMX1.sst
+  [32] [32] Upgrade { p: 1 } -> upgraded (epoch Some(4))
+  [33] [33] Flush { p: 1 } -> flushed
+  [34] fault TimeoutBefore: life 1 List tenants/sim-100246-107/manifest/
+  [34] fault Fail: life 1 Get tenants/sim-100246-107/fx/run/delta/00000000000000000007-4-36b70f58
+  [34] [34] CompStart { p: 1 } -> compactor started after a catch-up publish; 
+  [35] fault Fail: life 1 Get tenants/sim-100246-107/fx/run/delta/00000000000000000007-4-36b70f58
+  [36] fault Fail: life 1 Get tenants/sim-100246-107/compactions/00000000000000000004.compactions
+  [36] fault Fail: life 1 Get tenants/sim-100246-107/gc/compactions.boundary
+  [36] fault Fail: life 3 List tenants/sim-100246-107/manifest/
+  [36] fault Fail: life 1 Get tenants/sim-100246-107/gc/manifest.boundary
+  [36] fault TimeoutBefore: life 3 Get tenants/sim-100246-107/wal/00000000000000000011.sst
+  [36] fault Fail: life 1 Get tenants/sim-100246-107/gc/manifest.boundary
+  [36] fault Fail: life 1 List tenants/sim-100246-107/fx/manifest/
+  [36] fault Fail: life 1 Get tenants/sim-100246-107/gc/compactions.boundary
+  [36] fault TimeoutBefore: life 1 Get tenants/sim-100246-107/gc/compactions.boundary
+  [36] fault TimeoutBefore: life 3 Get tenants/sim-100246-107/wal/00000000000000000011.sst
+  [36] fault Fail: life 1 Get tenants/sim-100246-107/manifest/00000000000000000012.manifest
+  [36] fault Fail: life 3 Get tenants/sim-100246-107/wal/00000000000000000013.sst
+  [36] fault Fail: life 3 Get tenants/sim-100246-107/wal/00000000000000000017.sst
+  [36] fault Fail: life 3 Get tenants/sim-100246-107/wal/00000000000000000010.sst
+  [36] fault TimeoutBefore: life 1 Get tenants/sim-100246-107/compactions/00000000000000000004.compactions
+  [36] fault Fail: life 3 Get tenants/sim-100246-107/wal/00000000000000000010.sst
+  [36] event 36 still in flight after 1.5s
+  [37] mark 3 at 1794605372293
+  [38] [38] Erase { p: 0, cust: 5 } -> busy (skipped)
+  [39] fault TimeoutBefore: life 2 Get tenants/sim-100246-107/wal/00000000000000000073.sst
+  [39] fault Fail: life 1 Get tenants/sim-100246-107/compactions/00000000000000000004.compactions
+  [39] [36] Open { p: 0, writer: true } -> opened (life 3, writer epoch Some(5))
+  [39] fault Fail: life 2 Get tenants/sim-100246-107/wal/00000000000000000010.sst
+  [39] fault TimeoutAfter: life 2 Put tenants/sim-100246-107/manifest/00000000000000000013.manifest
+  [39] fault TimeoutBefore: life 1 Get tenants/sim-100246-107/compactions/00000000000000000004.compactions
+  [39] fault Fail: life 3 Get tenants/sim-100246-107/manifest/00000000000000000013.manifest
+  [39] fault TimeoutAfter: life 2 Put tenants/sim-100246-107/fx/manifest/00000000000000000006
+  [39] fault Fail: life 1 Get tenants/sim-100246-107/fx/manifest/00000000000000000006
+  [39] event 39 still in flight after 1.5s
+  [40] [40] CompDrain { p: 1 } -> drained (version 4)
+  [41] hold rule 3 armed: life 1 Some(Put) FxVersion skip 0 land true all false
+  [42] [42] DropThrough { p: 2 } -> busy (skipped)
+  [43] [43] Write { p: 0, ops: [(5, 23, false), (5, 1, false), (2, 22, false), (0, 21, false), (0, 2, true), (2, 15, false)] } -> failed: Closed error: detected newer DB client
+  [44] [44] CompStart { p: 2 } -> busy (skipped)
+  [45] [45] Gc { p: 2 } -> busy (skipped)
+  [46] hold rule 2 released (0 waiting)
+  [47] [47] Write { p: 2, ops: [(3, 8, false), (3, 14, false), (1, 7, false), (4, 22, false), (1, 13, false), (1, 16, false), (4, 9, -> busy (skipped)
+  [48] kill -9 slot 1 (life 1)
+  [49] [39] Open { p: 2, writer: true } -> open failed: Generic sim error: timeout after the write landed (simulated): timeout after the write landed (simulated)
+  [50] [50] Gc { p: 2 } -> no compactor (skipped)
+  [52] [52] Write { p: 0, ops: [(1, 6, false), (2, 9, false), (1, 19, false), (4, 14, false), (1, 2, false), (5, 8, false), (2, 11,  -> failed: Closed error: detected newer DB client
+  [53] hold rule 3 released (0 waiting)
+  [54] fault Fail: life 2 List control/staging/sim-100246-107/54/manifest/
+  [54] fault Fail: life 2 Put tenants/sim-100246-107/manifest/00000000000000000015.manifest
+  [54] fault Fail: life 2 Get control/staging/sim-100246-107/54/gc/manifest.boundary
+  [54] fault Fail: life 2 Get tenants/sim-100246-107/gc/manifest.boundary
+  [54] fault Fail: life 2 List control/staging/sim-100246-107/54/wal/
+  [54] [54] Restore { p: 2, mark: 3, apply: false } -> restore to mark 3 refused while staging (point 2): Generic sim error: 503 slow down (simulated): 503 slow down (simulated)
+  [55] [55] CompDrain { p: 2 } -> no compactor (skipped)
+  [56] [56] Gc { p: 2 } -> no compactor (skipped)
+  [57] kill -9 slot 2 (life 2)
+  [58] fault Fail: life 4 Get tenants/sim-100246-107/gc/manifest.boundary
+  [58] fault Fail: life 4 Get tenants/sim-100246-107/wal/00000000000000000013.sst
+  [58] fault TimeoutBefore: life 4 Get tenants/sim-100246-107/wal/00000000000000000011.sst
+  [58] fault Fail: life 4 Get tenants/sim-100246-107/wal/00000000000000000012.sst
+  [58] fault Fail: life 4 Get tenants/sim-100246-107/compacted/01M7BD1H31K8WQGH6T484RZMX1.sst
+  [58] fault Fail: life 4 Get tenants/sim-100246-107/wal/00000000000000000137.sst
+  [58] fault Fail: life 4 Get tenants/sim-100246-107/wal/00000000000000000013.sst
+  [58] fault TimeoutBefore: life 4 Get tenants/sim-100246-107/manifest/00000000000000000017.manifest
+  [58] event 58 still in flight after 1.5s
+  [60] [60] Retire { p: 0 } -> nothing to retire
+  [61] mark 4 at 1794605376226
+  [62] [62] Write { p: 1, ops: [(5, 1, false), (2, 18, false), (3, 10, false), (5, 0, false), (5, 15, true), (2, 13, false)] } -> busy (skipped)
+  [63] [63] Abandon { p: 0 } -> abandoned (close done true)
+  [64] [64] FirstPoll { p: 1 } -> busy (skipped)
+  [65] [65] Flush { p: 1 } -> busy (skipped)
+  [66] [66] FirstPoll { p: 1 } -> busy (skipped)
+  [67] fault TimeoutBefore: life 4 Get tenants/sim-100246-107/wal/00000000000000000010.sst
+  [67] fault Fail: life 4 Get tenants/sim-100246-107/fx/pairs/f1bc6c52-9008-48a1-aea7-d76764c0618f
+  [67] [67] Restore { p: 1, mark: 3, apply: false } -> restore to mark 3 refused while staging (point 2): Generic sim error: 503 slow down (simulated): 503 slow down (simulated)
+  [68] [68] Write { p: 1, ops: [(0, 17, false), (4, 8, false), (5, 8, false)] } -> busy (skipped)
+  [69] [69] Erase { p: 1, cust: 5 } -> busy (skipped)
+  [70] fault TimeoutBefore: life 4 Get control/staging/sim-100246-107/67/wal/00000000000000000013.sst
+  [70] [70] Retire { p: 2 } -> nothing to retire
+  [71] fault TimeoutBefore: life 3 Get tenants/sim-100246-107/fx/erasures/00000000000000000001-8c2a5a07.json
+  [71] [58] Open { p: 1, writer: true } -> opened (life 4, writer epoch Some(7))
+  [71] [71] Retire { p: 0 } -> retire failed: Generic sim error: timeout before the store (simulated): timeout before the store (simulated)
+  [72] fault Fail: life 4 Get control/staging/sim-100246-107/67/wal/00000000000000000013.sst
+  [72] [72] Publish { p: 1 } -> published (x_d 7)
+  [73] [73] Write { p: 1, ops: [(1, 20, false), (3, 1, false), (1, 2, false), (5, 8, true), (0, 8, false), (3, 16, false), (2, 10, f -> acked 11 keys
+  [74] [74] CompStart { p: 1 } -> compactor started 
+  [75] fault TimeoutBefore: life 4 Get tenants/sim-100246-107/fx/manifest/00000000000000000008
+  [75] fault Fail: life 4 Get tenants/sim-100246-107/gc/compactions.boundary
+  [75] fault Fail: life 4 Get tenants/sim-100246-107/manifest/00000000000000000017.manifest
+  [75] fault Fail: life 4 Get tenants/sim-100246-107/gc/compactions.boundary
+  [75] fault Fail: life 4 Get tenants/sim-100246-107/manifest/00000000000000000017.manifest
+  [75] fault Fail: life 4 Get tenants/sim-100246-107/manifest/00000000000000000019.manifest
+  [75] fault TimeoutBefore: life 4 Get tenants/sim-100246-107/gc/manifest.boundary
+  [75] [75] Flush { p: 1 } -> flushed
+  [76] fault TimeoutBefore: life 4 Get tenants/sim-100246-107/fx/run/delta/00000000000000000008-7-c08b683e
+  [76] [76] Write { p: 1, ops: [(0, 19, false), (5, 11, false), (2, 23, false), (0, 2, false), (1, 2, false), (5, 2, true)] } -> acked 6 keys
+  [77] [77] Close { p: 1 } -> closed
+  [79] fault Fail: life 3 Get tenants/sim-100246-107/wal/00000000000000000024.sst
+  [79] fault TimeoutBefore: life 3 Get tenants/sim-100246-107/wal/00000000000000000080.sst
+  [79] fault TimeoutAfter: life 3 Put tenants/sim-100246-107/wal/00000000000000000017.sst
+  [79] [79] Open { p: 0, writer: true } -> opened (life 3, writer epoch Some(8))
+  [80] [80] Erase { p: 0, cust: 1 } -> deletes acked; erasure 00000000000000000010-d73b819d registered, S_e 10
+  [81] [81] CompStart { p: 0 } -> compactor started 
+  [82] fault Fail: life 3 List tenants/sim-100246-107/manifest/
+  [82] fault Fail: life 5 Get tenants/sim-100246-107/fx/erasures/00000000000000000010-d73b819d.json
+  [82] [82] Retire { p: 2 } -> retire failed: Generic sim error: 503 slow down (simulated): 503 slow down (simulated)
+  [83] fault TimeoutBefore: life 3 Get tenants/sim-100246-107/compacted/01M7BD1T85W4HWGJJFS8M0S8GW.sst
+  [83] fault TimeoutBefore: life 3 Get tenants/sim-100246-107/manifest/00000000000000000022.manifest
+  [83] fault TimeoutBefore: life 3 Get tenants/sim-100246-107/gc/compactions.boundary
+  [83] [83] CompDrain { p: 0 } -> drain failed: Unavailable error: object store error (Generic sim error: timeout before the store (simulated)): Generic sim error: timeout before the store (simulated): timeou
+  [84] [84] Retire { p: 1 } -> nothing to retire
+  [85] fault Fail: life 3 Get tenants/sim-100246-107/fx/erasures/00000000000000000002-1419b22a.json
+  [85] [85] ErasePass { p: 0 } -> erase pass failed: Generic sim error: 503 slow down (simulated): 503 slow down (simulated)
+  [86] fault Fail: life 3 List tenants/sim-100246-107/fx/forks/
+  [86] [86] Gc { p: 0 } -> gc failed: Generic sim error: 503 slow down (simulated): 503 slow down (simulated)
+  [87] hold rule 4 armed: life 3 Some(Put) Wal skip 2 land true all false
+  [88] fault TimeoutBefore: life 3 Put tenants/sim-100246-107/wal/00000000000000000019.sst
+  [88] fault TimeoutAfter: life 3 Put tenants/sim-100246-107/compactions/00000000000000000007.compactions
+  [88] fault Fail: life 3 List tenants/sim-100246-107/fx/manifest/
+  [88] [88] Write { p: 0, ops: [(1, 22, false), (5, 4, false), (1, 13, false), (5, 14, false), (2, 5, false), (1, 5, false), (3, 1,  -> acked 9 keys
+  [89] fault Fail: life 3 Get tenants/sim-100246-107/gc/manifest.boundary
+  [89] fault Fail: life 3 Get tenants/sim-100246-107/compactions/00000000000000000007.compactions
+  [89] fault TimeoutBefore: life 3 Get tenants/sim-100246-107/fx/drop-lease
+  [89] [89] PointPrune { p: 0, tag: 2 } -> restore point 2 pruned
+  [90] [90] CompDrain { p: 0 } -> drained (version 11)
+  [91] held by rule 4: life 3 Put tenants/sim-100246-107/wal/00000000000000000020.sst
+  [91] fault Fail: life 3 Get tenants/sim-100246-107/compactions/00000000000000000008.compactions
+  [91] fault Fail: life 3 Get tenants/sim-100246-107/compactions/00000000000000000008.compactions
+  [91] fault TimeoutBefore: life 3 Get tenants/sim-100246-107/gc/compactions.boundary
+  [91] rule 4 lets go after 1001 ms: life 3 Put tenants/sim-100246-107/wal/00000000000000000020.sst lands
+  [91] [91] Write { p: 0, ops: [(2, 0, false), (2, 13, false), (2, 13, false)] } -> acked 2 keys
+  [92] [92] Flush { p: 0 } -> flushed
+  [93] [93] Write { p: 0, ops: [(1, 16, false), (1, 3, false), (1, 20, false)] } -> acked 3 keys
+  [94] fault TimeoutAfter: life 3 Put tenants/sim-100246-107/compacted/01M7BD1XXPT59ZB4CZ5RPYW3X9.sst
+  [94] fault Fail: life 3 Get tenants/sim-100246-107/manifest/00000000000000000026.manifest
+  [94] fault Fail: life 3 Get tenants/sim-100246-107/gc/compactions.boundary
+  [94] [94] Flush { p: 0 } -> flushed
+  [95] [95] Write { p: 0, ops: [(2, 0, false), (2, 7, false), (2, 10, false)] } -> acked 3 keys
+  [96] fault Fail: life 3 Put tenants/sim-100246-107/fx/manifest/00000000000000000014
+  [96] fault Fail: life 3 List tenants/sim-100246-107/fx/manifest/
+  [96] fault TimeoutBefore: life 3 Get tenants/sim-100246-107/manifest/00000000000000000027.manifest
+  [96] [96] Flush { p: 0 } -> flushed
+  [97] [97] Write { p: 0, ops: [(4, 15, false), (4, 23, false), (4, 20, false)] } -> acked 3 keys
+  [98] [98] Flush { p: 0 } -> flushed
+  [99] [99] Write { p: 0, ops: [(2, 7, false), (2, 18, false), (2, 3, false)] } -> acked 3 keys
+  [100] [100] Flush { p: 0 } -> flushed
+  [101] fault TimeoutAfter: life 3 Put tenants/sim-100246-107/wal/00000000000000000025.sst
+  [101] fault Fail: life 3 List tenants/sim-100246-107/fx/manifest/
+  [101] fault TimeoutAfter: life 3 Put tenants/sim-100246-107/fx/manifest/00000000000000000017
+  [101] fault Fail: life 3 List tenants/sim-100246-107/fx/manifest/
+  [101] fault Fail: life 3 Put tenants/sim-100246-107/fx/manifest/00000000000000000019
+  [101] fault Fail: life 3 List tenants/sim-100246-107/manifest/
+  [101] [101] Write { p: 0, ops: [(4, 16, false), (4, 15, false), (4, 23, false)] } -> acked 3 keys
+  [102] fault TimeoutBefore: life 3 Put tenants/sim-100246-107/manifest/00000000000000000030.manifest
+  [102] fault Fail: life 3 Get tenants/sim-100246-107/gc/compactions.boundary
+  [102] fault Fail: life 3 Get tenants/sim-100246-107/gc/compactions.boundary
+  [102] [102] Flush { p: 0 } -> flushed
+  [103] [103] Write { p: 0, ops: [(1, 7, false), (1, 16, false), (1, 12, false)] } -> acked 3 keys
+  [104] fault TimeoutAfter: life 3 Put tenants/sim-100246-107/compacted/01M7BD1ZGPVPVWEY9VV2CYKZ0N.sst
+  [104] fault Fail: life 3 Get tenants/sim-100246-107/fx/run/delta/00000000000000000017-8-f1791902
+  [104] fault TimeoutBefore: life 3 Get tenants/sim-100246-107/manifest/00000000000000000031.manifest
+  [104] [104] Flush { p: 0 } -> flushed
+  [105] fault Fail: life 3 Get tenants/sim-100246-107/fx/run/delta/00000000000000000017-8-f1791902
+  [105] [105] Write { p: 0, ops: [(3, 18, false), (3, 7, false), (3, 18, false)] } -> acked 2 keys
+  [106] [106] Flush { p: 0 } -> flushed
+  [107] hold rule 4 released (0 waiting)
+  [108] [108] Flush { p: 0 } -> flushed
+  [109] [109] Restore { p: 0, mark: 3, apply: false } -> restore to mark 3: no restore point before it (skipped)
+  [110] fault TimeoutBefore: life 3 Multipart tenants/sim-100246-107/fx/run/delta/00000000000000000019-8-6ead8fb5
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/gc/manifest.boundary
+  [110] fault TimeoutBefore: life 3 Multipart tenants/sim-100246-107/fx/run/delta/00000000000000000019-8-9a572567
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/gc/compactions.boundary
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/manifest/00000000000000000033.manifest
+  [110] fault TimeoutAfter: life 3 Multipart tenants/sim-100246-107/fx/run/delta/00000000000000000019-8-9e8635f6
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/gc/manifest.boundary
+  [110] fault TimeoutBefore: life 3 Get tenants/sim-100246-107/gc/manifest.boundary
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/manifest/00000000000000000033.manifest
+  [110] fault TimeoutBefore: life 3 Get tenants/sim-100246-107/compactions/00000000000000000010.compactions
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/manifest/00000000000000000033.manifest
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/gc/manifest.boundary
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/compactions/00000000000000000010.compactions
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/gc/manifest.boundary
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/compactions/00000000000000000010.compactions
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/gc/compactions.boundary
+  [110] fault TimeoutBefore: life 3 Get tenants/sim-100246-107/manifest/00000000000000000033.manifest
+  [110] fault Fail: life 3 List tenants/sim-100246-107/fx/manifest/
+  [110] fault TimeoutBefore: life 3 Get tenants/sim-100246-107/manifest/00000000000000000033.manifest
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/manifest/00000000000000000033.manifest
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/fx/drop-lease
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/manifest/00000000000000000033.manifest
+  [110] fault TimeoutBefore: life 3 Get tenants/sim-100246-107/fx/drop-lease
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/manifest/00000000000000000033.manifest
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/gc/compactions.boundary
+  [110] fault TimeoutBefore: life 3 List tenants/sim-100246-107/fx/manifest/
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/manifest/00000000000000000033.manifest
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/compactions/00000000000000000010.compactions
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/manifest/00000000000000000033.manifest
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/compactions/00000000000000000010.compactions
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/manifest/00000000000000000033.manifest
+  [110] fault TimeoutBefore: life 3 Get tenants/sim-100246-107/compactions/00000000000000000010.compactions
+  [110] fault Fail: life 3 List tenants/sim-100246-107/fx/manifest/
+  [110] fault TimeoutBefore: life 3 Get tenants/sim-100246-107/compactions/00000000000000000010.compactions
+  [110] fault TimeoutBefore: life 3 Get tenants/sim-100246-107/gc/compactions.boundary
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/fx/drop-lease
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/manifest/00000000000000000033.manifest
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/gc/compactions.boundary
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/gc/compactions.boundary
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/fx/drop-lease
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/compactions/00000000000000000010.compactions
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/gc/manifest.boundary
+  [110] fault TimeoutBefore: life 3 Get tenants/sim-100246-107/gc/compactions.boundary
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/gc/compactions.boundary
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/manifest/00000000000000000033.manifest
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/fx/drop-lease
+  [110] fault TimeoutBefore: life 3 Get tenants/sim-100246-107/gc/manifest.boundary
+  [110] fault TimeoutBefore: life 3 List tenants/sim-100246-107/fx/manifest/
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/gc/manifest.boundary
+  [110] fault TimeoutBefore: life 3 Get tenants/sim-100246-107/gc/manifest.boundary
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/gc/compactions.boundary
+  [110] fault Fail: life 3 List tenants/sim-100246-107/fx/manifest/
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/gc/manifest.boundary
+  [110] fault TimeoutBefore: life 3 Get tenants/sim-100246-107/manifest/00000000000000000033.manifest
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/compactions/00000000000000000010.compactions
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/gc/manifest.boundary
+  [110] fault TimeoutBefore: life 3 Get tenants/sim-100246-107/manifest/00000000000000000033.manifest
+  [110] fault TimeoutBefore: life 3 Get tenants/sim-100246-107/manifest/00000000000000000033.manifest
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/gc/manifest.boundary
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/gc/compactions.boundary
+  [110] fault TimeoutBefore: life 3 Get tenants/sim-100246-107/fx/drop-lease
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/gc/manifest.boundary
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/manifest/00000000000000000033.manifest
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/compactions/00000000000000000010.compactions
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/gc/manifest.boundary
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/gc/manifest.boundary
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/gc/manifest.boundary
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/compactions/00000000000000000010.compactions
+  [110] fault TimeoutBefore: life 3 Get tenants/sim-100246-107/gc/compactions.boundary
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/gc/manifest.boundary
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/gc/manifest.boundary
+  [110] fault TimeoutBefore: life 3 Get tenants/sim-100246-107/compactions/00000000000000000010.compactions
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/gc/compactions.boundary
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/gc/compactions.boundary
+  [110] fault TimeoutBefore: life 3 Get tenants/sim-100246-107/compactions/00000000000000000010.compactions
+  [110] fault TimeoutBefore: life 3 Get tenants/sim-100246-107/manifest/00000000000000000033.manifest
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/compactions/00000000000000000010.compactions
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/gc/manifest.boundary
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/gc/manifest.boundary
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/compactions/00000000000000000010.compactions
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/compactions/00000000000000000010.compactions
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/gc/compactions.boundary
+  [110] fault TimeoutBefore: life 3 Get tenants/sim-100246-107/manifest/00000000000000000033.manifest
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/gc/manifest.boundary
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/gc/compactions.boundary
+  [110] fault TimeoutBefore: life 3 Get tenants/sim-100246-107/manifest/00000000000000000033.manifest
+  [110] fault TimeoutBefore: life 3 Get tenants/sim-100246-107/gc/compactions.boundary
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/manifest/00000000000000000033.manifest
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/compactions/00000000000000000010.compactions
+  [110] fault TimeoutBefore: life 3 Get tenants/sim-100246-107/compactions/00000000000000000010.compactions
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/manifest/00000000000000000033.manifest
+  [110] fault TimeoutBefore: life 3 List tenants/sim-100246-107/fx/manifest/
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/compactions/00000000000000000010.compactions
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/compactions/00000000000000000010.compactions
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/gc/manifest.boundary
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/gc/manifest.boundary
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/manifest/00000000000000000033.manifest
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/compactions/00000000000000000010.compactions
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/compactions/00000000000000000010.compactions
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/gc/compactions.boundary
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/manifest/00000000000000000033.manifest
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/compactions/00000000000000000010.compactions
+  [110] fault TimeoutBefore: life 3 Get tenants/sim-100246-107/gc/compactions.boundary
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/fx/drop-lease
+  [110] fault TimeoutBefore: life 3 Get tenants/sim-100246-107/compactions/00000000000000000010.compactions
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/compactions/00000000000000000010.compactions
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/fx/drop-lease
+  [110] fault TimeoutBefore: life 3 Get tenants/sim-100246-107/manifest/00000000000000000033.manifest
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/compactions/00000000000000000010.compactions
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/gc/compactions.boundary
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/gc/manifest.boundary
+  [110] fault TimeoutBefore: life 3 Get tenants/sim-100246-107/gc/manifest.boundary
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/fx/drop-lease
+  [110] fault TimeoutBefore: life 3 Get tenants/sim-100246-107/compactions/00000000000000000010.compactions
+  [110] fault TimeoutBefore: life 3 Get tenants/sim-100246-107/compactions/00000000000000000010.compactions
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/gc/manifest.boundary
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/manifest/00000000000000000033.manifest
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/manifest/00000000000000000033.manifest
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/gc/compactions.boundary
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/gc/compactions.boundary
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/compactions/00000000000000000010.compactions
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/gc/compactions.boundary
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/compactions/00000000000000000010.compactions
+  [110] fault TimeoutBefore: life 3 Get tenants/sim-100246-107/gc/compactions.boundary
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/gc/compactions.boundary
+  [110] fault TimeoutBefore: life 3 Get tenants/sim-100246-107/compactions/00000000000000000010.compactions
+  [110] fault TimeoutBefore: life 3 Get tenants/sim-100246-107/compactions/00000000000000000010.compactions
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/gc/compactions.boundary
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/compactions/00000000000000000010.compactions
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/gc/compactions.boundary
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/manifest/00000000000000000033.manifest
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/manifest/00000000000000000033.manifest
+  [110] fault TimeoutBefore: life 3 Get tenants/sim-100246-107/gc/compactions.boundary
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/compactions/00000000000000000010.compactions
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/compactions/00000000000000000010.compactions
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/compactions/00000000000000000010.compactions
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/gc/manifest.boundary
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/manifest/00000000000000000033.manifest
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/manifest/00000000000000000033.manifest
+  [110] fault Fail: life 3 List tenants/sim-100246-107/fx/manifest/
+  [110] fault TimeoutBefore: life 3 Get tenants/sim-100246-107/manifest/00000000000000000033.manifest
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/gc/manifest.boundary
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/gc/manifest.boundary
+  [110] fault TimeoutBefore: life 3 Get tenants/sim-100246-107/compactions/00000000000000000010.compactions
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/fx/drop-lease
+  [110] fault Fail: life 3 Get tenants/sim-100246-107/gc/manifest.boundary
+  [110] [110] DropThrough { p: 0 } -> drop failed: the drop did not reach X_d 18 in 40s: floor 18, 11 SSTs or runs at or below it left
+  [111] hold rule 5 armed: life 3 Some(Put) Other skip 2 land false all false
+  [112] fault Fail: life 3 Get tenants/sim-100246-107/fx/drop-lease
+  [112] [112] Gc { p: 0 } -> gc failed: Generic sim error: 503 slow down (simulated): 503 slow down (simulated)
+  [113] [113] Flush { p: 0 } -> flushed
+  [114] [114] Write { p: 0, ops: [(0, 8, false), (5, 8, false), (2, 20, false), (0, 5, false), (5, 15, true), (5, 15, false)] } -> acked 5 keys
+  [115] [115] Flush { p: 0 } -> flushed
+  [116] [116] Erase { p: 0, cust: 0 } -> deletes acked; erasure 00000000000000000021-8e783b5c registered, S_e 21
+  [117] fault Fail: life 3 Delete tenants/sim-100246-107/fx/manifest/00000000000000000004
+  [117] [117] Gc { p: 0 } -> gc failed: Generic sim error: 503 slow down (simulated): 503 slow down (simulated)
+  [118] fault TimeoutAfter: life 3 Put tenants/sim-100246-107/fx/erasures/00000000000000000022-92ace4a9.json
+  [118] fault Fail: life 3 Get tenants/sim-100246-107/manifest/00000000000000000034.manifest
+  [118] fault Fail: life 3 Get tenants/sim-100246-107/compactions/00000000000000000010.compactions
+  [118] [118] Erase { p: 0, cust: 5 } -> deletes acked; register failed: Generic sim error: timeout after the write landed (simulated): timeout after the write landed (simulated)
+  [119] fault Fail: life 4 Get tenants/sim-100246-107/gc/manifest.boundary
+  [119] fault TimeoutBefore: life 4 Get tenants/sim-100246-107/wal/00000000000000000031.sst
+  [119] fault Fail: life 3 Get tenants/sim-100246-107/gc/manifest.boundary
+  [119] fault Fail: life 3 Get tenants/sim-100246-107/gc/manifest.boundary
+  [119] fault Fail: life 3 Get tenants/sim-100246-107/fx/drop-lease
+  [119] fault Fail: life 3 Get tenants/sim-100246-107/manifest/00000000000000000034.manifest
+  [119] fault Fail: life 4 Delete tenants/sim-100246-107/_clean
+  [119] fault Fail: life 3 Get tenants/sim-100246-107/compactions/00000000000000000010.compactions
+  [119] fault Fail: life 3 Get tenants/sim-100246-107/fx/drop-lease
+  [119] fault Fail: life 3 Get tenants/sim-100246-107/gc/compactions.boundary
+  [119] [119] Open { p: 1, writer: true } -> open failed: Generic sim error: 503 slow down (simulated): 503 slow down (simulated)
+  [120] [120] Fork { p: 1, copy: false, tag: 5 } -> not open (skipped)
+  [121] fault Fail: life 5 Get tenants/sim-100246-107/manifest/00000000000000000035.manifest
+  [121] fault Fail: life 3 Get tenants/sim-100246-107/compactions/00000000000000000010.compactions
+  [121] fault TimeoutBefore: life 5 Get tenants/sim-100246-107/gc/manifest.boundary
+  [121] fault Fail: life 3 Get tenants/sim-100246-107/manifest/00000000000000000035.manifest
+  [121] fault Fail: life 5 Get tenants/sim-100246-107/wal/00000000000000000030.sst
+  [121] fault Fail: life 3 Get tenants/sim-100246-107/compactions/00000000000000000010.compactions
+  [121] [121] Open { p: 2, writer: false } -> opened (life 5, writer epoch None)
+  [121] fault Fail: life 5 Get tenants/sim-100246-107/fx/run/delta/00000000000000000019-8-fb20d609
+  [122] hold rule 6 armed: life 4 Some(Put) Wal skip 0 land true all false
+  [123] [123] Flush { p: 1 } -> not open (skipped)
+  [124] [124] Erase { p: 0, cust: 4 } -> deletes failed: Closed error: detected newer DB client
+  [125] [125] Restore { p: 1, mark: 4, apply: false } -> restore to mark 4: no restore point before it (skipped)
+  [4294967295] settle: slot 0 close Ok(Ok(()))
+  [4294967295] settle: slot 2 abandon Ok(Ok(()))
+
+FULL SCRIPT
+seed 100246 knobs 1 profile Profile { delay_ppm: 100000, delay_max_ms: 120, fail_ppm: 15000, timeout_before_ppm: 5000, timeout_after_ppm: 8000, timeout_ms: 400 }
+    0 Open { p: 0, writer: true }
+    1 Erase { p: 0, cust: 5 }
+    2 Erase { p: 0, cust: 5 }
+    3 Write { p: 0, ops: [(1, 13, false), (3, 3, false), (5, 21, false)] }
+    4 Hold { p: 0, class: FxErasure, op: Some(Put), skip: 1, land: false, all: false, rid: 1 }
+    5 Kill { p: 0 }
+    6 Sleep { ms: 22 }
+    7 Mark { tag: 1 }
+    8 GcClosed { p: 0 }
+    9 Sleep { ms: 97 }
+   10 Open { p: 2, writer: true }
+   11 Release { rid: 1 }
+   12 Publish { p: 2 }
+   13 CompStart { p: 2 }
+   14 Restore { p: 2, mark: 1, apply: true }
+   15 Write { p: 2, ops: [(3, 4, false), (3, 23, false), (4, 17, true), (4, 13, false), (2, 8, false), (0, 20, false), (3, 17, false), (2, 18, false), (3, 20, false)] }
+   16 CompDrain { p: 2 }
+   17 Gc { p: 2 }
+   18 Write { p: 2, ops: [(3, 5, false), (3, 23, false), (4, 1, false), (2, 17, false), (4, 17, false)] }
+   19 Hold { p: 2, class: Other, op: Some(Put), skip: 2, land: true, all: true, rid: 2 }
+   20 Gc { p: 2 }
+   21 Write { p: 2, ops: [(4, 17, false), (1, 5, false)] }
+   22 Sleep { ms: 304 }
+   23 Flush { p: 2 }
+   24 Close { p: 2 }
+   25 Open { p: 1, writer: true }
+   26 Storm { on: true }
+   27 Abandon { p: 1 }
+   28 ClosePass { p: 1 }
+   29 Open { p: 1, writer: false }
+   30 Point { p: 0, tag: 2 }
+   31 Retire { p: 2 }
+   32 Upgrade { p: 1 }
+   33 Flush { p: 1 }
+   34 CompStart { p: 1 }
+   35 Sleep { ms: 119 }
+   36 Open { p: 0, writer: true }
+   37 Mark { tag: 3 }
+   38 Erase { p: 0, cust: 5 }
+   39 Open { p: 2, writer: true }
+   40 CompDrain { p: 1 }
+   41 Hold { p: 1, class: FxVersion, op: Some(Put), skip: 0, land: true, all: false, rid: 3 }
+   42 DropThrough { p: 2 }
+   43 Write { p: 0, ops: [(5, 23, false), (5, 1, false), (2, 22, false), (0, 21, false), (0, 2, true), (2, 15, false)] }
+   44 CompStart { p: 2 }
+   45 Gc { p: 2 }
+   46 Release { rid: 2 }
+   47 Write { p: 2, ops: [(3, 8, false), (3, 14, false), (1, 7, false), (4, 22, false), (1, 13, false), (1, 16, false), (4, 9, false), (2, 12, false)] }
+   48 Kill { p: 1 }
+   49 Sleep { ms: 168 }
+   50 Gc { p: 2 }
+   51 Sleep { ms: 40 }
+   52 Write { p: 0, ops: [(1, 6, false), (2, 9, false), (1, 19, false), (4, 14, false), (1, 2, false), (5, 8, false), (2, 11, true), (4, 17, false), (0, 9, false), (1, 16, false), (0, 17, false)] }
+   53 Release { rid: 3 }
+   54 Restore { p: 2, mark: 3, apply: false }
+   55 CompDrain { p: 2 }
+   56 Gc { p: 2 }
+   57 Kill { p: 2 }
+   58 Open { p: 1, writer: true }
+   59 Sleep { ms: 75 }
+   60 Retire { p: 0 }
+   61 Mark { tag: 4 }
+   62 Write { p: 1, ops: [(5, 1, false), (2, 18, false), (3, 10, false), (5, 0, false), (5, 15, true), (2, 13, false)] }
+   63 Abandon { p: 0 }
+   64 FirstPoll { p: 1 }
+   65 Flush { p: 1 }
+   66 FirstPoll { p: 1 }
+   67 Restore { p: 1, mark: 3, apply: false }
+   68 Write { p: 1, ops: [(0, 17, false), (4, 8, false), (5, 8, false)] }
+   69 Erase { p: 1, cust: 5 }
+   70 Retire { p: 2 }
+   71 Retire { p: 0 }
+   72 Publish { p: 1 }
+   73 Write { p: 1, ops: [(1, 20, false), (3, 1, false), (1, 2, false), (5, 8, true), (0, 8, false), (3, 16, false), (2, 10, false), (3, 17, false), (5, 23, true), (2, 5, false), (4, 8, false)] }
+   74 CompStart { p: 1 }
+   75 Flush { p: 1 }
+   76 Write { p: 1, ops: [(0, 19, false), (5, 11, false), (2, 23, false), (0, 2, false), (1, 2, false), (5, 2, true)] }
+   77 Close { p: 1 }
+   78 Sleep { ms: 128 }
+   79 Open { p: 0, writer: true }
+   80 Erase { p: 0, cust: 1 }
+   81 CompStart { p: 0 }
+   82 Retire { p: 2 }
+   83 CompDrain { p: 0 }
+   84 Retire { p: 1 }
+   85 ErasePass { p: 0 }
+   86 Gc { p: 0 }
+   87 Hold { p: 0, class: Wal, op: Some(Put), skip: 2, land: true, all: false, rid: 4 }
+   88 Write { p: 0, ops: [(1, 22, false), (5, 4, false), (1, 13, false), (5, 14, false), (2, 5, false), (1, 5, false), (3, 1, false), (3, 3, true), (2, 4, false)] }
+   89 PointPrune { p: 0, tag: 2 }
+   90 CompDrain { p: 0 }
+   91 Write { p: 0, ops: [(2, 0, false), (2, 13, false), (2, 13, false)] }
+   92 Flush { p: 0 }
+   93 Write { p: 0, ops: [(1, 16, false), (1, 3, false), (1, 20, false)] }
+   94 Flush { p: 0 }
+   95 Write { p: 0, ops: [(2, 0, false), (2, 7, false), (2, 10, false)] }
+   96 Flush { p: 0 }
+   97 Write { p: 0, ops: [(4, 15, false), (4, 23, false), (4, 20, false)] }
+   98 Flush { p: 0 }
+   99 Write { p: 0, ops: [(2, 7, false), (2, 18, false), (2, 3, false)] }
+  100 Flush { p: 0 }
+  101 Write { p: 0, ops: [(4, 16, false), (4, 15, false), (4, 23, false)] }
+  102 Flush { p: 0 }
+  103 Write { p: 0, ops: [(1, 7, false), (1, 16, false), (1, 12, false)] }
+  104 Flush { p: 0 }
+  105 Write { p: 0, ops: [(3, 18, false), (3, 7, false), (3, 18, false)] }
+  106 Flush { p: 0 }
+  107 Release { rid: 4 }
+  108 Flush { p: 0 }
+  109 Restore { p: 0, mark: 3, apply: false }
+  110 DropThrough { p: 0 }
+  111 Hold { p: 0, class: Other, op: Some(Put), skip: 2, land: false, all: false, rid: 5 }
+  112 Gc { p: 0 }
+  113 Flush { p: 0 }
+  114 Write { p: 0, ops: [(0, 8, false), (5, 8, false), (2, 20, false), (0, 5, false), (5, 15, true), (5, 15, false)] }
+  115 Flush { p: 0 }
+  116 Erase { p: 0, cust: 0 }
+  117 Gc { p: 0 }
+  118 Erase { p: 0, cust: 5 }
+  119 Open { p: 1, writer: true }
+  120 Fork { p: 1, copy: false, tag: 5 }
+  121 Open { p: 2, writer: false }
+  122 Hold { p: 1, class: Wal, op: Some(Put), skip: 0, land: true, all: false, rid: 6 }
+  123 Flush { p: 1 }
+  124 Erase { p: 0, cust: 4 }
+  125 Restore { p: 1, mark: 4, apply: false }

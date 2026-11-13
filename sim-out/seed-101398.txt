@@ -1,0 +1,208 @@
+SEED 101398 (steps 114): 334 violations; replays failing 2 of 2
+events 114 writes issued 15 key-writes acked 234 requests 1488 faults 45; points 7 restores 1 (applied 0) forks 0 generated 1 slate-gc 3 drops 0 scrubs 0 storms 3 groups-profile false
+
+VIOLATIONS
+  reader: c00msgs/d/00000 acknowledged write lost: expected s101398-g1-0-0 (event 1, slot 0), read absent
+  reader: c00msgs/d/00001 acknowledged write lost: expected s101398-g1-0-1 (event 1, slot 0), read absent
+  reader: c00msgs/d/00002 acknowledged write lost: expected s101398-g1-0-2 (event 1, slot 0), read absent
+  reader: c00msgs/d/00003 acknowledged write lost: expected s101398-g1-0-3 (event 1, slot 0), read absent
+  reader: c00msgs/d/00007 acknowledged write lost: expected s101398-g1-0-7 (event 1, slot 0), read absent
+  reader: c00msgs/d/00008 acknowledged write lost: expected s101398-g1-0-8 (event 1, slot 0), read absent
+  reader: c00msgs/d/00009 acknowledged write lost: expected s101398-g1-0-9 (event 1, slot 0), read absent
+  reader: c00msgs/d/00010 acknowledged write lost: expected s101398-g1-0-10 (event 1, slot 0), read absent
+  reader: c00msgs/d/00011 acknowledged write lost: expected s101398-g1-0-11 (event 1, slot 0), read absent
+  reader: c00msgs/d/00014 acknowledged write lost: expected s101398-g1-0-14 (event 1, slot 0), read absent
+  reader: c00msgs/d/00016 acknowledged write lost: expected s101398-g1-0-16 (event 1, slot 0), read absent
+  reader: c00msgs/d/00017 acknowledged write lost: expected s101398-g1-0-17 (event 1, slot 0), read absent
+  reader: c00msgs/d/00020 acknowledged write lost: expected s101398-g1-0-20 (event 1, slot 0), read absent
+  reader: c00msgs/d/00022 acknowledged write lost: expected s101398-g1-0-22 (event 1, slot 0), read absent
+  reader: c00msgs/d/00023 acknowledged write lost: expected s101398-g1-0-23 (event 1, slot 0), read absent
+  reader: c02msgs/d/00000 acknowledged write lost: expected s101398-g1-2-0 (event 1, slot 0), read absent
+  reader: c02msgs/d/00001 acknowledged write lost: expected s101398-g1-2-1 (event 1, slot 0), read absent
+  reader: c02msgs/d/00003 acknowledged write lost: expected s101398-g1-2-3 (event 1, slot 0), read absent
+  reader: c02msgs/d/00005 acknowledged write lost: expected s101398-g1-2-5 (event 1, slot 0), read absent
+  reader: c02msgs/d/00006 acknowledged write lost: expected s101398-g1-2-6 (event 1, slot 0), read absent
+  reader: c02msgs/d/00008 acknowledged write lost: expected s101398-g1-2-8 (event 1, slot 0), read absent
+  reader: c02msgs/d/00009 acknowledged write lost: expected s101398-g1-2-9 (event 1, slot 0), read absent
+  reader: c02msgs/d/00010 acknowledged write lost: expected s101398-g1-2-10 (event 1, slot 0), read absent
+  reader: c02msgs/d/00011 acknowledged write lost: expected s101398-g1-2-11 (event 1, slot 0), read absent
+  reader: c02msgs/d/00012 acknowledged write lost: expected s101398-g1-2-12 (event 1, slot 0), read absent
+  reader: c02msgs/d/00013 acknowledged write lost: expected s101398-g1-2-13 (event 1, slot 0), read absent
+  reader: c02msgs/d/00014 acknowledged write lost: expected s101398-g1-2-14 (event 1, slot 0), read absent
+  reader: c02msgs/d/00015 acknowledged write lost: expected s101398-g1-2-15 (event 1, slot 0), read absent
+  reader: c02msgs/d/00016 acknowledged write lost: expected s101398-g1-2-16 (event 1, slot 0), read absent
+  reader: c02msgs/d/00017 acknowledged write lost: expected s101398-g1-2-17 (event 1, slot 0), read absent
+  reader: c02msgs/d/00023 acknowledged write lost: expected s101398-g1-2-23 (event 1, slot 0), read absent
+  reader: c03msgs/d/00000 acknowledged write lost: expected s101398-g1-3-0 (event 1, slot 0), read absent
+  reader: c03msgs/d/00001 acknowledged write lost: expected s101398-g1-3-1 (event 1, slot 0), read absent
+  reader: c03msgs/d/00003 acknowledged write lost: expected s101398-g1-3-3 (event 1, slot 0), read absent
+  reader: c03msgs/d/00004 acknowledged write lost: expected s101398-g1-3-4 (event 1, slot 0), read absent
+  reader: c03msgs/d/00006 acknowledged write lost: expected s101398-g1-3-6 (event 1, slot 0), read absent
+  reader: c03msgs/d/00007 acknowledged write lost: expected s101398-g1-3-7 (event 1, slot 0), read absent
+  reader: c03msgs/d/00008 acknowledged write lost: expected s101398-g1-3-8 (event 1, slot 0), read absent
+  reader: c03msgs/d/00009 acknowledged write lost: expected s101398-g1-3-9 (event 1, slot 0), read absent
+  reader: c03msgs/d/00012 acknowledged write lost: expected s101398-g1-3-12 (event 1, slot 0), read absent
+
+MINIMAL SCRIPT (8 events; SIM_KEEP=0,1,2,3,4,5,6,7), its run: 288 violations
+seed 101398 knobs 1 profile Profile { delay_ppm: 0, delay_max_ms: 0, fail_ppm: 0, timeout_before_ppm: 0, timeout_after_ppm: 0, timeout_ms: 0 }
+    0 Open { p: 0, writer: true }
+    1 Generate { p: 0, writers: 2 }
+    2 FirstStart { p: 0 }
+    3 FirstStart { p: 0 }
+    4 Storm { on: true }
+    5 Flush { p: 0 }
+    6 Publish { p: 0 }
+    7 Open { p: 1, writer: true }
+  ! reader: c00msgs/d/00000 acknowledged write lost: expected s101398-g1-0-0 (event 1, slot 0), read absent
+  ! reader: c00msgs/d/00001 acknowledged write lost: expected s101398-g1-0-1 (event 1, slot 0), read absent
+  ! reader: c00msgs/d/00002 acknowledged write lost: expected s101398-g1-0-2 (event 1, slot 0), read absent
+  ! reader: c00msgs/d/00003 acknowledged write lost: expected s101398-g1-0-3 (event 1, slot 0), read absent
+  ! reader: c00msgs/d/00004 acknowledged write lost: expected s101398-g1-0-4 (event 1, slot 0), read absent
+  ! reader: c00msgs/d/00005 acknowledged write lost: expected s101398-g1-0-5 (event 1, slot 0), read absent
+  ! reader: c00msgs/d/00006 acknowledged write lost: expected s101398-g1-0-6 (event 1, slot 0), read absent
+  ! reader: c00msgs/d/00007 acknowledged write lost: expected s101398-g1-0-7 (event 1, slot 0), read absent
+  ! reader: c00msgs/d/00008 acknowledged write lost: expected s101398-g1-0-8 (event 1, slot 0), read absent
+  ! reader: c00msgs/d/00009 acknowledged write lost: expected s101398-g1-0-9 (event 1, slot 0), read absent
+  ! reader: c00msgs/d/00010 acknowledged write lost: expected s101398-g1-0-10 (event 1, slot 0), read absent
+  ! reader: c00msgs/d/00011 acknowledged write lost: expected s101398-g1-0-11 (event 1, slot 0), read absent
+  ! reader: c00msgs/d/00012 acknowledged write lost: expected s101398-g1-0-12 (event 1, slot 0), read absent
+  ! reader: c00msgs/d/00013 acknowledged write lost: expected s101398-g1-0-13 (event 1, slot 0), read absent
+  ! reader: c00msgs/d/00014 acknowledged write lost: expected s101398-g1-0-14 (event 1, slot 0), read absent
+  ! reader: c00msgs/d/00015 acknowledged write lost: expected s101398-g1-0-15 (event 1, slot 0), read absent
+  ! reader: c00msgs/d/00016 acknowledged write lost: expected s101398-g1-0-16 (event 1, slot 0), read absent
+  ! reader: c00msgs/d/00017 acknowledged write lost: expected s101398-g1-0-17 (event 1, slot 0), read absent
+  ! reader: c00msgs/d/00018 acknowledged write lost: expected s101398-g1-0-18 (event 1, slot 0), read absent
+  ! reader: c00msgs/d/00019 acknowledged write lost: expected s101398-g1-0-19 (event 1, slot 0), read absent
+
+TRACE OF THE MINIMAL RUN
+  [0] seed 101398 knobs 1 profile Profile { delay_ppm: 0, delay_max_ms: 0, fail_ppm: 0, timeout_before_ppm: 0, timeout_after_ppm: 0, timeout_ms: 0 }
+  [0] [0] Open { p: 0, writer: true } -> opened (life 0, writer epoch Some(1))
+  [1] [1] Generate { p: 0, writers: 2 } -> generated published: 2 writers, 2 groups, x_d 1
+  [2] [2] FirstStart { p: 0 } -> no first build to start
+  [3] [3] FirstStart { p: 0 } -> no first build to start
+  [4] storm on
+  [5] [5] Flush { p: 0 } -> flushed
+  [6] fault TimeoutBefore: life 0 Get tenants/sim-101398-87/manifest/00000000000000000003.manifest
+  [6] fault Fail: life 0 Get tenants/sim-101398-87/manifest/00000000000000000003.manifest
+  [6] fault TimeoutBefore: life 0 Get tenants/sim-101398-87/manifest/00000000000000000004.manifest
+  [6] [6] Publish { p: 0 } -> published (x_d 1)
+  [7] fault TimeoutBefore: life 1 List tenants/sim-101398-87/fx/manifest/
+  [7] [7] Open { p: 1, writer: true } -> open failed: Generic sim error: timeout before the store (simulated): timeout before the store (simulated)
+  [4294967295] settle: slot 0 close Ok(Ok(()))
+
+FULL SCRIPT
+seed 101398 knobs 1 profile Profile { delay_ppm: 0, delay_max_ms: 0, fail_ppm: 0, timeout_before_ppm: 0, timeout_after_ppm: 0, timeout_ms: 0 }
+    0 Open { p: 0, writer: true }
+    1 Generate { p: 0, writers: 2 }
+    2 FirstStart { p: 0 }
+    3 FirstStart { p: 0 }
+    4 Storm { on: true }
+    5 Flush { p: 0 }
+    6 Publish { p: 0 }
+    7 Open { p: 1, writer: true }
+    8 Publish { p: 1 }
+    9 Hold { p: 1, class: Other, op: Some(Delete), skip: 0, land: true, all: false, rid: 1 }
+   10 FirstStart { p: 1 }
+   11 Write { p: 1, ops: [(5, 3, false), (2, 9, false), (4, 2, false)] }
+   12 SlateGc { p: 0 }
+   13 Write { p: 1, ops: [(1, 9, false), (1, 15, false), (2, 8, true), (2, 13, false), (4, 15, false), (1, 14, false), (5, 12, false)] }
+   14 Retire { p: 0 }
+   15 Release { rid: 1 }
+   16 Erase { p: 1, cust: 3 }
+   17 FirstPoll { p: 0 }
+   18 Point { p: 2, tag: 1 }
+   19 FirstStart { p: 1 }
+   20 Write { p: 1, ops: [(2, 15, false), (2, 17, false), (2, 21, false), (0, 23, false), (0, 15, false), (4, 5, false), (2, 9, false), (2, 14, false)] }
+   21 Erase { p: 1, cust: 1 }
+   22 SlateGc { p: 2 }
+   23 Write { p: 1, ops: [(0, 21, false), (2, 4, false), (0, 0, false), (3, 6, false), (1, 16, false), (4, 0, false), (3, 8, false)] }
+   24 CompStart { p: 1 }
+   25 Retire { p: 0 }
+   26 ErasePass { p: 1 }
+   27 Write { p: 1, ops: [(0, 10, true), (4, 16, false), (1, 14, false)] }
+   28 ErasePass { p: 1 }
+   29 PointPrune { p: 0, tag: 1 }
+   30 CompDrain { p: 1 }
+   31 Retire { p: 2 }
+   32 Storm { on: false }
+   33 CompDrain { p: 1 }
+   34 Write { p: 1, ops: [(3, 3, false), (5, 16, false), (1, 19, false)] }
+   35 Flush { p: 1 }
+   36 Write { p: 0, ops: [(4, 14, false), (4, 8, false), (3, 5, false), (1, 11, false), (4, 5, false), (1, 1, false)] }
+   37 Point { p: 2, tag: 2 }
+   38 Flush { p: 1 }
+   39 CompDrain { p: 1 }
+   40 CompDrain { p: 1 }
+   41 Close { p: 1 }
+   42 Retire { p: 2 }
+   43 GcClosed { p: 1 }
+   44 Gc { p: 2 }
+   45 Retire { p: 2 }
+   46 FirstPoll { p: 0 }
+   47 Hold { p: 0, class: Wal, op: Some(Put), skip: 2, land: false, all: true, rid: 2 }
+   48 Open { p: 1, writer: true }
+   49 Write { p: 1, ops: [(0, 4, false), (4, 11, false), (3, 10, false), (4, 15, false), (3, 23, false), (1, 14, false), (1, 15, false)] }
+   50 Point { p: 0, tag: 3 }
+   51 Open { p: 2, writer: true }
+   52 Write { p: 2, ops: [(3, 2, false), (3, 19, false), (5, 19, false), (5, 17, false), (1, 3, false)] }
+   53 Point { p: 2, tag: 4 }
+   54 Write { p: 2, ops: [(4, 2, true), (4, 5, false), (2, 19, false)] }
+   55 Hold { p: 1, class: FxRun, op: Some(Put), skip: 0, land: true, all: false, rid: 3 }
+   56 Retire { p: 0 }
+   57 FirstPoll { p: 0 }
+   58 Write { p: 2, ops: [(1, 1, true), (5, 2, false)] }
+   59 Hold { p: 0, class: FxVersion, op: None, skip: 1, land: true, all: false, rid: 4 }
+   60 Hold { p: 0, class: FxVersion, op: Some(Put), skip: 0, land: true, all: false, rid: 5 }
+   61 Write { p: 2, ops: [(2, 7, false), (0, 5, false), (4, 11, false), (5, 7, false)] }
+   62 Write { p: 2, ops: [(0, 6, false), (3, 2, true), (5, 2, false), (5, 5, false), (1, 12, false)] }
+   63 Flush { p: 2 }
+   64 Write { p: 1, ops: [(0, 9, false)] }
+   65 Storm { on: true }
+   66 CompStart { p: 2 }
+   67 Retire { p: 1 }
+   68 Storm { on: false }
+   69 CompStop { p: 2 }
+   70 FirstPoll { p: 0 }
+   71 Abandon { p: 2 }
+   72 Abandon { p: 0 }
+   73 Storm { on: true }
+   74 FirstPoll { p: 1 }
+   75 Write { p: 1, ops: [(3, 2, false), (3, 14, false), (4, 15, false), (0, 4, false)] }
+   76 Hold { p: 1, class: FxOther, op: Some(Put), skip: 0, land: true, all: false, rid: 6 }
+   77 Open { p: 2, writer: true }
+   78 Point { p: 2, tag: 5 }
+   79 Flush { p: 2 }
+   80 Write { p: 2, ops: [(2, 20, false), (4, 6, false), (3, 20, false), (2, 4, false), (5, 21, true), (3, 17, true)] }
+   81 Retire { p: 0 }
+   82 Erase { p: 2, cust: 1 }
+   83 Mark { tag: 6 }
+   84 Write { p: 2, ops: [(4, 10, false), (3, 23, false), (1, 1, false), (4, 18, true), (1, 5, true), (0, 15, false), (1, 0, false), (0, 15, false), (4, 5, false), (0, 19, false), (5, 6, false)] }
+   85 Release { rid: 4 }
+   86 Kill { p: 1 }
+   87 CompStart { p: 2 }
+   88 CompDrain { p: 2 }
+   89 Kill { p: 2 }
+   90 ClosePass { p: 2 }
+   91 Release { rid: 6 }
+   92 Gc { p: 0 }
+   93 Open { p: 1, writer: false }
+   94 ClosePass { p: 1 }
+   95 Upgrade { p: 1 }
+   96 Point { p: 0, tag: 7 }
+   97 Hold { p: 1, class: SlateManifest, op: Some(Get), skip: 2, land: true, all: false, rid: 7 }
+   98 Open { p: 0, writer: true }
+   99 Gc { p: 0 }
+  100 Write { p: 0, ops: [(4, 17, false), (0, 3, false), (3, 12, false), (2, 17, true), (0, 21, false)] }
+  101 Write { p: 0, ops: [(4, 21, false), (5, 18, false), (5, 21, false), (3, 17, false), (4, 21, false)] }
+  102 Storm { on: false }
+  103 Kill { p: 0 }
+  104 Retire { p: 0 }
+  105 ClosePass { p: 2 }
+  106 GcClosed { p: 2 }
+  107 Open { p: 2, writer: false }
+  108 Retire { p: 2 }
+  109 Upgrade { p: 2 }
+  110 Write { p: 2, ops: [(5, 23, true), (0, 12, true), (0, 13, false), (2, 18, false), (5, 2, false), (2, 22, false), (2, 2, false), (2, 21, false), (4, 0, false)] }
+  111 Write { p: 2, ops: [(4, 23, false), (0, 18, false), (4, 7, false), (2, 19, false), (3, 2, false), (3, 16, false), (1, 12, false), (3, 11, false), (0, 21, true)] }
+  112 SlateGc { p: 0 }
+  113 Restore { p: 2, mark: 6, apply: false }

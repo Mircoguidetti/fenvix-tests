@@ -1,0 +1,416 @@
+SEED 101882 (steps 139): 11 violations; replays failing 0 of 2
+events 139 writes issued 27 key-writes acked 290 requests 2987 faults 37; points 6 restores 5 (applied 1) forks 1 generated 0 slate-gc 2 drops 0 scrubs 0 storms 3 groups-profile true
+
+VIOLATIONS
+  reader: c00msgs/d/00011 acknowledged write lost: expected s101882-e115-4-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx (event 115, slot 0, issue 25), read the older s101882-e9-1-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx (event 9, slot 0)
+  reader: c01msgs/d/00003 acknowledged write lost: expected s101882-e115-3-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx (event 115, slot 0, issue 25), read the older absent (event 4, slot 0)
+  reader: c01msgs/d/00004 acknowledged write lost: expected s101882-e115-1-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx (event 115, slot 0, issue 25), read the older absent (event 4, slot 0)
+  reader: c02msgs/d/00021 acknowledged write lost: expected s101882-e115-2-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx (event 115, slot 0, issue 25), read the older absent (event 109, slot 1)
+  reader: c04msgs/d/00014 acknowledged write lost: expected s101882-e115-0-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx (event 115, slot 0, issue 25), read the older s101882-e112-1-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx (event 112, slot 0)
+  reader and writer differ on c00msgs/d/00011: reader s101882-e9-1-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx, writer s101882-e115-4-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  reader and writer differ on c01msgs/d/00003: reader absent, writer s101882-e115-3-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  reader and writer differ on c01msgs/d/00004: reader absent, writer s101882-e115-1-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  reader and writer differ on c02msgs/d/00021: reader absent, writer s101882-e115-2-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  reader and writer differ on c04msgs/d/00014: reader s101882-e112-1-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx, writer s101882-e115-0-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  reader and writer differ on c05msgs/d/00017: reader absent, writer s101882-e115-5-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+MINIMAL SCRIPT (105 events; SIM_KEEP=0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138), its run: 11 violations
+seed 101882 knobs 2 profile Profile { delay_ppm: 100000, delay_max_ms: 120, fail_ppm: 15000, timeout_before_ppm: 5000, timeout_after_ppm: 8000, timeout_ms: 400 }
+    0 Open { p: 0, writer: true }
+    1 Write { p: 0, ops: [(0, 0, false), (0, 1, false), (0, 2, false), (0, 3, false), (0, 4, false), (0, 5, false), (0, 6, false), (0, 7, false), (0, 8, false), (0, 9, false), (0, 10, false), (0, 11, false), (0, 12, false), (0, 13, false), (0, 14, false), (0, 15, false), (0, 16, false), (0, 17, false), (0, 18, false), (0, 19, false), (0, 20, false), (0, 21, false), (0, 22, false), (0, 23, false)] }
+    2 Flush { p: 0 }
+    3 Point { p: 0, tag: 1 }
+    4 Erase { p: 0, cust: 1 }
+    5 Write { p: 0, ops: [(5, 9, false), (5, 15, false), (5, 8, false)] }
+    6 Flush { p: 0 }
+    7 Write { p: 0, ops: [(3, 7, false), (3, 7, false), (3, 7, false)] }
+    8 Flush { p: 0 }
+    9 Write { p: 0, ops: [(0, 23, false), (0, 11, false), (0, 1, false)] }
+   10 Flush { p: 0 }
+   11 Write { p: 0, ops: [(0, 5, false), (0, 21, false), (0, 23, false)] }
+   12 Flush { p: 0 }
+   13 Write { p: 0, ops: [(0, 3, false), (0, 0, false), (0, 16, false)] }
+   14 Flush { p: 0 }
+   15 Write { p: 0, ops: [(5, 23, false), (5, 18, false), (5, 4, false)] }
+   16 Flush { p: 0 }
+   17 Write { p: 0, ops: [(0, 12, false), (0, 17, false), (0, 22, false)] }
+   52 Hold { p: 0, class: FxRun, op: Some(Multipart), skip: 1, land: true, all: false, rid: 2 }
+   53 Write { p: 0, ops: [(4, 14, false), (4, 12, true)] }
+   54 Hold { p: 0, class: SlateManifest, op: None, skip: 2, land: true, all: false, rid: 3 }
+   55 Write { p: 0, ops: [(3, 20, false), (2, 12, false), (3, 0, false), (5, 16, false), (1, 2, true), (0, 5, false)] }
+   56 Kill { p: 0 }
+   57 GcClosed { p: 2 }
+   58 Retire { p: 1 }
+   59 ClosePass { p: 1 }
+   60 Mark { tag: 5 }
+   61 Release { rid: 1 }
+   62 Restore { p: 0, mark: 5, apply: true }
+   63 Sleep { ms: 88 }
+   64 Release { rid: 3 }
+   65 Restore { p: 1, mark: 2, apply: true }
+   66 Open { p: 2, writer: true }
+   67 Kill { p: 2 }
+   68 Sleep { ms: 29 }
+   69 Open { p: 2, writer: true }
+   70 Restore { p: 2, mark: 2, apply: true }
+   71 Hold { p: 2, class: Wal, op: Some(Put), skip: 1, land: true, all: false, rid: 4 }
+   72 Write { p: 2, ops: [(2, 1, false)] }
+   73 Storm { on: true }
+   74 Write { p: 2, ops: [(3, 23, true), (1, 20, false), (0, 2, false)] }
+   75 Storm { on: false }
+   76 FirstPoll { p: 2 }
+   77 Point { p: 0, tag: 6 }
+   78 Open { p: 0, writer: true }
+   79 Flush { p: 2 }
+   80 Write { p: 0, ops: [(2, 15, false), (0, 4, false), (3, 10, false)] }
+   81 Write { p: 2, ops: [(2, 6, false), (3, 11, false), (2, 8, false)] }
+   82 Retire { p: 1 }
+   83 Restore { p: 0, mark: 5, apply: false }
+   84 Write { p: 0, ops: [(1, 20, false)] }
+   85 Write { p: 0, ops: [(1, 12, false), (0, 3, true), (4, 20, false), (3, 22, false), (5, 5, false), (2, 23, false), (5, 2, false), (4, 7, false), (5, 18, false)] }
+   86 Release { rid: 4 }
+   87 Write { p: 0, ops: [(2, 14, true), (0, 16, false), (0, 7, false), (0, 14, true), (4, 13, false)] }
+   88 Point { p: 1, tag: 7 }
+   89 Hold { p: 2, class: FxVersion, op: Some(Put), skip: 1, land: true, all: false, rid: 5 }
+   90 CompStart { p: 0 }
+   91 Kill { p: 0 }
+   92 Retire { p: 2 }
+   93 Storm { on: true }
+   94 Retire { p: 0 }
+   95 Point { p: 1, tag: 8 }
+   96 Sleep { ms: 123 }
+   97 Mark { tag: 9 }
+   98 GcClosed { p: 2 }
+   99 Write { p: 2, ops: [(0, 2, false), (0, 9, false), (3, 0, false), (1, 12, false), (4, 22, false)] }
+  100 Hold { p: 2, class: FxRun, op: None, skip: 2, land: true, all: false, rid: 6 }
+  101 Restore { p: 0, mark: 2, apply: true }
+  102 Open { p: 1, writer: true }
+  103 Storm { on: false }
+  104 Write { p: 1, ops: [(1, 10, false), (2, 15, false), (2, 2, false), (3, 17, false), (0, 22, false), (4, 8, false), (0, 10, false)] }
+  105 Erase { p: 1, cust: 4 }
+  106 Kill { p: 1 }
+  107 ClosePass { p: 1 }
+  108 Open { p: 1, writer: true }
+  109 Restore { p: 1, mark: 9, apply: true }
+  110 Open { p: 0, writer: true }
+  111 Retire { p: 0 }
+  112 Write { p: 0, ops: [(2, 16, false), (4, 14, false), (2, 2, false), (4, 16, false)] }
+  113 Sleep { ms: 92 }
+  114 Flush { p: 0 }
+  115 Write { p: 0, ops: [(4, 14, false), (1, 4, false), (2, 21, false), (1, 3, false), (0, 11, false), (5, 17, false)] }
+  116 FirstPoll { p: 1 }
+  117 Kill { p: 0 }
+  118 Release { rid: 2 }
+  119 Sleep { ms: 753 }
+  120 Mark { tag: 10 }
+  121 Open { p: 0, writer: true }
+  122 Erase { p: 1, cust: 0 }
+  123 SlateGc { p: 1 }
+  124 Abandon { p: 0 }
+  125 Publish { p: 2 }
+  126 Hold { p: 1, class: Other, op: Some(Put), skip: 2, land: false, all: false, rid: 7 }
+  127 Point { p: 0, tag: 11 }
+  128 Hold { p: 1, class: FxVersion, op: Some(Delete), skip: 2, land: false, all: false, rid: 8 }
+  129 Retire { p: 0 }
+  130 Release { rid: 8 }
+  131 Open { p: 0, writer: false }
+  132 Gc { p: 1 }
+  133 ClosePass { p: 2 }
+  134 Sleep { ms: 130 }
+  135 Erase { p: 1, cust: 5 }
+  136 ClosePass { p: 1 }
+  137 Abandon { p: 1 }
+  138 DropThrough { p: 1 }
+  ! reader: c00msgs/d/00011 acknowledged write lost: expected s101882-e115-4-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx (event 115, slot 0, issue 20), read the older s101882-e9-1-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx (event 9, slot 0)
+  ! reader: c01msgs/d/00003 acknowledged write lost: expected s101882-e115-3-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx (event 115, slot 0, issue 20), read the older absent (event 4, slot 0)
+  ! reader: c01msgs/d/00004 acknowledged write lost: expected s101882-e115-1-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx (event 115, slot 0, issue 20), read the older absent (event 4, slot 0)
+  ! reader: c02msgs/d/00021 acknowledged write lost: expected s101882-e115-2-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx (event 115, slot 0, issue 20), read the older absent (event 109, slot 1)
+  ! reader: c04msgs/d/00014 acknowledged write lost: expected s101882-e115-0-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx (event 115, slot 0, issue 20), read the older s101882-e112-1-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx (event 112, slot 0)
+  ! reader and writer differ on c00msgs/d/00011: reader s101882-e9-1-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx, writer s101882-e115-4-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  ! reader and writer differ on c01msgs/d/00003: reader absent, writer s101882-e115-3-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  ! reader and writer differ on c01msgs/d/00004: reader absent, writer s101882-e115-1-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  ! reader and writer differ on c02msgs/d/00021: reader absent, writer s101882-e115-2-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  ! reader and writer differ on c04msgs/d/00014: reader s101882-e112-1-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx, writer s101882-e115-0-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  ! reader and writer differ on c05msgs/d/00017: reader absent, writer s101882-e115-5-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+TRACE OF THE MINIMAL RUN
+  [0] seed 101882 knobs 2 profile Profile { delay_ppm: 100000, delay_max_ms: 120, fail_ppm: 15000, timeout_before_ppm: 5000, timeout_after_ppm: 8000, timeout_ms: 400 }
+  [0] [0] Open { p: 0, writer: true } -> opened (life 0, writer epoch Some(1))
+  [1] [1] Write { p: 0, ops: [(0, 0, false), (0, 1, false), (0, 2, false), (0, 3, false), (0, 4, false), (0, 5, false), (0, 6, fal -> acked 24 keys
+  [2] [2] Flush { p: 0 } -> flushed
+  [3] fault TimeoutBefore: life 0 Get tenants/sim-101882-87/gc/manifest.boundary
+  [3] [3] Point { p: 0, tag: 1 } -> restore point 1: checkpoint 5f5a1025-91ce-4f4e-8d8d-bb7394d718fe (manifest 4) paired with version None at 1794607627118
+  [4] [4] Erase { p: 0, cust: 1 } -> deletes acked; erasure 00000000000000000002-d396fac4 registered, S_e 2
+  [5] [5] Write { p: 0, ops: [(5, 9, false), (5, 15, false), (5, 8, false)] } -> acked 3 keys
+  [6] [6] Flush { p: 0 } -> flushed
+  [7] [7] Write { p: 0, ops: [(3, 7, false), (3, 7, false), (3, 7, false)] } -> acked 1 keys
+  [8] [8] Flush { p: 0 } -> flushed
+  [9] [9] Write { p: 0, ops: [(0, 23, false), (0, 11, false), (0, 1, false)] } -> acked 3 keys
+  [10] [10] Flush { p: 0 } -> flushed
+  [11] [11] Write { p: 0, ops: [(0, 5, false), (0, 21, false), (0, 23, false)] } -> acked 3 keys
+  [12] [12] Flush { p: 0 } -> flushed
+  [13] [13] Write { p: 0, ops: [(0, 3, false), (0, 0, false), (0, 16, false)] } -> acked 3 keys
+  [14] [14] Flush { p: 0 } -> flushed
+  [15] [15] Write { p: 0, ops: [(5, 23, false), (5, 18, false), (5, 4, false)] } -> acked 3 keys
+  [16] [16] Flush { p: 0 } -> flushed
+  [17] [17] Write { p: 0, ops: [(0, 12, false), (0, 17, false), (0, 22, false)] } -> acked 3 keys
+  [52] hold rule 2 armed: life 0 Some(Multipart) FxRun skip 1 land true all false
+  [53] [53] Write { p: 0, ops: [(4, 14, false), (4, 12, true)] } -> acked 2 keys
+  [54] hold rule 3 armed: life 0 None SlateManifest skip 2 land true all false
+  [55] [55] Write { p: 0, ops: [(3, 20, false), (2, 12, false), (3, 0, false), (5, 16, false), (1, 2, true), (0, 5, false)] } -> acked 6 keys
+  [56] kill -9 slot 0 (life 0)
+  [57] [57] GcClosed { p: 2 } -> closed gc pass
+  [58] [58] Retire { p: 1 } -> nothing to retire
+  [59] fault TimeoutBefore: life 1 Get tenants/sim-101882-87/manifest/00000000000000000011.manifest
+  [59] fault Fail: life 1 Get tenants/sim-101882-87/compacted/01M7BF6EVGGSPZY6NFQCEED7D6.sst
+  [59] fault Fail: life 1 Get tenants/sim-101882-87/gc/compactions.boundary
+  [59] [59] ClosePass { p: 1 } -> close-time pass: ran
+  [60] mark 5 at 1794607628505
+  [61] hold rule 1 released (0 waiting)
+  [62] fault Fail: life 3 Put control/staging/sim-101882-87/62/manifest/00000000000000000002.manifest
+  [62] [62] Restore { p: 0, mark: 5, apply: true } -> restore checked; apply: not open (skipped)
+  [64] hold rule 3 released (0 waiting)
+  [65] [65] Restore { p: 1, mark: 2, apply: true } -> no mark 2 (skipped)
+  [66] fault TimeoutBefore: life 2 Get tenants/sim-101882-87/gc/manifest.boundary
+  [66] [66] Open { p: 2, writer: true } -> opened (life 2, writer epoch Some(2))
+  [67] kill -9 slot 2 (life 2)
+  [69] fault TimeoutBefore: life 4 List tenants/sim-101882-87/fx/manifest/
+  [69] [69] Open { p: 2, writer: true } -> open failed: Generic sim error: timeout before the store (simulated): timeout before the store (simulated)
+  [70] [70] Restore { p: 2, mark: 2, apply: true } -> no mark 2 (skipped)
+  [71] hold rule 4 armed: life 4 Some(Put) Wal skip 1 land true all false
+  [72] [72] Write { p: 2, ops: [(2, 1, false)] } -> not open (skipped)
+  [73] storm on
+  [74] [74] Write { p: 2, ops: [(3, 23, true), (1, 20, false), (0, 2, false)] } -> not open (skipped)
+  [75] storm off
+  [76] [76] FirstPoll { p: 2 } -> not open (skipped)
+  [77] [77] Point { p: 0, tag: 6 } -> restore point 6: checkpoint 1b4dd495-8d81-4af0-a2c8-cc34aa391b85 (manifest 19) paired with version None at 1794607630409
+  [78] fault Fail: life 3 Get tenants/sim-101882-87/wal/00000000000000000011.sst
+  [78] [78] Open { p: 0, writer: true } -> opened (life 3, writer epoch Some(4))
+  [79] [79] Flush { p: 2 } -> not open (skipped)
+  [80] [80] Write { p: 0, ops: [(2, 15, false), (0, 4, false), (3, 10, false)] } -> acked 3 keys
+  [81] [81] Write { p: 2, ops: [(2, 6, false), (3, 11, false), (2, 8, false)] } -> not open (skipped)
+  [82] [82] Retire { p: 1 } -> nothing to retire
+  [83] [83] Restore { p: 0, mark: 5, apply: false } -> restore checked: mark 5, point 1, version None, 10 WAL objects forward, 0 wrong
+  [84] [84] Write { p: 0, ops: [(1, 20, false)] } -> acked 1 keys
+  [85] [85] Write { p: 0, ops: [(1, 12, false), (0, 3, true), (4, 20, false), (3, 22, false), (5, 5, false), (2, 23, false), (5, 2,  -> acked 9 keys
+  [86] hold rule 4 released (0 waiting)
+  [87] [87] Write { p: 0, ops: [(2, 14, true), (0, 16, false), (0, 7, false), (0, 14, true), (4, 13, false)] } -> acked 5 keys
+  [88] [88] Point { p: 1, tag: 7 } -> restore point 7: checkpoint f8043e16-3169-4ffd-8ba3-5f4e67272b99 (manifest 22) paired with version None at 1794607631408
+  [89] hold rule 5 armed: life 4 Some(Put) FxVersion skip 1 land true all false
+  [90] [90] CompStart { p: 0 } -> no writer, no version, or a first build running (skipped)
+  [91] kill -9 slot 0 (life 3)
+  [92] [92] Retire { p: 2 } -> nothing to retire
+  [93] storm on
+  [94] fault Fail: life 5 List tenants/sim-101882-87/fx/erasures/
+  [94] [94] Retire { p: 0 } -> retire failed: Generic sim error: 503 slow down (simulated): 503 slow down (simulated)
+  [95] fault TimeoutAfter: life 1 Put tenants/sim-101882-87/manifest/00000000000000000023.manifest
+  [95] fault Fail: life 1 Get tenants/sim-101882-87/manifest/00000000000000000023.manifest
+  [95] [95] Point { p: 1, tag: 8 } -> restore point 8: checkpoint ad4e4c8a-1a09-4af8-9e4f-67370263b2bb (manifest 23) paired with version None at 1794607632056
+  [97] mark 9 at 1794607632184
+  [98] [98] GcClosed { p: 2 } -> closed gc pass
+  [99] [99] Write { p: 2, ops: [(0, 2, false), (0, 9, false), (3, 0, false), (1, 12, false), (4, 22, false)] } -> not open (skipped)
+  [100] hold rule 6 armed: life 4 None FxRun skip 2 land true all false
+  [101] [101] Restore { p: 0, mark: 2, apply: true } -> no mark 2 (skipped)
+  [102] fault TimeoutBefore: life 1 Get tenants/sim-101882-87/wal/00000000000000000014.sst
+  [102] fault TimeoutBefore: life 1 Get tenants/sim-101882-87/wal/00000000000000000019.sst
+  [102] fault Fail: life 1 Get tenants/sim-101882-87/wal/00000000000000000021.sst
+  [102] fault TimeoutBefore: life 1 Get tenants/sim-101882-87/manifest/00000000000000000025.manifest
+  [102] [102] Open { p: 1, writer: true } -> opened (life 1, writer epoch Some(5))
+  [103] storm off
+  [104] [104] Write { p: 1, ops: [(1, 10, false), (2, 15, false), (2, 2, false), (3, 17, false), (0, 22, false), (4, 8, false), (0, 10 -> acked 7 keys
+  [105] [105] Erase { p: 1, cust: 4 } -> deletes acked; erasure 00000000000000000017-bd34c9a3 registered, S_e 17
+  [106] kill -9 slot 1 (life 1)
+  [107] [107] ClosePass { p: 1 } -> close-time pass: nothing
+  [108] fault Fail: life 6 Get tenants/sim-101882-87/manifest/00000000000000000024.manifest
+  [108] fault TimeoutBefore: life 6 Get tenants/sim-101882-87/wal/00000000000000000019.sst
+  [108] fault TimeoutBefore: life 6 Get tenants/sim-101882-87/wal/00000000000000000030.sst
+  [108] fault Fail: life 6 Get tenants/sim-101882-87/wal/00000000000000000016.sst
+  [108] [108] Open { p: 1, writer: true } -> opened (life 6, writer epoch Some(6))
+  [109] fault TimeoutAfter: life 6 Put control/staging/sim-101882-87/109/manifest/00000000000000000001.manifest
+  [109] fault Fail: life 6 Get control/staging/sim-101882-87/109/wal/00000000000000000018.sst
+  [109] [109] Restore { p: 1, mark: 9, apply: true } -> restore checked and applied: mark 9, point 8, version None, 5 WAL objects forward
+  [110] [110] Open { p: 0, writer: true } -> opened (life 5, writer epoch Some(7))
+  [111] [111] Retire { p: 0 } -> nothing to retire
+  [112] [112] Write { p: 0, ops: [(2, 16, false), (4, 14, false), (2, 2, false), (4, 16, false)] } -> acked 4 keys
+  [114] [114] Flush { p: 0 } -> flushed
+  [115] [115] Write { p: 0, ops: [(4, 14, false), (1, 4, false), (2, 21, false), (1, 3, false), (0, 11, false), (5, 17, false)] } -> acked 6 keys
+  [116] [116] FirstPoll { p: 1 } -> no first version yet
+  [117] kill -9 slot 0 (life 5)
+  [118] hold rule 2 released (0 waiting)
+  [120] mark 10 at 1794607636876
+  [121] fault TimeoutBefore: life 7 Get tenants/sim-101882-87/gc/manifest.boundary
+  [121] [121] Open { p: 0, writer: true } -> opened (life 7, writer epoch Some(8))
+  [122] [122] Erase { p: 1, cust: 0 } -> deletes failed: Closed error: detected newer DB client
+  [123] fault TimeoutAfter: life 6 Delete tenants/sim-101882-87/manifest/00000000000000000008.manifest
+  [123] fault Fail: life 6 List tenants/sim-101882-87/wal/
+  [123] [123] SlateGc { p: 1 } -> slate gc pass
+  [124] [124] Abandon { p: 0 } -> abandoned (close done true)
+  [125] [125] Publish { p: 2 } -> not open (skipped)
+  [126] hold rule 7 armed: life 6 Some(Put) Other skip 2 land false all false
+  [127] [127] Point { p: 0, tag: 11 } -> restore point 11: checkpoint 9bbc368d-8f89-40f6-bede-56fdc4f31c58 (manifest 33) paired with version None at 1794607638741
+  [128] hold rule 8 armed: life 6 Some(Delete) FxVersion skip 2 land false all false
+  [129] [129] Retire { p: 0 } -> nothing to retire
+  [130] hold rule 8 released (0 waiting)
+  [131] fault Fail: life 7 Get tenants/sim-101882-87/wal/00000000000000000028.sst
+  [131] [131] Open { p: 0, writer: false } -> opened (life 7, writer epoch None)
+  [132] [132] Gc { p: 1 } -> no compactor (skipped)
+  [133] fault TimeoutBefore: life 4 Put tenants/sim-101882-87/compactions/00000000000000000013.compactions
+  [133] fault Fail: life 4 Get tenants/sim-101882-87/compactions/00000000000000000013.compactions
+  [133] fault TimeoutBefore: life 4 Get tenants/sim-101882-87/gc/compactions.boundary
+  [133] event 133 still in flight after 1.5s
+  [134] fault Fail: life 4 Get tenants/sim-101882-87/gc/manifest.boundary
+  [135] [135] Erase { p: 1, cust: 5 } -> deletes failed: Closed error: detected newer DB client
+  [136] fault Fail: life 6 Put tenants/sim-101882-87/compactions/00000000000000000016.compactions
+  [136] held by rule 7: life 6 Put tenants/sim-101882-87/compactions/00000000000000000016.compactions
+  [136] fault Fail: life 6 Get tenants/sim-101882-87/gc/compactions.boundary
+  [136] fault Fail: life 6 Get tenants/sim-101882-87/compactions/00000000000000000018.compactions
+  [136] rule 7 lets go after 1001 ms: life 6 Put tenants/sim-101882-87/compactions/00000000000000000016.compactions dropped
+  [136] event 136 still in flight after 1.5s
+  [137] [137] Abandon { p: 1 } -> busy (skipped)
+  [138] [138] DropThrough { p: 1 } -> busy (skipped)
+  [4294967295] [133] ClosePass { p: 2 } -> close-time pass failed: Closed error: detected newer DB client
+  [4294967295] [136] ClosePass { p: 1 } -> close-time pass failed: Unavailable error: object store error (Generic sim error: held request dropped): Generic sim error: held request dropped: held request dropped
+  [4294967295] settle: slot 0 abandon Ok(Ok(()))
+  [4294967295] settle: slot 1 close Ok(Ok(()))
+
+FULL SCRIPT
+seed 101882 knobs 2 profile Profile { delay_ppm: 100000, delay_max_ms: 120, fail_ppm: 15000, timeout_before_ppm: 5000, timeout_after_ppm: 8000, timeout_ms: 400 }
+    0 Open { p: 0, writer: true }
+    1 Write { p: 0, ops: [(0, 0, false), (0, 1, false), (0, 2, false), (0, 3, false), (0, 4, false), (0, 5, false), (0, 6, false), (0, 7, false), (0, 8, false), (0, 9, false), (0, 10, false), (0, 11, false), (0, 12, false), (0, 13, false), (0, 14, false), (0, 15, false), (0, 16, false), (0, 17, false), (0, 18, false), (0, 19, false), (0, 20, false), (0, 21, false), (0, 22, false), (0, 23, false)] }
+    2 Flush { p: 0 }
+    3 Point { p: 0, tag: 1 }
+    4 Erase { p: 0, cust: 1 }
+    5 Write { p: 0, ops: [(5, 9, false), (5, 15, false), (5, 8, false)] }
+    6 Flush { p: 0 }
+    7 Write { p: 0, ops: [(3, 7, false), (3, 7, false), (3, 7, false)] }
+    8 Flush { p: 0 }
+    9 Write { p: 0, ops: [(0, 23, false), (0, 11, false), (0, 1, false)] }
+   10 Flush { p: 0 }
+   11 Write { p: 0, ops: [(0, 5, false), (0, 21, false), (0, 23, false)] }
+   12 Flush { p: 0 }
+   13 Write { p: 0, ops: [(0, 3, false), (0, 0, false), (0, 16, false)] }
+   14 Flush { p: 0 }
+   15 Write { p: 0, ops: [(5, 23, false), (5, 18, false), (5, 4, false)] }
+   16 Flush { p: 0 }
+   17 Write { p: 0, ops: [(0, 12, false), (0, 17, false), (0, 22, false)] }
+   18 Flush { p: 0 }
+   19 Write { p: 0, ops: [(4, 23, false), (4, 5, false), (4, 13, false)] }
+   20 Flush { p: 0 }
+   21 Write { p: 0, ops: [(0, 23, false)] }
+   22 Open { p: 1, writer: true }
+   23 Publish { p: 0 }
+   24 Gc { p: 1 }
+   25 Publish { p: 0 }
+   26 Open { p: 1, writer: true }
+   27 Write { p: 0, ops: [(4, 21, false), (2, 22, false), (2, 20, false)] }
+   28 Storm { on: true }
+   29 Sleep { ms: 158 }
+   30 Mark { tag: 2 }
+   31 Flush { p: 1 }
+   32 Flush { p: 1 }
+   33 FirstPoll { p: 1 }
+   34 Fork { p: 1, copy: false, tag: 3 }
+   35 CompStart { p: 1 }
+   36 Abandon { p: 0 }
+   37 Hold { p: 1, class: FxOther, op: Some(Get), skip: 0, land: false, all: false, rid: 1 }
+   38 DropThrough { p: 1 }
+   39 Storm { on: false }
+   40 Write { p: 1, ops: [(2, 6, true), (2, 23, true), (5, 13, false), (1, 13, false), (4, 1, false), (4, 14, true)] }
+   41 Point { p: 0, tag: 4 }
+   42 Open { p: 0, writer: true }
+   43 Open { p: 2, writer: false }
+   44 Sleep { ms: 252 }
+   45 ErasePass { p: 1 }
+   46 Abandon { p: 1 }
+   47 Abandon { p: 2 }
+   48 Flush { p: 0 }
+   49 Write { p: 0, ops: [(1, 0, false), (4, 20, false), (5, 21, false), (0, 22, false), (1, 19, false), (5, 19, false)] }
+   50 SlateGc { p: 1 }
+   51 Write { p: 0, ops: [(2, 8, false), (4, 20, false)] }
+   52 Hold { p: 0, class: FxRun, op: Some(Multipart), skip: 1, land: true, all: false, rid: 2 }
+   53 Write { p: 0, ops: [(4, 14, false), (4, 12, true)] }
+   54 Hold { p: 0, class: SlateManifest, op: None, skip: 2, land: true, all: false, rid: 3 }
+   55 Write { p: 0, ops: [(3, 20, false), (2, 12, false), (3, 0, false), (5, 16, false), (1, 2, true), (0, 5, false)] }
+   56 Kill { p: 0 }
+   57 GcClosed { p: 2 }
+   58 Retire { p: 1 }
+   59 ClosePass { p: 1 }
+   60 Mark { tag: 5 }
+   61 Release { rid: 1 }
+   62 Restore { p: 0, mark: 5, apply: true }
+   63 Sleep { ms: 88 }
+   64 Release { rid: 3 }
+   65 Restore { p: 1, mark: 2, apply: true }
+   66 Open { p: 2, writer: true }
+   67 Kill { p: 2 }
+   68 Sleep { ms: 29 }
+   69 Open { p: 2, writer: true }
+   70 Restore { p: 2, mark: 2, apply: true }
+   71 Hold { p: 2, class: Wal, op: Some(Put), skip: 1, land: true, all: false, rid: 4 }
+   72 Write { p: 2, ops: [(2, 1, false)] }
+   73 Storm { on: true }
+   74 Write { p: 2, ops: [(3, 23, true), (1, 20, false), (0, 2, false)] }
+   75 Storm { on: false }
+   76 FirstPoll { p: 2 }
+   77 Point { p: 0, tag: 6 }
+   78 Open { p: 0, writer: true }
+   79 Flush { p: 2 }
+   80 Write { p: 0, ops: [(2, 15, false), (0, 4, false), (3, 10, false)] }
+   81 Write { p: 2, ops: [(2, 6, false), (3, 11, false), (2, 8, false)] }
+   82 Retire { p: 1 }
+   83 Restore { p: 0, mark: 5, apply: false }
+   84 Write { p: 0, ops: [(1, 20, false)] }
+   85 Write { p: 0, ops: [(1, 12, false), (0, 3, true), (4, 20, false), (3, 22, false), (5, 5, false), (2, 23, false), (5, 2, false), (4, 7, false), (5, 18, false)] }
+   86 Release { rid: 4 }
+   87 Write { p: 0, ops: [(2, 14, true), (0, 16, false), (0, 7, false), (0, 14, true), (4, 13, false)] }
+   88 Point { p: 1, tag: 7 }
+   89 Hold { p: 2, class: FxVersion, op: Some(Put), skip: 1, land: true, all: false, rid: 5 }
+   90 CompStart { p: 0 }
+   91 Kill { p: 0 }
+   92 Retire { p: 2 }
+   93 Storm { on: true }
+   94 Retire { p: 0 }
+   95 Point { p: 1, tag: 8 }
+   96 Sleep { ms: 123 }
+   97 Mark { tag: 9 }
+   98 GcClosed { p: 2 }
+   99 Write { p: 2, ops: [(0, 2, false), (0, 9, false), (3, 0, false), (1, 12, false), (4, 22, false)] }
+  100 Hold { p: 2, class: FxRun, op: None, skip: 2, land: true, all: false, rid: 6 }
+  101 Restore { p: 0, mark: 2, apply: true }
+  102 Open { p: 1, writer: true }
+  103 Storm { on: false }
+  104 Write { p: 1, ops: [(1, 10, false), (2, 15, false), (2, 2, false), (3, 17, false), (0, 22, false), (4, 8, false), (0, 10, false)] }
+  105 Erase { p: 1, cust: 4 }
+  106 Kill { p: 1 }
+  107 ClosePass { p: 1 }
+  108 Open { p: 1, writer: true }
+  109 Restore { p: 1, mark: 9, apply: true }
+  110 Open { p: 0, writer: true }
+  111 Retire { p: 0 }
+  112 Write { p: 0, ops: [(2, 16, false), (4, 14, false), (2, 2, false), (4, 16, false)] }
+  113 Sleep { ms: 92 }
+  114 Flush { p: 0 }
+  115 Write { p: 0, ops: [(4, 14, false), (1, 4, false), (2, 21, false), (1, 3, false), (0, 11, false), (5, 17, false)] }
+  116 FirstPoll { p: 1 }
+  117 Kill { p: 0 }
+  118 Release { rid: 2 }
+  119 Sleep { ms: 753 }
+  120 Mark { tag: 10 }
+  121 Open { p: 0, writer: true }
+  122 Erase { p: 1, cust: 0 }
+  123 SlateGc { p: 1 }
+  124 Abandon { p: 0 }
+  125 Publish { p: 2 }
+  126 Hold { p: 1, class: Other, op: Some(Put), skip: 2, land: false, all: false, rid: 7 }
+  127 Point { p: 0, tag: 11 }
+  128 Hold { p: 1, class: FxVersion, op: Some(Delete), skip: 2, land: false, all: false, rid: 8 }
+  129 Retire { p: 0 }
+  130 Release { rid: 8 }
+  131 Open { p: 0, writer: false }
+  132 Gc { p: 1 }
+  133 ClosePass { p: 2 }
+  134 Sleep { ms: 130 }
+  135 Erase { p: 1, cust: 5 }
+  136 ClosePass { p: 1 }
+  137 Abandon { p: 1 }
+  138 DropThrough { p: 1 }
