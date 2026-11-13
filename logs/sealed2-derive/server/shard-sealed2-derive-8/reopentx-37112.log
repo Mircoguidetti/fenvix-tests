@@ -1,0 +1,38 @@
+TEST FAULT INJECTION ON (/tmp/tmpjnfvdzv7.faults): never use this in production
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+admin interface listening on 127.0.0.1:35150 (bearer token required)
+mongo-server listening on 127.0.0.1:37112 (idle close after 600 s, holder T1, lease ttl 2 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:40496
+LEASE process_lease tenant=- holder=T1 unix_ms=1794553809355 inc=4faef54531623f98 gen=1
+LEASE acquired tenant=d holder=T1 unix_ms=1794553809357 takeover_from=-
+LEASE acquired tenant=d holder=T1 unix_ms=1794553809363 takeover_from=-
+LEASE acquired tenant=d holder=T1 unix_ms=1794553809368 takeover_from=-
+LEASE acquired tenant=d holder=T1 unix_ms=1794553809373 takeover_from=- new=true
+LEASE writer_open tenant=d holder=T1 unix_ms=1794553809384 
+FXC not started db=d reason=no_version_of_our_manifest unix_ms=1794553809385
+FIRST_PUBLISH u=1794553809395 db=d version=1 x_d=3 rows=26 build_ms=8 off_lock=1
+FAULT delay_put processes/T1/_lease 3500
+L0_TRACE u=1794553810422.628 db=d l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794553811446.754 db=d l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794553812469.2878 db=d l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794553813493.5557 db=d l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+LEASE process_lease_late tenant=- holder=T1 unix_ms=1794553813585 abandoned=1
+LEASE lost tenant=d holder=T1 unix_ms=1794553813585 process_lease_late
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=2 closed=true
+LEASE writer_close tenant=d holder=T1 unix_ms=1794553813587 
+LEASE process_lease_lapsed tenant=- holder=T1 unix_ms=1794553813682 gen=2 abandoned=0
+LEASE acquired tenant=d holder=T1 unix_ms=1794553816600 takeover_from=-
+LEASE takeover_wake tenant=d holder=T1 unix_ms=1794553816612 unclean=true takeover_from=-
+LEASE writer_open tenant=d holder=T1 unix_ms=1794553816627 
+shutting down: closing tenants cleanly
+ABSORB u=1794553816650.4136 db=d ssts=1 rows=7 raw_kib=0 committed=1 l0_start=1 l0_end=1 lock_ms=0 read_ms=0 write_ms=4 commit_ms=1 total_ms=7
+LEASE writer_close tenant=d holder=T1 unix_ms=1794553816657 
+LEASE release_begin tenant=d holder=T1 unix_ms=1794553816657 
+LEASE release tenant=d holder=T1 unix_ms=1794553816659 ok=true
+tenants closed; stopping maintenance
+maintenance shutdown: waiting for the L0 watch unix_ms=1794553816667
+maintenance shutdown: waiting for the dispatcher unix_ms=1794553817290
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794553817290
+maintenance shutdown: waiting for the GC task unix_ms=1794553817290
+maintenance shutdown: done unix_ms=1794553819286
+maintenance stopped (2650 ms)

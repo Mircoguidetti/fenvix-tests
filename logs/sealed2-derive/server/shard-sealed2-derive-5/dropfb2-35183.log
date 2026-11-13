@@ -1,0 +1,26 @@
+TEST FAULT INJECTION ON (/tmp/tmp6q0bkpol.faults): never use this in production
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+admin interface listening on 127.0.0.1:22255 (bearer token required)
+mongo-server listening on 127.0.0.1:35183 (idle close after 900 s, holder DROPFB2, lease ttl 4 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:52518
+LEASE process_lease tenant=- holder=DROPFB2 unix_ms=1794553200422 inc=12ecf6365eb89d6e gen=1
+LEASE acquired tenant=f holder=DROPFB2 unix_ms=1794553200424 takeover_from=-
+FAULT delay_get tenants/f/manifest/00000000000000000002.manifest 12000
+FAULT delay_put processes/DROPFB2/_lease 15000
+SLOW hello db=admin ms=10002 ok=true
+SLOW dropDatabase db=f ms=12004 ok=false
+LEASE process_lease_lost tenant=- holder=DROPFB2 unix_ms=1794553216834 abandoned=1
+LEASE lost tenant=f holder=DROPFB2 unix_ms=1794553216834 process_lease_lost
+TIMING abandon db=f stop_fxc_ms=0 tenant_abandon_ms=0 closed=true
+SLOW hello db=admin ms=10001 ok=true
+SLOW hello db=admin ms=10001 ok=true
+SLOW hello db=admin ms=10002 ok=true
+SLOW hello db=admin ms=10001 ok=true
+shutting down: closing tenants cleanly
+tenants closed; stopping maintenance
+maintenance shutdown: waiting for the L0 watch unix_ms=1794553252258
+maintenance shutdown: waiting for the dispatcher unix_ms=1794553252286
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794553252286
+maintenance shutdown: waiting for the GC task unix_ms=1794553252286
+maintenance shutdown: done unix_ms=1794553254261
+maintenance stopped (2010 ms)

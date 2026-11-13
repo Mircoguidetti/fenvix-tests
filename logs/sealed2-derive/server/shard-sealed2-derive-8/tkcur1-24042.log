@@ -1,0 +1,29 @@
+TEST FAULT INJECTION ON (/tmp/tmpen9ho4kz.faults): never use this in production
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+admin interface listening on 127.0.0.1:22045 (bearer token required)
+mongo-server listening on 127.0.0.1:24042 (idle close after 600 s, holder P1, lease ttl 3 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:48760
+LEASE process_lease tenant=- holder=P1 unix_ms=1794554013461 inc=6b9f8d7c1a18c974 gen=1
+LEASE acquired tenant=d holder=P1 unix_ms=1794554013463 takeover_from=-
+LEASE acquired tenant=d holder=P1 unix_ms=1794554013469 takeover_from=-
+LEASE acquired tenant=d holder=P1 unix_ms=1794554013505 takeover_from=- new=true
+LEASE writer_open tenant=d holder=P1 unix_ms=1794554013516 
+FXC not started db=d reason=no_version_of_our_manifest unix_ms=1794554013516
+FIRST_PUBLISH u=1794554013557 db=d version=1 x_d=3 rows=10005 build_ms=26 off_lock=1
+FAULT delay_put processes/P1/_lease 4500
+L0_TRACE u=1794554014587.052 db=d l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794554015611.9297 db=d l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794554016634.8982 db=d l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794554017660.2068 db=d l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+LEASE invalid tenant=d holder=P1 unix_ms=1794554018170 
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=105 closed=true
+LEASE writer_close tenant=d holder=P1 unix_ms=1794554018276 
+shutting down: closing tenants cleanly
+tenants closed; stopping maintenance
+maintenance shutdown: waiting for the L0 watch unix_ms=1794554018284
+LEASE process_lease_lost tenant=- holder=P1 unix_ms=1794554018973 abandoned=0
+maintenance shutdown: waiting for the dispatcher unix_ms=1794554019275
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794554019275
+maintenance shutdown: waiting for the GC task unix_ms=1794554019275
+maintenance shutdown: done unix_ms=1794554021274
+maintenance stopped (2996 ms)

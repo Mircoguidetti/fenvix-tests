@@ -1,0 +1,31 @@
+TEST FAULT INJECTION ON (/tmp/tmp9wvrf_k_.faults): never use this in production
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+admin interface listening on 127.0.0.1:28184 (bearer token required)
+mongo-server listening on 127.0.0.1:39523 (idle close after 300 s, holder e65a-39523, lease ttl 6 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:54356
+LEASE process_lease tenant=- holder=e65a-39523 unix_ms=1794553459225 inc=6e3bc284204ecbe0 gen=1
+LEASE acquired tenant=infla holder=e65a-39523 unix_ms=1794553459226 takeover_from=-
+LEASE acquired tenant=infla holder=e65a-39523 unix_ms=1794553459231 takeover_from=-
+LEASE acquired tenant=infla holder=e65a-39523 unix_ms=1794553459236 takeover_from=- new=true
+LEASE writer_open tenant=infla holder=e65a-39523 unix_ms=1794553459245 
+FXC not started db=infla reason=no_version_of_our_manifest unix_ms=1794553459245
+FAULT delay_put tenants/infla/wal/00000000000000000003.sst 1500
+FIRST_PUBLISH u=1794553459255 db=infla version=1 x_d=2 rows=404 build_ms=7 off_lock=1
+SLOW_PUT u=1794553460755 db=infla kind=wal ms=1503 bytes=327
+SLOW insert db=infla ms=1503 ok=true
+TIMING abandon db=infla stop_fxc_ms=0 tenant_abandon_ms=1304 closed=true
+LEASE writer_close tenant=infla holder=e65a-39523 unix_ms=1794553460861 
+LEASE acquired tenant=admin holder=e65a-39523 unix_ms=1794553460868 takeover_from=-
+LEASE acquired tenant=admin holder=e65a-39523 unix_ms=1794553460872 takeover_from=-
+ADMIN DELETE /v1/databases/infla -> 200 1344 ms peer=127.0.0.1:54368
+LEASE acquired tenant=infla holder=e65a-39523 unix_ms=1794553463917 takeover_from=-
+LEASE acquired tenant=infla holder=e65a-39523 unix_ms=1794553463921 takeover_from=-
+LEASE acquired tenant=infla holder=e65a-39523 unix_ms=1794553463925 takeover_from=-
+shutting down: closing tenants cleanly
+tenants closed; stopping maintenance
+maintenance shutdown: waiting for the L0 watch unix_ms=1794553463931
+maintenance shutdown: waiting for the dispatcher unix_ms=1794553464147
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794553464147
+maintenance shutdown: waiting for the GC task unix_ms=1794553464147
+maintenance shutdown: done unix_ms=1794553465146
+maintenance stopped (1217 ms)

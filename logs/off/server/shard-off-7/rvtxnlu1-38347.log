@@ -1,0 +1,30 @@
+TEST FAULT INJECTION ON (/tmp/tmpnj170ctb.faults): never use this in production
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+admin interface listening on 127.0.0.1:33591 (bearer token required)
+mongo-server listening on 127.0.0.1:38347 (idle close after 600 s, holder P1, lease ttl 2 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:41182
+LEASE process_lease tenant=- holder=P1 unix_ms=1794554422780 inc=203f3aaa24aded28 gen=1
+LEASE acquired tenant=d holder=P1 unix_ms=1794554422781 takeover_from=-
+LEASE acquired tenant=d holder=P1 unix_ms=1794554422785 takeover_from=-
+LEASE acquired tenant=d holder=P1 unix_ms=1794554422789 takeover_from=- new=true
+LEASE writer_open tenant=d holder=P1 unix_ms=1794554422795 
+FAULT delay_put processes/P1/_lease 3500
+LEASE process_lease_late tenant=- holder=P1 unix_ms=1794554427105 abandoned=1
+LEASE lost tenant=d holder=P1 unix_ms=1794554427105 process_lease_late
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=1 closed=true
+LEASE writer_close tenant=d holder=P1 unix_ms=1794554427107 
+LEASE process_lease_lapsed tenant=- holder=P1 unix_ms=1794554427201 gen=2 abandoned=0
+FAULT delay_put processes/P1/_lease 3500
+LEASE process_lease_lost tenant=- holder=P1 unix_ms=1794554430704 abandoned=0
+LEASE process_lease tenant=- holder=P1 unix_ms=1794554430835 inc=9df2de8d578b8f5b gen=3
+LEASE acquired tenant=d holder=P1 unix_ms=1794554430837 takeover_from=-
+shutting down: closing tenants cleanly
+LEASE release_begin tenant=d holder=P1 unix_ms=1794554430843 
+LEASE release tenant=d holder=P1 unix_ms=1794554430844 ok=true
+tenants closed; stopping maintenance
+maintenance shutdown: waiting for the L0 watch unix_ms=1794554430849
+maintenance shutdown: waiting for the dispatcher unix_ms=1794554431609
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794554431609
+maintenance shutdown: waiting for the GC task unix_ms=1794554431609
+maintenance shutdown: done unix_ms=1794554432606
+maintenance stopped (1763 ms)
