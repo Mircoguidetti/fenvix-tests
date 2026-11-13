@@ -1,0 +1,23 @@
+TEST FAULT INJECTION ON (/tmp/tmpk5ugaklw.faults): never use this in production
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+admin interface listening on 127.0.0.1:37421 (bearer token required)
+mongo-server listening on 127.0.0.1:23449 (idle close after 600 s, holder P1, lease ttl 3 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:52208
+LEASE process_lease tenant=- holder=P1 unix_ms=1794573230675 inc=6aa5fee4fa22be72 gen=1
+LEASE acquired tenant=d holder=P1 unix_ms=1794573230677 takeover_from=-
+LEASE acquired tenant=d holder=P1 unix_ms=1794573230681 takeover_from=-
+LEASE acquired tenant=d holder=P1 unix_ms=1794573230713 takeover_from=- new=true
+LEASE writer_open tenant=d holder=P1 unix_ms=1794573230721 
+FAULT delay_put processes/P1/_lease 4500
+LEASE invalid tenant=d holder=P1 unix_ms=1794573235481 
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=105 closed=true
+LEASE writer_close tenant=d holder=P1 unix_ms=1794573235586 
+shutting down: closing tenants cleanly
+tenants closed; stopping maintenance
+maintenance shutdown: waiting for the L0 watch unix_ms=1794573235591
+LEASE process_lease_lost tenant=- holder=P1 unix_ms=1794573236361 abandoned=0
+maintenance shutdown: waiting for the dispatcher unix_ms=1794573236463
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794573236463
+maintenance shutdown: waiting for the GC task unix_ms=1794573236463
+maintenance shutdown: done unix_ms=1794573238462
+maintenance stopped (2874 ms)

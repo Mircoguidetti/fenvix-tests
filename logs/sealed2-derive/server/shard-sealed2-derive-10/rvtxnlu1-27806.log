@@ -1,0 +1,36 @@
+TEST FAULT INJECTION ON (/tmp/tmp79mw2s6a.faults): never use this in production
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+admin interface listening on 127.0.0.1:38789 (bearer token required)
+mongo-server listening on 127.0.0.1:27806 (idle close after 600 s, holder P1, lease ttl 2 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:41582
+LEASE process_lease tenant=- holder=P1 unix_ms=1794573146632 inc=47684dcb0b019bf6 gen=1
+LEASE acquired tenant=d holder=P1 unix_ms=1794573146634 takeover_from=-
+LEASE acquired tenant=d holder=P1 unix_ms=1794573146639 takeover_from=-
+LEASE acquired tenant=d holder=P1 unix_ms=1794573146645 takeover_from=- new=true
+LEASE writer_open tenant=d holder=P1 unix_ms=1794573146657 
+FXC not started db=d reason=no_version_of_our_manifest unix_ms=1794573146657
+FIRST_PUBLISH u=1794573146669 db=d version=1 x_d=3 rows=7 build_ms=9 off_lock=1
+FAULT delay_put processes/P1/_lease 3500
+L0_TRACE u=1794573147696.0847 db=d l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794573148720.602 db=d l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794573149745.6987 db=d l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794573150768.553 db=d l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+LEASE process_lease_late tenant=- holder=P1 unix_ms=1794573150956 abandoned=1
+LEASE lost tenant=d holder=P1 unix_ms=1794573150957 process_lease_late
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=2 closed=true
+LEASE writer_close tenant=d holder=P1 unix_ms=1794573150959 
+LEASE process_lease_lapsed tenant=- holder=P1 unix_ms=1794573151053 gen=2 abandoned=0
+LEASE process_lease_lost tenant=- holder=P1 unix_ms=1794573151054 abandoned=0
+LEASE process_lease tenant=- holder=P1 unix_ms=1794573154615 inc=13892dc1fd19719f gen=3
+LEASE acquired tenant=d holder=P1 unix_ms=1794573154618 takeover_from=-
+shutting down: closing tenants cleanly
+FXC not started db=d reason=not_writer unix_ms=1794573154629
+LEASE release_begin tenant=d holder=P1 unix_ms=1794573154629 
+LEASE release tenant=d holder=P1 unix_ms=1794573154632 ok=true
+tenants closed; stopping maintenance
+maintenance shutdown: waiting for the L0 watch unix_ms=1794573154647
+maintenance shutdown: waiting for the dispatcher unix_ms=1794573155461
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794573155461
+maintenance shutdown: waiting for the GC task unix_ms=1794573155461
+maintenance shutdown: done unix_ms=1794573156457
+maintenance stopped (1827 ms)

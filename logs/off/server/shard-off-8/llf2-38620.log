@@ -1,0 +1,21 @@
+TEST FAULT INJECTION ON (/tmp/tmpt33drcz4.faults): never use this in production
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+FAULT fail_get tenants/f1/manifest/00000000000000000002.manifest
+LEASE process_lease tenant=- holder=F1 unix_ms=1794573293448 inc=68494e4d2db09c42 gen=1
+LEASE acquired tenant=f2 holder=F1 unix_ms=1794573293451 takeover_from=-
+LEASE takeover_wake tenant=f2 holder=F1 unix_ms=1794573293461 unclean=true takeover_from=-
+LEASE writer_open tenant=f2 holder=F1 unix_ms=1794573293473 
+local log: database f2: 6 records applied again (after record 0)
+FAULT fail_get tenants/f1/manifest/00000000000000000002.manifest
+FAULT fail_get tenants/f1/manifest/00000000000000000002.manifest
+FAULT fail_get tenants/f1/manifest/00000000000000000002.manifest
+FAULT fail_get tenants/f1/manifest/00000000000000000002.manifest
+FAULT fail_get tenants/f1/manifest/00000000000000000002.manifest
+FAULT fail_get tenants/f1/manifest/00000000000000000002.manifest
+FAULT fail_get tenants/f1/manifest/00000000000000000002.manifest
+local log: replay of database f1 failed (no progress after 5 s); its 6 records are kept, the database is refused until they are applied
+local log: 1 databases kept their records; retried in the background
+local log: restart applied 6 records to 1 databases in 5.0 s
+admin interface listening on 127.0.0.1:36639 (bearer token required)
+mongo-server listening on 127.0.0.1:38620 (idle close after 600 s, holder F1, lease ttl 4 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:47998

@@ -1,0 +1,31 @@
+TEST FAULT INJECTION ON (/tmp/tmp3_8p01k0.faults): never use this in production
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+admin interface listening on 127.0.0.1:38839 (bearer token required)
+mongo-server listening on 127.0.0.1:38198 (idle close after 600 s, holder T1, lease ttl 2 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:40016
+LEASE process_lease tenant=- holder=T1 unix_ms=1794573476904 inc=c1be24e101bb7b97 gen=1
+LEASE acquired tenant=d holder=T1 unix_ms=1794573476906 takeover_from=-
+LEASE acquired tenant=d holder=T1 unix_ms=1794573476912 takeover_from=-
+LEASE acquired tenant=d holder=T1 unix_ms=1794573476917 takeover_from=-
+LEASE acquired tenant=d holder=T1 unix_ms=1794573476922 takeover_from=- new=true
+LEASE writer_open tenant=d holder=T1 unix_ms=1794573476932 
+FAULT delay_put processes/T1/_lease 3500
+LEASE process_lease_late tenant=- holder=T1 unix_ms=1794573481135 abandoned=1
+LEASE lost tenant=d holder=T1 unix_ms=1794573481135 process_lease_late
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=2 closed=true
+LEASE writer_close tenant=d holder=T1 unix_ms=1794573481137 
+LEASE process_lease_lapsed tenant=- holder=T1 unix_ms=1794573481230 gen=2 abandoned=0
+LEASE acquired tenant=d holder=T1 unix_ms=1794573484148 takeover_from=-
+LEASE takeover_wake tenant=d holder=T1 unix_ms=1794573484158 unclean=true takeover_from=-
+LEASE writer_open tenant=d holder=T1 unix_ms=1794573484171 
+shutting down: closing tenants cleanly
+LEASE writer_close tenant=d holder=T1 unix_ms=1794573484184 
+LEASE release_begin tenant=d holder=T1 unix_ms=1794573484184 
+LEASE release tenant=d holder=T1 unix_ms=1794573484186 ok=true
+tenants closed; stopping maintenance
+maintenance shutdown: waiting for the L0 watch unix_ms=1794573484193
+maintenance shutdown: waiting for the dispatcher unix_ms=1794573484837
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794573484837
+maintenance shutdown: waiting for the GC task unix_ms=1794573484837
+maintenance shutdown: done unix_ms=1794573486835
+maintenance stopped (2659 ms)

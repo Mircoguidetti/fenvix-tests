@@ -1,0 +1,22 @@
+..F....s..s                                                              [100%]
+=================================== FAILURES ===================================
+___________________ test_mixed_writes_spanning_lease_losses ____________________
+test_52r_review_c2_fix_outage_loss.py:205: in test_mixed_writes_spanning_lease_losses
+    _mixed_writes(throttled=False)
+test_52r_review_c2_fix_outage_loss.py:335: in _mixed_writes
+    assert not problems, "\n".join(problems)
+E   AssertionError: now: 1 counters differ from their acknowledged increments (stored, acknowledged), e.g. [('c1-21', (74, 73))]
+E     after a restart: 1 counters differ from their acknowledged increments (stored, acknowledged), e.g. [('c1-21', (74, 73))]
+E   assert not ["now: 1 counters differ from their acknowledged increments (stored, acknowledged), e.g. [('c1-21', (74, 73))]", "after a restart: 1 counters differ from their acknowledged increments (stored, acknowledged), e.g. [('c1-21', (74, 73))]"]
+----------------------------- Captured stdout call -----------------------------
+one error of each kind: ["OperationFailure 1 Closed error: db is closed, full error: {'ok': 0.0, 'errmsg': 'Closed error: db is closed', 'code': 1, 'codeName': 'Inte", 'OperationFailure 251 database d was reopened since the transaction began (its lease was lost); the transaction was not applied, run it again,']
+lease losses 9; reopenedWritesRefused 6; errors {'OperationFailure 1': 21, 'OperationFailure 251': 6}; samples ["OperationFailure 1 Closed error: db is closed, full error: {'ok': 0.0, 'errmsg': 'Closed error: db is closed', 'code': 1, 'codeName': 'Inte", 'OperationFailure 251 database d was reopened since the transaction began (its lease was lost); the transaction was not applied, run it again,', 'OperationFailure 251 database d was reopened since the transaction began (its lease was lost); the transaction was not applied, run it again,']
+now: acknowledged inserts 187361, scanned 187361, by _id index 187361, by k index 187361
+now: 1 counters differ from their acknowledged increments (stored, acknowledged), e.g. [('c1-21', (74, 73))]
+after a restart: acknowledged inserts 187361, scanned 187361, by _id index 187361, by k index 187361
+after a restart: 1 counters differ from their acknowledged increments (stored, acknowledged), e.g. [('c1-21', (74, 73))]
+=========================== short test summary info ============================
+FAILED test_52r_review_c2_fix_outage_loss.py::test_mixed_writes_spanning_lease_losses - AssertionError: now: 1 counters differ from their acknowledged increments (stored, acknowledged), e.g. [('c1-21', (74, 73))]
+  after a restart: 1 counters differ from their acknowledged increments (stored, acknowledged), e.g. [('c1-21', (74, 73))]
+assert not ["now: 1 counters differ from their acknowledged increments (stored, acknowledged), e.g. [('c1-21', (74, 73))]", "after a restart: 1 counters differ from their acknowledged increments (stored, acknowledged), e.g. [('c1-21', (74, 73))]"]
+1 failed, 8 passed, 2 skipped in 405.11s (0:06:45)

@@ -1,0 +1,23 @@
+TEST FAULT INJECTION ON (/tmp/tmpqfph1inj.faults): never use this in production
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+LEASE process_lease tenant=- holder=E1 unix_ms=1794573291195 inc=1a134249e2741323 gen=1
+LEASE acquired tenant=e holder=E1 unix_ms=1794573291198 takeover_from=-
+LEASE takeover_wake tenant=e holder=E1 unix_ms=1794573291209 unclean=true takeover_from=-
+FAULT hang_put tenants/e/wal/00000000000000000002.sst
+LEASE writer_open tenant=e holder=E1 unix_ms=1794573291425 
+local log: database e: 6 records applied again (after record 0)
+local log: restart applied 6 records to 1 databases in 0.2 s
+admin interface listening on 127.0.0.1:20799 (bearer token required)
+mongo-server listening on 127.0.0.1:25341 (idle close after 600 s, holder E1, lease ttl 4 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:40568
+shutting down: closing tenants cleanly
+LEASE writer_close tenant=e holder=E1 unix_ms=1794573291474 
+LEASE release_begin tenant=e holder=E1 unix_ms=1794573291474 
+LEASE release tenant=e holder=E1 unix_ms=1794573291477 ok=true
+tenants closed; stopping maintenance
+maintenance shutdown: waiting for the L0 watch unix_ms=1794573291484
+maintenance shutdown: waiting for the dispatcher unix_ms=1794573292189
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794573292189
+maintenance shutdown: waiting for the GC task unix_ms=1794573292189
+maintenance shutdown: done unix_ms=1794573293189
+maintenance stopped (1725 ms)

@@ -1,0 +1,14 @@
+F..........                                                              [100%]
+=================================== FAILURES ===================================
+_______ test_restore_after_compaction_and_gc_uses_retained_wal_and_ssts ________
+test_03b_restore_gc_crash.py:52: in test_restore_after_compaction_and_gc_uses_retained_wal_and_ssts
+    states, deleted = gc_scenario(srv, bucket, "g")
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+test_03b_restore_gc_crash.py:40: in gc_scenario
+    wait_until(lambda: c.admin.command("tenantStats")["maintenance"]["compactRuns"] > base["compactRuns"], 60, what="compaction")
+lib.py:251: in wait_until
+    raise AssertionError(f"timed out waiting for {what}: {last}")
+E   AssertionError: timed out waiting for compaction: False
+=========================== short test summary info ============================
+FAILED test_03b_restore_gc_crash.py::test_restore_after_compaction_and_gc_uses_retained_wal_and_ssts - AssertionError: timed out waiting for compaction: False
+1 failed, 10 passed in 191.04s (0:03:11)
