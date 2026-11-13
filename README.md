@@ -66,6 +66,7 @@ is public). Starting a workflow needs write access to this repository (the `plan
 
 - A full set, repeats of some files, or cargo unit tests on an engine commit: `ctl-build`.
 - The fast judge on an engine commit: `fast-judge`.
+- The 50 + 50 takeovers (log on and off) of the integration rounds: `step9-takeovers`.
 - One of the engine's local programs under `loadtest/` (e.g. the 50 live takeovers of `takeover_rounds.py`): `loadtest`.
 - `ctl` (prebuilt bundles) is the older path, kept for bundles; new work uses `ctl-build`.
 
@@ -97,6 +98,15 @@ is public). Starting a workflow needs write access to this repository (the `plan
   `args` (after OUT, e.g. `--rounds 50`), `timeout_min` (default 120). One runner; binaries built from the commit;
   results on `results/<7>/<run id>`: `LOADTEST.md` (command, exit code, last lines), `out/` (the program's logs, the
   engines' logs; store and log data dropped), `program.json`, `build.json`.
+
+### step9-takeovers inputs
+
+- `engine_commit`, `log` (`on`, `off` or `both`, one job each), `n` (default 50), `harness_ref` (default `aws-step9`).
+  Runs `ci/step9-takeovers.sh`: the step 9 local harness of `harness_ref` (docker containers as machines, local MinIO,
+  fake Atlas, the 3-copy log) with only `step9/programs/takeovers.py --n N --writers 8 --between-s 3 --lease-ttl 4
+  --log on|off`, against mongo-server and pq built from `engine_commit`, as `research/integration-3/takeover-run.sh`
+  did locally. The job refuses to run if the runner has cloud credentials. Results: `TAKEOVERS.md` and `<log>/` (the
+  program's summary and raw lines, run and package logs) on `results/<7>/<run id>`.
 
 ### fast-judge inputs
 

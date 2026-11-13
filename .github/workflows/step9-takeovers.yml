@@ -1,0 +1,162 @@
+name: step9-takeovers
+# The 50 + 50 takeovers (log on and log off) of the integration rounds, as research/integration-3/takeover-run.sh ran
+# them locally: the step 9 local harness (fenvix-engine branch aws-step9: docker containers as machines, MinIO as S3,
+# a fake Atlas, the 3-copy log) running only step9/programs/takeovers.py, "--n N --writers 8 --between-s 3
+# --lease-ttl 4 --log on|off", with mongo-server and pq built from the engine commit under test (ci/build-engine.sh).
+# Everything stays on the runner: MinIO and the containers are local, the runner has no cloud credentials.
+# Results (takeovers-summary.json, takeovers.jsonl, run and package logs) go to results/<7-char commit>/<run id>.
+on:
+  workflow_dispatch:
+    inputs:
+      engine_commit:
+        description: "Engine commit under test (full sha preferred)"
+        required: true
+      log:
+        description: "on, off or both (one job each)"
+        required: false
+        default: "both"
+      n:
+        description: "Takeovers per log mode"
+        required: false
+        default: "50"
+      harness_ref:
+        description: "fenvix-engine ref holding the step 9 harness"
+        required: false
+        default: "aws-step9"
+
+permissions:
+  contents: write
+
+env:
+  ENGINE_REPO: Mircoguidetti/fenvix-engine
+  RUST_VERSION: "1.97.0"
+
+jobs:
+  plan:
+    if: github.actor == github.repository_owner
+    runs-on: ubuntu-24.04
+    outputs:
+      modes: ${{ steps.p.outputs.modes }}
+      name: ${{ steps.p.outputs.name }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ env.ENGINE_REPO }}
+          ref: ${{ inputs.engine_commit }}
+          path: engine
+          persist-credentials: false
+          sparse-checkout: judge
+      - id: p
+        env: { L: "${{ inputs.log }}", N: "${{ inputs.n }}" }
+        run: |
+          set -euo pipefail
+          case "$L" in on) M='["on"]' ;; off) M='["off"]' ;; both) M='["on","off"]' ;; *) echo "log: on, off or both"; exit 1 ;; esac
+          case "$N" in ''|*[!0-9]*) echo "n must be a number"; exit 1 ;; esac
+          FULL=$(git -C engine rev-parse HEAD)
+          { echo "modes=$M"; echo "name=${FULL:0:7}"; } >> "$GITHUB_OUTPUT"
+
+  takeovers:
+    needs: plan
+    runs-on: ubuntu-24.04
+    timeout-minutes: 300
+    strategy:
+      fail-fast: false
+      matrix:
+        log: ${{ fromJSON(needs.plan.outputs.modes) }}
+    name: takeovers log ${{ matrix.log }}
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: "${{ github.sha }}" }
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ env.ENGINE_REPO }}
+          ref: ${{ inputs.engine_commit }}
+          path: engine
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ env.ENGINE_REPO }}
+          ref: ${{ inputs.harness_ref }}
+          path: s9
+          persist-credentials: false
+      - name: no cloud credentials on this runner
+        run: |
+          if env | grep -qE '^AWS_(ACCESS_KEY_ID|SECRET_ACCESS_KEY|SESSION_TOKEN|PROFILE)='; then echo "AWS credentials found: refusing to run"; exit 1; fi
+          [ ! -e ~/.aws ] || { echo "~/.aws exists: refusing to run"; exit 1; }
+          echo "none"
+      - name: rust
+        run: rustup toolchain install "$RUST_VERSION" --profile minimal > /dev/null && rustup default "$RUST_VERSION" && rustc --version
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry/index
+            ~/.cargo/registry/cache
+          key: cargo-registry-${{ hashFiles('engine/Cargo.lock', 'engine/proto/quaderno/Cargo.lock') }}
+      - uses: actions/cache@v4
+        with:
+          path: ~/.fenvix-judge
+          key: judge-env-${{ hashFiles('ci/setup-env.sh') }}
+      - name: build the engine under test
+        run: mkdir -p meta && ci/build-engine.sh engine "$(git -C engine rev-parse HEAD)" meta
+      - run: ci/setup-env.sh
+      - name: takeovers, log ${{ matrix.log }}
+        env:
+          LOGMODE: ${{ matrix.log }}
+          N: ${{ inputs.n }}
+          PIP_BREAK_SYSTEM_PACKAGES: "1"
+        run: |
+          W=$PWD/w; t0=$(date +%s)
+          ci/step9-takeovers.sh s9 engine "$W" "$LOGMODE" "$N" > meta/harness.log 2>&1; rc=$?
+          echo "{\"log\": \"$LOGMODE\", \"n\": $N, \"rc\": $rc, \"seconds\": $(( $(date +%s) - t0 )), \"harness\": \"$(git -C s9 rev-parse HEAD)\"}" > meta/job.json
+          tail -40 meta/harness.log
+          exit 0
+      - name: collect
+        if: always()
+        env: { LOGMODE: "${{ matrix.log }}" }
+        run: |
+          mkdir -p res/$LOGMODE; cp meta/* res/$LOGMODE/ 2>/dev/null || true
+          W=$PWD/w
+          [ -d "$W/out-takeovers-$LOGMODE" ] && cp -r "$W/out-takeovers-$LOGMODE" res/$LOGMODE/out
+          for f in "$W"/run-*.log "$W"/summary-*.md "$W"/packages-*.txt "$W"/teardown-*.txt "$W"/resolved-*.json "$W"/minio.log; do [ -f "$f" ] && cp "$f" res/$LOGMODE/; done
+          find res -type f -size +20M -delete
+          # no passwords in what is published
+          grep -rl "CM_PW=" res 2>/dev/null | xargs -r sed -i 's/CM_PW=[^ ]*/CM_PW=<masked>/g'
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: takeovers-${{ matrix.log }}
+          path: res
+          retention-days: 14
+
+  summary:
+    needs: [plan, takeovers]
+    if: always() && !cancelled() && needs.plan.outputs.name != ''
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/download-artifact@v4
+        with: { path: arts }
+      - name: summary and publish
+        env:
+          NAME: ${{ needs.plan.outputs.name }}
+          COMMIT: ${{ inputs.engine_commit }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          mkdir -p result; for d in arts/*/; do cp -r "$d"* result/ 2>/dev/null || true; done
+          {
+            echo "# step 9 takeovers, engine $COMMIT"; echo; echo "Run: $RUN_URL"; echo
+            for m in on off; do
+              [ -d "result/$m" ] || continue
+              echo "## log $m"; echo
+              cat "result/$m/job.json" 2>/dev/null; echo
+              s=$(ls result/$m/out/*takeovers*summary*.json 2>/dev/null | head -1)
+              if [ -n "$s" ]; then echo '```'; cat "$s"; echo; echo '```'; else echo "no takeovers summary (see harness.log)"; fi
+              grep -h "TAKEOVERS:" result/$m/out/* result/$m/run-*.log 2>/dev/null | tail -2
+              echo
+            done
+          } > result/TAKEOVERS.md
+          cat result/TAKEOVERS.md >> "$GITHUB_STEP_SUMMARY"
+          cd result && git init -q && git checkout -q -b r
+          git -c user.name=takeovers-ci -c user.email=takeovers-ci@users.noreply.github.com add -A
+          git -c user.name=takeovers-ci -c user.email=takeovers-ci@users.noreply.github.com commit -q -m "step9 takeovers: engine $NAME, run $GITHUB_RUN_ID"
+          git push -q "https://x-access-token:${{ github.token }}@github.com/$GITHUB_REPOSITORY" "r:refs/heads/results/$NAME/$GITHUB_RUN_ID"
