@@ -1,0 +1,128 @@
+# The engine's seeded simulation of late writes (P-sim-test), many seeds in parallel, against an engine commit.
+# Same steps as the engine's own .github/workflows/sim-test.yml (which exists only on engine branches and so cannot be
+# dispatched there): 20 jobs, each builds the lib tests once and runs one range of seeds with
+#   SIM_SEEDS=A..B SIM_STEPS=steps SIM_PAR=4 SIM_REPLAYS=3 SIM_MIN_BUDGET=24 SIM_OUT=sim-out
+#   cargo test --release --lib fx::sim::tests::sim_seeds -- --nocapture
+# A job fails if any of its seeds printed "SIM VIOLATION". The summary job publishes SIM.md, every job's SIM lines and
+# the violation reports (sim-out/) on branch results/<7-char commit>/<run id>. No secret, no cloud.
+name: sim-test
+on:
+  workflow_dispatch:
+    inputs:
+      engine_commit:
+        description: "Engine commit (full sha preferred)"
+        required: true
+      first_seed:
+        description: "first seed"
+        default: "0"
+      seeds_per_job:
+        description: "seeds per job (20 jobs)"
+        default: "250"
+      steps:
+        description: "events per script"
+        default: "90"
+
+permissions:
+  contents: write
+
+env:
+  ENGINE_REPO: Mircoguidetti/fenvix-engine
+
+jobs:
+  plan:
+    if: github.actor == github.repository_owner
+    runs-on: ubuntu-24.04
+    outputs:
+      commit: ${{ steps.p.outputs.commit }}
+      name: ${{ steps.p.outputs.name }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ env.ENGINE_REPO }}
+          ref: ${{ inputs.engine_commit }}
+          path: engine
+          persist-credentials: false
+          sparse-checkout: src
+      - id: p
+        env: { F: "${{ inputs.first_seed }}", P: "${{ inputs.seeds_per_job }}", S: "${{ inputs.steps }}" }
+        run: |
+          set -euo pipefail
+          for v in "$F" "$P" "$S"; do case "$v" in ''|*[!0-9]*) echo "first_seed, seeds_per_job and steps must be numbers"; exit 1 ;; esac; done
+          FULL=$(git -C engine rev-parse HEAD)
+          grep -rqs "fn sim_seeds" engine/src || { echo "no fx::sim::tests::sim_seeds at $FULL"; exit 1; }
+          { echo "commit=$FULL"; echo "name=${FULL:0:7}"; } >> "$GITHUB_OUTPUT"
+
+  seeds:
+    needs: plan
+    runs-on: ubuntu-24.04
+    timeout-minutes: 240
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ env.ENGINE_REPO }}
+          ref: ${{ needs.plan.outputs.commit }}
+          path: engine
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with: { workspaces: engine }
+      - name: build
+        working-directory: engine
+        run: cargo test --release --lib --no-run
+      - name: seeds
+        working-directory: engine
+        env: { F: "${{ inputs.first_seed }}", P: "${{ inputs.seeds_per_job }}", S: "${{ inputs.steps }}", K: "${{ matrix.shard }}" }
+        run: |
+          A=$(( F + K * P )); B=$(( A + P ))
+          echo "seeds $A..$B"
+          SIM_SEEDS=$A..$B SIM_STEPS=$S SIM_PAR=4 SIM_REPLAYS=3 SIM_MIN_BUDGET=24 SIM_OUT=sim-out \
+            cargo test --release --lib fx::sim::tests::sim_seeds -- --nocapture 2>&1 | grep -E "^SIM|panicked" | tee ../sim-$K.log
+          ! grep -q "SIM VIOLATION" ../sim-$K.log
+      - if: always()
+        run: mkdir -p out && cp sim-*.log out/ 2>/dev/null; [ -d engine/sim-out ] && cp -r engine/sim-out out/ || true
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sim-${{ matrix.shard }}
+          path: out/
+          if-no-files-found: ignore
+
+  summary:
+    needs: [plan, seeds]
+    if: always() && !cancelled() && needs.plan.outputs.name != ''
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/download-artifact@v4
+        with: { path: arts }
+      - name: summary and publish
+        env:
+          NAME: ${{ needs.plan.outputs.name }}
+          COMMIT: ${{ needs.plan.outputs.commit }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          F: ${{ inputs.first_seed }}
+          P: ${{ inputs.seeds_per_job }}
+          S: ${{ inputs.steps }}
+        run: |
+          set -eu
+          mkdir -p result; for d in arts/*/; do cp -r "$d"* result/ 2>/dev/null || true; done
+          logs=$(ls result/sim-*.log 2>/dev/null | wc -l)
+          viol=$(cat result/sim-*.log 2>/dev/null | grep -c "SIM VIOLATION" || true)
+          panics=$(cat result/sim-*.log 2>/dev/null | grep -c "panicked" || true)
+          {
+            echo "# sim-test, engine $COMMIT"; echo; echo "Run: $RUN_URL"; echo
+            echo "Seeds $F..$(( F + 20 * P )) (20 jobs x $P), $S events per script."
+            echo "Job logs found: $logs of 20. Lines \"SIM VIOLATION\": $viol. Lines \"panicked\": $panics."
+            if [ "$logs" = 20 ] && [ "$viol" = 0 ] && [ "$panics" = 0 ]; then echo "Verdict: PASS"; else echo "Verdict: FAIL"; fi
+            echo; echo "## last SIM line of each job"; echo
+            for k in $(seq 0 19); do echo "- job $k: $(grep -E '^SIM' result/sim-$k.log 2>/dev/null | tail -1)"; done
+            echo; echo "## violations"; echo; echo '```'; grep -h "SIM VIOLATION" result/sim-*.log 2>/dev/null | head -50 || true; echo '```'
+          } > result/SIM.md
+          cat result/SIM.md >> "$GITHUB_STEP_SUMMARY"
+          cd result && git init -q && git checkout -q -b r
+          git -c user.name=sim-ci -c user.email=sim-ci@users.noreply.github.com add -A
+          git -c user.name=sim-ci -c user.email=sim-ci@users.noreply.github.com commit -q -m "sim-test: engine $NAME, run $GITHUB_RUN_ID"
+          git push -q "https://x-access-token:${{ github.token }}@github.com/$GITHUB_REPOSITORY" "r:refs/heads/results/$NAME/$GITHUB_RUN_ID"
