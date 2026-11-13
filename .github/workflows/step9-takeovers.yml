@@ -141,7 +141,7 @@ jobs:
           COMMIT: ${{ inputs.engine_commit }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
-          set -euo pipefail
+          set -eu
           mkdir -p result; for d in arts/*/; do cp -r "$d"* result/ 2>/dev/null || true; done
           {
             echo "# step 9 takeovers, engine $COMMIT"; echo; echo "Run: $RUN_URL"; echo
@@ -151,7 +151,8 @@ jobs:
               cat "result/$m/job.json" 2>/dev/null; echo
               s=$(ls result/$m/out/*takeovers*summary*.json 2>/dev/null | head -1)
               if [ -n "$s" ]; then echo '```'; cat "$s"; echo; echo '```'; else echo "no takeovers summary (see harness.log)"; fi
-              grep -h "TAKEOVERS:" result/$m/out/* result/$m/run-*.log 2>/dev/null | tail -2
+              { grep -h "TAKEOVERS:" result/$m/out/* result/$m/run-*.log 2>/dev/null || true; } | tail -2
+              echo; echo "harness.log, last lines:"; echo '```'; tail -40 "result/$m/harness.log" 2>/dev/null || true; echo '```'
               echo
             done
           } > result/TAKEOVERS.md
