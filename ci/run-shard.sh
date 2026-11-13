@@ -43,7 +43,11 @@ for spec in "$@"; do
   # "test_x" runs the file once; "test_x@K" is run K of a repeat (its own log, ctl_test_x@K.log)
   n=${spec%%@*}; k=""; [ "$spec" != "$n" ] && k=${spec#*@}
   t0=$(date +%s)
-  timeout 1500 "$PY" -m pytest -q -p no:cacheprovider --tb=short "$n.py" > "$OUT/ctl_$spec.log" 2>&1; rc=$?
+  # a memory cgroup test (imports memcg.py) runs as root when the job set one up (MEMCG_SUDO=1, ci/memcg-setup.sh): cgroup v2
+  # lets only root create the child groups of the root group, where the job's shell now is
+  runas=""; if [ "${MEMCG_SUDO:-0}" = 1 ] && grep -qE '^from memcg import|^import memcg' "$n.py"; then runas="sudo -E env PATH=$PATH HOME=$HOME"; fi
+  $runas timeout 1500 "$PY" -m pytest -q -p no:cacheprovider --tb=short "$n.py" > "$OUT/ctl_$spec.log" 2>&1; rc=$?
+  if [ -n "$runas" ]; then sudo pkill -9 -f "$B/target/release/mongo-server" 2>/dev/null; sudo chown -R "$(id -u):$(id -g)" "$B/ctl-tests" "$OUT" 2>/dev/null; fi
   t1=$(date +%s)
   "$PY" - "$n" "$rc" "$((t1 - t0))" "$OUT" "$spec" "$k" <<'Q'
 import json, sys

@@ -146,7 +146,8 @@ is public). Starting a workflow needs write access to this repository (the `plan
 Tests that import `ctl-tests/memcg.py` (test_81, test_82, test_83) need a memory cgroup. When a job's files include
 one, `ci/memcg-setup.sh` (with sudo) moves the job's shell into the cgroup v2 root group, keeps the memory controller on
 for its children and hands the root group's directory, `cgroup.procs` and `cgroup.subtree_control` to the runner user,
-so the tests create their own limited child groups. Other jobs are unchanged.
+and `ci/run-shard.sh` runs those test files as root (`MEMCG_SUDO=1`; a non-root user cannot create children of the root
+group, MEASURED), so the tests create their own limited child groups. Other files and jobs are unchanged.
 
 ### Isolation
 
