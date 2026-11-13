@@ -51,7 +51,7 @@ on:
         required: false
         default: "1200"
       test_env:
-        description: "Extra environment for the ctl tests, space separated NAME=VALUE (names in capitals, e.g. CTL82_CONTROL=1)"
+        description: "Extra environment for the ctl tests and the lib suite runs, space separated NAME=VALUE (names in capitals, e.g. CTL82_CONTROL=1)"
         required: false
         default: ""
       extra_tests:
@@ -267,8 +267,14 @@ jobs:
             ~/.cargo/registry/cache
           key: cargo-registry-${{ hashFiles('engine/Cargo.lock', 'engine/proto/quaderno/Cargo.lock') }}
       - name: lib suite
-        env: { RUN: "${{ matrix.run }}", TO: "${{ inputs.lib_suite_timeout }}", FILTER: "${{ inputs.lib_suite_filter }}", PKGN: "${{ inputs.lib_suite_package }}" }
-        run: ci/run-lib-suite.sh engine "$PWD/lib" "$RUN" "${TO:-1200}" "$FILTER" "$PKGN"
+        env: { RUN: "${{ matrix.run }}", TO: "${{ inputs.lib_suite_timeout }}", FILTER: "${{ inputs.lib_suite_filter }}", PKGN: "${{ inputs.lib_suite_package }}", TEST_ENV: "${{ inputs.test_env }}" }
+        run: |
+          # test_env applies to the lib suite too (same rules as for the ctl tests)
+          for kv in $TEST_ENV; do
+            case "$kv" in [A-Z]*=*) n=${kv%%=*}; case "$n" in *[!A-Z0-9_]*|GITHUB_*|RUNNER_*|AWS_*|PATH|HOME|LD_*) echo "test_env: $n not allowed"; exit 1 ;; esac; export "$kv"; echo "test_env: $n set" ;;
+              *) echo "test_env: bad item"; exit 1 ;; esac
+          done
+          ci/run-lib-suite.sh engine "$PWD/lib" "$RUN" "${TO:-1200}" "$FILTER" "$PKGN"
       - uses: actions/upload-artifact@v4
         if: always()
         with:

@@ -22,6 +22,10 @@ on:
       steps:
         description: "events per base script"
         default: "90"
+      sim_env:
+        description: "Extra simulator environment, space separated NAME=VALUE with SIM_ names only (e.g. SIM_REMOTE=1); empty = none"
+        required: false
+        default: ""
 
 permissions:
   contents: write
@@ -73,8 +77,12 @@ jobs:
         with: { workspaces: engine }
       - name: seeds
         working-directory: engine
-        env: { F: "${{ inputs.first_seed }}", P: "${{ inputs.seeds_per_job }}", G: "${{ inputs.gen }}", K: "${{ matrix.shard }}", SIM_STEPS: "${{ inputs.steps }}", SIM_OUT: sim-out }
+        env: { F: "${{ inputs.first_seed }}", P: "${{ inputs.seeds_per_job }}", G: "${{ inputs.gen }}", K: "${{ matrix.shard }}", SIM_STEPS: "${{ inputs.steps }}", SIM_OUT: sim-out, SIM_ENV_IN: "${{ inputs.sim_env }}" }
         run: |
+          for kv in $SIM_ENV_IN; do
+            case "$kv" in SIM_*=*) n=${kv%%=*}; case "$n" in *[!A-Z0-9_]*) echo "sim_env: $n not allowed"; exit 1 ;; esac; export "$kv"; echo "sim_env: $kv" ;;
+              *) echo "sim_env: only SIM_ names"; exit 1 ;; esac
+          done
           A=$(( F + K * P ))
           rc=0; bash scripts/sim-seeds.sh "$A" "$P" "$G" 4 || rc=$?
           cp sim-out/summary.log ../sim-$K.log 2>/dev/null || true
@@ -104,6 +112,7 @@ jobs:
           P: ${{ inputs.seeds_per_job }}
           S: ${{ inputs.steps }}
           G: ${{ inputs.gen }}
+          SIM_ENV_IN: ${{ inputs.sim_env }}
         run: |
           set -eu
           mkdir -p result; for d in arts/*/; do cp -r "$d"* result/ 2>/dev/null || true; done
@@ -112,7 +121,7 @@ jobs:
           panics=$(cat result/sim-*.log 2>/dev/null | grep -c "panicked" || true)
           {
             echo "# sim-test-2, engine $COMMIT"; echo; echo "Run: $RUN_URL"; echo
-            echo "Seeds $F..$(( F + 20 * P )) (20 runners x $P), gen $G, $S events per base script."
+            echo "Seeds $F..$(( F + 20 * P )) (20 runners x $P), gen $G, $S events per base script. sim_env: ${SIM_ENV_IN:-none}."
 
             seeds=$(cat result/sim-*.log 2>/dev/null | grep -c '^SIM seed' || true)
             echo "Job logs found: $logs of 20. Seeds reported run (lines \"SIM seed\"): $seeds. Lines \"SIM VIOLATION\": $viol. Lines \"panicked\": $panics."
@@ -120,6 +129,7 @@ jobs:
             echo; echo "## last SIM line of each job"; echo
             for k in $(seq 0 19); do echo "- job $k: $(grep -E '^SIM' result/sim-$k.log 2>/dev/null | tail -1)"; done
             echo; echo "## violations"; echo; echo '```'; grep -h "SIM VIOLATION" result/sim-*.log 2>/dev/null | head -50 || true; echo '```'
+            echo; echo "## SIM REMOTE COVERAGE lines (when present)"; echo; echo '```'; grep -h "SIM REMOTE COVERAGE" result/sim-*.log 2>/dev/null | head -60 || true; echo '```'
           } > result/SIM.md
           cat result/SIM.md >> "$GITHUB_STEP_SUMMARY"
           cd result && git init -q && git checkout -q -b r
