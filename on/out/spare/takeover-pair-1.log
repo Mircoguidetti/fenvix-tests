@@ -1,0 +1,37 @@
+cpu: the process may use 2 core(s) and runs on CPU(s) [1, 2]
+quaderno: writes are acknowledged by the replicated log at 172.18.0.2:7200,172.18.0.4:7200,172.18.0.5:7200
+quaderno: restart read 4 records of 2 databases from the log
+LEASE process_lease tenant=- holder=tk-spare-1 unix_ms=1794585212134 inc=a7d8accbb332764e gen=1
+local log: replay of database tk_app failed (tenant tk_app is owned by server process tk-server-1-1 (lease valid for another 2579 ms); retry); its 2 records are kept, the database is refused until they are applied
+local log: replay of database admin failed (tenant admin is owned by server process tk-server-1-1 (lease valid for another 2577 ms); retry); its 2 records are kept, the database is refused until they are applied
+local log: 2 databases kept their records; retried in the background
+quaderno: restart applied 0 records to 0 databases in 0.1 s
+mongo-server listening on 0.0.0.0:27018 (idle close after 60 s, holder tk-spare-1, lease ttl 4 s)
+local log: retry of database admin failed (tenant admin is owned by server process tk-server-1-1 (lease valid for another 3030 ms); retry); retried later
+local log: retry of database tk_app failed (tenant tk_app is owned by server process tk-server-1-1 (lease valid for another 3016 ms); retry); retried later
+local log: retry of database admin failed (tenant admin is owned by server process tk-server-1-1 (lease valid for another 3803 ms); retry); retried later
+local log: retry of database tk_app failed (tenant tk_app is owned by server process tk-server-1-1 (lease valid for another 3792 ms); retry); retried later
+local log: retry of database admin failed (tenant admin is owned by server process tk-server-1-1 (lease valid for another 3979 ms); retry); retried later
+local log: retry of database tk_app failed (tenant tk_app is owned by server process tk-server-1-1 (lease valid for another 3968 ms); retry); retried later
+SLOW hello db=admin ms=10002 ok=true
+SLOW hello db=admin ms=10001 ok=true
+SLOW hello db=admin ms=10001 ok=true
+local log: retry of database admin failed (tenant admin is owned by server process tk-server-1-1 (lease valid for another 2956 ms); retry); retried later
+local log: retry of database tk_app failed (tenant tk_app is owned by server process tk-server-1-1 (lease valid for another 2946 ms); retry); retried later
+SLOW hello db=admin ms=10000 ok=true
+SLOW hello db=admin ms=10001 ok=true
+SLOW hello db=admin ms=10000 ok=true
+SLOW hello db=admin ms=10000 ok=true
+local log: database admin: kept records applied by the retry; the database is open again
+local log: database tk_app: kept records applied by the retry; the database is open again
+SLOW hello db=admin ms=10000 ok=true
+SLOW hello db=admin ms=10001 ok=true
+SLOW hello db=admin ms=10000 ok=true
+SLOW hello db=admin ms=10001 ok=true
+LEASE process_lease_revoked tenant=admin holder=tk-spare-1 unix_ms=1794585271311 of=tk-server-1-1
+LEASE acquired tenant=admin holder=tk-spare-1 unix_ms=1794585271314 takeover_from=tk-server-1-1
+LEASE takeover_wake tenant=admin holder=tk-spare-1 unix_ms=1794585271334 unclean=true takeover_from=tk-server-1-1
+LEASE acquired tenant=tk_app holder=tk-spare-1 unix_ms=1794585271360 takeover_from=tk-server-1-1
+LEASE takeover_wake tenant=tk_app holder=tk-spare-1 unix_ms=1794585271392 unclean=true takeover_from=tk-server-1-1
+LEASE writer_open tenant=tk_app holder=tk-spare-1 unix_ms=1794585271486 
+quaderno: takeover of tk_app: 6037 records applied from the log (after record 117609939129925632)
