@@ -1,0 +1,50 @@
+# loadtest, engine 7657d2f4adb2f7f05bbeee65efad06581e6b96ff
+
+Run: https://github.com/Mircoguidetti/fenvix-tests/actions/runs/43434531824
+Program: python loadtest/log_path_fix/takeover_rounds.py OUT --rounds 50
+Exit code: 0 (0 = the program's own PASS); time 341 s
+
+## last lines
+
+```
+round 12: primary A killed after 305 acknowledged writes this round; spare B answered 5.06 s after the kill; acknowledged so far fast=1325 agent=876 hot=534 (spare has 540); missing=0 hot_short=0
+round 13: primary B killed after 327 acknowledged writes this round; spare A answered 5.06 s after the kill; acknowledged so far fast=1481 agent=983 hot=598 (spare has 604); missing=0 hot_short=0
+round 14: primary A killed after 218 acknowledged writes this round; spare B answered 5.67 s after the kill; acknowledged so far fast=1589 agent=1047 hot=644 (spare has 651); missing=0 hot_short=0
+round 15: primary B killed after 239 acknowledged writes this round; spare A answered 5.09 s after the kill; acknowledged so far fast=1708 agent=1118 hot=693 (spare has 701); missing=0 hot_short=0
+round 16: primary A killed after 108 acknowledged writes this round; spare B answered 5.09 s after the kill; acknowledged so far fast=1760 agent=1151 hot=716 (spare has 725); missing=0 hot_short=0
+round 17: primary B killed after 91 acknowledged writes this round; spare A answered 5.07 s after the kill; acknowledged so far fast=1804 agent=1179 hot=735 (spare has 745); missing=0 hot_short=0
+round 18: primary A killed after 213 acknowledged writes this round; spare B answered 5.48 s after the kill; acknowledged so far fast=1907 agent=1245 hot=779 (spare has 790); missing=0 hot_short=0
+round 19: primary B killed after 48 acknowledged writes this round; spare A answered 5.07 s after the kill; acknowledged so far fast=1932 agent=1258 hot=789 (spare has 801); missing=0 hot_short=0
+round 20: primary A killed after 140 acknowledged writes this round; spare B answered 5.07 s after the kill; acknowledged so far fast=2000 agent=1302 hot=817 (spare has 830); missing=0 hot_short=0
+round 21: primary B killed after 74 acknowledged writes this round; spare A answered 5.08 s after the kill; acknowledged so far fast=2037 agent=1322 hot=834 (spare has 848); missing=0 hot_short=0
+round 22: primary A killed after 177 acknowledged writes this round; spare B answered 5.09 s after the kill; acknowledged so far fast=2127 agent=1374 hot=869 (spare has 884); missing=0 hot_short=0
+round 23: primary B killed after 292 acknowledged writes this round; spare A answered 5.12 s after the kill; acknowledged so far fast=2273 agent=1466 hot=923 (spare has 938); missing=0 hot_short=0
+round 24: primary A killed after 111 acknowledged writes this round; spare B answered 5.08 s after the kill; acknowledged so far fast=2326 agent=1500 hot=947 (spare has 963); missing=0 hot_short=0
+round 25: primary B killed after 84 acknowledged writes this round; spare A answered 5.09 s after the kill; acknowledged so far fast=2370 agent=1526 hot=961 (spare has 978); missing=0 hot_short=0
+round 26: primary A killed after 205 acknowledged writes this round; spare B answered 5.49 s after the kill; acknowledged so far fast=2470 agent=1589 hot=1003 (spare has 1021); missing=0 hot_short=0
+round 27: primary B killed after 236 acknowledged writes this round; spare A answered 5.10 s after the kill; acknowledged so far fast=2588 agent=1663 hot=1047 (spare has 1066); missing=0 hot_short=0
+round 28: primary A killed after 277 acknowledged writes this round; spare B answered 5.10 s after the kill; acknowledged so far fast=2719 agent=1752 hot=1104 (spare has 1124); missing=0 hot_short=0
+round 29: primary B killed after 142 acknowledged writes this round; spare A answered 5.09 s after the kill; acknowledged so far fast=2790 agent=1795 hot=1132 (spare has 1153); missing=0 hot_short=0
+round 30: primary A killed after 25 acknowledged writes this round; spare B answered 5.10 s after the kill; acknowledged so far fast=2804 agent=1802 hot=1136 (spare has 1158); missing=0 hot_short=0
+round 31: primary B killed after 190 acknowledged writes this round; spare A answered 5.50 s after the kill; acknowledged so far fast=2894 agent=1866 hot=1172 (spare has 1194); missing=0 hot_short=0
+round 32: primary A killed after 184 acknowledged writes this round; spare B answered 5.30 s after the kill; acknowledged so far fast=2988 agent=1918 hot=1210 (spare has 1233); missing=0 hot_short=0
+round 33: primary B killed after 213 acknowledged writes this round; spare A answered 5.30 s after the kill; acknowledged so far fast=3094 agent=1983 hot=1252 (spare has 1276); missing=0 hot_short=0
+round 34: primary A killed after 194 acknowledged writes this round; spare B answered 5.31 s after the kill; acknowledged so far fast=3190 agent=2044 hot=1289 (spare has 1314); missing=0 hot_short=0
+round 35: primary B killed after 248 acknowledged writes this round; spare A answered 5.14 s after the kill; acknowledged so far fast=3302 agent=2133 hot=1336 (spare has 1362); missing=0 hot_short=0
+round 36: primary A killed after 231 acknowledged writes this round; spare B answered 5.32 s after the kill; acknowledged so far fast=3415 agent=2206 hot=1381 (spare has 1407); missing=0 hot_short=0
+round 37: primary B killed after 237 acknowledged writes this round; spare A answered 5.19 s after the kill; acknowledged so far fast=3532 agent=2280 hot=1427 (spare has 1454); missing=0 hot_short=0
+round 38: primary A killed after 306 acknowledged writes this round; spare B answered 5.22 s after the kill; acknowledged so far fast=3682 agent=2380 hot=1483 (spare has 1511); missing=0 hot_short=0
+round 39: primary B killed after 77 acknowledged writes this round; spare A answered 5.14 s after the kill; acknowledged so far fast=3721 agent=2404 hot=1497 (spare has 1526); missing=0 hot_short=0
+round 40: primary A killed after 190 acknowledged writes this round; spare B answered 5.33 s after the kill; acknowledged so far fast=3811 agent=2465 hot=1536 (spare has 1566); missing=0 hot_short=0
+round 41: primary B killed after 41 acknowledged writes this round; spare A answered 5.13 s after the kill; acknowledged so far fast=3831 agent=2481 hot=1541 (spare has 1572); missing=0 hot_short=0
+round 42: primary A killed after 212 acknowledged writes this round; spare B answered 5.33 s after the kill; acknowledged so far fast=3934 agent=2547 hot=1584 (spare has 1616); missing=0 hot_short=0
+round 43: primary B killed after 136 acknowledged writes this round; spare A answered 5.17 s after the kill; acknowledged so far fast=3999 agent=2591 hot=1611 (spare has 1644); missing=0 hot_short=0
+round 44: primary A killed after 297 acknowledged writes this round; spare B answered 5.12 s after the kill; acknowledged so far fast=4145 agent=2685 hot=1668 (spare has 1702); missing=0 hot_short=0
+round 45: primary B killed after 372 acknowledged writes this round; spare A answered 5.13 s after the kill; acknowledged so far fast=4330 agent=2795 hot=1745 (spare has 1780); missing=0 hot_short=0
+round 46: primary A killed after 165 acknowledged writes this round; spare B answered 5.19 s after the kill; acknowledged so far fast=4412 agent=2845 hot=1778 (spare has 1814); missing=0 hot_short=0
+round 47: primary B killed after 162 acknowledged writes this round; spare A answered 5.48 s after the kill; acknowledged so far fast=4490 agent=2896 hot=1811 (spare has 1847); missing=0 hot_short=0
+round 48: primary A killed after 323 acknowledged writes this round; spare B answered 5.75 s after the kill; acknowledged so far fast=4649 agent=2995 hot=1876 (spare has 1913); missing=0 hot_short=0
+round 49: primary B killed after 260 acknowledged writes this round; spare A answered 5.19 s after the kill; acknowledged so far fast=4777 agent=3074 hot=1929 (spare has 1967); missing=0 hot_short=0
+first read after the kill: p50 5.13 s, max 5.75 s
+RESULT takeover_rounds rounds=50 acked_fast=4777 acked_agent=3074 acked_hot_incs=1929 missing=0 -> PASS
+```
