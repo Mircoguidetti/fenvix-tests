@@ -1,0 +1,27 @@
+TEST FAULT INJECTION ON (/tmp/tmp0fuq8voz.faults): never use this in production
+admin interface listening on 127.0.0.1:21950 (bearer token required)
+mongo-server listening on 127.0.0.1:39615 (idle close after 600 s, holder Q1, lease ttl 3 s)
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:44032
+LEASE process_lease tenant=- holder=Q1 unix_ms=1794545728569 inc=96d4ac6611c29b41 gen=1
+LEASE acquired tenant=d holder=Q1 unix_ms=1794545728571 takeover_from=-
+LEASE acquired tenant=d holder=Q1 unix_ms=1794545728577 takeover_from=-
+LEASE acquired tenant=d holder=Q1 unix_ms=1794545728613 takeover_from=- new=true
+LEASE writer_open tenant=d holder=Q1 unix_ms=1794545728623 
+FAULT delay_put processes/Q1/_lease 4500
+LEASE invalid tenant=d holder=Q1 unix_ms=1794545733289 
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=107 closed=true
+LEASE writer_close tenant=d holder=Q1 unix_ms=1794545733397 
+LEASE process_lease_lost tenant=- holder=Q1 unix_ms=1794545734081 abandoned=0
+LEASE process_lease tenant=- holder=Q1 unix_ms=1794545734405 inc=8f6f8085eb8d28e1 gen=2
+LEASE acquired tenant=d holder=Q1 unix_ms=1794545735915 takeover_from=-
+shutting down: closing tenants cleanly
+LEASE release_begin tenant=d holder=Q1 unix_ms=1794545736057 
+LEASE release tenant=d holder=Q1 unix_ms=1794545736060 ok=true
+tenants closed; stopping maintenance
+maintenance shutdown: waiting for the L0 watch unix_ms=1794545736066
+maintenance shutdown: waiting for the dispatcher unix_ms=1794545736386
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794545736386
+maintenance shutdown: waiting for the GC task unix_ms=1794545736386
+maintenance shutdown: done unix_ms=1794545738384
+maintenance stopped (2326 ms)

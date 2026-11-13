@@ -1,0 +1,56 @@
+FF.                                                                      [100%]
+=================================== FAILURES ===================================
+_ test_the_delete_returns_before_the_physical_erasure_and_a_batch_serves_them_all _
+test_69_perf_erase.py:78: in test_the_delete_returns_before_the_physical_erasure_and_a_batch_serves_them_all
+    assert [e["state"] for e in es] == ["pending", "pending"], es
+E   AssertionError: [{'id': '00000000000000000008-36ee0361', 'kind': 'customer', 'collection': 'msgs', 'customer_hash': 'd2d2a960232d6ea5'...: '00000000000000000009-8d3ba8f3', 'kind': 'customer', 'collection': 'msgs', 'customer_hash': 'bb8d43cd0be3f646', ...}]
+E   assert ['scrubbed', 'scrubbed'] == ['pending', 'pending']
+E     
+E     At index 0 diff: 'scrubbed' != 'pending'
+E     
+E     Full diff: (-: missing in left side, +: extra in left side)
+E       [
+E     -     'pending',
+E     -     'pending',
+E     +     'scrubbed',
+E     +     'scrubbed',
+E       ]
+____________ test_a_full_batch_runs_without_waiting_for_the_window _____________
+test_69_perf_erase.py:122: in test_a_full_batch_runs_without_waiting_for_the_window
+    assert [e["state"] for e in erasures(s, db)] == ["pending", "pending"]
+E   AssertionError: assert ['scrubbed', 'scrubbed'] == ['pending', 'pending']
+E     
+E     At index 0 diff: 'scrubbed' != 'pending'
+E     
+E     Full diff: (-: missing in left side, +: extra in left side)
+E       [
+E     -     'pending',
+E     -     'pending',
+E     +     'scrubbed',
+E     +     'scrubbed',
+E       ]
+=========================== short test summary info ============================
+FAILED test_69_perf_erase.py::test_the_delete_returns_before_the_physical_erasure_and_a_batch_serves_them_all - AssertionError: [{'id': '00000000000000000008-36ee0361', 'kind': 'customer', 'collection': 'msgs', 'customer_hash': 'd2d2a960232d6ea5'...: '00000000000000000009-8d3ba8f3', 'kind': 'customer', 'collection': 'msgs', 'customer_hash': 'bb8d43cd0be3f646', ...}]
+assert ['scrubbed', 'scrubbed'] == ['pending', 'pending']
+  
+  At index 0 diff: 'scrubbed' != 'pending'
+  
+  Full diff: (-: missing in left side, +: extra in left side)
+    [
+  -     'pending',
+  -     'pending',
+  +     'scrubbed',
+  +     'scrubbed',
+    ]
+FAILED test_69_perf_erase.py::test_a_full_batch_runs_without_waiting_for_the_window - AssertionError: assert ['scrubbed', 'scrubbed'] == ['pending', 'pending']
+  
+  At index 0 diff: 'scrubbed' != 'pending'
+  
+  Full diff: (-: missing in left side, +: extra in left side)
+    [
+  -     'pending',
+  -     'pending',
+  +     'scrubbed',
+  +     'scrubbed',
+    ]
+2 failed, 1 passed in 20.43s

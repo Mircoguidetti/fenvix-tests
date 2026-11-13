@@ -1,0 +1,24 @@
+.F.F......                                                               [100%]
+=================================== FAILURES ===================================
+____________ test_the_deadline_is_met_with_ordinary_passes_stopped _____________
+test_77_erase_cost.py:146: in test_the_deadline_is_met_with_ordinary_passes_stopped
+    assert es[0]["state"] == "pending" and compactor(c)["forcedReseals"] == f0, "nothing is forced before the force time"
+E   AssertionError: nothing is forced before the force time
+E   assert ('scrubbed' == 'pending'
+E     
+E     - pending
+E     + scrubbed)
+_____________ test_kill9_at_every_step[erase.after_forced_reseal] ______________
+test_77_erase_cost.py:193: in test_kill9_at_every_step
+    wait_until(lambda: f"FAILPOINT {step} reached" in s.log_text(), 60, what=f"the pass at {step}")
+lib.py:251: in wait_until
+    raise AssertionError(f"timed out waiting for {what}: {last}")
+E   AssertionError: timed out waiting for the pass at erase.after_forced_reseal: False
+=========================== short test summary info ============================
+FAILED test_77_erase_cost.py::test_the_deadline_is_met_with_ordinary_passes_stopped - AssertionError: nothing is forced before the force time
+assert ('scrubbed' == 'pending'
+  
+  - pending
+  + scrubbed)
+FAILED test_77_erase_cost.py::test_kill9_at_every_step[erase.after_forced_reseal] - AssertionError: timed out waiting for the pass at erase.after_forced_reseal: False
+2 failed, 8 passed in 176.86s (0:02:56)

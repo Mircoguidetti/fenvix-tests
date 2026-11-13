@@ -1,0 +1,31 @@
+TEST FAULT INJECTION ON (/tmp/tmp23th9x78.faults): never use this in production
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+LEASE process_lease tenant=- holder=H1 unix_ms=1794543218190 inc=8c05b71ff1e1d3f0 gen=1
+LEASE acquired tenant=h1 holder=H1 unix_ms=1794543218193 takeover_from=-
+LEASE takeover_wake tenant=h1 holder=H1 unix_ms=1794543218204 unclean=true takeover_from=-
+FAULT fail_put tenants/h1/wal/00000000000000000002.sst
+FAULT fail_put tenants/h1/wal/00000000000000000002.sst
+FAULT fail_put tenants/h1/wal/00000000000000000002.sst
+FAULT fail_put tenants/h1/wal/00000000000000000002.sst
+FAULT fail_put tenants/h1/wal/00000000000000000002.sst
+FAULT fail_put tenants/h1/wal/00000000000000000002.sst
+FAULT fail_put tenants/h1/wal/00000000000000000002.sst
+FAULT fail_put tenants/h1/wal/00000000000000000002.sst
+local log: replay of database h1 failed (no progress after 5 s); its 6 records are kept, the database is refused until they are applied
+local log: 1 databases kept their records; retried in the background
+local log: restart applied 0 records to 0 databases in 5.0 s
+admin interface listening on 127.0.0.1:22222 (bearer token required)
+mongo-server listening on 127.0.0.1:35175 (idle close after 600 s, holder H1, lease ttl 4 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:60422
+local log: retry of database h1 failed (closed); retried later
+local log: retry of database h1 failed (closed); retried later
+shutting down: closing tenants cleanly
+LEASE release_begin tenant=h1 holder=H1 unix_ms=1794543226281 
+LEASE release tenant=h1 holder=H1 unix_ms=1794543226286 ok=true
+tenants closed; stopping maintenance
+maintenance shutdown: waiting for the L0 watch unix_ms=1794543226294
+maintenance shutdown: waiting for the dispatcher unix_ms=1794543227191
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794543227191
+maintenance shutdown: waiting for the GC task unix_ms=1794543227191
+maintenance shutdown: done unix_ms=1794543228187
+maintenance stopped (1906 ms)
