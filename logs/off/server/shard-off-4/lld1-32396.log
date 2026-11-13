@@ -1,0 +1,29 @@
+TEST FAULT INJECTION ON (/tmp/tmpefx5lzf0.faults): never use this in production
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+local log: restart applied 0 records to 0 databases in 0.0 s
+admin interface listening on 127.0.0.1:20861 (bearer token required)
+mongo-server listening on 127.0.0.1:32396 (idle close after 600 s, holder D1, lease ttl 4 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:37466
+LEASE process_lease tenant=- holder=D1 unix_ms=1794534373417 inc=4fa38405668ff496 gen=1
+LEASE acquired tenant=d holder=D1 unix_ms=1794534373419 takeover_from=-
+LEASE acquired tenant=d holder=D1 unix_ms=1794534373425 takeover_from=-
+LEASE acquired tenant=d holder=D1 unix_ms=1794534373429 takeover_from=- new=true
+LEASE writer_open tenant=d holder=D1 unix_ms=1794534373440 
+FAULT stall_local_ack 3000
+LEASE process_lease_lapsed tenant=- holder=D1 unix_ms=1794534381375 gen=2 abandoned=1
+LEASE lost tenant=d holder=D1 unix_ms=1794534381375 process_lease_lapsed
+local log: ownership of d lost with writes not yet in object storage; they are lost
+SLOW insert db=d ms=7933 ok=false
+LEASE process_lease_lost tenant=- holder=D1 unix_ms=1794534381376 abandoned=0
+FAULT stall_local_ack 3000
+shutting down: closing tenants cleanly
+SLOW hello db=admin ms=10000 ok=true
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=103 closed=true
+LEASE writer_close tenant=d holder=D1 unix_ms=1794534384486 
+tenants closed; stopping maintenance
+maintenance shutdown: waiting for the L0 watch unix_ms=1794534384490
+maintenance shutdown: waiting for the dispatcher unix_ms=1794534385378
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794534385378
+maintenance shutdown: waiting for the GC task unix_ms=1794534385378
+maintenance shutdown: done unix_ms=1794534387377
+maintenance stopped (4082 ms)

@@ -1,0 +1,45 @@
+TEST FAULT INJECTION ON (/tmp/tmp9nm9ur24.faults): never use this in production
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+admin interface listening on 127.0.0.1:25641 (bearer token required)
+mongo-server listening on 127.0.0.1:38043 (idle close after 300 s, holder H65, lease ttl 3 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:40116
+LEASE process_lease tenant=- holder=H65 unix_ms=1794533190562 inc=97110a45582b953c gen=1
+LEASE acquired tenant=inflc holder=H65 unix_ms=1794533190563 takeover_from=-
+LEASE acquired tenant=inflc holder=H65 unix_ms=1794533190567 takeover_from=-
+LEASE acquired tenant=inflc holder=H65 unix_ms=1794533190572 takeover_from=- new=true
+LEASE writer_open tenant=inflc holder=H65 unix_ms=1794533190580 
+FXC not started db=inflc reason=no_version_of_our_manifest unix_ms=1794533190580
+FXC not started db=inflc reason=catch_up_published_nothing unix_ms=1794533190589
+FAULT delay_put tenants/inflc/wal/00000000000000000004.sst 12000
+FAULT delay_put processes/H65/_lease 4000
+LEASE process_lease_late tenant=- holder=H65 unix_ms=1794533195688 abandoned=1
+LEASE lost tenant=inflc holder=H65 unix_ms=1794533195688 process_lease_late
+LEASE process_lease_lapsed tenant=- holder=H65 unix_ms=1794533195885 gen=2 abandoned=0
+FAULT delay_put processes/H65/_lease 4000
+LEASE process_lease_lapsed tenant=- holder=H65 unix_ms=1794533200085 gen=3 abandoned=0
+FAULT delay_put processes/H65/_lease 4000
+SLOW hello db=admin ms=10001 ok=true
+SLOW hello db=admin ms=10001 ok=true
+SLOW insert db=inflc ms=12008 ok=true
+TIMING abandon db=inflc stop_fxc_ms=0 tenant_abandon_ms=6914 closed=true
+LEASE writer_close tenant=inflc holder=H65 unix_ms=1794533202603 
+LEASE process_lease_lapsed tenant=- holder=H65 unix_ms=1794533204285 gen=4 abandoned=0
+TEST FAULT INJECTION ON (/tmp/tmp9nm9ur24.faults): never use this in production
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+admin interface listening on 127.0.0.1:25641 (bearer token required)
+mongo-server listening on 127.0.0.1:38043 (idle close after 300 s, holder H65, lease ttl 3 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:58436
+LEASE process_lease tenant=- holder=H65 unix_ms=1794533204712 inc=3fc423546b78edb6 gen=1
+LEASE acquired tenant=inflc holder=H65 unix_ms=1794533204714 takeover_from=-
+LEASE takeover_wake tenant=inflc holder=H65 unix_ms=1794533204723 unclean=true takeover_from=-
+shutting down: closing tenants cleanly
+FXC not started db=inflc reason=not_writer unix_ms=1794533204729
+LEASE release_begin tenant=inflc holder=H65 unix_ms=1794533204729 
+LEASE release tenant=inflc holder=H65 unix_ms=1794533204730 ok=true
+tenants closed; stopping maintenance
+maintenance shutdown: waiting for the L0 watch unix_ms=1794533204735
+maintenance shutdown: waiting for the dispatcher unix_ms=1794533205635
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794533205635
+maintenance shutdown: waiting for the GC task unix_ms=1794533205635
+maintenance shutdown: done unix_ms=1794533206636
+maintenance stopped (1906 ms)
