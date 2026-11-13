@@ -113,9 +113,10 @@ jobs:
           {
             echo "# sim-test-2, engine $COMMIT"; echo; echo "Run: $RUN_URL"; echo
             echo "Seeds $F..$(( F + 20 * P )) (20 runners x $P), gen $G, $S events per base script."
-            echo "Seeds reported run (lines \"SIM seed\"): $(cat result/sim-*.log 2>/dev/null | grep -c '^SIM seed' || true)."
-            echo "Job logs found: $logs of 20. Lines \"SIM VIOLATION\": $viol. Lines \"panicked\": $panics."
-            if [ "$logs" = 20 ] && [ "$viol" = 0 ] && [ "$panics" = 0 ]; then echo "Verdict: PASS"; else echo "Verdict: FAIL"; fi
+
+            seeds=$(cat result/sim-*.log 2>/dev/null | grep -c '^SIM seed' || true)
+            echo "Job logs found: $logs of 20. Seeds reported run (lines \"SIM seed\"): $seeds. Lines \"SIM VIOLATION\": $viol. Lines \"panicked\": $panics."
+            if [ "$logs" = 20 ] && [ "$seeds" -gt 0 ] && [ "$viol" = 0 ] && [ "$panics" = 0 ]; then echo "Verdict: PASS"; else echo "Verdict: FAIL"; fi
             echo; echo "## last SIM line of each job"; echo
             for k in $(seq 0 19); do echo "- job $k: $(grep -E '^SIM' result/sim-$k.log 2>/dev/null | tail -1)"; done
             echo; echo "## violations"; echo; echo '```'; grep -h "SIM VIOLATION" result/sim-*.log 2>/dev/null | head -50 || true; echo '```'

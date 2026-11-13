@@ -80,7 +80,9 @@ jobs:
           A=$(( F + K * P )); B=$(( A + P ))
           echo "seeds $A..$B"
           SIM_SEEDS=$A..$B SIM_STEPS=$S SIM_PAR=4 SIM_REPLAYS=3 SIM_MIN_BUDGET=24 SIM_OUT=sim-out \
-            cargo test --release --lib fx::sim::tests::sim_seeds -- --nocapture 2>&1 | grep -E "^SIM|panicked" | tee ../sim-$K.log
+            cargo test --release --lib fx::sim::tests::sim_seeds -- --include-ignored --nocapture 2>&1 | grep -E "^SIM|panicked" | tee ../sim-$K.log
+          # --include-ignored: sim_seeds is #[ignore] from fix-sim-holes 9f88ae2 on (run on request only), not before
+          grep -q "^SIM seed" ../sim-$K.log || { echo "no seed ran (no 'SIM seed' line)"; exit 1; }
           ! grep -q "SIM VIOLATION" ../sim-$K.log
       - if: always()
         run: mkdir -p out && cp sim-*.log out/ 2>/dev/null; [ -d engine/sim-out ] && cp -r engine/sim-out out/ || true
@@ -115,8 +117,9 @@ jobs:
           {
             echo "# sim-test, engine $COMMIT"; echo; echo "Run: $RUN_URL"; echo
             echo "Seeds $F..$(( F + 20 * P )) (20 jobs x $P), $S events per script."
-            echo "Job logs found: $logs of 20. Lines \"SIM VIOLATION\": $viol. Lines \"panicked\": $panics."
-            if [ "$logs" = 20 ] && [ "$viol" = 0 ] && [ "$panics" = 0 ]; then echo "Verdict: PASS"; else echo "Verdict: FAIL"; fi
+            seeds=$(cat result/sim-*.log 2>/dev/null | grep -c '^SIM seed' || true)
+            echo "Job logs found: $logs of 20. Seeds reported run (lines \"SIM seed\"): $seeds. Lines \"SIM VIOLATION\": $viol. Lines \"panicked\": $panics."
+            if [ "$logs" = 20 ] && [ "$seeds" -gt 0 ] && [ "$viol" = 0 ] && [ "$panics" = 0 ]; then echo "Verdict: PASS"; else echo "Verdict: FAIL"; fi
             echo; echo "## last SIM line of each job"; echo
             for k in $(seq 0 19); do echo "- job $k: $(grep -E '^SIM' result/sim-$k.log 2>/dev/null | tail -1)"; done
             echo; echo "## violations"; echo; echo '```'; grep -h "SIM VIOLATION" result/sim-*.log 2>/dev/null | head -50 || true; echo '```'
