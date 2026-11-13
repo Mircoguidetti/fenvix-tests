@@ -1,0 +1,39 @@
+TEST FAULT INJECTION ON (/tmp/tmp_7w5atj4.faults): never use this in production
+memory budget: limit 15983 MiB (memtotal), caches 7479 MiB (block 3365, meta 1121, sealed 2991), memtable 8 MiB, first course 998 MiB, change log 32 MiB, L0 reads at once 4
+box disk floor: 4096 MiB in /tmp/fenvix-box-floor-26712
+memory budget (review round): box 373 MiB per customer, 747 MiB in flight; memtables of every database 1997 MiB (writes wait past 2996 MiB); merge read-ahead 499 MiB; absorption 16 L0 SSTs
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+admin interface listening on 127.0.0.1:37521 (bearer token required)
+mongo-server listening on 127.0.0.1:26712 (idle close after 600 s, holder Q1, lease ttl 3 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:37870
+LEASE process_lease tenant=- holder=Q1 unix_ms=1794568590109 inc=273c1fa5fd62e234 gen=1
+LEASE acquired tenant=d holder=Q1 unix_ms=1794568590111 takeover_from=-
+LEASE acquired tenant=d holder=Q1 unix_ms=1794568590116 takeover_from=-
+LEASE acquired tenant=d holder=Q1 unix_ms=1794568590152 takeover_from=- new=true
+LEASE writer_open tenant=d holder=Q1 unix_ms=1794568590163 
+FXC not started db=d reason=no_version_of_our_manifest unix_ms=1794568590163
+FIRST_PUBLISH u=1794568590248 db=d version=1 x_d=3 rows=10005 build_ms=70 off_lock=1
+FXC not started db=d reason=catch_up_published_nothing unix_ms=1794568590251
+FAULT delay_put processes/Q1/_lease 4500
+L0_TRACE u=1794568591398.2002 db=d l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794568592421.979 db=d l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794568593445.1772 db=d l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794568594469.2568 db=d l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+LEASE invalid tenant=d holder=Q1 unix_ms=1794568595015 
+fx drop: SlateDB compactor of d: Closed error: detected newer DB client
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=108 closed=true
+LEASE writer_close tenant=d holder=Q1 unix_ms=1794568595124 
+LEASE process_lease_lost tenant=- holder=Q1 unix_ms=1794568595624 abandoned=0
+LEASE process_lease tenant=- holder=Q1 unix_ms=1794568595629 inc=85934ad09c8709a9 gen=2
+LEASE acquired tenant=d holder=Q1 unix_ms=1794568597642 takeover_from=-
+shutting down: closing tenants cleanly
+FXC not started db=d reason=not_writer unix_ms=1794568597755
+LEASE release_begin tenant=d holder=Q1 unix_ms=1794568597755 
+LEASE release tenant=d holder=Q1 unix_ms=1794568597757 ok=true
+tenants closed; stopping maintenance
+maintenance shutdown: waiting for the L0 watch unix_ms=1794568597766
+maintenance shutdown: waiting for the dispatcher unix_ms=1794568597930
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794568597930
+maintenance shutdown: waiting for the GC task unix_ms=1794568597930
+maintenance shutdown: done unix_ms=1794568599926
+maintenance stopped (2171 ms)

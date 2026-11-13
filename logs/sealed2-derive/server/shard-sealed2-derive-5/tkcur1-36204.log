@@ -1,0 +1,27 @@
+TEST FAULT INJECTION ON (/tmp/tmpawn3rrj_.faults): never use this in production
+memory budget: limit 15983 MiB (memtotal), caches 7479 MiB (block 3365, meta 1121, sealed 2991), memtable 8 MiB, first course 998 MiB, change log 32 MiB, L0 reads at once 4
+box disk floor: 4096 MiB in /tmp/fenvix-box-floor-36204
+memory budget (review round): box 373 MiB per customer, 747 MiB in flight; memtables of every database 1997 MiB (writes wait past 2996 MiB); merge read-ahead 499 MiB; absorption 16 L0 SSTs
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+admin interface listening on 127.0.0.1:35053 (bearer token required)
+mongo-server listening on 127.0.0.1:36204 (idle close after 600 s, holder P1, lease ttl 3 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:34826
+LEASE process_lease tenant=- holder=P1 unix_ms=1794568774125 inc=ef0de6ecb4f6c08f gen=1
+LEASE acquired tenant=d holder=P1 unix_ms=1794568774127 takeover_from=-
+LEASE acquired tenant=d holder=P1 unix_ms=1794568774132 takeover_from=-
+LEASE acquired tenant=d holder=P1 unix_ms=1794568774170 takeover_from=- new=true
+LEASE writer_open tenant=d holder=P1 unix_ms=1794568774181 
+FXC not started db=d reason=no_version_of_our_manifest unix_ms=1794568774181
+FAULT delay_put processes/P1/_lease 4500
+LEASE invalid tenant=d holder=P1 unix_ms=1794568778843 
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=4 closed=true
+LEASE writer_close tenant=d holder=P1 unix_ms=1794568778847 
+shutting down: closing tenants cleanly
+tenants closed; stopping maintenance
+maintenance shutdown: waiting for the L0 watch unix_ms=1794568778854
+maintenance shutdown: waiting for the dispatcher unix_ms=1794568778919
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794568778919
+maintenance shutdown: waiting for the GC task unix_ms=1794568778919
+LEASE process_lease_lost tenant=- holder=P1 unix_ms=1794568779818 abandoned=0
+maintenance shutdown: done unix_ms=1794568779918
+maintenance stopped (1069 ms)

@@ -1,0 +1,30 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+____________________ test_big_customer_read_under_1gib[on] _____________________
+test_81_box_capped_memory.py:54: in test_big_customer_read_under_1gib
+    cg = MemCg(f"t81-{box}-{os.getpid()}", 1 << 30)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+memcg.py:73: in __init__
+    raise Unavailable("; ".join(errs))
+E   memcg.Unavailable: v1: no own group or mount; v2 at /sys/fs/cgroup/system.slice/hosted-compute-agent.service/t81-on-25528: [Errno 13] Permission denied: '/sys/fs/cgroup/system.slice/hosted-compute-agent.service/t81-on-25528'
+
+During handling of the above exception, another exception occurred:
+test_81_box_capped_memory.py:56: in test_big_customer_read_under_1gib
+    pytest.fail(f"no memory cgroup could be set up here (the test needs one): {e}")
+E   Failed: no memory cgroup could be set up here (the test needs one): v1: no own group or mount; v2 at /sys/fs/cgroup/system.slice/hosted-compute-agent.service/t81-on-25528: [Errno 13] Permission denied: '/sys/fs/cgroup/system.slice/hosted-compute-agent.service/t81-on-25528'
+____________________ test_big_customer_read_under_1gib[off] ____________________
+test_81_box_capped_memory.py:54: in test_big_customer_read_under_1gib
+    cg = MemCg(f"t81-{box}-{os.getpid()}", 1 << 30)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+memcg.py:73: in __init__
+    raise Unavailable("; ".join(errs))
+E   memcg.Unavailable: v1: no own group or mount; v2 at /sys/fs/cgroup/system.slice/hosted-compute-agent.service/t81-off-25528: [Errno 13] Permission denied: '/sys/fs/cgroup/system.slice/hosted-compute-agent.service/t81-off-25528'
+
+During handling of the above exception, another exception occurred:
+test_81_box_capped_memory.py:56: in test_big_customer_read_under_1gib
+    pytest.fail(f"no memory cgroup could be set up here (the test needs one): {e}")
+E   Failed: no memory cgroup could be set up here (the test needs one): v1: no own group or mount; v2 at /sys/fs/cgroup/system.slice/hosted-compute-agent.service/t81-off-25528: [Errno 13] Permission denied: '/sys/fs/cgroup/system.slice/hosted-compute-agent.service/t81-off-25528'
+=========================== short test summary info ============================
+FAILED test_81_box_capped_memory.py::test_big_customer_read_under_1gib[on] - Failed: no memory cgroup could be set up here (the test needs one): v1: no own group or mount; v2 at /sys/fs/cgroup/system.slice/hosted-compute-agent.service/t81-on-25528: [Errno 13] Permission denied: '/sys/fs/cgroup/system.slice/hosted-compute-agent.service/t81-on-25528'
+FAILED test_81_box_capped_memory.py::test_big_customer_read_under_1gib[off] - Failed: no memory cgroup could be set up here (the test needs one): v1: no own group or mount; v2 at /sys/fs/cgroup/system.slice/hosted-compute-agent.service/t81-off-25528: [Errno 13] Permission denied: '/sys/fs/cgroup/system.slice/hosted-compute-agent.service/t81-off-25528'
+2 failed in 98.43s (0:01:38)

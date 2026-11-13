@@ -1,0 +1,38 @@
+TEST FAULT INJECTION ON (/tmp/tmp3xdw0fqv.faults): never use this in production
+memory budget: limit 15983 MiB (memtotal), caches 7479 MiB (block 3365, meta 1121, sealed 2991), memtable 8 MiB, first course 998 MiB, change log 32 MiB, L0 reads at once 4
+box disk floor: 4096 MiB in /tmp/fenvix-box-floor-25908
+memory budget (review round): box 373 MiB per customer, 747 MiB in flight; memtables of every database 1997 MiB (writes wait past 2996 MiB); merge read-ahead 499 MiB; absorption 16 L0 SSTs
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+admin interface listening on 127.0.0.1:24911 (bearer token required)
+mongo-server listening on 127.0.0.1:25908 (idle close after 600 s, holder S1, lease ttl 4 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:43326
+LEASE process_lease tenant=- holder=S1 unix_ms=1794567098405 inc=b0ca50a961967c04 gen=1
+LEASE acquired tenant=d holder=S1 unix_ms=1794567098406 takeover_from=-
+LEASE acquired tenant=d holder=S1 unix_ms=1794567098410 takeover_from=-
+LEASE acquired tenant=d holder=S1 unix_ms=1794567098413 takeover_from=- new=true
+LEASE writer_open tenant=d holder=S1 unix_ms=1794567098420 
+FXC not started db=d reason=no_version_of_our_manifest unix_ms=1794567098420
+FAULT delay_put processes/S1/_lease 1000
+FAULT delay_put processes/S1/_lease 1000
+FAULT delay_put processes/S1/_lease 1000
+FAULT delay_put processes/S1/_lease 1000
+FAULT delay_put processes/S1/_lease 1000
+FAULT delay_put processes/S1/_lease 1000
+FAULT delay_put processes/S1/_lease 1000
+SLOW hello db=admin ms=10000 ok=true
+FAULT delay_put processes/S1/_lease 1000
+FAULT delay_put processes/S1/_lease 1000
+FAULT delay_put processes/S1/_lease 1000
+shutting down: closing tenants cleanly
+FIRST_PUBLISH u=1794567113464 db=d version=1 x_d=3 rows=7 build_ms=15041 off_lock=1
+LEASE writer_close tenant=d holder=S1 unix_ms=1794567113469 
+LEASE release_begin tenant=d holder=S1 unix_ms=1794567113469 
+LEASE release tenant=d holder=S1 unix_ms=1794567113471 ok=true
+FAULT delay_put processes/S1/_lease 1000
+tenants closed; stopping maintenance
+maintenance shutdown: waiting for the L0 watch unix_ms=1794567114476
+maintenance shutdown: waiting for the dispatcher unix_ms=1794567115346
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794567115346
+maintenance shutdown: waiting for the GC task unix_ms=1794567115346
+maintenance shutdown: done unix_ms=1794567116337
+maintenance stopped (2874 ms)

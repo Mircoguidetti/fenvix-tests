@@ -1,0 +1,28 @@
+TEST FAULT INJECTION ON (/tmp/tmptca_ftx2.faults): never use this in production
+memory budget: limit 15983 MiB (memtotal), caches 7479 MiB (block 3365, meta 1121, sealed 2991), memtable 8 MiB, first course 998 MiB, change log 32 MiB, L0 reads at once 4
+box disk floor: 4096 MiB in /tmp/fenvix-box-floor-22606
+memory budget (review round): box 373 MiB per customer, 747 MiB in flight; memtables of every database 1997 MiB (writes wait past 2996 MiB); merge read-ahead 499 MiB; absorption 16 L0 SSTs
+uploads: 1 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+LEASE process_lease tenant=- holder=E1 unix_ms=1794567283593 inc=fc806aca11defd9b gen=1
+LEASE acquired tenant=e holder=E1 unix_ms=1794567283596 takeover_from=-
+LEASE takeover_wake tenant=e holder=E1 unix_ms=1794567283607 unclean=true takeover_from=-
+FXC not started db=e reason=not_writer unix_ms=1794567283607
+FAULT hang_put tenants/e/wal/00000000000000000003.sst
+LEASE writer_open tenant=e holder=E1 unix_ms=1794567283826 
+FXC not started db=e reason=no_version_of_our_manifest unix_ms=1794567283827
+local log: database e: 4 records applied again (after record 1099511627778)
+local log: restart applied 4 records to 1 databases in 0.2 s
+admin interface listening on 127.0.0.1:20609 (bearer token required)
+mongo-server listening on 127.0.0.1:22606 (idle close after 600 s, holder E1, lease ttl 4 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:41364
+shutting down: closing tenants cleanly
+LEASE writer_close tenant=e holder=E1 unix_ms=1794567283869 
+LEASE release_begin tenant=e holder=E1 unix_ms=1794567283869 
+LEASE release tenant=e holder=E1 unix_ms=1794567283871 ok=true
+tenants closed; stopping maintenance
+maintenance shutdown: waiting for the L0 watch unix_ms=1794567283877
+maintenance shutdown: waiting for the dispatcher unix_ms=1794567284589
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794567284590
+maintenance shutdown: waiting for the GC task unix_ms=1794567284590
+maintenance shutdown: done unix_ms=1794567285590
+maintenance stopped (1729 ms)
