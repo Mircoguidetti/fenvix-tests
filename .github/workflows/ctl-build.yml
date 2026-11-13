@@ -133,9 +133,52 @@ jobs:
           case "${N:-0}" in ''|0) echo "libruns=" >> "$GITHUB_OUTPUT" ;; *[!0-9]*) echo "lib_suite_runs must be a number"; exit 1 ;;
             *) echo "libruns=$(python3 -c "import json,sys;print(json.dumps(list(range(1,int(sys.argv[1])+1))))" "$N")" >> "$GITHUB_OUTPUT" ;; esac
 
-  ctl:
+  # Build once per run: the engine's binaries go to this repository's Actions cache (readable only by its own
+  # workflows; nothing is published), keyed by engine commit and toolchain, and every ctl shard restores them instead
+  # of building (about 10 minutes each). A shard that cannot restore or verify them builds as before.
+  build:
     needs: plan
     if: needs.plan.outputs.matrix != ''
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: "${{ github.sha }}" }
+      - id: have
+        uses: actions/cache/restore@v4
+        with:
+          path: fxbin
+          key: fxbin-${{ needs.plan.outputs.commit }}-${{ env.RUST_VERSION }}
+          lookup-only: true
+      - uses: actions/checkout@v4
+        if: steps.have.outputs.cache-hit != 'true'
+        with:
+          repository: ${{ env.ENGINE_REPO }}
+          ref: ${{ needs.plan.outputs.commit }}
+          path: engine
+          persist-credentials: false
+      - name: rust
+        if: steps.have.outputs.cache-hit != 'true'
+        run: rustup toolchain install "$RUST_VERSION" --profile minimal > /dev/null && rustup default "$RUST_VERSION" && rustc --version
+      - uses: actions/cache@v4
+        if: steps.have.outputs.cache-hit != 'true'
+        with:
+          path: |
+            ~/.cargo/registry/index
+            ~/.cargo/registry/cache
+          key: cargo-registry-${{ hashFiles('engine/Cargo.lock', 'engine/proto/quaderno/Cargo.lock') }}
+      - name: build and pack
+        if: steps.have.outputs.cache-hit != 'true'
+        run: mkdir -p out && ci/build-engine.sh engine "${{ needs.plan.outputs.commit }}" out && ci/bin-pack.sh engine out fxbin
+      - uses: actions/cache/save@v4
+        if: steps.have.outputs.cache-hit != 'true'
+        with:
+          path: fxbin
+          key: fxbin-${{ needs.plan.outputs.commit }}-${{ env.RUST_VERSION }}
+
+  ctl:
+    needs: [plan, build]
+    if: always() && !cancelled() && needs.plan.outputs.matrix != ''
     runs-on: ubuntu-24.04
     timeout-minutes: 150
     strategy:
@@ -164,8 +207,16 @@ jobs:
         with:
           path: ~/.fenvix-judge
           key: judge-env-${{ hashFiles('ci/setup-env.sh') }}
-      - name: build
-        run: mkdir -p out && ci/build-engine.sh engine "${{ needs.plan.outputs.commit }}" out
+      - id: bins
+        uses: actions/cache/restore@v4
+        with:
+          path: fxbin
+          key: fxbin-${{ needs.plan.outputs.commit }}-${{ env.RUST_VERSION }}
+      - name: build (or the run's shared binaries)
+        env: { HIT: "${{ steps.bins.outputs.cache-hit }}" }
+        run: |
+          mkdir -p out
+          if [ "$HIT" = true ] && ci/bin-unpack.sh fxbin engine "${{ needs.plan.outputs.commit }}" out; then echo "shared binaries"; else ci/build-engine.sh engine "${{ needs.plan.outputs.commit }}" out; fi
       - run: ci/setup-env.sh
       - name: node driver (test_40)
         run: cd engine/mongo-tests/node && npm ci --silent
