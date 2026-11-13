@@ -20,3 +20,11 @@ ctl-tests after the engine checkout (after the build, so the build is unchanged)
   the control on 837f969 (items 1, 2, 3, 4 and 6 must fail there). The a058b14 folder's run was cancelled when the head moved.
 - `box-first-7329b53/`: `reviews/big-speed-2026-11-13/test_r1_id_unique_in_box.py` from fenvix-engine 7329b535 (fix-box-first-trip
   round 2), unchanged; asked "5 runs (PYTHONPATH=ctl-tests)": copied into ctl-tests it imports `lib` from there.
+- `fss-r2-537e5e9/`: for fix-slow-store round 2 (537e5e9f). `test_rr2_fss_script.py` is R-rolling's
+  `reviews/rr2-fix-slow-store/rr2_fss.py` from fenvix-engine 3d20666, unchanged (a script, never named in `files` or
+  `repeats`); three wrappers run it against the head's mongo-server (`lib.BIN`) and pass when its last "RESULT" line says
+  OK and it exits 0: `test_rr2_fork_in_hold_clone` (RR2_MODE=clone), `test_rr2_fork_in_hold_copy` (RR2_MODE=copy),
+  `test_rr2_deadline_unlabelled`.
+- `fss-r2-control-50d753b/`: `test_90_fix_slow_store.py` at 537e5e9f with its proxy (`test_pathproxy_537e5e9.py`, the
+  one-line import change as above), for the control run on fix-slow-store 50d753b (must fail exactly the 6 tests its
+  report's Round 2 lists). ctl-tests/lib.py and the proxy are the same at both commits.
