@@ -5,6 +5,9 @@
 #   1. JUDGE_CI_PHASE="<phase>": the fast settings for that phase alone (the workflow runs the phases as parallel jobs);
 #   2. a phase "cleanup-kill": the full judge's second kill test, `loadtest/test_open_gc.py --trials 1 --secs 60`
 #      (SIGKILL inside a storage cleanup pass; no acknowledged write may be lost), which the fast judge does not run.
+#   3. only if JUDGE_CI_UNIT_SKIP is set (a cargo test name filter, e.g. fx::box_first_trip_tests): the unit phase runs
+#      `cargo test --release --workspace -- --skip <it>`, and that filter then runs alone under `timeout 1200` (log
+#      unit-skipped.log next to unit.log, its exit code in unit-skipped.rc: 124 = timed out, a hang).
 # If judge/run.sh no longer has the lines these additions hook onto, the job fails: nothing is guessed.
 # Usage: ci/judge-phase.sh ENGINE_DIR PHASE OUT_DIR   (JUDGE_SEALED_RUNS / JUDGE_SEALED_DERIVE as for judge/run.sh)
 # Writes OUT_DIR/judge/ (a copy of judge/out/<commit><suffix>/: VERDICT-FAST.md with this phase's line, the phase's logs).
@@ -25,6 +28,12 @@ s = s.replace(hook2, '''    cleanup-kill)
       (cd loadtest && "$PY" test_open_gc.py --trials 1 --secs 60) >> "$log" 2>&1 || ok=0
       [ $ok = 1 ] && verdict cleanup-kill "PASS (see cleanup-kill.log for counts)" || verdict cleanup-kill "FAIL (see cleanup-kill.log)" ;;
 ''' + hook2, 1)
+skip = __import__("os").environ.get("JUDGE_CI_UNIT_SKIP", "").strip()
+if skip:
+    hook3 = '      cargo test --release --workspace > "$log" 2>&1; rc=$?\n'
+    if s.count(hook3) != 1:
+        sys.exit("judge/run.sh changed: the unit line is not there exactly once; unit_skip cannot be applied")
+    s = s.replace(hook3, f'      cargo test --release --workspace -- --skip {skip} > "$log" 2>&1; rc=$?\n', 1)
 open(dst, "w").write(s)
 Q
 chmod +x "$E/judge/run-ci.sh"
@@ -32,6 +41,10 @@ cd "$E"
 t0=$(date +%s)
 JUDGE_CI_PHASE="$PHASE" judge/run-ci.sh; rc=$?
 t1=$(date +%s)
+if [ "$PHASE" = unit ] && [ -n "${JUDGE_CI_UNIT_SKIP:-}" ]; then
+  SK=$(ls -d judge/out/"$(git rev-parse --short HEAD)"* 2>/dev/null | head -1)
+  timeout 1200 cargo test --release --workspace -- "$JUDGE_CI_UNIT_SKIP" > "${SK:-.}/unit-skipped.log" 2>&1; echo $? > "${SK:-.}/unit-skipped.rc"
+fi
 # the judge's output folder of this commit (judge/out/<short sha><suffix>/)
 D=$(ls -d judge/out/"$(git rev-parse --short HEAD)"* 2>/dev/null | head -1)
 [ -n "$D" ] || { echo "no judge output folder"; exit 1; }

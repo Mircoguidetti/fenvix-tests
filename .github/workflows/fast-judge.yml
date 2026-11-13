@@ -17,6 +17,10 @@ on:
         description: "2-derive (JUDGE_SEALED_RUNS=2 JUDGE_SEALED_DERIVE=1, the sessions' judge), 2 (JUDGE_SEALED_RUNS=2) or off"
         required: false
         default: "2-derive"
+      unit_skip:
+        description: "Optional cargo test name filter the unit phase skips and then runs alone under a 20-minute timeout (e.g. fx::box_first_trip_tests, for a module that hangs); empty = none"
+        required: false
+        default: ""
 
 permissions:
   contents: write
@@ -89,7 +93,9 @@ jobs:
         env:
           PHASE: ${{ matrix.phase }}
           SEALED: ${{ inputs.sealed }}
+          JUDGE_CI_UNIT_SKIP: ${{ inputs.unit_skip }}
         run: |
+          case "$JUDGE_CI_UNIT_SKIP" in *[!A-Za-z0-9_:]*) echo "unit_skip: letters, digits, _ and : only"; exit 1 ;; esac
           case "$SEALED" in
             2-derive) export JUDGE_SEALED_RUNS=2 JUDGE_SEALED_DERIVE=1 ;;
             2) export JUDGE_SEALED_RUNS=2 ;;
