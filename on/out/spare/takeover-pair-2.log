@@ -1,0 +1,51 @@
+cpu: the process may use 2 core(s) and runs on CPU(s) [2, 3]
+quaderno: writes are acknowledged by the replicated log at 172.18.0.2:7200,172.18.0.4:7200,172.18.0.5:7200
+quaderno: restart read 1278 records of 1 databases from the log
+LEASE process_lease tenant=- holder=tk-spare-2 unix_ms=1794585094322 inc=28be40a7c9c42979 gen=1
+local log: replay of database tk_app failed (tenant tk_app is owned by server process tk-server-1-2 (lease valid for another 3783 ms); retry); its 1278 records are kept, the database is refused until they are applied
+local log: 1 databases kept their records; retried in the background
+quaderno: restart applied 0 records to 0 databases in 1.1 s
+mongo-server listening on 0.0.0.0:27018 (idle close after 60 s, holder tk-spare-2, lease ttl 4 s)
+local log: retry of database tk_app failed (tenant tk_app is owned by server process tk-server-1-2 (lease valid for another 3042 ms); retry); retried later
+local log: retry of database tk_app failed (tenant tk_app is owned by server process tk-server-1-2 (lease valid for another 3688 ms); retry); retried later
+local log: retry of database tk_app failed (tenant tk_app is owned by server process tk-server-1-2 (lease valid for another 0 ms); retry); retried later
+SLOW hello db=admin ms=10000 ok=true
+SLOW hello db=admin ms=10000 ok=true
+SLOW hello db=admin ms=10001 ok=true
+SLOW hello db=admin ms=10000 ok=true
+LEASE process_lease_revoked tenant=tk_app holder=tk-spare-2 unix_ms=1794585110783 of=tk-server-1-2
+LEASE acquired tenant=tk_app holder=tk-spare-2 unix_ms=1794585110785 takeover_from=tk-server-1-2
+LEASE takeover_wake tenant=tk_app holder=tk-spare-2 unix_ms=1794585110845 unclean=true takeover_from=tk-server-1-2
+LEASE writer_open tenant=tk_app holder=tk-spare-2 unix_ms=1794585111015 
+LEASE acquired tenant=admin holder=tk-spare-2 unix_ms=1794585111133 takeover_from=tk-server-1-2
+LEASE takeover_wake tenant=admin holder=tk-spare-2 unix_ms=1794585111145 unclean=true takeover_from=tk-server-1-2
+quaderno: takeover of tk_app: 15428 records applied from the log (after record 117609927902101505)
+local log: database tk_app: kept records applied by the retry; the database is open again
+SLOW find db=tk_app ms=647 ok=true
+SLOW hello db=admin ms=10000 ok=true
+SLOW hello db=admin ms=10001 ok=true
+SLOW hello db=admin ms=10000 ok=true
+SLOW hello db=admin ms=10001 ok=true
+SLOW hello db=admin ms=10001 ok=true
+SLOW hello db=admin ms=10000 ok=true
+SLOW hello db=admin ms=10001 ok=true
+LEASE release_begin tenant=admin holder=tk-spare-2 unix_ms=1794585174840 
+LEASE release tenant=admin holder=tk-spare-2 unix_ms=1794585174842 ok=true
+LEASE writer_close tenant=tk_app holder=tk-spare-2 unix_ms=1794585174982 
+LEASE release_begin tenant=tk_app holder=tk-spare-2 unix_ms=1794585174982 
+LEASE release tenant=tk_app holder=tk-spare-2 unix_ms=1794585174984 ok=true
+SLOW hello db=admin ms=10001 ok=true
+SLOW hello db=admin ms=10001 ok=true
+SLOW hello db=admin ms=10001 ok=true
+LEASE acquired tenant=admin holder=tk-spare-2 unix_ms=1794585205220 takeover_from=-
+LEASE takeover_wake tenant=admin holder=tk-spare-2 unix_ms=1794585205231 unclean=true takeover_from=-
+LEASE acquired tenant=tk_app holder=tk-spare-2 unix_ms=1794585205240 takeover_from=-
+SLOW find db=tk_app ms=747 ok=true
+shutting down: closing tenants cleanly
+LEASE release_begin tenant=tk_app holder=tk-spare-2 unix_ms=1794585207957 
+LEASE release_begin tenant=admin holder=tk-spare-2 unix_ms=1794585207957 
+LEASE release tenant=admin holder=tk-spare-2 unix_ms=1794585207959 ok=true
+LEASE release tenant=tk_app holder=tk-spare-2 unix_ms=1794585207959 ok=true
+tenants closed; stopping maintenance
+SLOW hello db=admin ms=10000 ok=true
+maintenance stopped
