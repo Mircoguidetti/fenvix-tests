@@ -1,0 +1,36 @@
+FF.                                                                      [100%]
+=================================== FAILURES ===================================
+___________________ test_many_databases_under_1gib_and_kill9 ___________________
+test_82_many_databases_memory.py:64: in run_first_wave
+    cg = MemCg(f"t82-{tag}-{os.getpid()}", 1 << 30)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+memcg.py:73: in __init__
+    raise Unavailable("; ".join(errs))
+E   memcg.Unavailable: v1: no own group or mount; v2 at /sys/fs/cgroup/t82-t82-23829: [Errno 13] Permission denied: '/sys/fs/cgroup/t82-t82-23829'
+
+During handling of the above exception, another exception occurred:
+test_82_many_databases_memory.py:127: in test_many_databases_under_1gib_and_kill9
+    s, cg, acked, errs, alive, ooms, mb, peak = run_first_wave(bucket, "t82", [])
+                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+test_82_many_databases_memory.py:66: in run_first_wave
+    pytest.fail(f"no memory cgroup could be set up here (the test needs one): {e}")
+E   Failed: no memory cgroup could be set up here (the test needs one): v1: no own group or mount; v2 at /sys/fs/cgroup/t82-t82-23829: [Errno 13] Permission denied: '/sys/fs/cgroup/t82-t82-23829'
+____________ test_control_without_the_process_budget_is_oom_killed _____________
+test_82_many_databases_memory.py:64: in run_first_wave
+    cg = MemCg(f"t82-{tag}-{os.getpid()}", 1 << 30)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+memcg.py:73: in __init__
+    raise Unavailable("; ".join(errs))
+E   memcg.Unavailable: v1: no own group or mount; v2 at /sys/fs/cgroup/t82-t82c-23829: [Errno 13] Permission denied: '/sys/fs/cgroup/t82-t82c-23829'
+
+During handling of the above exception, another exception occurred:
+test_82_many_databases_memory.py:160: in test_control_without_the_process_budget_is_oom_killed
+    s, cg, acked, errs, alive, ooms, mb, peak = run_first_wave(bucket, "t82c", ["--memtables-total-mb", "0"])
+                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+test_82_many_databases_memory.py:66: in run_first_wave
+    pytest.fail(f"no memory cgroup could be set up here (the test needs one): {e}")
+E   Failed: no memory cgroup could be set up here (the test needs one): v1: no own group or mount; v2 at /sys/fs/cgroup/t82-t82c-23829: [Errno 13] Permission denied: '/sys/fs/cgroup/t82-t82c-23829'
+=========================== short test summary info ============================
+FAILED test_82_many_databases_memory.py::test_many_databases_under_1gib_and_kill9 - Failed: no memory cgroup could be set up here (the test needs one): v1: no own group or mount; v2 at /sys/fs/cgroup/t82-t82-23829: [Errno 13] Permission denied: '/sys/fs/cgroup/t82-t82-23829'
+FAILED test_82_many_databases_memory.py::test_control_without_the_process_budget_is_oom_killed - Failed: no memory cgroup could be set up here (the test needs one): v1: no own group or mount; v2 at /sys/fs/cgroup/t82-t82c-23829: [Errno 13] Permission denied: '/sys/fs/cgroup/t82-t82c-23829'
+2 failed, 1 passed in 24.20s
