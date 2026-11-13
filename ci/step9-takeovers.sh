@@ -28,6 +28,27 @@ def once(old, new):
 once('colls = {k: client(k)["tk_app"]', 'DBN = "tk_app" + (("_" + a.label) if a.label else "")\ncolls = {k: client(k)[DBN]')
 once('vc["tk_app"]["w"]', 'vc[DBN]["w"]')
 once('    lost = sorted(lost_set)\n', '    lost = sorted(lost_set)\n    json.dump(lost, open(os.path.join(a.out, f"{tag}-lost-ids.json"), "w"))\n')
+# 3. the read-back reads in pages of 5,000 _ids (sorted, from the last one read), keeps what it read across errors and
+#    switches node on an error, with a 900 s deadline instead of 180 s. At n=50 one find over ~700,000 ids failed every
+#    try for 180 s on a GitHub runner: the survivor answered "serving lease expired; it begins no new read (F7)" and
+#    the other process could not log in (admin owned by the survivor); lost became UNKNOWN (run 43450733225, MEASURED).
+#    What is checked is unchanged: the acknowledged ids not found.
+once('def read_back(wait_s=180):', 'def read_back(wait_s=900):')
+once('    end = time.time() + wait_s\n    while True:\n        for node in (survivor, other):', '    end = time.time() + wait_s\n    got = set(); last = None\n    while True:\n        for node in (survivor, other):')
+once('                got = {d["_id"] for d in vc[DBN]["w"].find({}, {"_id": 1}, batch_size=20000)}\n',
+     '                while True:\n'
+     '                    for _try in range(30):\n'
+     '                        try:\n'
+     '                            page = [d["_id"] for d in vc[DBN]["w"].find({} if last is None else {"_id": {"$gt": last}}, {"_id": 1}).sort("_id", 1).limit(5000)]\n'
+     '                            break\n'
+     '                        except Exception as pe:\n'
+     '                            if time.time() > end or _try == 29:\n'
+     '                                raise\n'
+     '                            note(kind="read_back_page_error", node=node, after=last, error=f"{type(pe).__name__}: {str(pe)[:160]}")\n'
+     '                            time.sleep(1)\n'
+     '                    if not page:\n'
+     '                        break\n'
+     '                    got.update(page); last = page[-1]\n')
 open(p, "w").write(s)
 PYP
 cd "$S9WT/step9/local" || exit 2
