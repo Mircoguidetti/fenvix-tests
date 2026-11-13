@@ -1,0 +1,30 @@
+TEST FAULT INJECTION ON (/tmp/tmp6dx8dtue.faults): never use this in production
+memory budget: limit 15983 MiB (memtotal), caches 7479 MiB (block 3365, meta 1121, sealed 2991), memtable 8 MiB, first course 998 MiB, change log 32 MiB, L0 reads at once 4
+box disk floor: 4096 MiB in /tmp/fenvix-box-floor-30623
+memory budget (review round): box 373 MiB per customer, 747 MiB in flight; memtables of every database 1997 MiB (writes wait past 2996 MiB); merge read-ahead 499 MiB; absorption 16 L0 SSTs
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+admin interface listening on 127.0.0.1:23518 (bearer token required)
+mongo-server listening on 127.0.0.1:30623 (idle close after 600 s, holder Q1, lease ttl 3 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:35466
+LEASE process_lease tenant=- holder=Q1 unix_ms=1794573814750 inc=28383b749aecd007 gen=1
+LEASE acquired tenant=d holder=Q1 unix_ms=1794573814751 takeover_from=-
+LEASE acquired tenant=d holder=Q1 unix_ms=1794573814755 takeover_from=-
+LEASE acquired tenant=d holder=Q1 unix_ms=1794573814780 takeover_from=- new=true
+LEASE writer_open tenant=d holder=Q1 unix_ms=1794573814787 
+FAULT delay_put processes/Q1/_lease 4500
+LEASE invalid tenant=d holder=Q1 unix_ms=1794573819623 
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=108 closed=true
+LEASE writer_close tenant=d holder=Q1 unix_ms=1794573819732 
+LEASE process_lease_lost tenant=- holder=Q1 unix_ms=1794573820267 abandoned=0
+LEASE process_lease tenant=- holder=Q1 unix_ms=1794573820739 inc=7518f13bb7d025e7 gen=2
+LEASE acquired tenant=d holder=Q1 unix_ms=1794573821746 takeover_from=-
+shutting down: closing tenants cleanly
+LEASE release_begin tenant=d holder=Q1 unix_ms=1794573821886 
+LEASE release tenant=d holder=Q1 unix_ms=1794573821889 ok=true
+tenants closed; stopping maintenance
+maintenance shutdown: waiting for the L0 watch unix_ms=1794573821894
+maintenance shutdown: waiting for the dispatcher unix_ms=1794573822574
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794573822574
+maintenance shutdown: waiting for the GC task unix_ms=1794573822574
+maintenance shutdown: done unix_ms=1794573824570
+maintenance stopped (2683 ms)

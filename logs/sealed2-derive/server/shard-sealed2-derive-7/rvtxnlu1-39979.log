@@ -1,0 +1,34 @@
+TEST FAULT INJECTION ON (/tmp/tmpq7j878pl.faults): never use this in production
+memory budget: limit 15983 MiB (memtotal), caches 7479 MiB (block 3365, meta 1121, sealed 2991), memtable 8 MiB, first course 998 MiB, change log 32 MiB, L0 reads at once 4
+box disk floor: 4096 MiB in /tmp/fenvix-box-floor-39979
+memory budget (review round): box 373 MiB per customer, 747 MiB in flight; memtables of every database 1997 MiB (writes wait past 2996 MiB); merge read-ahead 499 MiB; absorption 16 L0 SSTs
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+admin interface listening on 127.0.0.1:27101 (bearer token required)
+mongo-server listening on 127.0.0.1:39979 (idle close after 600 s, holder P1, lease ttl 2 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:35858
+LEASE process_lease tenant=- holder=P1 unix_ms=1794575359984 inc=26400525e95f3f6d gen=1
+LEASE acquired tenant=d holder=P1 unix_ms=1794575359986 takeover_from=-
+LEASE acquired tenant=d holder=P1 unix_ms=1794575359991 takeover_from=-
+LEASE acquired tenant=d holder=P1 unix_ms=1794575359995 takeover_from=- new=true
+LEASE writer_open tenant=d holder=P1 unix_ms=1794575360006 
+FXC not started db=d reason=no_version_of_our_manifest unix_ms=1794575360006
+FAULT delay_put processes/P1/_lease 3500
+LEASE process_lease_late tenant=- holder=P1 unix_ms=1794575364308 abandoned=1
+LEASE lost tenant=d holder=P1 unix_ms=1794575364308 process_lease_late
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=1 closed=true
+LEASE writer_close tenant=d holder=P1 unix_ms=1794575364310 
+LEASE process_lease_lapsed tenant=- holder=P1 unix_ms=1794575364405 gen=2 abandoned=0
+LEASE process_lease_lost tenant=- holder=P1 unix_ms=1794575364406 abandoned=0
+LEASE process_lease tenant=- holder=P1 unix_ms=1794575367554 inc=e47d353357a85ef4 gen=3
+LEASE acquired tenant=d holder=P1 unix_ms=1794575367556 takeover_from=-
+shutting down: closing tenants cleanly
+FXC not started db=d reason=not_writer unix_ms=1794575367563
+LEASE release_begin tenant=d holder=P1 unix_ms=1794575367563 
+LEASE release tenant=d holder=P1 unix_ms=1794575367565 ok=true
+tenants closed; stopping maintenance
+maintenance shutdown: waiting for the L0 watch unix_ms=1794575367571
+maintenance shutdown: waiting for the dispatcher unix_ms=1794575367811
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794575367811
+maintenance shutdown: waiting for the GC task unix_ms=1794575367811
+maintenance shutdown: done unix_ms=1794575369810
+maintenance stopped (2246 ms)

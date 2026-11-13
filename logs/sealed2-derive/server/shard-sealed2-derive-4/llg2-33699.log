@@ -1,0 +1,39 @@
+TEST FAULT INJECTION ON (/tmp/tmpplewhtji.faults): never use this in production
+memory budget: limit 15983 MiB (memtotal), caches 7479 MiB (block 3365, meta 1121, sealed 2991), memtable 8 MiB, first course 998 MiB, change log 32 MiB, L0 reads at once 4
+box disk floor: 4096 MiB in /tmp/fenvix-box-floor-33699
+memory budget (review round): box 373 MiB per customer, 747 MiB in flight; memtables of every database 1997 MiB (writes wait past 2996 MiB); merge read-ahead 499 MiB; absorption 16 L0 SSTs
+uploads: 1 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+FAULT fail_get tenants/g1/manifest/00000000000000000002.manifest
+FAULT fail_get tenants/g1/manifest/00000000000000000002.manifest
+FAULT fail_get tenants/g1/manifest/00000000000000000002.manifest
+FAULT fail_get tenants/g1/manifest/00000000000000000002.manifest
+FAULT fail_get tenants/g1/manifest/00000000000000000002.manifest
+FAULT fail_get tenants/g1/manifest/00000000000000000002.manifest
+FAULT fail_get tenants/g1/manifest/00000000000000000002.manifest
+FAULT fail_get tenants/g1/manifest/00000000000000000002.manifest
+local log: replay of database g1 failed (no progress after 5 s); its 6 records are kept, the database is refused until they are applied
+local log: 1 databases kept their records; retried in the background
+local log: restart applied 0 records to 0 databases in 5.0 s
+admin interface listening on 127.0.0.1:28781 (bearer token required)
+mongo-server listening on 127.0.0.1:33699 (idle close after 600 s, holder G1, lease ttl 4 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:34018
+LEASE process_lease tenant=- holder=G1 unix_ms=1794575116841 inc=2c9acb9579c8ee40 gen=1
+LEASE acquired tenant=g1 holder=G1 unix_ms=1794575116844 takeover_from=-
+LEASE takeover_wake tenant=g1 holder=G1 unix_ms=1794575116855 unclean=true takeover_from=-
+FXC not started db=g1 reason=not_writer unix_ms=1794575116855
+LEASE writer_open tenant=g1 holder=G1 unix_ms=1794575116872 
+FXC not started db=g1 reason=no_version_of_our_manifest unix_ms=1794575116873
+local log: database g1: 4 records applied again (after record 1099511627778)
+local log: database g1: kept records applied by the retry; the database is open again
+shutting down: closing tenants cleanly
+FIRST_PUBLISH u=1794575116931 db=g1 version=1 x_d=5 rows=18 build_ms=9 off_lock=1
+LEASE writer_close tenant=g1 holder=G1 unix_ms=1794575116940 
+LEASE release_begin tenant=g1 holder=G1 unix_ms=1794575116940 
+LEASE release tenant=g1 holder=G1 unix_ms=1794575116943 ok=true
+tenants closed; stopping maintenance
+maintenance shutdown: waiting for the L0 watch unix_ms=1794575116950
+maintenance shutdown: waiting for the dispatcher unix_ms=1794575117831
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794575117831
+maintenance shutdown: waiting for the GC task unix_ms=1794575117831
+maintenance shutdown: done unix_ms=1794575118826
+maintenance stopped (1903 ms)
