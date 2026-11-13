@@ -34,6 +34,14 @@ on:
         description: "Cargo unit tests of the engine's root package, each N times in one job: FILTER:RUNS,... (e.g. compactor_tests::some_test:5)"
         required: false
         default: ""
+      lib_suite_runs:
+        description: "Runs of the whole lib unit suite (cargo test --release -p <root package> --lib), one per parallel job (empty or 0: none)"
+        required: false
+        default: ""
+      lib_suite_timeout:
+        description: "Timeout of one lib suite run, seconds (the build is not counted)"
+        required: false
+        default: "1200"
       extra_tests:
         description: "Folder under extra-tests/ in this repo whose test_*.py files are copied into ctl-tests for this run (empty: none)"
         required: false
@@ -56,6 +64,7 @@ jobs:
       commit: ${{ steps.p.outputs.commit }}
       name: ${{ steps.p.outputs.name }}
       matrix: ${{ steps.p.outputs.matrix }}
+      libruns: ${{ steps.l.outputs.libruns }}
     steps:
       - uses: actions/checkout@v4
         with: { ref: "${{ github.sha }}" }
@@ -102,6 +111,13 @@ jobs:
           M=$(python3 ci/split.py --jobs "${IN_JOBS:-10}" --modes "$MODES" --repeats "${IN_REPEATS:-}" --repeat-jobs "${IN_REPEAT_JOBS:-10}" $FILES)
           echo "$M" | python3 -m json.tool
           { echo "commit=$FULL"; echo "name=${FULL:0:7}"; echo "matrix=$M"; } >> "$GITHUB_OUTPUT"
+
+      - id: l
+        env: { N: "${{ inputs.lib_suite_runs }}" }
+        run: |
+          set -euo pipefail
+          case "${N:-0}" in ''|0) echo "libruns=" >> "$GITHUB_OUTPUT" ;; *[!0-9]*) echo "lib_suite_runs must be a number"; exit 1 ;;
+            *) echo "libruns=$(python3 -c "import json,sys;print(json.dumps(list(range(1,int(sys.argv[1])+1))))" "$N")" >> "$GITHUB_OUTPUT" ;; esac
 
   ctl:
     needs: plan
@@ -201,9 +217,46 @@ jobs:
           path: unit
           retention-days: 14
 
+  libsuite:
+    needs: plan
+    if: needs.plan.outputs.commit != '' && needs.plan.outputs.libruns != ''
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      matrix:
+        run: ${{ fromJSON(needs.plan.outputs.libruns) }}
+    name: lib suite ${{ matrix.run }}
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: "${{ github.sha }}" }
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ env.ENGINE_REPO }}
+          ref: ${{ needs.plan.outputs.commit }}
+          path: engine
+          persist-credentials: false
+      - name: rust
+        run: rustup toolchain install "$RUST_VERSION" --profile minimal > /dev/null && rustup default "$RUST_VERSION" && rustc --version
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry/index
+            ~/.cargo/registry/cache
+          key: cargo-registry-${{ hashFiles('engine/Cargo.lock', 'engine/proto/quaderno/Cargo.lock') }}
+      - name: lib suite
+        env: { RUN: "${{ matrix.run }}", TO: "${{ inputs.lib_suite_timeout }}" }
+        run: ci/run-lib-suite.sh engine "$PWD/lib" "$RUN" "${TO:-1200}"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: libsuite-${{ matrix.run }}
+          path: lib
+          retention-days: 14
+
   summary:
-    needs: [plan, ctl, unit]
-    if: always() && !cancelled() && (needs.plan.outputs.matrix != '' || inputs.unit_tests != '')
+    needs: [plan, ctl, unit, libsuite]
+    if: always() && !cancelled() && (needs.plan.outputs.matrix != '' || inputs.unit_tests != '' || needs.plan.outputs.libruns != '')
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
@@ -224,6 +277,21 @@ jobs:
           export BUNDLE_MANIFEST="$(echo "engine_commit: $COMMIT (built from source on each runner)"; for f in shards/*/build.json; do echo "$(basename "$(dirname "$f")"): $(python3 -c 'import json,sys;d=json.load(open(sys.argv[1]));print(d["rustc"],"| unstripped mongo-server",d.get("mongo_server_sha256_unstripped","-"),"pq",d.get("pq_sha256_unstripped","-"),"| stripped mongo-server",d["mongo_server_sha256"],"pq",d["pq_sha256"])' "$f")"; done)"
           python3 ci/summarize.py shards result > /dev/null
           if [ -f shards/unit/UNIT.md ]; then { echo; cat shards/unit/UNIT.md; } >> result/SUMMARY.md; mkdir -p result/unit; cp shards/unit/*.log shards/unit/unit.jsonl shards/unit/UNIT.md result/unit/ 2>/dev/null || true; fi
+          if ls -d shards/libsuite-* > /dev/null 2>&1; then
+            mkdir -p result/libsuite; cp shards/libsuite-*/lib_*.log shards/libsuite-*/lib.json result/libsuite/ 2>/dev/null || true
+            for d in shards/libsuite-*/; do cp "$d/lib.json" "result/libsuite/lib_$(basename "$d" | sed 's/libsuite-//').json" 2>/dev/null || true; done
+            rm -f result/libsuite/lib.json
+            python3 - shards >> result/SUMMARY.md <<'PY'
+          import glob, json, sys
+          recs = sorted((json.load(open(f)) for f in glob.glob(sys.argv[1] + "/libsuite-*/lib.json")), key=lambda r: r["run"])
+          if recs:
+              p = sum(r["status"] == "pass" for r in recs)
+              print(f"\n## lib unit suite (cargo test --release -p {recs[0]['package']} --lib), one run per job\n")
+              print(f"- {p} of {len(recs)} PASS")
+              for r in recs:
+                  print(f"- run {r['run']}: {r['status'].upper()} in {r['seconds']} s | {r['result']}" + (f" | failed: {', '.join(r['failed'])}" if r['failed'] else ""))
+          PY
+          fi
           cat result/SUMMARY.md >> "$GITHUB_STEP_SUMMARY"
           for d in shards/*/; do m=$(python3 -c 'import json,sys;print(json.load(open(sys.argv[1]))["mode"])' "$d/shard.json" 2>/dev/null) || continue
             mkdir -p "result/logs/$m"; cp "$d"/ctl_*.log "result/logs/$m/" 2>/dev/null || true

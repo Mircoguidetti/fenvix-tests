@@ -79,7 +79,11 @@ is public). Starting a workflow needs write access to this repository (the `plan
 - `repeats`: `FILE:RUNS:MODE,...` with FILE the file name without `.py` (it must exist at the commit, or come from
   `extra_tests`), MODE `sealed2-derive`, `off` or `both`. `repeat_jobs`: most jobs one item is spread over (default 10;
   every job builds the engine first, about 10 minutes, so short tests are cheaper with 1 or 2 jobs).
-- `unit_tests`: `FILTER:RUNS,...`, cargo test filters of the root package's lib tests.
+- `unit_tests`: `FILTER:RUNS,...`, cargo test filters of the root package's lib tests (debug build, one job, runs in a row).
+- `lib_suite_runs` (N) and `lib_suite_timeout` (seconds, default 1200): N parallel jobs, each one run of the whole lib
+  suite `cargo test --release --locked -p <root package> --lib` (the test harness's default parallel threads; the build
+  is not under the timeout). Summary section "lib unit suite" with each run's result line and failing test names;
+  logs in `libsuite/` on the results branch.
 - `extra_tests`: a folder under `extra-tests/` whose `test_*.py` are copied into `ctl-tests` before the run (test code
   only: a reviewer's test that the engine commit does not carry). See `extra-tests/README.md`.
 
