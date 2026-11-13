@@ -1,0 +1,26 @@
+TEST FAULT INJECTION ON (/tmp/tmpkamnmi9f.faults): never use this in production
+memory budget: limit 15983 MiB (memtotal), caches 7479 MiB (block 3365, meta 1121, sealed 2991), memtable 8 MiB, first course 998 MiB, change log 32 MiB, L0 reads at once 4
+box disk floor: 4096 MiB in /tmp/fenvix-box-floor-36144
+memory budget (review round): box 373 MiB per customer, 747 MiB in flight; memtables of every database 1997 MiB (writes wait past 2996 MiB); merge read-ahead 499 MiB; absorption 16 L0 SSTs
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+LEASE process_lease tenant=- holder=E1 unix_ms=1794579956325 inc=efc526e47658d70d gen=1
+LEASE acquired tenant=e holder=E1 unix_ms=1794579956327 takeover_from=-
+LEASE takeover_wake tenant=e holder=E1 unix_ms=1794579956334 unclean=true takeover_from=-
+FAULT hang_put tenants/e/wal/00000000000000000002.sst
+LEASE writer_open tenant=e holder=E1 unix_ms=1794579956549 
+local log: database e: 6 records applied again (after record 0)
+local log: restart applied 6 records to 1 databases in 0.2 s
+admin interface listening on 127.0.0.1:24794 (bearer token required)
+mongo-server listening on 127.0.0.1:36144 (idle close after 600 s, holder E1, lease ttl 4 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:38364
+shutting down: closing tenants cleanly
+LEASE writer_close tenant=e holder=E1 unix_ms=1794579956593 
+LEASE release_begin tenant=e holder=E1 unix_ms=1794579956593 
+LEASE release tenant=e holder=E1 unix_ms=1794579956595 ok=true
+tenants closed; stopping maintenance
+maintenance shutdown: waiting for the L0 watch unix_ms=1794579956599
+maintenance shutdown: waiting for the dispatcher unix_ms=1794579957314
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794579957314
+maintenance shutdown: waiting for the GC task unix_ms=1794579957314
+maintenance shutdown: done unix_ms=1794579958314
+maintenance stopped (1727 ms)

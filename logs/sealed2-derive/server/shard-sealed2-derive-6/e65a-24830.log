@@ -1,0 +1,34 @@
+TEST FAULT INJECTION ON (/tmp/tmpwq8c7efx.faults): never use this in production
+memory budget: limit 15982 MiB (memtotal), caches 7479 MiB (block 3365, meta 1121, sealed 2991), memtable 8 MiB, first course 998 MiB, change log 32 MiB, L0 reads at once 4
+box disk floor: 4096 MiB in /tmp/fenvix-box-floor-24830
+memory budget (review round): box 373 MiB per customer, 747 MiB in flight; memtables of every database 1997 MiB (writes wait past 2996 MiB); merge read-ahead 499 MiB; absorption 16 L0 SSTs
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+admin interface listening on 127.0.0.1:25199 (bearer token required)
+mongo-server listening on 127.0.0.1:24830 (idle close after 300 s, holder e65a-24830, lease ttl 6 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:38116
+LEASE process_lease tenant=- holder=e65a-24830 unix_ms=1794580228717 inc=fa508421d87a9f9e gen=1
+LEASE acquired tenant=infla holder=e65a-24830 unix_ms=1794580228719 takeover_from=-
+LEASE acquired tenant=infla holder=e65a-24830 unix_ms=1794580228725 takeover_from=-
+LEASE acquired tenant=infla holder=e65a-24830 unix_ms=1794580228732 takeover_from=- new=true
+LEASE writer_open tenant=infla holder=e65a-24830 unix_ms=1794580228745 
+FXC not started db=infla reason=no_version_of_our_manifest unix_ms=1794580228745
+FAULT delay_put tenants/infla/wal/00000000000000000003.sst 1500
+FIRST_PUBLISH u=1794580228762 db=infla version=1 x_d=3 rows=405 build_ms=13 off_lock=1
+SLOW_PUT u=1794580230259 db=infla kind=wal ms=1503 bytes=327
+SLOW insert db=infla ms=1503 ok=true
+TIMING abandon db=infla stop_fxc_ms=0 tenant_abandon_ms=1305 closed=true
+LEASE writer_close tenant=infla holder=e65a-24830 unix_ms=1794580230367 
+LEASE acquired tenant=admin holder=e65a-24830 unix_ms=1794580230377 takeover_from=-
+LEASE acquired tenant=admin holder=e65a-24830 unix_ms=1794580230383 takeover_from=-
+ADMIN DELETE /v1/databases/infla -> 200 1363 ms peer=127.0.0.1:38124
+LEASE acquired tenant=infla holder=e65a-24830 unix_ms=1794580233441 takeover_from=-
+LEASE acquired tenant=infla holder=e65a-24830 unix_ms=1794580233447 takeover_from=-
+LEASE acquired tenant=infla holder=e65a-24830 unix_ms=1794580233453 takeover_from=-
+shutting down: closing tenants cleanly
+tenants closed; stopping maintenance
+maintenance shutdown: waiting for the L0 watch unix_ms=1794580233461
+maintenance shutdown: waiting for the dispatcher unix_ms=1794580233636
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794580233636
+maintenance shutdown: waiting for the GC task unix_ms=1794580233636
+maintenance shutdown: done unix_ms=1794580234634
+maintenance stopped (1177 ms)

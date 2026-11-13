@@ -1,0 +1,17 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_____________________ test_limit_of_the_own_group_is_seen ______________________
+test_83_cgroup_own_group.py:19: in test_limit_of_the_own_group_is_seen
+    cg = MemCg(f"t83-{os.getpid()}", 1 << 30)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+memcg.py:73: in __init__
+    raise Unavailable("; ".join(errs))
+E   memcg.Unavailable: v1: no own group or mount; v2 at /sys/fs/cgroup/t83-33919: [Errno 13] Permission denied: '/sys/fs/cgroup/t83-33919'
+
+During handling of the above exception, another exception occurred:
+test_83_cgroup_own_group.py:21: in test_limit_of_the_own_group_is_seen
+    pytest.fail(f"no memory cgroup could be set up here (the test needs one): {e}")
+E   Failed: no memory cgroup could be set up here (the test needs one): v1: no own group or mount; v2 at /sys/fs/cgroup/t83-33919: [Errno 13] Permission denied: '/sys/fs/cgroup/t83-33919'
+=========================== short test summary info ============================
+FAILED test_83_cgroup_own_group.py::test_limit_of_the_own_group_is_seen - Failed: no memory cgroup could be set up here (the test needs one): v1: no own group or mount; v2 at /sys/fs/cgroup/t83-33919: [Errno 13] Permission denied: '/sys/fs/cgroup/t83-33919'
+1 failed in 0.11s
