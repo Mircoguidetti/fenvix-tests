@@ -1,0 +1,31 @@
+TEST FAULT INJECTION ON (/tmp/tmpd2xuc0tx.faults): never use this in production
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+admin interface listening on 127.0.0.1:24640 (bearer token required)
+mongo-server listening on 127.0.0.1:27114 (idle close after 600 s, holder P1, lease ttl 2 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:45298
+LEASE process_lease tenant=- holder=P1 unix_ms=1794539159887 inc=a361b0d36b59dbaf gen=1
+LEASE acquired tenant=d holder=P1 unix_ms=1794539159888 takeover_from=-
+LEASE acquired tenant=d holder=P1 unix_ms=1794539159892 takeover_from=-
+LEASE acquired tenant=d holder=P1 unix_ms=1794539159896 takeover_from=- new=true
+LEASE writer_open tenant=d holder=P1 unix_ms=1794539159904 
+FXC not started db=d reason=no_version_of_our_manifest unix_ms=1794539159904
+FAULT delay_put processes/P1/_lease 3500
+LEASE process_lease_late tenant=- holder=P1 unix_ms=1794539164213 abandoned=1
+LEASE lost tenant=d holder=P1 unix_ms=1794539164213 process_lease_late
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=2 closed=true
+LEASE writer_close tenant=d holder=P1 unix_ms=1794539164215 
+LEASE process_lease_lapsed tenant=- holder=P1 unix_ms=1794539164308 gen=2 abandoned=0
+LEASE process_lease_lost tenant=- holder=P1 unix_ms=1794539164309 abandoned=0
+LEASE process_lease tenant=- holder=P1 unix_ms=1794539167852 inc=0553ef4618fd740d gen=3
+LEASE acquired tenant=d holder=P1 unix_ms=1794539167854 takeover_from=-
+shutting down: closing tenants cleanly
+FXC not started db=d reason=not_writer unix_ms=1794539167862
+LEASE release_begin tenant=d holder=P1 unix_ms=1794539167862 
+LEASE release tenant=d holder=P1 unix_ms=1794539167864 ok=true
+tenants closed; stopping maintenance
+maintenance shutdown: waiting for the L0 watch unix_ms=1794539167872
+maintenance shutdown: waiting for the dispatcher unix_ms=1794539168720
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794539168720
+maintenance shutdown: waiting for the GC task unix_ms=1794539168720
+maintenance shutdown: done unix_ms=1794539169712
+maintenance stopped (1849 ms)
