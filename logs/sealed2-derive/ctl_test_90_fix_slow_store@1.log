@@ -1,0 +1,65 @@
+...F.F.....FFFF                                                          [100%]
+=================================== FAILURES ===================================
+_____ test_a_write_the_store_does_not_take_gets_a_retryable_error_in_time ______
+test_90_fix_slow_store.py:300: in test_a_write_the_store_does_not_take_gets_a_retryable_error_in_time
+    assert err.code == 134 and err.details.get("codeName") == "WriteOutcomeUnknown" and err.has_error_label("RetryableWriteError"), f"wrong error: {err.details}"
+E   AssertionError: wrong error: {'ok': 0.0, 'errmsg': 'the write was not acknowledged within 2000 ms (the store is slow or does not answer): it is not acknowledged, and it may still be applied; retry', 'code': 262, 'codeName': 'ExceededTimeLimit', 'errorLabels': ['RetryableWriteError']}
+E   assert (262 == 134)
+E    +  where 262 = OperationFailure("the write was not acknowledged within 2000 ms (the store is slow or does not answer): it is not ackn...t may still be applied; retry', 'code': 262, 'codeName': 'ExceededTimeLimit', 'errorLabels': ['RetryableWriteError']}").code
+----------------------------- Captured stdout call -----------------------------
+insert with the WAL PUT held: OperationFailure after 4.0 s: {'ok': 0.0, 'errmsg': 'the write was not acknowledged within 2000 ms (the store is slow or does not answer): it is not acknowledged, and it may still be applied; retry', 'code': 262, 'codeName': 'ExceededTimeLimit', 'errorLabels': ['RetryableWriteError']}
+___ test_a_write_answered_by_the_deadline_with_retry_writes_off_is_labelled ____
+test_90_fix_slow_store.py:381: in test_a_write_answered_by_the_deadline_with_retry_writes_off_is_labelled
+    assert labelled or n == 0, f"a write answered with an unlabelled error (code {err.code}) was applied: n = {n}"
+E   AssertionError: a write answered with an unlabelled error (code 262) was applied: n = 1
+E   assert (False or 1 == 0)
+----------------------------- Captured stdout call -----------------------------
+$inc with the WAL held, retryWrites off: code 262, labelled False: the write was not acknowledged within 2000 ms (the store is slow or does not answer): it is not acknowledged, and it may still be applied
+after the store answers: n = 1; log: ['WRITE_DEADLINE update db=rrwdl conn=4 ms=2000 retryable=false: answered with an error, the command goes on', 'WRITE_DEADLINE_END update db=rrwdl conn=4 ms=2006 ok=true']
+________ test_a_fork_onto_a_name_just_read_keeps_every_document[clone] _________
+test_90_fix_slow_store.py:637: in test_a_fork_onto_a_name_just_read_keeps_every_document
+    assert out["now"] == 50, f"the branch read as {out['now']} documents right after the fork"
+E   AssertionError: the branch read as 0 documents right after the fork
+E   assert 0 == 50
+----------------------------- Captured stdout call -----------------------------
+fork (clone) during the absent hold: {'now': 0, 'insert': 'ok', 'after': (50, [0], []), 'late': (50, [0], []), 'restart': (50, [0], []), 'log': []}
+_________ test_a_fork_onto_a_name_just_read_keeps_every_document[copy] _________
+test_90_fix_slow_store.py:637: in test_a_fork_onto_a_name_just_read_keeps_every_document
+    assert out["now"] == 50, f"the branch read as {out['now']} documents right after the fork"
+E   AssertionError: the branch read as 0 documents right after the fork
+E   assert 0 == 50
+----------------------------- Captured stdout call -----------------------------
+fork (copy) during the absent hold: {'now': 0, 'insert': 'ok', 'after': (50, [0], []), 'late': (50, [0], []), 'restart': (50, [0], []), 'log': []}
+___________ test_a_create_that_finds_the_database_refuses_the_write ____________
+test_90_fix_slow_store.py:650: in test_a_create_that_finds_the_database_refuses_the_write
+    assert out["insert"].startswith("code 134 DatabaseExistedAtCreate labelled True"), out["insert"]
+E   AssertionError: ok
+E   assert False
+E    +  where False = <built-in method startswith of str object at 0x560a06fc9de0>('code 134 DatabaseExistedAtCreate labelled True')
+E    +    where <built-in method startswith of str object at 0x560a06fc9de0> = 'ok'.startswith
+----------------------------- Captured stdout call -----------------------------
+fork (clone) during the absent hold: {'now': 0, 'insert': 'ok', 'after': (50, [0], []), 'late': (50, [0], []), 'restart': (50, [0], []), 'log': []}
+___________ test_a_fork_onto_a_name_just_read_leaves_no_lease_behind ___________
+test_90_fix_slow_store.py:679: in test_a_fork_onto_a_name_just_read_leaves_no_lease_behind
+    assert n == 20, f"the branch stayed owned by the forking process: {last}"
+E   AssertionError: the branch stayed owned by the forking process: code 134: tenant br is owned by server process forkholdlease-26582 (lease valid for another 5756 ms); retry, full error: {'ok': 0.
+E   assert None == 20
+----------------------------- Captured stdout call -----------------------------
+another process reads the branch: None documents after 2.55 s (last refusal: code 134: tenant br is owned by server process forkholdlease-26582 (lease valid for another 5756 ms); retry, full error: {'ok': 0.)
+=========================== short test summary info ============================
+FAILED test_90_fix_slow_store.py::test_a_write_the_store_does_not_take_gets_a_retryable_error_in_time - AssertionError: wrong error: {'ok': 0.0, 'errmsg': 'the write was not acknowledged within 2000 ms (the store is slow or does not answer): it is not acknowledged, and it may still be applied; retry', 'code': 262, 'codeName': 'ExceededTimeLimit', 'errorLabels': ['RetryableWriteError']}
+assert (262 == 134)
+ +  where 262 = OperationFailure("the write was not acknowledged within 2000 ms (the store is slow or does not answer): it is not ackn...t may still be applied; retry', 'code': 262, 'codeName': 'ExceededTimeLimit', 'errorLabels': ['RetryableWriteError']}").code
+FAILED test_90_fix_slow_store.py::test_a_write_answered_by_the_deadline_with_retry_writes_off_is_labelled - AssertionError: a write answered with an unlabelled error (code 262) was applied: n = 1
+assert (False or 1 == 0)
+FAILED test_90_fix_slow_store.py::test_a_fork_onto_a_name_just_read_keeps_every_document[clone] - AssertionError: the branch read as 0 documents right after the fork
+assert 0 == 50
+FAILED test_90_fix_slow_store.py::test_a_fork_onto_a_name_just_read_keeps_every_document[copy] - AssertionError: the branch read as 0 documents right after the fork
+assert 0 == 50
+FAILED test_90_fix_slow_store.py::test_a_create_that_finds_the_database_refuses_the_write - AssertionError: ok
+assert False
+ +  where False = <built-in method startswith of str object at 0x560a06fc9de0>('code 134 DatabaseExistedAtCreate labelled True')
+ +    where <built-in method startswith of str object at 0x560a06fc9de0> = 'ok'.startswith
+FAILED test_90_fix_slow_store.py::test_a_fork_onto_a_name_just_read_leaves_no_lease_behind - AssertionError: the branch stayed owned by the forking process: code 134: tenant br is owned by server process forkholdlease-26582 (lease valid for another 5756 ms); retry, full error: {'ok': 0.
+assert None == 20
+6 failed, 9 passed in 203.75s (0:03:23)
