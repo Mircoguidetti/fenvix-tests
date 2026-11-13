@@ -14,7 +14,8 @@ All rights reserved: see `LICENSE`.
   `bundle.tar.gz`: the stripped binaries `target/release/mongo-server` and `target/release/pq`, the test files of that
   commit, two test proxies and the Node driver's package files.
 - `results/<name>/<run id>`: the summary of each run (`SUMMARY.md`, `summary.json`) and each test file's pytest log.
-  The server logs are in the run's artifacts (14 days).
+  `ctl-build` also puts the server logs there (`logs/<mode>/server/shard-<mode>-<shard>/`); `ctl` keeps them in the run's
+  artifacts (14 days).
 
 ## Built from source (workflow `ctl-build`)
 
@@ -55,3 +56,67 @@ judge does not run). Input: `engine_commit`, and `sealed` (`2-derive` by default
 `judge/run.sh` (through `ci/judge-phase.sh`, which only adds the one-phase switch and the cleanup-kill phase). The verdict,
 in the same format as `judge/out/<commit>-sealed2-derive/VERDICT-FAST.md`, with every phase's logs, goes to the branch
 `results/<7-char commit>/<run id>` (`judge/out/...`, `JUDGE.md`, `server/<phase>/`).
+
+## Handover: running this repository as the CI session
+
+Everything below works with a browser or the GitHub API and `git`; no secret is needed to read results (the repository
+is public). Starting a workflow needs write access to this repository (the `plan` job runs only for the repository owner).
+
+### Which workflow
+
+- A full set, repeats of some files, or cargo unit tests on an engine commit: `ctl-build`.
+- The fast judge on an engine commit: `fast-judge`.
+- `ctl` (prebuilt bundles) is the older path, kept for bundles; new work uses `ctl-build`.
+
+### ctl-build inputs
+
+- `engine_commit` (required): full sha of Mircoguidetti/fenvix-engine.
+- `mode`: `both` (default), `sealed2-derive`, `off`, or `none` (no full set: only `repeats` and/or `unit_tests`).
+  sealed2-derive = `FENVIX_SEALED_RUNS=2`, T_pin 1000 ms, E1 wait 0, compactor `small`, derived documents, zstd runs
+  (as `JUDGE_SEALED_RUNS=2 JUDGE_SEALED_DERIVE=1`); off = `FENVIX_SEALED_RUNS=off`. See `ci/run-shard.sh`.
+- `jobs`: parallel jobs per mode for the full set (default 10; files split by `ci/durations.json`).
+- `files`: only these test files (space separated), empty = every `ctl-tests/test_*.py` at the commit.
+- `repeats`: `FILE:RUNS:MODE,...` with FILE the file name without `.py` (it must exist at the commit, or come from
+  `extra_tests`), MODE `sealed2-derive`, `off` or `both`. `repeat_jobs`: most jobs one item is spread over (default 10;
+  every job builds the engine first, about 10 minutes, so short tests are cheaper with 1 or 2 jobs).
+- `unit_tests`: `FILTER:RUNS,...`, cargo test filters of the root package's lib tests.
+- `extra_tests`: a folder under `extra-tests/` whose `test_*.py` are copied into `ctl-tests` before the run (test code
+  only: a reviewer's test that the engine commit does not carry). See `extra-tests/README.md`.
+
+### fast-judge inputs
+
+- `engine_commit` (required), `sealed`: `2-derive` (default, the sessions' judge), `2` or `off`.
+
+### Where the result is
+
+- Branch `results/<first 7 chars of the commit>/<run id>`, written by the last job (`summary`). A cancelled run writes
+  nothing. Wait for it with `git ls-remote https://github.com/Mircoguidetti/fenvix-tests refs/heads/results/<7>/<run id>`
+  (and check the run's status on the API: a run that ends without the branch lost its summary).
+- ctl-build: `SUMMARY.md` (per mode "ctl: PASS (N files)" or "ctl: FAIL (k of N files: names)", one line per file with
+  status, seconds and pytest's last line; then per mode the repeats "FILE: P of N PASS" with each failing run's pytest
+  line; then "## cargo unit tests" if asked), `summary.json` (the same as data: `modes.<mode>.files[]`,
+  `repeats.<mode>.<file>.records[]`, `manifest`, `wall_seconds`, `run_url`), `logs/<mode>/ctl_<file>.log` (repeat run K:
+  `ctl_<file>@K.log`), `logs/<mode>/server/shard-<mode>-<shard>/` (every server log of that job; repeat jobs are
+  `shard-<mode>-r<N>`, runs numbered in order: with one run per job, run K of the first item is job rK, the next item
+  starts at r11, r21, ... when items are spread over 10 jobs), `unit/` (UNIT.md, unit.jsonl, logs).
+- fast-judge: `JUDGE.md` (overall, the verdict lines, per-phase seconds, wall time), `judge/out/<7><suffix>/` exactly as
+  the local judge leaves it (`VERDICT-FAST.md` with one line per phase: readers, build, unit, diff-py, diff-node, ctl, kill,
+  then cleanup-kill; `<phase>.log`, `kill.log`, `cleanup-kill.log`, `ctl_<file>.log`, `diff-py.json`, `diff-node.json`),
+  `server/<phase>/` (mongo-tests/out, ctl-tests/out), `build/` (sha256 of the binaries per job).
+- Read a ctl-build result from a shell: `ci/result.sh <7> --mode sealed2-derive|off [--wait] [--all]`.
+
+### Reporting into fenvix-brain (the coordinator's format)
+
+- `python3 ci/brain-result.py <7> <run id> "<label>" <out.md>` writes the report file of a ctl-build run, comparing each
+  file with integration-3 3e4fdcc's GitHub runs (43075464776 sealed2-derive, 43075634599 off) and listing the repeats.
+  Add a "## Notes (one run, no reruns ...)" section by hand before the "Logs:" line: every failure with its assertion,
+  whether it failed before, and any rule-8 signal (an acknowledged write missing, an erased document readable).
+- Reports go to fenvix-brain `sessions/2026-11-11-ci-public-tests/results/` on `main`; the message to the requester is
+  "CI done: <7>, <path>" with the run id, pass/fail and rule-8 signal, copied to the coordinator.
+- Labels: MEASURED, ESTIMATED, NOT KNOWN. No reruns unless asked. A failure that does not happen locally is a CI problem
+  until explained, not an engine result.
+
+### Isolation
+
+Every job runs on its own fresh runner (its own mongod, MinIO and ports); nothing is shared between jobs or runs. Runs
+queue first in, first out behind GitHub's limit of 20 jobs at once. Cancel a queued run to reorder (it publishes nothing).
