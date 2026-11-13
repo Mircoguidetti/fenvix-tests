@@ -45,3 +45,13 @@ after the other with `timeout 1500 python -m pytest -q`, deleting the buckets ea
 Input `unit_tests` (`FILTER:RUNS,...`) adds one job that runs `cargo test --locked -p <root package> --lib -- FILTER`,
 RUNS times per filter, on the same engine commit. Results go to the summary's "cargo unit tests" section and to
 `unit/` on the results branch. A filter that matches no test is reported as MATCHED-NONE, never as a pass.
+
+## fast judge (workflow fast-judge)
+
+`fast-judge` runs the engine's fast judge (`judge/run.sh fast`) with its phases as parallel jobs: readers, build, unit,
+diff-py, diff-node, ctl, kill, and cleanup-kill (the full judge's `test_open_gc.py`, one 60 s trial, which the local fast
+judge does not run). Input: `engine_commit`, and `sealed` (`2-derive` by default, as the sessions run it:
+`JUDGE_SEALED_RUNS=2 JUDGE_SEALED_DERIVE=1`; or `2`, or `off`). Every job uses the engine's own `judge/setup.sh` and
+`judge/run.sh` (through `ci/judge-phase.sh`, which only adds the one-phase switch and the cleanup-kill phase). The verdict,
+in the same format as `judge/out/<commit>-sealed2-derive/VERDICT-FAST.md`, with every phase's logs, goes to the branch
+`results/<7-char commit>/<run id>` (`judge/out/...`, `JUDGE.md`, `server/<phase>/`).

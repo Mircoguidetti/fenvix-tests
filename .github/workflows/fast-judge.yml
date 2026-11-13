@@ -1,0 +1,135 @@
+name: fast-judge
+# The engine's fast judge (judge/run.sh fast) on GitHub runners, its phases as parallel jobs: readers, build, unit,
+# diff-py, diff-node, ctl, kill, plus cleanup-kill (the full judge's second kill test, test_open_gc, one 60 s trial).
+# Each job checks out the public Mircoguidetti/fenvix-engine at the requested commit (no token), sets up the judge's own
+# tools with the engine's judge/setup.sh (mongod 7.0, MinIO, Python from conda-forge; node driver with npm ci), and runs
+# its phase with the engine's judge/run.sh through ci/judge-phase.sh. The phases that start servers first build the
+# workspace's binaries on the runner (ci/build-engine.sh). No binary leaves the runners. The summary merges the phases'
+# lines into one VERDICT-FAST.md in the same format as judge/out/<commit>-sealed2-derive/, with every phase's logs (the
+# kill logs included), on the branch results/<7-char commit>/<run id>, and JUDGE.md beside it.
+on:
+  workflow_dispatch:
+    inputs:
+      engine_commit:
+        description: "Engine commit (full sha preferred)"
+        required: true
+      sealed:
+        description: "2-derive (JUDGE_SEALED_RUNS=2 JUDGE_SEALED_DERIVE=1, the sessions' judge), 2 (JUDGE_SEALED_RUNS=2) or off"
+        required: false
+        default: "2-derive"
+
+permissions:
+  contents: write
+
+env:
+  ENGINE_REPO: Mircoguidetti/fenvix-engine
+  RUST_VERSION: "1.97.0"
+
+jobs:
+  plan:
+    if: github.actor == github.repository_owner
+    runs-on: ubuntu-24.04
+    outputs:
+      commit: ${{ steps.p.outputs.commit }}
+      name: ${{ steps.p.outputs.name }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ env.ENGINE_REPO }}
+          ref: ${{ inputs.engine_commit }}
+          path: engine
+          persist-credentials: false
+          sparse-checkout: judge
+      - id: p
+        env: { IN_SEALED: "${{ inputs.sealed }}" }
+        run: |
+          set -euo pipefail
+          case "$IN_SEALED" in 2-derive|2|off) ;; *) echo "sealed must be 2-derive, 2 or off"; exit 1 ;; esac
+          FULL=$(git -C engine rev-parse HEAD)
+          [ -x engine/judge/run.sh ] || [ -f engine/judge/run.sh ] || { echo "no judge/run.sh at $FULL"; exit 1; }
+          { echo "commit=$FULL"; echo "name=${FULL:0:7}"; } >> "$GITHUB_OUTPUT"
+
+  phase:
+    needs: plan
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      matrix:
+        phase: [readers, build, unit, diff-py, diff-node, ctl, kill, cleanup-kill]
+    name: judge ${{ matrix.phase }}
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: "${{ github.sha }}" }
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ env.ENGINE_REPO }}
+          ref: ${{ needs.plan.outputs.commit }}
+          path: engine
+          persist-credentials: false
+      - name: rust
+        run: rustup toolchain install "$RUST_VERSION" --profile minimal > /dev/null && rustup default "$RUST_VERSION" && rustc --version
+      # only crates.io downloads and the conda-forge tools are cached; never the engine's source or target
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry/index
+            ~/.cargo/registry/cache
+          key: cargo-registry-${{ hashFiles('engine/Cargo.lock', 'engine/proto/quaderno/Cargo.lock') }}
+      - uses: actions/cache@v4
+        with:
+          path: ~/.fenvix-judge
+          key: judge-setup-${{ hashFiles('engine/judge/setup.sh') }}
+      - name: judge setup (engine's judge/setup.sh)
+        run: engine/judge/setup.sh
+      - name: binaries
+        if: contains(fromJSON('["diff-py","diff-node","ctl","kill","cleanup-kill"]'), matrix.phase)
+        run: mkdir -p out && ci/build-engine.sh engine "${{ needs.plan.outputs.commit }}" out
+      - name: phase ${{ matrix.phase }}
+        env:
+          PHASE: ${{ matrix.phase }}
+          SEALED: ${{ inputs.sealed }}
+        run: |
+          case "$SEALED" in
+            2-derive) export JUDGE_SEALED_RUNS=2 JUDGE_SEALED_DERIVE=1 ;;
+            2) export JUDGE_SEALED_RUNS=2 ;;
+            off) unset JUDGE_SEALED_RUNS JUDGE_SEALED_DERIVE ;;
+          esac
+          ci/judge-phase.sh engine "$PHASE" out
+          cat out/judge/VERDICT-FAST.md
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: phase-${{ matrix.phase }}
+          path: out
+          retention-days: 14
+
+  summary:
+    needs: [plan, phase]
+    if: always() && !cancelled() && needs.plan.outputs.commit != ''
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: "${{ github.sha }}" }
+      - uses: actions/download-artifact@v4
+        with: { path: phases }
+      - name: summary
+        env:
+          GH_TOKEN: ${{ github.token }}
+          COMMIT: ${{ needs.plan.outputs.commit }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          started=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" --jq .run_started_at)
+          export WALL_SECONDS=$(( $(date +%s) - $(date -d "$started" +%s) ))
+          python3 ci/judge-summary.py phases result > /dev/null
+          for f in phases/*/build.json; do [ -f "$f" ] && { mkdir -p result/build; cp "$f" "result/build/$(basename "$(dirname "$f")").json"; }; done
+          cat result/JUDGE.md >> "$GITHUB_STEP_SUMMARY"
+      - name: publish to results/<commit>/<run id>
+        env: { NAME: "${{ needs.plan.outputs.name }}" }
+        run: |
+          set -euo pipefail
+          cd result && git init -q && git checkout -q -b r
+          git -c user.name=judge-ci -c user.email=judge-ci@users.noreply.github.com add -A
+          git -c user.name=judge-ci -c user.email=judge-ci@users.noreply.github.com commit -q -m "fast judge: engine $NAME, run $GITHUB_RUN_ID"
+          git push -q "https://x-access-token:${{ github.token }}@github.com/$GITHUB_REPOSITORY" "r:refs/heads/results/$NAME/$GITHUB_RUN_ID"
