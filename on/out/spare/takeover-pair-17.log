@@ -1,0 +1,31 @@
+cpu: the process may use 2 core(s) and runs on CPU(s) [1, 2]
+quaderno: writes are acknowledged by the replicated log at 172.18.0.2:7200,172.18.0.4:7200,172.18.0.5:7200
+quaderno: restart read 905 records of 1 databases from the log
+LEASE process_lease tenant=- holder=tk-spare-17 unix_ms=1794585840180 inc=0fe2aa7c8057162d gen=1
+local log: replay of database tk_app failed (tenant tk_app is owned by server process tk-server-1-17 (lease valid for another 3559 ms); retry); its 905 records are kept, the database is refused until they are applied
+local log: 1 databases kept their records; retried in the background
+quaderno: restart applied 0 records to 0 databases in 0.8 s
+mongo-server listening on 0.0.0.0:27018 (idle close after 60 s, holder tk-spare-17, lease ttl 4 s)
+local log: retry of database tk_app failed (tenant tk_app is owned by server process tk-server-1-17 (lease valid for another 3172 ms); retry); retried later
+local log: retry of database tk_app failed (tenant tk_app is owned by server process tk-server-1-17 (lease valid for another 3637 ms); retry); retried later
+local log: retry of database tk_app failed (tenant tk_app is owned by server process tk-server-1-17 (lease valid for another 0 ms); retry); retried later
+SLOW hello db=admin ms=10001 ok=true
+SLOW hello db=admin ms=10000 ok=true
+SLOW hello db=admin ms=10002 ok=true
+LEASE process_lease_revoked tenant=tk_app holder=tk-spare-17 unix_ms=1794585856479 of=tk-server-1-17
+LEASE acquired tenant=tk_app holder=tk-spare-17 unix_ms=1794585856482 takeover_from=tk-server-1-17
+LEASE acquired tenant=admin holder=tk-spare-17 unix_ms=1794585856566 takeover_from=tk-server-1-17
+LEASE takeover_wake tenant=tk_app holder=tk-spare-17 unix_ms=1794585856576 unclean=true takeover_from=tk-server-1-17
+LEASE takeover_wake tenant=admin holder=tk-spare-17 unix_ms=1794585856579 unclean=true takeover_from=tk-server-1-17
+LEASE writer_open tenant=tk_app holder=tk-spare-17 unix_ms=1794585856748 
+quaderno: takeover of tk_app: 13521 records applied from the log (after record 117609976485773312)
+local log: database tk_app: kept records applied by the retry; the database is open again
+SLOW insert db=tk_app ms=5714 ok=true
+SLOW insert db=tk_app ms=5708 ok=true
+SLOW insert db=tk_app ms=5712 ok=true
+SLOW insert db=tk_app ms=5718 ok=true
+SLOW insert db=tk_app ms=5745 ok=true
+SLOW insert db=tk_app ms=5748 ok=true
+SLOW insert db=tk_app ms=5731 ok=true
+SLOW insert db=tk_app ms=5738 ok=true
+SLOW hello db=admin ms=10000 ok=true
