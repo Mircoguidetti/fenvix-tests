@@ -1,0 +1,32 @@
+TEST FAULT INJECTION ON (/tmp/tmpyucjipqv.faults): never use this in production
+memory budget: limit 15982 MiB (memtotal), caches 7479 MiB (block 3365, meta 1121, sealed 2991), memtable 8 MiB, first course 998 MiB, change log 32 MiB, L0 reads at once 4
+box disk floor: 4096 MiB in /tmp/fenvix-box-floor-34437
+memory budget (review round): box 373 MiB per customer, 747 MiB in flight; memtables of every database 1997 MiB (writes wait past 2996 MiB); merge read-ahead 499 MiB; absorption 16 L0 SSTs
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+admin interface listening on 127.0.0.1:32262 (bearer token required)
+mongo-server listening on 127.0.0.1:34437 (idle close after 300 s, holder e65a-34437, lease ttl 6 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:49080
+LEASE process_lease tenant=- holder=e65a-34437 unix_ms=1794589645682 inc=9247af0f19005305 gen=1
+LEASE acquired tenant=infla holder=e65a-34437 unix_ms=1794589645684 takeover_from=-
+LEASE acquired tenant=infla holder=e65a-34437 unix_ms=1794589645691 takeover_from=-
+LEASE acquired tenant=infla holder=e65a-34437 unix_ms=1794589645698 takeover_from=- new=true
+LEASE writer_open tenant=infla holder=e65a-34437 unix_ms=1794589645708 
+FAULT delay_put tenants/infla/wal/00000000000000000003.sst 1500
+SLOW_PUT u=1794589647217 db=infla kind=wal ms=1502 bytes=324
+SLOW insert db=infla ms=1503 ok=true
+TIMING abandon db=infla stop_fxc_ms=0 tenant_abandon_ms=1199 closed=true
+LEASE writer_close tenant=infla holder=e65a-34437 unix_ms=1794589647219 
+LEASE acquired tenant=admin holder=e65a-34437 unix_ms=1794589647233 takeover_from=-
+LEASE acquired tenant=admin holder=e65a-34437 unix_ms=1794589647238 takeover_from=-
+ADMIN DELETE /v1/databases/infla -> 200 1251 ms peer=127.0.0.1:49092
+LEASE acquired tenant=infla holder=e65a-34437 unix_ms=1794589650289 takeover_from=-
+LEASE acquired tenant=infla holder=e65a-34437 unix_ms=1794589650295 takeover_from=-
+LEASE acquired tenant=infla holder=e65a-34437 unix_ms=1794589650301 takeover_from=-
+shutting down: closing tenants cleanly
+tenants closed; stopping maintenance
+maintenance shutdown: waiting for the L0 watch unix_ms=1794589650309
+maintenance shutdown: waiting for the dispatcher unix_ms=1794589650600
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794589650600
+maintenance shutdown: waiting for the GC task unix_ms=1794589650600
+maintenance shutdown: done unix_ms=1794589651598
+maintenance stopped (1292 ms)

@@ -1,0 +1,54 @@
+memory budget: limit 15983 MiB (memtotal), caches 7479 MiB (block 3365, meta 1121, sealed 2991), memtable 8 MiB, first course 998 MiB, change log 32 MiB, L0 reads at once 4
+box disk floor: 4096 MiB in /tmp/fenvix-box-floor-20153
+memory budget (review round): box 373 MiB per customer, 747 MiB in flight; memtables of every database 1997 MiB (writes wait past 2996 MiB); merge read-ahead 499 MiB; absorption 16 L0 SSTs
+admin interface listening on 127.0.0.1:23777 (bearer token required)
+mongo-server listening on 127.0.0.1:20153 (idle close after 60 s, holder loc20153, lease ttl 6 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:58068
+LEASE process_lease tenant=- holder=loc20153 unix_ms=1794588152297 inc=985f896780aa8bec gen=1
+LEASE acquired tenant=admin holder=loc20153 unix_ms=1794588152297 takeover_from=-
+LEASE acquired tenant=admin holder=loc20153 unix_ms=1794588152298 takeover_from=-
+LEASE acquired tenant=lr1 holder=loc20153 unix_ms=1794588152299 takeover_from=-
+LEASE acquired tenant=lr1 holder=loc20153 unix_ms=1794588152300 takeover_from=- new=true
+LEASE writer_open tenant=lr1 holder=loc20153 unix_ms=1794588152303 
+FXC not started db=lr1 reason=no_version_of_our_manifest unix_ms=1794588152303
+ADMIN POST /v1/databases -> 201 7 ms peer=127.0.0.1:58082
+LEASE writer_close tenant=lr1 holder=loc20153 unix_ms=1794588152306 
+LEASE release_begin tenant=lr1 holder=loc20153 unix_ms=1794588152306 
+LEASE release tenant=lr1 holder=loc20153 unix_ms=1794588152307 ok=true
+ADMIN PUT /v1/databases/lr1/retention -> 200 3 ms peer=127.0.0.1:58086
+LEASE acquired tenant=lr1 holder=loc20153 unix_ms=1794588152310 takeover_from=-
+FXC not started db=lr1 reason=not_writer unix_ms=1794588152312
+LEASE writer_open tenant=lr1 holder=loc20153 unix_ms=1794588152314 
+FXC not started db=lr1 reason=no_version_of_our_manifest unix_ms=1794588152314
+FIRST_PUBLISH u=1794588152316 db=lr1 version=1 x_d=4 rows=105 build_ms=1 off_lock=1
+L0_TRACE u=1794588153341.7542 db=lr1 l0=1 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794588154365.9226 db=lr1 l0=1 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794588155391.1824 db=lr1 l0=1 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794588156414.5366 db=lr1 l0=1 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794588157438.8208 db=lr1 l0=1 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794588158461.2393 db=lr1 l0=1 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794588159485.5713 db=lr1 l0=1 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+ABSORB u=1794588160120.4736 db=lr1 ssts=1 rows=42 raw_kib=1 committed=1 l0_start=2 l0_end=2 lock_ms=0 read_ms=0 write_ms=0 commit_ms=0 total_ms=0
+LEASE writer_close tenant=lr1 holder=loc20153 unix_ms=1794588160121 
+LEASE release_begin tenant=lr1 holder=loc20153 unix_ms=1794588160121 
+LEASE release tenant=lr1 holder=loc20153 unix_ms=1794588160122 ok=true
+LEASE acquired tenant=lr1 holder=loc20153 unix_ms=1794588160131 takeover_from=-
+FXC not started db=lr1 reason=not_writer unix_ms=1794588160133
+LEASE writer_open tenant=lr1 holder=loc20153 unix_ms=1794588160135 
+ABSORB u=1794588160140.057 db=lr1 ssts=1 rows=42 raw_kib=1 committed=1 l0_start=3 l0_end=3 lock_ms=0 read_ms=0 write_ms=0 commit_ms=0 total_ms=0
+LEASE writer_close tenant=lr1 holder=loc20153 unix_ms=1794588160141 
+LEASE release_begin tenant=lr1 holder=loc20153 unix_ms=1794588160141 
+LEASE release tenant=lr1 holder=loc20153 unix_ms=1794588160141 ok=true
+ADMIN POST /v1/databases/lr1/restore -> 200 24 ms peer=127.0.0.1:39468
+LEASE acquired tenant=lr1 holder=loc20153 unix_ms=1794588160142 takeover_from=-
+shutting down: closing tenants cleanly
+FXC not started db=lr1 reason=not_writer unix_ms=1794588160147
+LEASE release_begin tenant=lr1 holder=loc20153 unix_ms=1794588160147 
+LEASE release tenant=lr1 holder=loc20153 unix_ms=1794588160147 ok=true
+tenants closed; stopping maintenance
+maintenance shutdown: waiting for the L0 watch unix_ms=1794588160149
+maintenance shutdown: waiting for the dispatcher unix_ms=1794588161126
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794588161126
+maintenance shutdown: waiting for the GC task unix_ms=1794588161126
+maintenance shutdown: done unix_ms=1794588162122
+maintenance stopped (1975 ms)

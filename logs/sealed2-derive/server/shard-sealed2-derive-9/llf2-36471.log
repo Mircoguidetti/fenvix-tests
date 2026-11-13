@@ -1,0 +1,26 @@
+TEST FAULT INJECTION ON (/tmp/tmpi8ccvy56.faults): never use this in production
+memory budget: limit 15983 MiB (memtotal), caches 7479 MiB (block 3365, meta 1121, sealed 2991), memtable 8 MiB, first course 998 MiB, change log 32 MiB, L0 reads at once 4
+box disk floor: 4096 MiB in /tmp/fenvix-box-floor-36471
+memory budget (review round): box 373 MiB per customer, 747 MiB in flight; memtables of every database 1997 MiB (writes wait past 2996 MiB); merge read-ahead 499 MiB; absorption 16 L0 SSTs
+uploads: 1 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+FAULT fail_get tenants/f1/manifest/00000000000000000003.manifest
+LEASE process_lease tenant=- holder=F1 unix_ms=1794588240419 inc=ac33e7bed49f3721 gen=1
+LEASE acquired tenant=f2 holder=F1 unix_ms=1794588240422 takeover_from=-
+LEASE takeover_wake tenant=f2 holder=F1 unix_ms=1794588240433 unclean=true takeover_from=-
+FXC not started db=f2 reason=not_writer unix_ms=1794588240434
+LEASE writer_open tenant=f2 holder=F1 unix_ms=1794588240449 
+FXC not started db=f2 reason=no_version_of_our_manifest unix_ms=1794588240451
+local log: database f2: 4 records applied again (after record 1099511627784)
+FAULT fail_get tenants/f1/manifest/00000000000000000003.manifest
+FAULT fail_get tenants/f1/manifest/00000000000000000003.manifest
+FAULT fail_get tenants/f1/manifest/00000000000000000003.manifest
+FAULT fail_get tenants/f1/manifest/00000000000000000003.manifest
+FAULT fail_get tenants/f1/manifest/00000000000000000003.manifest
+FAULT fail_get tenants/f1/manifest/00000000000000000003.manifest
+FAULT fail_get tenants/f1/manifest/00000000000000000003.manifest
+local log: replay of database f1 failed (no progress after 5 s); its 6 records are kept, the database is refused until they are applied
+local log: 1 databases kept their records; retried in the background
+local log: restart applied 4 records to 1 databases in 5.0 s
+admin interface listening on 127.0.0.1:32351 (bearer token required)
+mongo-server listening on 127.0.0.1:36471 (idle close after 600 s, holder F1, lease ttl 4 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:49904

@@ -1,0 +1,49 @@
+TEST FAULT INJECTION ON (/tmp/tmp3oh1jwhx.faults): never use this in production
+memory budget: limit 15982 MiB (memtotal), caches 7479 MiB (block 3365, meta 1121, sealed 2991), memtable 8 MiB, first course 998 MiB, change log 32 MiB, L0 reads at once 4
+box disk floor: 4096 MiB in /tmp/fenvix-box-floor-37678
+memory budget (review round): box 373 MiB per customer, 747 MiB in flight; memtables of every database 1997 MiB (writes wait past 2996 MiB); merge read-ahead 499 MiB; absorption 16 L0 SSTs
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+admin interface listening on 127.0.0.1:36603 (bearer token required)
+mongo-server listening on 127.0.0.1:37678 (idle close after 300 s, holder H65, lease ttl 3 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:58550
+LEASE process_lease tenant=- holder=H65 unix_ms=1794589657846 inc=37ef80f8351c7a07 gen=1
+LEASE acquired tenant=inflc holder=H65 unix_ms=1794589657848 takeover_from=-
+LEASE acquired tenant=inflc holder=H65 unix_ms=1794589657854 takeover_from=-
+LEASE acquired tenant=inflc holder=H65 unix_ms=1794589657861 takeover_from=- new=true
+LEASE writer_open tenant=inflc holder=H65 unix_ms=1794589657871 
+FAULT delay_put tenants/inflc/wal/00000000000000000003.sst 12000
+FAULT delay_put processes/H65/_lease 4000
+LEASE process_lease_late tenant=- holder=H65 unix_ms=1794589662972 abandoned=1
+LEASE lost tenant=inflc holder=H65 unix_ms=1794589662972 process_lease_late
+LEASE process_lease_lapsed tenant=- holder=H65 unix_ms=1794589663168 gen=2 abandoned=0
+FAULT delay_put processes/H65/_lease 4000
+LEASE process_lease_lapsed tenant=- holder=H65 unix_ms=1794589667368 gen=3 abandoned=0
+FAULT delay_put processes/H65/_lease 4000
+SLOW hello db=admin ms=10001 ok=true
+SLOW hello db=admin ms=10000 ok=true
+SLOW_PUT u=1794589669880 db=inflc kind=wal ms=12003 bytes=324
+SLOW insert db=inflc ms=12003 ok=true
+TIMING abandon db=inflc stop_fxc_ms=0 tenant_abandon_ms=6910 closed=true
+LEASE writer_close tenant=inflc holder=H65 unix_ms=1794589669883 
+LEASE process_lease_lapsed tenant=- holder=H65 unix_ms=1794589671568 gen=4 abandoned=0
+TEST FAULT INJECTION ON (/tmp/tmp3oh1jwhx.faults): never use this in production
+memory budget: limit 15982 MiB (memtotal), caches 7479 MiB (block 3365, meta 1121, sealed 2991), memtable 8 MiB, first course 998 MiB, change log 32 MiB, L0 reads at once 4
+box disk floor: 4096 MiB in /tmp/fenvix-box-floor-37678
+memory budget (review round): box 373 MiB per customer, 747 MiB in flight; memtables of every database 1997 MiB (writes wait past 2996 MiB); merge read-ahead 499 MiB; absorption 16 L0 SSTs
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+admin interface listening on 127.0.0.1:36603 (bearer token required)
+mongo-server listening on 127.0.0.1:37678 (idle close after 300 s, holder H65, lease ttl 3 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:49296
+LEASE process_lease tenant=- holder=H65 unix_ms=1794589671994 inc=9935fe16c26ad347 gen=1
+LEASE acquired tenant=inflc holder=H65 unix_ms=1794589671997 takeover_from=-
+LEASE takeover_wake tenant=inflc holder=H65 unix_ms=1794589672009 unclean=true takeover_from=-
+shutting down: closing tenants cleanly
+LEASE release_begin tenant=inflc holder=H65 unix_ms=1794589672016 
+LEASE release tenant=inflc holder=H65 unix_ms=1794589672018 ok=true
+tenants closed; stopping maintenance
+maintenance shutdown: waiting for the L0 watch unix_ms=1794589672025
+maintenance shutdown: waiting for the dispatcher unix_ms=1794589672916
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794589672916
+maintenance shutdown: waiting for the GC task unix_ms=1794589672916
+maintenance shutdown: done unix_ms=1794589673916
+maintenance stopped (1900 ms)

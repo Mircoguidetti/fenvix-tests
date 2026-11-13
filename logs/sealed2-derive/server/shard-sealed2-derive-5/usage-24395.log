@@ -1,0 +1,244 @@
+memory budget: limit 15983 MiB (memtotal), caches 7479 MiB (block 3365, meta 1121, sealed 2991), memtable 8 MiB, first course 998 MiB, change log 32 MiB, L0 reads at once 4
+box disk floor: 4096 MiB in /tmp/fenvix-box-floor-24395
+memory budget (review round): box 373 MiB per customer, 747 MiB in flight; memtables of every database 1997 MiB (writes wait past 2996 MiB); merge read-ahead 499 MiB; absorption 16 L0 SSTs
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+admin interface listening on 127.0.0.1:38179 (bearer token required)
+mongo-server listening on 127.0.0.1:24395 (idle close after 3 s, holder usage-24395, lease ttl 6 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:56682
+LEASE process_lease tenant=- holder=usage-24395 unix_ms=1794586448768 inc=dbe0edb6c6c3efe8 gen=1
+LEASE acquired tenant=u1 holder=usage-24395 unix_ms=1794586448853 takeover_from=-
+LEASE acquired tenant=u1 holder=usage-24395 unix_ms=1794586449193 takeover_from=-
+LEASE acquired tenant=u1 holder=usage-24395 unix_ms=1794586449533 takeover_from=- new=true
+LEASE writer_open tenant=u1 holder=usage-24395 unix_ms=1794586449800 
+FXC not started db=u1 reason=no_version_of_our_manifest unix_ms=1794586449800
+SLOW insert db=u1 ms=1047 ok=true
+LEASE acquired tenant=other_db holder=usage-24395 unix_ms=1794586449900 takeover_from=-
+FIRST_PUBLISH u=1794586450062 db=u1 version=1 x_d=3 rows=7 build_ms=258 off_lock=1
+LEASE acquired tenant=other_db holder=usage-24395 unix_ms=1794586450240 takeover_from=-
+LEASE acquired tenant=other_db holder=usage-24395 unix_ms=1794586450579 takeover_from=- new=true
+LEASE writer_open tenant=other_db holder=usage-24395 unix_ms=1794586450841 
+FXC not started db=other_db reason=no_version_of_our_manifest unix_ms=1794586450841
+SLOW insert db=other_db ms=1030 ok=true
+FIRST_PUBLISH u=1794586451103 db=other_db version=1 x_d=3 rows=7 build_ms=259 off_lock=1
+L0_TRACE u=1794586451174.6836 db=u1 l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794586452198.9148 db=u1 l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794586452212.0413 db=other_db l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+ADMIN GET /v1/databases/u1/usage -> 200 45 ms peer=127.0.0.1:56692
+ADMIN GET /v1/databases/other_db/usage -> 200 126 ms peer=127.0.0.1:56708
+LEASE acquired tenant=u2 holder=usage-24395 unix_ms=1794586452614 takeover_from=-
+LEASE acquired tenant=u2 holder=usage-24395 unix_ms=1794586452948 takeover_from=-
+L0_TRACE u=1794586453221.27 db=u1 l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794586453234.4539 db=other_db l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+LEASE acquired tenant=u2 holder=usage-24395 unix_ms=1794586453296 takeover_from=- new=true
+LEASE writer_open tenant=u2 holder=usage-24395 unix_ms=1794586453563 
+FXC not started db=u2 reason=no_version_of_our_manifest unix_ms=1794586453563
+SLOW insert db=u2 ms=1046 ok=true
+ABSORB u=1794586453887.315 db=u1 ssts=1 rows=7 raw_kib=0 committed=1 l0_start=1 l0_end=1 lock_ms=0 read_ms=1 write_ms=262 commit_ms=44 total_ms=307
+FIRST_PUBLISH u=1794586454095 db=u2 version=1 x_d=3 rows=4005 build_ms=525 off_lock=1
+LEASE writer_close tenant=u1 holder=usage-24395 unix_ms=1794586454224 
+LEASE release_begin tenant=u1 holder=usage-24395 unix_ms=1794586454224 
+L0_TRACE u=1794586454255.6343 db=other_db l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+LEASE release tenant=u1 holder=usage-24395 unix_ms=1794586454285 ok=true
+LEASE writer_close tenant=u2 holder=usage-24395 unix_ms=1794586454371 
+LEASE release_begin tenant=u2 holder=usage-24395 unix_ms=1794586454371 
+LEASE release tenant=u2 holder=usage-24395 unix_ms=1794586454374 ok=true
+SLOW tenantAdmin db=u2 ms=778 ok=true
+LEASE acquired tenant=u2 holder=usage-24395 unix_ms=1794586454469 takeover_from=-
+ABSORB u=1794586454586.3088 db=other_db ssts=1 rows=0 raw_kib=0 committed=1 l0_start=1 l0_end=1 lock_ms=0 read_ms=1 write_ms=0 commit_ms=43 total_ms=45
+LEASE writer_close tenant=other_db holder=usage-24395 unix_ms=1794586455031 
+LEASE release_begin tenant=other_db holder=usage-24395 unix_ms=1794586455031 
+LEASE release tenant=other_db holder=usage-24395 unix_ms=1794586455033 ok=true
+SLOW aggregate db=u2 ms=833 ok=true
+FXC not started db=u2 reason=not_writer unix_ms=1794586455208
+LEASE release_begin tenant=u2 holder=usage-24395 unix_ms=1794586455208 
+LEASE release tenant=u2 holder=usage-24395 unix_ms=1794586455211 ok=true
+LEASE acquired tenant=u2 holder=usage-24395 unix_ms=1794586455299 takeover_from=-
+SLOW aggregate db=u2 ms=742 ok=true
+FXC not started db=u2 reason=not_writer unix_ms=1794586455956
+LEASE release_begin tenant=u2 holder=usage-24395 unix_ms=1794586455956 
+LEASE release tenant=u2 holder=usage-24395 unix_ms=1794586455962 ok=true
+LEASE acquired tenant=u2 holder=usage-24395 unix_ms=1794586456054 takeover_from=-
+SLOW aggregate db=u2 ms=745 ok=true
+FXC not started db=u2 reason=not_writer unix_ms=1794586456709
+LEASE release_begin tenant=u2 holder=usage-24395 unix_ms=1794586456709 
+LEASE release tenant=u2 holder=usage-24395 unix_ms=1794586456712 ok=true
+LEASE acquired tenant=u2 holder=usage-24395 unix_ms=1794586456800 takeover_from=-
+FXC not started db=u2 reason=not_writer unix_ms=1794586457319
+LEASE writer_open tenant=u2 holder=usage-24395 unix_ms=1794586457630 
+SLOW insert db=u2 ms=920 ok=true
+L0_RECOGNISE db=u2 read=1 absorbed=0 ms=7 off_lock=1
+ABSORB u=1794586457873.3647 db=u2 ssts=2 rows=3002 raw_kib=529 committed=1 l0_start=2 l0_end=2 lock_ms=0 read_ms=43 write_ms=99 commit_ms=43 total_ms=187
+LEASE writer_close tenant=u2 holder=usage-24395 unix_ms=1794586458689 
+LEASE release_begin tenant=u2 holder=usage-24395 unix_ms=1794586458689 
+LEASE release tenant=u2 holder=usage-24395 unix_ms=1794586458691 ok=true
+SLOW tenantAdmin db=u2 ms=1057 ok=true
+SLOW hello db=admin ms=10001 ok=true
+ADMIN GET /v1/databases/u2/usage -> 200 43 ms peer=127.0.0.1:48792
+LEASE acquired tenant=u3 holder=usage-24395 unix_ms=1794586460352 takeover_from=-
+LEASE acquired tenant=u3 holder=usage-24395 unix_ms=1794586460691 takeover_from=-
+LEASE acquired tenant=u3 holder=usage-24395 unix_ms=1794586461033 takeover_from=- new=true
+LEASE writer_open tenant=u3 holder=usage-24395 unix_ms=1794586461295 
+FXC not started db=u3 reason=no_version_of_our_manifest unix_ms=1794586461295
+SLOW insert db=u3 ms=1035 ok=true
+FIRST_PUBLISH u=1794586461564 db=u3 version=1 x_d=2 rows=1004 build_ms=264 off_lock=1
+LEASE writer_close tenant=u3 holder=usage-24395 unix_ms=1794586462065 
+LEASE release_begin tenant=u3 holder=usage-24395 unix_ms=1794586462065 
+LEASE release tenant=u3 holder=usage-24395 unix_ms=1794586462124 ok=true
+SLOW tenantAdmin db=u3 ms=821 ok=true
+ADMIN GET /v1/databases/u3 -> 200 310 ms peer=127.0.0.1:48804
+SLOW hello db=admin ms=10000 ok=true
+LEASE acquired tenant=u3 holder=usage-24395 unix_ms=1794586462533 takeover_from=-
+SLOW find db=u3 ms=686 ok=true
+FXC not started db=u3 reason=not_writer unix_ms=1794586463122
+LEASE release_begin tenant=u3 holder=usage-24395 unix_ms=1794586463122 
+LEASE release tenant=u3 holder=usage-24395 unix_ms=1794586463239 ok=true
+ADMIN GET /v1/databases/u3 -> 200 168 ms peer=127.0.0.1:48814
+LEASE acquired tenant=u3 holder=usage-24395 unix_ms=1794586463495 takeover_from=-
+SLOW find db=u3 ms=632 ok=true
+FXC not started db=u3 reason=not_writer unix_ms=1794586464041
+LEASE release_begin tenant=u3 holder=usage-24395 unix_ms=1794586464042 
+LEASE release tenant=u3 holder=usage-24395 unix_ms=1794586464045 ok=true
+ADMIN GET /v1/databases/u3 -> 200 166 ms peer=127.0.0.1:48830
+LEASE acquired tenant=u3 holder=usage-24395 unix_ms=1794586464299 takeover_from=-
+SLOW find db=u3 ms=635 ok=true
+ADMIN GET /v1/databases/u3/usage -> 200 43 ms peer=127.0.0.1:48846
+ADMIN GET /v1/databases/u3/usage -> 200 43 ms peer=127.0.0.1:48856
+LEASE acquired tenant=u4 holder=usage-24395 unix_ms=1794586468117 takeover_from=-
+LEASE acquired tenant=u4 holder=usage-24395 unix_ms=1794586468456 takeover_from=-
+LEASE acquired tenant=u4 holder=usage-24395 unix_ms=1794586468811 takeover_from=- new=true
+LEASE writer_open tenant=u4 holder=usage-24395 unix_ms=1794586469075 
+FXC not started db=u4 reason=no_version_of_our_manifest unix_ms=1794586469075
+SLOW insert db=u4 ms=1063 ok=true
+FIRST_PUBLISH u=1794586469358 db=u4 version=1 x_d=3 rows=4005 build_ms=276 off_lock=1
+FXC not started db=u3 reason=not_writer unix_ms=1794586469568
+LEASE release_begin tenant=u3 holder=usage-24395 unix_ms=1794586469568 
+LEASE release tenant=u3 holder=usage-24395 unix_ms=1794586469571 ok=true
+LEASE writer_close tenant=u4 holder=usage-24395 unix_ms=1794586469627 
+LEASE release_begin tenant=u4 holder=usage-24395 unix_ms=1794586469627 
+LEASE release tenant=u4 holder=usage-24395 unix_ms=1794586469630 ok=true
+SLOW tenantAdmin db=u4 ms=502 ok=true
+SLOW hello db=admin ms=10001 ok=true
+ADMIN GET /v1/databases/u4/usage -> 200 85 ms peer=127.0.0.1:50726
+LEASE acquired tenant=u4 holder=usage-24395 unix_ms=1794586472326 takeover_from=-
+FXC not started db=u4 reason=not_writer unix_ms=1794586472906
+LEASE writer_open tenant=u4 holder=usage-24395 unix_ms=1794586473220 
+SLOW insert db=u4 ms=993 ok=true
+L0_RECOGNISE db=u4 read=1 absorbed=1 ms=9 off_lock=1
+ABSORB u=1794586473802.314 db=u4 ssts=1 rows=4002 raw_kib=468 committed=1 l0_start=2 l0_end=2 lock_ms=0 read_ms=11 write_ms=88 commit_ms=43 total_ms=142
+LEASE writer_close tenant=u4 holder=usage-24395 unix_ms=1794586474581 
+LEASE release_begin tenant=u4 holder=usage-24395 unix_ms=1794586474581 
+LEASE release tenant=u4 holder=usage-24395 unix_ms=1794586474620 ok=true
+SLOW tenantAdmin db=u4 ms=989 ok=true
+ADMIN GET /v1/databases/u4/usage -> 200 129 ms peer=127.0.0.1:50736
+LEASE acquired tenant=u5 holder=usage-24395 unix_ms=1794586474850 takeover_from=-
+LEASE acquired tenant=u5 holder=usage-24395 unix_ms=1794586475187 takeover_from=-
+LEASE acquired tenant=u5 holder=usage-24395 unix_ms=1794586475523 takeover_from=- new=true
+LEASE writer_open tenant=u5 holder=usage-24395 unix_ms=1794586475785 
+FXC not started db=u5 reason=no_version_of_our_manifest unix_ms=1794586475785
+SLOW insert db=u5 ms=1027 ok=true
+ADMIN GET /v1/databases/u5 -> 200 212 ms peer=127.0.0.1:50750
+FIRST_PUBLISH u=1794586476055 db=u5 version=1 x_d=3 rows=7 build_ms=266 off_lock=1
+L0_TRACE u=1794586477166.5469 db=u5 l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+ADMIN GET /v1/databases/u5 -> 200 125 ms peer=127.0.0.1:50766
+LEASE acquired tenant=u6 holder=usage-24395 unix_ms=1794586477318 takeover_from=-
+LEASE acquired tenant=u6 holder=usage-24395 unix_ms=1794586477654 takeover_from=-
+LEASE acquired tenant=u6 holder=usage-24395 unix_ms=1794586477998 takeover_from=- new=true
+SLOW hello db=admin ms=10000 ok=true
+L0_TRACE u=1794586478190.6338 db=u5 l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+LEASE writer_open tenant=u6 holder=usage-24395 unix_ms=1794586478283 
+FXC not started db=u6 reason=no_version_of_our_manifest unix_ms=1794586478283
+SLOW insert db=u6 ms=1054 ok=true
+FIRST_PUBLISH u=1794586478544 db=u6 version=1 x_d=3 rows=7 build_ms=258 off_lock=1
+L0_TRACE u=1794586479211.6838 db=u5 l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794586479666.582 db=u6 l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794586480231.6343 db=u5 l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794586480693.2932 db=u6 l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+ABSORB u=1794586480721.3005 db=u5 ssts=1 rows=0 raw_kib=0 committed=1 l0_start=1 l0_end=1 lock_ms=0 read_ms=41 write_ms=0 commit_ms=43 total_ms=85
+ADMIN GET /v1/databases/u6/usage -> 200 84 ms peer=127.0.0.1:55710
+shutting down: closing tenants cleanly
+LEASE writer_close tenant=u5 holder=usage-24395 unix_ms=1794586481070 
+LEASE release_begin tenant=u5 holder=usage-24395 unix_ms=1794586481070 
+LEASE release tenant=u5 holder=usage-24395 unix_ms=1794586481072 ok=true
+ABSORB u=1794586481121.319 db=u6 ssts=1 rows=40 raw_kib=1 committed=1 l0_start=1 l0_end=1 lock_ms=0 read_ms=41 write_ms=86 commit_ms=42 total_ms=171
+LEASE writer_close tenant=u6 holder=usage-24395 unix_ms=1794586481450 
+LEASE release_begin tenant=u6 holder=usage-24395 unix_ms=1794586481450 
+LEASE release tenant=u6 holder=usage-24395 unix_ms=1794586481480 ok=true
+tenants closed; stopping maintenance
+maintenance shutdown: waiting for the L0 watch unix_ms=1794586481889
+maintenance shutdown: waiting for the dispatcher unix_ms=1794586482560
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794586482560
+maintenance shutdown: waiting for the GC task unix_ms=1794586482560
+SLOW hello db=admin ms=10001 ok=true
+maintenance shutdown: done unix_ms=1794586486318
+maintenance stopped (5408 ms)
+memory budget: limit 15983 MiB (memtotal), caches 7479 MiB (block 3365, meta 1121, sealed 2991), memtable 8 MiB, first course 998 MiB, change log 32 MiB, L0 reads at once 4
+box disk floor: 4096 MiB in /tmp/fenvix-box-floor-24395
+memory budget (review round): box 373 MiB per customer, 747 MiB in flight; memtables of every database 1997 MiB (writes wait past 2996 MiB); merge read-ahead 499 MiB; absorption 16 L0 SSTs
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+admin interface listening on 127.0.0.1:38179 (bearer token required)
+mongo-server listening on 127.0.0.1:24395 (idle close after 3 s, holder usage-24395, lease ttl 6 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:55734
+LEASE process_lease tenant=- holder=usage-24395 unix_ms=1794586486582 inc=e9c2ca7f49ccb802 gen=1
+LEASE acquired tenant=u6 holder=usage-24395 unix_ms=1794586486669 takeover_from=-
+FXC not started db=u6 reason=not_writer unix_ms=1794586487262
+LEASE writer_open tenant=u6 holder=usage-24395 unix_ms=1794586487691 
+SLOW insert db=u6 ms=1166 ok=true
+L0_RECOGNISE db=u6 read=1 absorbed=1 ms=2 off_lock=1
+L0_TRACE u=1794586489133.7188 db=u6 l0=1 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+ADMIN GET /v1/databases/u6/usage -> 200 45 ms peer=127.0.0.1:55420
+L0_TRACE u=1794586490158.1416 db=u6 l0=1 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794586491182.0725 db=u6 l0=1 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+memory budget: limit 15983 MiB (memtotal), caches 7479 MiB (block 3365, meta 1121, sealed 2991), memtable 8 MiB, first course 998 MiB, change log 32 MiB, L0 reads at once 4
+box disk floor: 4096 MiB in /tmp/fenvix-box-floor-24395
+memory budget (review round): box 373 MiB per customer, 747 MiB in flight; memtables of every database 1997 MiB (writes wait past 2996 MiB); merge read-ahead 499 MiB; absorption 16 L0 SSTs
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+admin interface listening on 127.0.0.1:38179 (bearer token required)
+mongo-server listening on 127.0.0.1:24395 (idle close after 3 s, holder usage-24395, lease ttl 6 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:55452
+ADMIN GET /v1/databases/u6/usage -> 200 129 ms peer=127.0.0.1:55468
+LEASE process_lease tenant=- holder=usage-24395 unix_ms=1794586492079 inc=01f10f2aecae6d20 gen=1
+LEASE acquired tenant=u6 holder=usage-24395 unix_ms=1794586492213 takeover_from=-
+LEASE takeover_wake tenant=u6 holder=usage-24395 unix_ms=1794586492999 unclean=true takeover_from=-
+FXC not started db=u6 reason=not_writer unix_ms=1794586493084
+LEASE writer_open tenant=u6 holder=usage-24395 unix_ms=1794586493499 
+SLOW insert db=u6 ms=1475 ok=true
+L0_RECOGNISE db=u6 read=1 absorbed=1 ms=2 off_lock=1
+memory budget: limit 15983 MiB (memtotal), caches 7479 MiB (block 3365, meta 1121, sealed 2991), memtable 8 MiB, first course 998 MiB, change log 32 MiB, L0 reads at once 4
+box disk floor: 4096 MiB in /tmp/fenvix-box-floor-24395
+memory budget (review round): box 373 MiB per customer, 747 MiB in flight; memtables of every database 1997 MiB (writes wait past 2996 MiB); merge read-ahead 499 MiB; absorption 16 L0 SSTs
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+admin interface listening on 127.0.0.1:38179 (bearer token required)
+mongo-server listening on 127.0.0.1:24395 (idle close after 3 s, holder usage-24395, lease ttl 6 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:55510
+ADMIN GET /v1/databases/u6/usage -> 200 212 ms peer=127.0.0.1:55516
+ADMIN GET /v1/databases/nope/usage -> 404 41 ms peer=127.0.0.1:55518
+ADMIN (rejected) -> 401 0 ms peer=127.0.0.1:55520
+ADMIN GET /v1/databases/u1/usage -> 400 85 ms peer=127.0.0.1:55522
+ADMIN GET /v1/databases/u1/usage -> 400 85 ms peer=127.0.0.1:55536
+ADMIN GET /v1/databases/bad.name/usage -> 400 0 ms peer=127.0.0.1:55546
+LEASE process_lease tenant=- holder=usage-24395 unix_ms=1794586494616 inc=71c07d5ddd407b2c gen=1
+LEASE acquired tenant=u7 holder=usage-24395 unix_ms=1794586494700 takeover_from=-
+LEASE acquired tenant=u7 holder=usage-24395 unix_ms=1794586495041 takeover_from=-
+LEASE acquired tenant=u7 holder=usage-24395 unix_ms=1794586495378 takeover_from=- new=true
+LEASE writer_open tenant=u7 holder=usage-24395 unix_ms=1794586495647 
+FXC not started db=u7 reason=no_version_of_our_manifest unix_ms=1794586495647
+SLOW insert db=u7 ms=1081 ok=true
+FIRST_PUBLISH u=1794586495923 db=u7 version=1 x_d=3 rows=7 build_ms=272 off_lock=1
+L0_TRACE u=1794586497034.465 db=u7 l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+ADMIN GET /v1/databases/u7/usage -> 200 169 ms peer=127.0.0.1:55548
+ADMIN GET /v1/databases/u7/usage -> 200 126 ms peer=127.0.0.1:55558
+L0_TRACE u=1794586498058.0413 db=u7 l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794586499082.9175 db=u7 l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+ABSORB u=1794586499726.3936 db=u7 ssts=1 rows=0 raw_kib=0 committed=1 l0_start=1 l0_end=1 lock_ms=0 read_ms=1 write_ms=0 commit_ms=233 total_ms=234
+LEASE writer_close tenant=u7 holder=usage-24395 unix_ms=1794586499943 
+LEASE release_begin tenant=u7 holder=usage-24395 unix_ms=1794586499943 
+LEASE release tenant=u7 holder=usage-24395 unix_ms=1794586499946 ok=true
+SLOW hello db=admin ms=10000 ok=true
+shutting down: closing tenants cleanly
+tenants closed; stopping maintenance
+maintenance shutdown: waiting for the L0 watch unix_ms=1794586519764
+maintenance shutdown: waiting for the dispatcher unix_ms=1794586519995
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794586519996
+maintenance shutdown: waiting for the GC task unix_ms=1794586519996
+maintenance shutdown: done unix_ms=1794586521986
+maintenance stopped (2263 ms)

@@ -1,0 +1,226 @@
+TEST FAULT INJECTION ON (/tmp/tmp6qzj6rad.faults): never use this in production
+memory budget: limit 15983 MiB (memtotal), caches 7479 MiB (block 3365, meta 1121, sealed 2991), memtable 8 MiB, first course 998 MiB, change log 32 MiB, L0 reads at once 4
+box disk floor: 4096 MiB in /tmp/fenvix-box-floor-39593
+memory budget (review round): box 373 MiB per customer, 747 MiB in flight; memtables of every database 1997 MiB (writes wait past 2996 MiB); merge read-ahead 499 MiB; absorption 16 L0 SSTs
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+admin interface listening on 127.0.0.1:33913 (bearer token required)
+mongo-server listening on 127.0.0.1:39593 (idle close after 3 s, holder L58, lease ttl 3 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:50990
+LEASE process_lease tenant=- holder=L58 unix_ms=1794588015253 inc=a9a352ae19dd9453 gen=1
+LEASE acquired tenant=d holder=L58 unix_ms=1794588015255 takeover_from=-
+LEASE acquired tenant=d holder=L58 unix_ms=1794588015262 takeover_from=-
+LEASE acquired tenant=d holder=L58 unix_ms=1794588015301 takeover_from=- new=true
+LEASE writer_open tenant=d holder=L58 unix_ms=1794588015313 
+FXC not started db=d reason=no_version_of_our_manifest unix_ms=1794588015313
+FIRST_PUBLISH u=1794588015406 db=d version=1 x_d=3 rows=10005 build_ms=76 off_lock=1
+L0_TRACE u=1794588016436.42 db=d l0=1 unabs=1 absorbing=1 slate_jobs=0/0 slate_job=-
+ABSORB u=1794588016446.6853 db=d ssts=1 rows=40002 raw_kib=6093 committed=1 l0_start=1 l0_end=1 lock_ms=0 read_ms=555 write_ms=16 commit_ms=2 total_ms=574
+ABSORB u=1794588017243.6973 db=d ssts=1 rows=50002 raw_kib=7617 committed=1 l0_start=2 l0_end=2 lock_ms=0 read_ms=529 write_ms=18 commit_ms=3 total_ms=551
+L0_TRACE u=1794588017462.731 db=d l0=2 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+ABSORB u=1794588018083.722 db=d ssts=1 rows=50002 raw_kib=7617 committed=1 l0_start=3 l0_end=3 lock_ms=0 read_ms=545 write_ms=21 commit_ms=2 total_ms=569
+L0_TRACE u=1794588018487.5222 db=d l0=3 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+ABSORB u=1794588019075.1995 db=d ssts=1 rows=50002 raw_kib=7617 committed=1 l0_start=4 l0_end=4 lock_ms=0 read_ms=514 write_ms=18 commit_ms=2 total_ms=536
+L0_TRACE u=1794588019512.6428 db=d l0=4 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794588020538.3213 db=d l0=4 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794588021561.8284 db=d l0=4 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+LEASE writer_close tenant=d holder=L58 unix_ms=1794588021687 
+LEASE release_begin tenant=d holder=L58 unix_ms=1794588021687 
+LEASE release tenant=d holder=L58 unix_ms=1794588021689 ok=true
+FAULT delay_get tenants/d/_lease 60
+LEASE acquired tenant=d holder=L58 unix_ms=1794588024024 takeover_from=-
+FAULT delay_get tenants/d/_clean 60
+FAULT delay_get tenants/d/manifest/00000000000000000012.manifest 60
+FAULT delay_get tenants/d/gc/manifest.boundary 60
+FAULT delay_get tenants/d/manifest/00000000000000000013.manifest 60
+FAULT delay_get tenants/d/gc/manifest.boundary 60
+FAULT delay_get tenants/d/compacted/01M7AWG4ZW70YQ5A6Y0RKGZFXE.sst 60
+FAULT delay_get tenants/d/manifest/00000000000000000013.manifest 60
+FAULT delay_get tenants/d/gc/manifest.boundary 60
+FAULT delay_get tenants/d/compacted/01M7AWG4ZW70YQ5A6Y0RKGZFXE.sst 60
+FAULT delay_get tenants/d/compacted/01M7AWG4ZW70YQ5A6Y0RKGZFXE.sst 60
+FAULT delay_get tenants/d/fx/manifest/00000000000000000011 60
+FAULT delay_get tenants/d/fx/manifest/00000000000000000010 60
+FAULT delay_get tenants/d/fx/run/g10s3/00000000000000000022-1-dbfa92af 60
+FAULT delay_get tenants/d/fx/run/g0/00000000000000000007-1-3c81b083 60
+FAULT delay_get tenants/d/compacted/01M7AWG4ZTCVZVKR8YS7A374WC.sst 60
+FAULT delay_get tenants/d/fx/run/g0s1/00000000000000000007-1-0b06e976 60
+FAULT delay_get tenants/d/fx/run/g0s2/00000000000000000007-1-9692d70c 60
+FAULT delay_get tenants/d/fx/run/g3/00000000000000000012-1-c61bb247 60
+FAULT delay_get tenants/d/fx/run/g3s1/00000000000000000012-1-731ca51a 60
+FAULT delay_get tenants/d/fx/run/g3s2/00000000000000000012-1-ef799f30 60
+FAULT delay_get tenants/d/fx/run/g6/00000000000000000017-1-17d51c8f 60
+FAULT delay_get tenants/d/fx/run/g6s1/00000000000000000017-1-9b267171 60
+FAULT delay_get tenants/d/fx/run/g6s2/00000000000000000017-1-b8d20f3f 60
+FAULT delay_get tenants/d/fx/run/g10/00000000000000000022-1-22d547ed 60
+FAULT delay_get tenants/d/fx/run/g10s1/00000000000000000022-1-619a8573 60
+FAULT delay_get tenants/d/fx/run/g10s2/00000000000000000022-1-38cdf4cb 60
+FAULT delay_get tenants/d/fx/run/g10s4/00000000000000000022-1-c65e7383 60
+FAULT delay_get tenants/d/fx/run/g6s4/00000000000000000017-1-91c54df6 60
+FAULT delay_get tenants/d/fx/run/g7/00000000000000000022-1-c2dd1995 60
+FAULT delay_get tenants/d/fx/run/delta/00000000000000000022-1-2699590c 60
+FAULT delay_get tenants/d/fx/run/delta/00000000000000000017-1-f324abe5 60
+FAULT delay_get tenants/d/fx/run/g10s3/00000000000000000022-1-dbfa92af 60
+FAULT delay_get tenants/d/fx/run/delta/00000000000000000012-1-38bec006 60
+FAULT delay_get tenants/d/fx/run/g0/00000000000000000007-1-3c81b083 60
+FAULT delay_get tenants/d/compacted/01M7AWG503FED062JAF4S4CYZS.sst 60
+SLOW find db=d ms=816 ok=true
+FAULT delay_get tenants/d/fx/run/g0/00000000000000000007-1-3c81b083 60
+FAULT delay_get tenants/d/fx/run/g10s3/00000000000000000022-1-dbfa92af 60
+FAULT delay_get tenants/d/fx/run/g0/00000000000000000007-1-3c81b083 60
+FAULT delay_get tenants/d/fx/manifest/00000000000000000011 60
+FAULT delay_get tenants/d/fx/manifest/00000000000000000010 60
+FAULT delay_get tenants/d/fx/run/g0/00000000000000000007-1-3c81b083 60
+FAULT delay_get tenants/d/fx/run/g10s3/00000000000000000022-1-dbfa92af 60
+FAULT delay_get tenants/d/fx/run/g10s4/00000000000000000022-1-c65e7383 60
+SLOW hello db=admin ms=10001 ok=true
+FAULT delay_get tenants/d/fx/run/g10s4/00000000000000000022-1-c65e7383 60
+FAULT delay_get tenants/d/fx/run/g10s4/00000000000000000022-1-c65e7383 60
+FAULT delay_get tenants/d/fx/run/g0/00000000000000000007-1-3c81b083 60
+FAULT delay_get tenants/d/fx/manifest/00000000000000000011 60
+FAULT delay_get tenants/d/fx/manifest/00000000000000000010 60
+FAULT delay_get tenants/d/fx/run/g0/00000000000000000007-1-3c81b083 60
+FAULT delay_get tenants/d/fx/run/g10s4/00000000000000000022-1-c65e7383 60
+FAULT delay_get tenants/d/fx/run/g10s4/00000000000000000022-1-c65e7383 60
+FAULT delay_get tenants/d/fx/run/g10s4/00000000000000000022-1-c65e7383 60
+FAULT delay_get tenants/d/fx/run/g0/00000000000000000007-1-3c81b083 60
+FAULT delay_get tenants/d/fx/run/g0s1/00000000000000000007-1-0b06e976 60
+FAULT delay_get tenants/d/fx/manifest/00000000000000000011 60
+FAULT delay_get tenants/d/fx/manifest/00000000000000000010 60
+FAULT delay_get tenants/d/fx/run/g10s4/00000000000000000022-1-c65e7383 60
+FAULT delay_put processes/L58/_lease 4500
+FAULT delay_get tenants/d/fx/run/g10s4/00000000000000000022-1-c65e7383 60
+FAULT delay_get tenants/d/fx/run/g10s4/00000000000000000022-1-c65e7383 60
+FAULT delay_get tenants/d/fx/run/g0s1/00000000000000000007-1-0b06e976 60
+FAULT delay_get tenants/d/fx/run/g0s1/00000000000000000007-1-0b06e976 60
+FAULT delay_get tenants/d/fx/run/g6s4/00000000000000000017-1-91c54df6 60
+FAULT delay_get tenants/d/fx/run/delta/00000000000000000022-1-2699590c 60
+FAULT delay_get tenants/d/fx/run/g6s4/00000000000000000017-1-91c54df6 60
+FAULT delay_get tenants/d/fx/run/g6s4/00000000000000000017-1-91c54df6 60
+FAULT delay_get tenants/d/fx/manifest/00000000000000000011 60
+FAULT delay_get tenants/d/fx/manifest/00000000000000000010 60
+FAULT delay_get tenants/d/fx/run/g0s1/00000000000000000007-1-0b06e976 60
+FAULT delay_get tenants/d/fx/run/g0s2/00000000000000000007-1-9692d70c 60
+FAULT delay_get tenants/d/fx/run/g6s4/00000000000000000017-1-91c54df6 60
+FAULT delay_get tenants/d/fx/run/g6s4/00000000000000000017-1-91c54df6 60
+FAULT delay_get tenants/d/fx/run/g6s4/00000000000000000017-1-91c54df6 60
+FAULT delay_get tenants/d/fx/run/g0s2/00000000000000000007-1-9692d70c 60
+FAULT delay_get tenants/d/fx/manifest/00000000000000000011 60
+FAULT delay_get tenants/d/fx/manifest/00000000000000000010 60
+FAULT delay_get tenants/d/fx/run/g0s2/00000000000000000007-1-9692d70c 60
+FAULT delay_get tenants/d/fx/run/g6s4/00000000000000000017-1-91c54df6 60
+FAULT delay_get tenants/d/fx/run/g6s4/00000000000000000017-1-91c54df6 60
+FAULT delay_get tenants/d/fx/run/g6s4/00000000000000000017-1-91c54df6 60
+FAULT delay_get tenants/d/fx/run/g0s2/00000000000000000007-1-9692d70c 60
+FAULT delay_get tenants/d/fx/run/g3/00000000000000000012-1-c61bb247 60
+FAULT delay_get tenants/d/fx/manifest/00000000000000000011 60
+FAULT delay_get tenants/d/fx/manifest/00000000000000000010 60
+SLOW aggregate db=d ms=2995 ok=false
+FXC not started db=d reason=not_writer unix_ms=1794588028195
+LEASE release_begin tenant=d holder=L58 unix_ms=1794588028195 
+LEASE release tenant=d holder=L58 unix_ms=1794588028198 ok=true
+LEASE process_lease_late tenant=- holder=L58 unix_ms=1794588030671 abandoned=0
+LEASE process_lease_lapsed tenant=- holder=L58 unix_ms=1794588030767 gen=2 abandoned=0
+SLOW hello db=admin ms=10000 ok=true
+SLOW hello db=admin ms=10001 ok=true
+SLOW hello db=admin ms=10000 ok=true
+SSTGC closed tenant=d left_unreferenced=1: another pass in 125s
+SLOW hello db=admin ms=10001 ok=true
+SLOW hello db=admin ms=10000 ok=true
+SSTGC begin tenant=d unix_ms=1794588077252
+SSTGC end tenant=d unix_ms=1794588077258 deleted_ssts=0 deleted_manifests=0 referenced=4 waiting=1
+SLOW hello db=admin ms=10000 ok=true
+FAULT delay_get tenants/d/_lease 60
+LEASE acquired tenant=d holder=L58 unix_ms=1794588089859 takeover_from=-
+FAULT delay_get tenants/d/_clean 60
+FAULT delay_get tenants/d/manifest/00000000000000000012.manifest 60
+FAULT delay_get tenants/d/gc/manifest.boundary 60
+FAULT delay_get tenants/d/manifest/00000000000000000013.manifest 60
+FAULT delay_get tenants/d/gc/manifest.boundary 60
+FAULT delay_get tenants/d/compacted/01M7AWG4ZW70YQ5A6Y0RKGZFXE.sst 60
+FAULT delay_get tenants/d/manifest/00000000000000000013.manifest 60
+FAULT delay_get tenants/d/gc/manifest.boundary 60
+FAULT delay_get tenants/d/compacted/01M7AWG4ZW70YQ5A6Y0RKGZFXE.sst 60
+FAULT delay_get tenants/d/compacted/01M7AWG4ZW70YQ5A6Y0RKGZFXE.sst 60
+FAULT delay_get tenants/d/fx/manifest/00000000000000000011 60
+FAULT delay_get tenants/d/fx/manifest/00000000000000000010 60
+FAULT delay_get tenants/d/fx/run/g10s3/00000000000000000022-1-dbfa92af 60
+FAULT delay_get tenants/d/fx/run/g0/00000000000000000007-1-3c81b083 60
+FAULT delay_get tenants/d/compacted/01M7AWG4ZTCVZVKR8YS7A374WC.sst 60
+FAULT delay_get tenants/d/fx/run/g0s1/00000000000000000007-1-0b06e976 60
+FAULT delay_get tenants/d/fx/run/g0s2/00000000000000000007-1-9692d70c 60
+FAULT delay_get tenants/d/fx/run/g3/00000000000000000012-1-c61bb247 60
+FAULT delay_get tenants/d/fx/run/g3s1/00000000000000000012-1-731ca51a 60
+FAULT delay_get tenants/d/fx/run/g3s2/00000000000000000012-1-ef799f30 60
+FAULT delay_get tenants/d/fx/run/g6/00000000000000000017-1-17d51c8f 60
+FAULT delay_get tenants/d/fx/run/g6s1/00000000000000000017-1-9b267171 60
+FAULT delay_get tenants/d/fx/run/g6s2/00000000000000000017-1-b8d20f3f 60
+FAULT delay_get tenants/d/fx/run/g10/00000000000000000022-1-22d547ed 60
+FAULT delay_get tenants/d/fx/run/g10s1/00000000000000000022-1-619a8573 60
+FAULT delay_get tenants/d/fx/run/g10s2/00000000000000000022-1-38cdf4cb 60
+FAULT delay_get tenants/d/fx/run/g10s4/00000000000000000022-1-c65e7383 60
+FAULT delay_get tenants/d/fx/run/g6s4/00000000000000000017-1-91c54df6 60
+FAULT delay_get tenants/d/fx/run/g7/00000000000000000022-1-c2dd1995 60
+FAULT delay_get tenants/d/compacted/01M7AWG503FED062JAF4S4CYZS.sst 60
+FAULT delay_get tenants/d/fx/run/delta/00000000000000000022-1-2699590c 60
+FAULT delay_get tenants/d/fx/run/delta/00000000000000000017-1-f324abe5 60
+FAULT delay_get tenants/d/fx/run/delta/00000000000000000012-1-38bec006 60
+SLOW find db=d ms=753 ok=true
+FAULT delay_get tenants/d/fx/run/g7/00000000000000000022-1-c2dd1995 60
+FAULT delay_get tenants/d/fx/run/g7/00000000000000000022-1-c2dd1995 60
+FAULT delay_get tenants/d/fx/run/g7/00000000000000000022-1-c2dd1995 60
+FAULT delay_get tenants/d/fx/run/g3/00000000000000000012-1-c61bb247 60
+FAULT delay_get tenants/d/fx/manifest/00000000000000000011 60
+FAULT delay_get tenants/d/fx/manifest/00000000000000000010 60
+FAULT delay_get tenants/d/fx/run/g3/00000000000000000012-1-c61bb247 60
+FAULT delay_get tenants/d/fx/run/g7/00000000000000000022-1-c2dd1995 60
+FAULT delay_get tenants/d/fx/run/g7/00000000000000000022-1-c2dd1995 60
+FAULT delay_get tenants/d/fx/run/g3/00000000000000000012-1-c61bb247 60
+FAULT delay_get tenants/d/fx/run/g3s1/00000000000000000012-1-731ca51a 60
+FAULT delay_get tenants/d/fx/run/g7/00000000000000000022-1-c2dd1995 60
+FAULT delay_get tenants/d/fx/run/g7/00000000000000000022-1-c2dd1995 60
+FAULT delay_get tenants/d/fx/run/g7/00000000000000000022-1-c2dd1995 60
+FAULT delay_get tenants/d/fx/manifest/00000000000000000011 60
+FAULT delay_get tenants/d/fx/manifest/00000000000000000010 60
+FAULT delay_get tenants/d/fx/run/g3s1/00000000000000000012-1-731ca51a 60
+FAULT delay_get tenants/d/fx/run/g3s1/00000000000000000012-1-731ca51a 60
+FAULT delay_get tenants/d/fx/run/g7/00000000000000000022-1-c2dd1995 60
+FAULT delay_get tenants/d/fx/run/g7/00000000000000000022-1-c2dd1995 60
+FAULT delay_get tenants/d/fx/run/g7/00000000000000000022-1-c2dd1995 60
+FAULT delay_get tenants/d/fx/run/g3s1/00000000000000000012-1-731ca51a 60
+FAULT delay_get tenants/d/fx/manifest/00000000000000000011 60
+FAULT delay_get tenants/d/fx/manifest/00000000000000000010 60
+FAULT delay_get tenants/d/fx/run/g3s2/00000000000000000012-1-ef799f30 60
+FAULT delay_put processes/L58/_lease 4500
+FAULT delay_get tenants/d/fx/run/g3s2/00000000000000000012-1-ef799f30 60
+FAULT delay_get tenants/d/fx/run/g7/00000000000000000022-1-c2dd1995 60
+FAULT delay_get tenants/d/fx/run/g7/00000000000000000022-1-c2dd1995 60
+FAULT delay_get tenants/d/fx/run/g7/00000000000000000022-1-c2dd1995 60
+FAULT delay_get tenants/d/compacted/01M7AWG505PBKD3M15QAN0F75Z.sst 60
+FAULT delay_get tenants/d/fx/run/g3s2/00000000000000000012-1-ef799f30 60
+FAULT delay_get tenants/d/fx/manifest/00000000000000000011 60
+FAULT delay_get tenants/d/fx/manifest/00000000000000000010 60
+FAULT delay_get tenants/d/fx/run/g3s2/00000000000000000012-1-ef799f30 60
+FAULT delay_get tenants/d/fx/run/g6/00000000000000000017-1-17d51c8f 60
+FAULT delay_get tenants/d/fx/run/g7/00000000000000000022-1-c2dd1995 60
+FAULT delay_get tenants/d/fx/run/g7/00000000000000000022-1-c2dd1995 60
+FAULT delay_get tenants/d/fx/run/g7/00000000000000000022-1-c2dd1995 60
+FAULT delay_get tenants/d/fx/run/g6/00000000000000000017-1-17d51c8f 60
+FAULT delay_get tenants/d/fx/manifest/00000000000000000011 60
+FAULT delay_get tenants/d/fx/manifest/00000000000000000010 60
+FAULT delay_get tenants/d/fx/run/g6/00000000000000000017-1-17d51c8f 60
+FAULT delay_get tenants/d/fx/run/g7/00000000000000000022-1-c2dd1995 60
+FAULT delay_get tenants/d/fx/run/g7/00000000000000000022-1-c2dd1995 60
+FAULT delay_get tenants/d/fx/run/g7/00000000000000000022-1-c2dd1995 60
+SLOW aggregate db=d ms=2941 ok=false
+shutting down: closing tenants cleanly
+FXC not started db=d reason=not_writer unix_ms=1794588093491
+LEASE release_begin tenant=d holder=L58 unix_ms=1794588093491 
+LEASE release tenant=d holder=L58 unix_ms=1794588093493 ok=true
+tenants closed; stopping maintenance
+maintenance shutdown: waiting for the L0 watch unix_ms=1794588093504
+maintenance shutdown: waiting for the dispatcher unix_ms=1794588094253
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794588094253
+maintenance shutdown: waiting for the GC task unix_ms=1794588094253
+SLOW hello db=admin ms=10000 ok=true
+maintenance shutdown: done unix_ms=1794588095269
+maintenance stopped (1778 ms)
