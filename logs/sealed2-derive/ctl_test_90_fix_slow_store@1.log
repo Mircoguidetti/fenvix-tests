@@ -1,0 +1,22 @@
+......FF.......                                                          [100%]
+=================================== FAILURES ===================================
+_________ test_a_write_answered_with_a_definite_error_was_not_applied __________
+test_90_fix_slow_store.py:457: in test_a_write_answered_with_a_definite_error_was_not_applied
+    assert v == 0, "the client saw a definite error (no RetryableWriteError label) and the increment was applied"
+E   AssertionError: the client saw a definite error (no RetryableWriteError label) and the increment was applied
+E   assert 1 == 0
+----------------------------- Captured stdout call -----------------------------
+retryWrites=False: client OperationFailure code 1 labelled False: Closed error: db is closed, full error: {'ok': 0.0, 'errmsg': 'Closed error: db is closed', 'code': 1, 'codeName': 'InternalError', '$cluste; stored v = 1
+___________ test_a_retried_write_across_a_lease_loss_is_applied_once ___________
+test_90_fix_slow_store.py:468: in test_a_retried_write_across_a_lease_loss_is_applied_once
+    assert v == 0, "a definite error, and the increment was applied"
+E   AssertionError: a definite error, and the increment was applied
+E   assert 1 == 0
+----------------------------- Captured stdout call -----------------------------
+retryWrites=True: client OperationFailure code 1 labelled False: Closed error: db is closed, full error: {'ok': 0.0, 'errmsg': 'Closed error: db is closed', 'code': 1, 'codeName': 'InternalError', '$cluste; stored v = 1
+=========================== short test summary info ============================
+FAILED test_90_fix_slow_store.py::test_a_write_answered_with_a_definite_error_was_not_applied - AssertionError: the client saw a definite error (no RetryableWriteError label) and the increment was applied
+assert 1 == 0
+FAILED test_90_fix_slow_store.py::test_a_retried_write_across_a_lease_loss_is_applied_once - AssertionError: a definite error, and the increment was applied
+assert 1 == 0
+2 failed, 13 passed in 191.65s (0:03:11)
