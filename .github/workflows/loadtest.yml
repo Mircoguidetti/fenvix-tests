@@ -1,0 +1,105 @@
+name: loadtest
+# One of the engine's own local test programs under loadtest/ (e.g. loadtest/log_path_fix/takeover_rounds.py: live
+# takeovers between two engines on a local store with the replicated log), on one runner, against binaries built from
+# the requested public engine commit (ci/build-engine.sh: the workspace and pq). Python from the judge environment
+# (ci/setup-env.sh). The program runs as `python <script> OUT <args>`; OUT (its logs, the engines' logs) goes to the
+# branch results/<7-char commit>/<run id> with LOADTEST.md (command, exit code, last lines). Everything is local to the
+# runner: no credentials, no cloud.
+on:
+  workflow_dispatch:
+    inputs:
+      engine_commit:
+        description: "Engine commit (full sha preferred)"
+        required: true
+      script:
+        description: "Program under loadtest/, e.g. loadtest/log_path_fix/takeover_rounds.py"
+        required: true
+      args:
+        description: "Arguments after OUT, e.g. --rounds 50"
+        required: false
+        default: ""
+      timeout_min:
+        description: "Timeout of the program, minutes"
+        required: false
+        default: "120"
+
+permissions:
+  contents: write
+
+env:
+  ENGINE_REPO: Mircoguidetti/fenvix-engine
+  RUST_VERSION: "1.97.0"
+
+jobs:
+  run:
+    if: github.actor == github.repository_owner
+    runs-on: ubuntu-24.04
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: "${{ github.sha }}" }
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ env.ENGINE_REPO }}
+          ref: ${{ inputs.engine_commit }}
+          path: engine
+          persist-credentials: false
+      - name: check inputs
+        env: { SCRIPT: "${{ inputs.script }}", ARGS: "${{ inputs.args }}", TO: "${{ inputs.timeout_min }}" }
+        run: |
+          set -euo pipefail
+          case "$SCRIPT" in loadtest/*.py) ;; *) echo "script must be loadtest/....py"; exit 1 ;; esac
+          case "$SCRIPT" in *..*) echo "bad script path"; exit 1 ;; esac
+          [ -f "engine/$SCRIPT" ] || { echo "engine/$SCRIPT not at this commit"; exit 1; }
+          echo "$ARGS" | grep -qE '^[A-Za-z0-9 ._=,:/-]*$' || { echo "args: only letters, digits, spaces and . _ = , : / -"; exit 1; }
+          case "$TO" in ''|*[!0-9]*) echo "timeout_min must be a number"; exit 1 ;; esac
+      - name: rust
+        run: rustup toolchain install "$RUST_VERSION" --profile minimal > /dev/null && rustup default "$RUST_VERSION" && rustc --version
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry/index
+            ~/.cargo/registry/cache
+          key: cargo-registry-${{ hashFiles('engine/Cargo.lock', 'engine/proto/quaderno/Cargo.lock') }}
+      - uses: actions/cache@v4
+        with:
+          path: ~/.fenvix-judge
+          key: judge-env-${{ hashFiles('ci/setup-env.sh') }}
+      - name: build
+        run: mkdir -p meta && ci/build-engine.sh engine "$(git -C engine rev-parse HEAD)" meta
+      - run: ci/setup-env.sh
+      - name: program
+        env: { SCRIPT: "${{ inputs.script }}", ARGS: "${{ inputs.args }}", TO: "${{ inputs.timeout_min }}" }
+        run: |
+          PY=$HOME/.fenvix-judge/env/bin/python
+          OUT=$PWD/out; mkdir -p "$OUT"
+          t0=$(date +%s)
+          # shellcheck disable=SC2086
+          (cd engine && timeout "$((TO * 60))" "$PY" "$SCRIPT" "$OUT" $ARGS) > "$OUT/program.out" 2>&1; rc=$?
+          t1=$(date +%s)
+          echo "{\"script\": \"$SCRIPT\", \"args\": \"$ARGS\", \"rc\": $rc, \"seconds\": $((t1 - t0))}" > meta/program.json
+          tail -30 "$OUT/program.out"
+          exit 0
+      - name: publish to results/<commit>/<run id>
+        if: always()
+        env:
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          SCRIPT: ${{ inputs.script }}
+          ARGS: ${{ inputs.args }}
+        run: |
+          set -euo pipefail
+          FULL=$(git -C engine rev-parse HEAD); NAME=${FULL:0:7}
+          mkdir -p result; cp -r out result/out 2>/dev/null || true; cp meta/*.json result/ 2>/dev/null || true
+          # the program's work directories hold store and log data: keep logs and summaries, drop the data
+          find result/out -type d \( -name store -o -name 'local-*' -o -name minio \) -prune -exec rm -rf {} + 2>/dev/null || true
+          find result/out -type f -size +20M -delete 2>/dev/null || true
+          rc=$(python3 -c 'import json;print(json.load(open("result/program.json"))["rc"])' 2>/dev/null || echo "?")
+          secs=$(python3 -c 'import json;print(json.load(open("result/program.json"))["seconds"])' 2>/dev/null || echo "?")
+          { echo "# loadtest, engine $FULL"; echo; echo "Run: $RUN_URL"; echo "Program: python $SCRIPT OUT $ARGS"
+            echo "Exit code: $rc (0 = the program's own PASS); time $secs s"; echo; echo "## last lines"; echo; echo '```'
+            tail -40 result/out/program.out 2>/dev/null; echo '```'; } > result/LOADTEST.md
+          cat result/LOADTEST.md >> "$GITHUB_STEP_SUMMARY"
+          cd result && git init -q && git checkout -q -b r
+          git -c user.name=loadtest-ci -c user.email=loadtest-ci@users.noreply.github.com add -A
+          git -c user.name=loadtest-ci -c user.email=loadtest-ci@users.noreply.github.com commit -q -m "loadtest: engine $NAME, run $GITHUB_RUN_ID"
+          git push -q "https://x-access-token:${{ github.token }}@github.com/$GITHUB_REPOSITORY" "r:refs/heads/results/$NAME/$GITHUB_RUN_ID"

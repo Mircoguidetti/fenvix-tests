@@ -66,6 +66,7 @@ is public). Starting a workflow needs write access to this repository (the `plan
 
 - A full set, repeats of some files, or cargo unit tests on an engine commit: `ctl-build`.
 - The fast judge on an engine commit: `fast-judge`.
+- One of the engine's local programs under `loadtest/` (e.g. the 50 live takeovers of `takeover_rounds.py`): `loadtest`.
 - `ctl` (prebuilt bundles) is the older path, kept for bundles; new work uses `ctl-build`.
 
 ### ctl-build inputs
@@ -89,6 +90,13 @@ is public). Starting a workflow needs write access to this repository (the `plan
   PATH, HOME, LD_* refused), e.g. `CTL82_CONTROL=1` to run test_82's negative control.
 - `extra_tests`: a folder under `extra-tests/` whose `test_*.py` are copied into `ctl-tests` before the run (test code
   only: a reviewer's test that the engine commit does not carry). See `extra-tests/README.md`.
+
+### loadtest inputs
+
+- `engine_commit`, `script` (a program under the engine's `loadtest/`, e.g. `loadtest/log_path_fix/takeover_rounds.py`),
+  `args` (after OUT, e.g. `--rounds 50`), `timeout_min` (default 120). One runner; binaries built from the commit;
+  results on `results/<7>/<run id>`: `LOADTEST.md` (command, exit code, last lines), `out/` (the program's logs, the
+  engines' logs; store and log data dropped), `program.json`, `build.json`.
 
 ### fast-judge inputs
 
