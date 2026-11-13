@@ -80,7 +80,8 @@ is public). Starting a workflow needs write access to this repository (the `plan
   `extra_tests`), MODE `sealed2-derive`, `off` or `both`. `repeat_jobs`: most jobs one item is spread over (default 10;
   every job builds the engine first, about 10 minutes, so short tests are cheaper with 1 or 2 jobs).
 - `unit_tests`: `FILTER:RUNS,...`, cargo test filters of the root package's lib tests (debug build, one job, runs in a row).
-- `lib_suite_runs` (N) and `lib_suite_timeout` (seconds, default 1200): N parallel jobs, each one run of the whole lib
+- `lib_suite_runs` (N), `lib_suite_filter` (optional cargo test name filter, e.g. `gc`; a filter that matches nothing is
+  MATCHED-NONE) and `lib_suite_timeout` (seconds, default 1200): N parallel jobs, each one run of the whole lib
   suite `cargo test --release --locked -p <root package> --lib` (the test harness's default parallel threads; the build
   is not under the timeout). Summary section "lib unit suite" with each run's result line and failing test names;
   logs in `libsuite/` on the results branch.

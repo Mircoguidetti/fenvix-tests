@@ -38,6 +38,10 @@ on:
         description: "Runs of the whole lib unit suite (cargo test --release -p <root package> --lib), one per parallel job (empty or 0: none)"
         required: false
         default: ""
+      lib_suite_filter:
+        description: "Optional cargo test name filter for the lib suite runs (e.g. gc); empty = the whole suite"
+        required: false
+        default: ""
       lib_suite_timeout:
         description: "Timeout of one lib suite run, seconds (the build is not counted)"
         required: false
@@ -245,8 +249,8 @@ jobs:
             ~/.cargo/registry/cache
           key: cargo-registry-${{ hashFiles('engine/Cargo.lock', 'engine/proto/quaderno/Cargo.lock') }}
       - name: lib suite
-        env: { RUN: "${{ matrix.run }}", TO: "${{ inputs.lib_suite_timeout }}" }
-        run: ci/run-lib-suite.sh engine "$PWD/lib" "$RUN" "${TO:-1200}"
+        env: { RUN: "${{ matrix.run }}", TO: "${{ inputs.lib_suite_timeout }}", FILTER: "${{ inputs.lib_suite_filter }}" }
+        run: ci/run-lib-suite.sh engine "$PWD/lib" "$RUN" "${TO:-1200}" "$FILTER"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -286,7 +290,8 @@ jobs:
           recs = sorted((json.load(open(f)) for f in glob.glob(sys.argv[1] + "/libsuite-*/lib.json")), key=lambda r: r["run"])
           if recs:
               p = sum(r["status"] == "pass" for r in recs)
-              print(f"\n## lib unit suite (cargo test --release -p {recs[0]['package']} --lib), one run per job\n")
+              filt = recs[0].get("filter") or ""
+              print(f"\n## lib unit suite (cargo test --release -p {recs[0]['package']} --lib{' -- ' + filt if filt else ''}), one run per job\n")
               print(f"- {p} of {len(recs)} PASS")
               for r in recs:
                   print(f"- run {r['run']}: {r['status'].upper()} in {r['seconds']} s | {r['result']}" + (f" | failed: {', '.join(r['failed'])}" if r['failed'] else ""))
