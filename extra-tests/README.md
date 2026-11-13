@@ -15,3 +15,6 @@ ctl-tests after the engine checkout (after the build, so the build is unchanged)
   `test_pathproxy_a058b14.py`, a copy of a058b14's `tools/lease-stall/pathproxy.py` (837f969's proxy lacks the item-6
   "ghost upload" injection, so item 6 would pass there for the wrong reason). The proxy file is never named in `files`
   or `repeats`, so pytest does not collect it.
+- `fix-slow-store-ad7ca59/`: the same for fix-slow-store-on-i5 ad7ca592 (item 4 added): `test_90_fix_slow_store.py` at
+  ad7ca59 with one change, `PathProxy` from `test_pathproxy_ad7ca59.py` (ad7ca59's `tools/lease-stall/pathproxy.py`), for
+  the control on 837f969 (items 1, 2, 3, 4 and 6 must fail there). The a058b14 folder's run was cancelled when the head moved.
