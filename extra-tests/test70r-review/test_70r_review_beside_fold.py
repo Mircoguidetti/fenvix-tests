@@ -17,9 +17,13 @@ Rule 8: zero acknowledged writes lost. Also: no document visible twice (find wit
 import os
 import time
 
+import pytest
+
 from pymongo.errors import PyMongoError
 
 from lib import Server, make_bucket, wait_until
+
+pytestmark = pytest.mark.skipif(os.environ.get("FENVIX_SEALED_RUNS") == "off", reason="needs sealed runs (FENVIX_SEALED_RUNS=off)")
 
 DB = "bf"
 SEALED = ["--sealed-t-pin-ms", "1000", "--sealed-e1-wait-ms", "0", "--sealed-test-short-e1-wait"]

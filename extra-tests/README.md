@@ -6,4 +6,4 @@ ctl-tests after the engine checkout (after the build, so the build is unchanged)
 `files` or `repeats`. Only test code goes here: no engine source, no binaries, no secrets.
 
 - `test70r-review/`: the reviewer's `ctl-tests/test_70r_review_beside_fold.py` from fenvix-engine
-  `claude/fenvix-coordinator-review-8vph5t` at 36b97760, unchanged, for the run on fix-write-stalls-on-i4 d660ea9.
+  `claude/fenvix-coordinator-review-8vph5t` at 36b97760, unchanged, for the run on fix-write-stalls-on-i4 d660ea9. Since 71815de: one change, the off-mode skip of test_76 (pytestmark skipif FENVIX_SEALED_RUNS == "off").
