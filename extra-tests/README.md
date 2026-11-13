@@ -18,3 +18,5 @@ ctl-tests after the engine checkout (after the build, so the build is unchanged)
 - `fix-slow-store-ad7ca59/`: the same for fix-slow-store-on-i5 ad7ca592 (item 4 added): `test_90_fix_slow_store.py` at
   ad7ca59 with one change, `PathProxy` from `test_pathproxy_ad7ca59.py` (ad7ca59's `tools/lease-stall/pathproxy.py`), for
   the control on 837f969 (items 1, 2, 3, 4 and 6 must fail there). The a058b14 folder's run was cancelled when the head moved.
+- `box-first-7329b53/`: `reviews/big-speed-2026-11-13/test_r1_id_unique_in_box.py` from fenvix-engine 7329b535 (fix-box-first-trip
+  round 2), unchanged; asked "5 runs (PYTHONPATH=ctl-tests)": copied into ctl-tests it imports `lib` from there.
