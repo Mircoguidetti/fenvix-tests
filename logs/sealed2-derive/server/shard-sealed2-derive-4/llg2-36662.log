@@ -1,0 +1,33 @@
+TEST FAULT INJECTION ON (/tmp/tmpzdli623z.faults): never use this in production
+FAULT fail_get tenants/g1/manifest/00000000000000000003.manifest
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+FAULT fail_get tenants/g1/manifest/00000000000000000003.manifest
+FAULT fail_get tenants/g1/manifest/00000000000000000003.manifest
+FAULT fail_get tenants/g1/manifest/00000000000000000003.manifest
+FAULT fail_get tenants/g1/manifest/00000000000000000003.manifest
+FAULT fail_get tenants/g1/manifest/00000000000000000003.manifest
+FAULT fail_get tenants/g1/manifest/00000000000000000003.manifest
+FAULT fail_get tenants/g1/manifest/00000000000000000003.manifest
+local log: replay of database g1 failed (no progress after 5 s); its 6 records are kept, the database is refused until they are applied
+local log: 1 databases kept their records; retried in the background
+local log: restart applied 0 records to 0 databases in 5.0 s
+admin interface listening on 127.0.0.1:39226 (bearer token required)
+mongo-server listening on 127.0.0.1:36662 (idle close after 600 s, holder G1, lease ttl 4 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:33950
+LEASE process_lease tenant=- holder=G1 unix_ms=1794555294040 inc=897c16be2a1c7fab gen=1
+LEASE acquired tenant=g1 holder=G1 unix_ms=1794555294042 takeover_from=-
+LEASE takeover_wake tenant=g1 holder=G1 unix_ms=1794555294052 unclean=true takeover_from=-
+LEASE writer_open tenant=g1 holder=G1 unix_ms=1794555294066 
+local log: database g1: 4 records applied again (after record 1099511627778)
+local log: database g1: kept records applied by the retry; the database is open again
+shutting down: closing tenants cleanly
+LEASE writer_close tenant=g1 holder=G1 unix_ms=1794555294240 
+LEASE release_begin tenant=g1 holder=G1 unix_ms=1794555294240 
+LEASE release tenant=g1 holder=G1 unix_ms=1794555294242 ok=true
+tenants closed; stopping maintenance
+maintenance shutdown: waiting for the L0 watch unix_ms=1794555294248
+maintenance shutdown: waiting for the dispatcher unix_ms=1794555295040
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794555295040
+maintenance shutdown: waiting for the GC task unix_ms=1794555295040
+maintenance shutdown: done unix_ms=1794555296036
+maintenance stopped (1906 ms)

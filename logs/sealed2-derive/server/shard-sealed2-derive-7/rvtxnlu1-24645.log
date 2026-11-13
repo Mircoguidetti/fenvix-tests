@@ -1,0 +1,30 @@
+TEST FAULT INJECTION ON (/tmp/tmpjeu6cr1r.faults): never use this in production
+admin interface listening on 127.0.0.1:38661 (bearer token required)
+mongo-server listening on 127.0.0.1:24645 (idle close after 600 s, holder P1, lease ttl 2 s)
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:34672
+LEASE process_lease tenant=- holder=P1 unix_ms=1794556660993 inc=152d1ae85ae86c15 gen=1
+LEASE acquired tenant=d holder=P1 unix_ms=1794556660995 takeover_from=-
+LEASE acquired tenant=d holder=P1 unix_ms=1794556661001 takeover_from=-
+LEASE acquired tenant=d holder=P1 unix_ms=1794556661006 takeover_from=- new=true
+LEASE writer_open tenant=d holder=P1 unix_ms=1794556661017 
+FAULT delay_put processes/P1/_lease 3500
+LEASE process_lease_late tenant=- holder=P1 unix_ms=1794556665315 abandoned=1
+LEASE lost tenant=d holder=P1 unix_ms=1794556665315 process_lease_late
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=2 closed=true
+LEASE writer_close tenant=d holder=P1 unix_ms=1794556665317 
+LEASE process_lease_lapsed tenant=- holder=P1 unix_ms=1794556665411 gen=2 abandoned=0
+LEASE process_lease_lost tenant=- holder=P1 unix_ms=1794556665412 abandoned=0
+SLOW hello db=admin ms=10000 ok=true
+LEASE process_lease tenant=- holder=P1 unix_ms=1794556678595 inc=b23bf1d2babc0c3d gen=3
+LEASE acquired tenant=d holder=P1 unix_ms=1794556678598 takeover_from=-
+shutting down: closing tenants cleanly
+LEASE release_begin tenant=d holder=P1 unix_ms=1794556678608 
+LEASE release tenant=d holder=P1 unix_ms=1794556678610 ok=true
+tenants closed; stopping maintenance
+maintenance shutdown: waiting for the L0 watch unix_ms=1794556678618
+maintenance shutdown: waiting for the dispatcher unix_ms=1794556678828
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794556678828
+maintenance shutdown: waiting for the GC task unix_ms=1794556678828
+maintenance shutdown: done unix_ms=1794556680822
+maintenance stopped (2214 ms)

@@ -1,0 +1,35 @@
+.F........                                                               [100%]
+=================================== FAILURES ===================================
+_____________ test_object_store_counts_match_an_independent_proxy ______________
+test_07_usage.py:81: in test_object_store_counts_match_an_independent_proxy
+    assert ours["get"] == kinds.get("GET", 0)
+E   AssertionError: assert 684 == 685
+E    +  where 685 = <built-in method get of dict object at 0x7ff574d8afc0>('GET', 0)
+E    +    where <built-in method get of dict object at 0x7ff574d8afc0> = {'GET': 685, 'PUT': 45, 'HEAD': 32, 'LIST': 77, ...}.get
+----------------------------- Captured stdout call -----------------------------
+ours {'get': 684, 'get_range': 32, 'head': 32, 'put': 60, 'copy': 0, 'list': 77, 'delete': 8, 'get_tier_requests': 748, 'put_tier_requests': 137, 'get_bytes': 1463633, 'put_bytes': 605110} proxy {'GET': 685, 'PUT': 45, 'HEAD': 32, 'LIST': 77, 'MP_CREATE': 5, 'PUT_PART': 5, 'MP_COMPLETE': 5, 'GET_RANGE': 32}
+----------------------------- Captured stderr call -----------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 44020)
+Traceback (most recent call last):
+  File "/home/runner/.fenvix-judge/env/lib/python3.12/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/home/runner/.fenvix-judge/env/lib/python3.12/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "/home/runner/.fenvix-judge/env/lib/python3.12/socketserver.py", line 766, in __init__
+    self.handle()
+  File "/home/runner/.fenvix-judge/env/lib/python3.12/http/server.py", line 442, in handle
+    self.handle_one_request()
+  File "/home/runner/.fenvix-judge/env/lib/python3.12/http/server.py", line 428, in handle_one_request
+    method()
+  File "/home/runner/work/fenvix-tests/fenvix-tests/engine/ctl-tests/proxy.py", line 116, in _do
+    self.wfile.write(data)
+  File "/home/runner/.fenvix-judge/env/lib/python3.12/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+=========================== short test summary info ============================
+FAILED test_07_usage.py::test_object_store_counts_match_an_independent_proxy - AssertionError: assert 684 == 685
+ +  where 685 = <built-in method get of dict object at 0x7ff574d8afc0>('GET', 0)
+ +    where <built-in method get of dict object at 0x7ff574d8afc0> = {'GET': 685, 'PUT': 45, 'HEAD': 32, 'LIST': 77, ...}.get
+1 failed, 9 passed in 125.62s (0:02:05)
