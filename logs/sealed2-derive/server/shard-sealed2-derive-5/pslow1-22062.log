@@ -1,0 +1,53 @@
+TEST FAULT INJECTION ON (/tmp/tmpoazop0hv.faults): never use this in production
+memory budget: limit 15701 MiB (memtotal), caches 7338 MiB (block 3302, meta 1100, sealed 2935), memtable 8 MiB, first course 981 MiB, change log 32 MiB, L0 reads at once 4
+box disk floor: 4096 MiB in /tmp/fenvix-box-floor-22062
+memory budget (review round): box 366 MiB per customer, 733 MiB in flight; memtables of every database 1962 MiB (writes wait past 2944 MiB); merge read-ahead 490 MiB; absorption 16 L0 SSTs
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+admin interface listening on 127.0.0.1:32642 (bearer token required)
+mongo-server listening on 127.0.0.1:22062 (idle close after 600 s, holder S1, lease ttl 4 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:58248
+LEASE process_lease tenant=- holder=S1 unix_ms=1794631839986 inc=c70f67f75648786f gen=1
+LEASE acquired tenant=d holder=S1 unix_ms=1794631839988 takeover_from=-
+LEASE acquired tenant=d holder=S1 unix_ms=1794631839990 takeover_from=- new=true
+LEASE writer_open tenant=d holder=S1 unix_ms=1794631839997 
+FXC not started db=d reason=no_version_of_our_manifest unix_ms=1794631839997
+FIRST_PUBLISH u=1794631840006 db=d version=1 x_d=3 rows=7 build_ms=7 off_lock=1
+L0_TRACE u=1794631841035.5083 db=d l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+FAULT delay_put processes/S1/_lease 1000
+L0_TRACE u=1794631842059.0964 db=d l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+FAULT delay_put processes/S1/_lease 1000
+L0_TRACE u=1794631843082.4778 db=d l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794631844106.8765 db=d l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+FAULT delay_put processes/S1/_lease 1000
+L0_TRACE u=1794631845131.085 db=d l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+FAULT delay_put processes/S1/_lease 1000
+L0_TRACE u=1794631846155.527 db=d l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+FAULT delay_put processes/S1/_lease 1000
+L0_TRACE u=1794631847178.979 db=d l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794631848202.422 db=d l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+FAULT delay_put processes/S1/_lease 1000
+L0_TRACE u=1794631849226.7852 db=d l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+FAULT delay_put processes/S1/_lease 1000
+SLOW hello db=admin ms=10000 ok=true
+L0_TRACE u=1794631850250.375 db=d l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794631851275.8586 db=d l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+FAULT delay_put processes/S1/_lease 1000
+L0_TRACE u=1794631852298.5603 db=d l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+FAULT delay_put processes/S1/_lease 1000
+L0_TRACE u=1794631853323.039 db=d l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+FAULT delay_put processes/S1/_lease 1000
+L0_TRACE u=1794631854346.5593 db=d l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+shutting down: closing tenants cleanly
+ABSORB u=1794631855022.7114 db=d ssts=1 rows=0 raw_kib=0 committed=1 l0_start=1 l0_end=1 lock_ms=0 read_ms=0 write_ms=0 commit_ms=1 total_ms=2
+LEASE writer_close tenant=d holder=S1 unix_ms=1794631855029 
+LEASE release_begin tenant=d holder=S1 unix_ms=1794631855029 
+LEASE release tenant=d holder=S1 unix_ms=1794631855030 ok=true
+maintenance shutdown: waiting for the L0 watch unix_ms=1794631855030
+FAULT delay_put processes/S1/_lease 1000
+maintenance shutdown: waiting for the dispatcher unix_ms=1794631855924
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794631855924
+maintenance shutdown: waiting for the GC task unix_ms=1794631855924
+maintenance shutdown: done unix_ms=1794631857917
+TIMING shutdown close_ms=13 aborts_ms=0 tail_ms=2886 deadline_cuts=0 left_behind=0 held_at_deadline=0 optional_skipped=0
+tenants closed; stopping maintenance (done with the steps above)
+maintenance stopped (2900 ms)

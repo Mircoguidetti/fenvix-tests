@@ -1,0 +1,40 @@
+TEST FAULT INJECTION ON (/tmp/slcfbbunm52mj): never use this in production
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+memory budget: limit 15983 MiB (memtotal), caches 7479 MiB (block 3365, meta 1121, sealed 2991), memtable 8 MiB, first course 998 MiB, change log 32 MiB, L0 reads at once 4
+box disk floor: 4096 MiB in /tmp/fenvix-box-floor-29980
+memory budget (review round): box 373 MiB per customer, 747 MiB in flight; memtables of every database 1997 MiB (writes wait past 2996 MiB); merge read-ahead 499 MiB; absorption 16 L0 SSTs
+quaderno: writes are acknowledged by the replicated log at 127.0.0.1:22325,127.0.0.1:36649,127.0.0.1:28838
+quaderno: restart read 0 records of 0 databases from the log
+quaderno: restart applied 0 records to 0 databases in 0.0 s
+admin interface listening on 127.0.0.1:35852 (bearer token required)
+mongo-server listening on 127.0.0.1:29980 (idle close after 600 s, holder slcb-29980, lease ttl 6 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:35686
+LEASE process_lease tenant=- holder=slcb-29980 unix_ms=1794631399898 inc=6b34d02cda2ef909 gen=1
+LEASE acquired tenant=tkr holder=slcb-29980 unix_ms=1794631400369 takeover_from=-
+LEASE acquired tenant=tkr holder=slcb-29980 unix_ms=1794631400371 takeover_from=- new=true
+LEASE writer_open tenant=tkr holder=slcb-29980 unix_ms=1794631400542 
+FXC not started db=tkr reason=no_version_of_our_manifest unix_ms=1794631400542
+SLOW insert db=tkr ms=874 ok=true
+FIRST_PUBLISH u=1794631400572 db=tkr version=1 x_d=3 rows=8 build_ms=27 off_lock=1
+L0_TRACE u=1794631401597.9875 db=tkr l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794631402620.76 db=tkr l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794631403644.7554 db=tkr l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794631404666.3076 db=tkr l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+FAULT hang_put tenants/tkr/wal/00000000000000000004.sst
+L0_TRACE u=1794631405687.9016 db=tkr l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794631406710.8184 db=tkr l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794631407732.7808 db=tkr l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794631408755.6648 db=tkr l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+PUTLOG ok tenants/tkr/wal/00000000000000000004.sst
+SLOW_PUT u=1794631408878 db=tkr kind=wal ms=3350 bytes=795
+PUTLOG ok tenants/tkr/wal/00000000000000000005.sst
+SLOW hello db=admin ms=10001 ok=true
+L0_TRACE u=1794631409777.6418 db=tkr l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794631410799.0679 db=tkr l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794631411822.0654 db=tkr l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794631412843.7407 db=tkr l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794631413866.7405 db=tkr l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+FAULT hang_put tenants/tkr/wal/00000000000000000006.sst
+L0_TRACE u=1794631414889.903 db=tkr l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+SLOW hello db=admin ms=10001 ok=true
+L0_TRACE u=1794631415912.062 db=tkr l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-

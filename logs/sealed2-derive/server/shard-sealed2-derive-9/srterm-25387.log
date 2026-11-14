@@ -1,0 +1,39 @@
+memory budget: limit 15983 MiB (memtotal), caches 7479 MiB (block 3365, meta 1121, sealed 2991), memtable 8 MiB, first course 998 MiB, change log 32 MiB, L0 reads at once 4
+box disk floor: 4096 MiB in /tmp/fenvix-box-floor-25387
+memory budget (review round): box 373 MiB per customer, 747 MiB in flight; memtables of every database 1997 MiB (writes wait past 2996 MiB); merge read-ahead 499 MiB; absorption 16 L0 SSTs
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+admin interface listening on 127.0.0.1:35814 (bearer token required)
+mongo-server listening on 127.0.0.1:25387 (idle close after 600 s, holder srterm-25387, lease ttl 30 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:43570
+LEASE process_lease tenant=- holder=srterm-25387 unix_ms=1794631941586 inc=daa3f332a2be5010 gen=1
+LEASE acquired tenant=d holder=srterm-25387 unix_ms=1794631941673 takeover_from=-
+LEASE acquired tenant=d holder=srterm-25387 unix_ms=1794631941842 takeover_from=- new=true
+LEASE writer_open tenant=d holder=srterm-25387 unix_ms=1794631942114 
+FXC not started db=d reason=no_version_of_our_manifest unix_ms=1794631942114
+SLOW insert db=d ms=580 ok=true
+SLOW_PUT u=1794631945537 db=d kind=wal ms=3404 bytes=341
+shutting down: closing tenants cleanly
+SLOW_PUT u=1794631948444 db=d kind=wal ms=2805 bytes=341
+SLOW_PUT u=1794631950652 db=d kind=wal ms=2007 bytes=341
+SLOW hello db=admin ms=10002 ok=true
+SLOW hello db=admin ms=10001 ok=true
+close of tenant d: the first build did not end before the close's deadline; cut
+close of tenant d: final flush did not finish in 0ns; closing without it (unclean)
+process lease renewal failed: Generic S3 error: Error performing PUT http://127.0.0.1:46129/ctl-srterm-50ad93ef/processes/srterm-25387/_lease in 2.584284765s, after 10 retries, max_retries: 10, retry_timeout: 180s  - Server returned non-2xx status code: 507 Insufficient Storage: <?xml version="1.0" encoding="UTF-8"?>
+<Error><Code>XMinioStorageFull</Code><Message>Storage backend has reached its minimum free drive threshold.</Message></Error>
+SLOW_PUT u=1794631954270 db=d kind=wal ms=3216 bytes=341
+close of tenant d: SlateDB's close without a flush did not end in 1s; left behind, the lease is kept
+TIMING close db=d hint_ms=0 fxc_ms=0 tenant_ms=8003 ok=false stopped=false
+LEASE writer_close tenant=d holder=srterm-25387 unix_ms=1794631955125 
+close of d failed: final flush timed out
+maintenance shutdown: waiting for the L0 watch unix_ms=1794631955125
+maintenance shutdown: waiting for the dispatcher unix_ms=1794631955380
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794631955380
+maintenance shutdown: waiting for the GC task unix_ms=1794631955380
+SLOW_PUT u=1794631956511 db=d kind=l0 ms=2387 bytes=754
+shutdown: the pins and the last usage counters were not written in time
+shutdown: the process lease was not released in time; it runs out by itself
+shutdown: maintenance did not stop in time
+TIMING shutdown close_ms=8003 aborts_ms=0 tail_ms=1998 deadline_cuts=2 left_behind=1 held_at_deadline=0 optional_skipped=0
+tenants closed; stopping maintenance (done with the steps above)
+maintenance stopped (10001 ms)

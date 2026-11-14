@@ -1,0 +1,56 @@
+memory budget: limit 15983 MiB (memtotal), caches 7479 MiB (block 3365, meta 1121, sealed 2991), memtable 8 MiB, first course 998 MiB, change log 32 MiB, L0 reads at once 4
+box disk floor: 4096 MiB in /tmp/fenvix-box-floor-21752
+memory budget (review round): box 373 MiB per customer, 747 MiB in flight; memtables of every database 1997 MiB (writes wait past 2996 MiB); merge read-ahead 499 MiB; absorption 16 L0 SSTs
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+admin interface listening on 127.0.0.1:28725 (bearer token required)
+mongo-server listening on 127.0.0.1:21752 (idle close after 300 s, holder rco-21752, lease ttl 6 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:52400
+LEASE process_lease tenant=- holder=rco-21752 unix_ms=1794631386124 inc=7592835a46608207 gen=1
+LEASE acquired tenant=w holder=rco-21752 unix_ms=1794631386127 takeover_from=-
+LEASE acquired tenant=w holder=rco-21752 unix_ms=1794631386133 takeover_from=- new=true
+LEASE writer_open tenant=w holder=rco-21752 unix_ms=1794631386149 
+FXC not started db=w reason=no_version_of_our_manifest unix_ms=1794631386149
+FIRST_PUBLISH u=1794631386173 db=w version=1 x_d=3 rows=1005 build_ms=20 off_lock=1
+LEASE writer_close tenant=w holder=rco-21752 unix_ms=1794631386189 
+LEASE release_begin tenant=w holder=rco-21752 unix_ms=1794631386189 
+LEASE release tenant=w holder=rco-21752 unix_ms=1794631386192 ok=true
+ADMIN PUT /v1/databases/w/retention -> 200 54 ms peer=127.0.0.1:52416
+LEASE acquired tenant=w holder=rco-21752 unix_ms=1794631386516 takeover_from=-
+FXC not started db=w reason=not_writer unix_ms=1794631387694
+LEASE writer_open tenant=w holder=rco-21752 unix_ms=1794631387709 
+L0_RECOGNISE db=w read=1 absorbed=1 ms=2 off_lock=1
+L0_TRACE u=1794631388760.1462 db=w l0=1 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+restore point of w: database w: checkpoint 32f7b842-6664-497f-a4b2-03a8c298cda7 would pair with version Some(2), below the newest version 3 (X_d 4 above the checkpoint's last L0 seq 3): a drop may have removed rows that version lacks; try again after a flush
+L0_TRACE u=1794631389787.1519 db=w l0=1 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+restore point of w: database w: checkpoint a97f1f1c-e3c9-4b5c-92db-d0949cfce788 would pair with version Some(2), below the newest version 3 (X_d 4 above the checkpoint's last L0 seq 3): a drop may have removed rows that version lacks; try again after a flush
+ABSORB u=1794631390145.445 db=w ssts=1 rows=1036 raw_kib=44 committed=1 l0_start=2 l0_end=2 lock_ms=0 read_ms=1 write_ms=5 commit_ms=2 total_ms=10
+LEASE writer_close tenant=w holder=rco-21752 unix_ms=1794631390160 
+LEASE release_begin tenant=w holder=rco-21752 unix_ms=1794631390160 
+LEASE release tenant=w holder=rco-21752 unix_ms=1794631390163 ok=true
+LEASE acquired tenant=w holder=rco-21752 unix_ms=1794631390245 takeover_from=-
+FXC not started db=w reason=not_writer unix_ms=1794631390254
+LEASE writer_open tenant=w holder=rco-21752 unix_ms=1794631390272 
+L0_RECOGNISE db=w read=2 absorbed=2 ms=2 off_lock=1
+ABSORB u=1794631390352.128 db=w ssts=1 rows=436 raw_kib=10 committed=1 l0_start=3 l0_end=3 lock_ms=0 read_ms=1 write_ms=5 commit_ms=2 total_ms=9
+LEASE writer_close tenant=w holder=rco-21752 unix_ms=1794631390381 
+LEASE release_begin tenant=w holder=rco-21752 unix_ms=1794631390381 
+LEASE release tenant=w holder=rco-21752 unix_ms=1794631390383 ok=true
+ADMIN POST /v1/databases/w/restore -> 200 280 ms peer=127.0.0.1:41642
+LEASE acquired tenant=w holder=rco-21752 unix_ms=1794631390387 takeover_from=-
+FXC not started db=w reason=not_writer unix_ms=1794631390401
+LEASE writer_open tenant=w holder=rco-21752 unix_ms=1794631390416 
+L0_RECOGNISE db=w read=3 absorbed=3 ms=4 off_lock=1
+restore point of w: database w: checkpoint d4b5bf7b-5cce-4ac2-a4de-0d65090424e1 would pair with version Some(9), below the newest version 10 (X_d 376 above the checkpoint's last L0 seq 375): a drop may have removed rows that version lacks; try again after a flush
+shutting down: closing tenants cleanly
+ABSORB u=1794631391174.4602 db=w ssts=1 rows=494 raw_kib=22 committed=1 l0_start=4 l0_end=4 lock_ms=0 read_ms=1 write_ms=5 commit_ms=3 total_ms=10
+LEASE writer_close tenant=w holder=rco-21752 unix_ms=1794631391234 
+LEASE release_begin tenant=w holder=rco-21752 unix_ms=1794631391234 
+LEASE release tenant=w holder=rco-21752 unix_ms=1794631391237 ok=true
+maintenance shutdown: waiting for the L0 watch unix_ms=1794631391237
+maintenance shutdown: waiting for the dispatcher unix_ms=1794631392052
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794631392052
+maintenance shutdown: waiting for the GC task unix_ms=1794631392052
+maintenance shutdown: done unix_ms=1794631394050
+TIMING shutdown close_ms=123 aborts_ms=0 tail_ms=2813 deadline_cuts=0 left_behind=0 held_at_deadline=0 optional_skipped=0
+tenants closed; stopping maintenance (done with the steps above)
+maintenance stopped (2937 ms)

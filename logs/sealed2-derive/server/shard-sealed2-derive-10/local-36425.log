@@ -1,0 +1,35 @@
+memory budget: limit 15701 MiB (memtotal), caches 7338 MiB (block 3302, meta 1100, sealed 2935), memtable 8 MiB, first course 981 MiB, change log 32 MiB, L0 reads at once 4
+box disk floor: 4096 MiB in /tmp/fenvix-box-floor-36425
+memory budget (review round): box 366 MiB per customer, 733 MiB in flight; memtables of every database 1962 MiB (writes wait past 2944 MiB); merge read-ahead 490 MiB; absorption 16 L0 SSTs
+admin interface listening on 127.0.0.1:30013 (bearer token required)
+mongo-server listening on 127.0.0.1:36425 (idle close after 60 s, holder loc36425, lease ttl 6 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:50744
+LEASE process_lease tenant=- holder=loc36425 unix_ms=1794635607172 inc=f0a2cadc87ea13eb gen=1
+LEASE acquired tenant=cas holder=loc36425 unix_ms=1794635607173 takeover_from=-
+LEASE acquired tenant=cas holder=loc36425 unix_ms=1794635607173 takeover_from=- new=true
+LEASE writer_open tenant=cas holder=loc36425 unix_ms=1794635607175 
+FXC not started db=cas reason=no_version_of_our_manifest unix_ms=1794635607175
+LEASE acquired tenant=admin holder=loc36425 unix_ms=1794635607176 takeover_from=-
+FIRST_PUBLISH u=1794635607177 db=cas version=1 x_d=3 rows=7 build_ms=1 off_lock=1
+LEASE acquired tenant=casdb holder=loc36425 unix_ms=1794635607177 takeover_from=-
+LEASE acquired tenant=casdb holder=loc36425 unix_ms=1794635607178 takeover_from=- new=true
+LEASE writer_open tenant=casdb holder=loc36425 unix_ms=1794635607179 
+FXC not started db=casdb reason=no_version_of_our_manifest unix_ms=1794635607179
+ADMIN POST /v1/databases -> 201 3 ms peer=127.0.0.1:50754
+ADMIN POST /v1/databases -> 409 0 ms peer=127.0.0.1:50770
+shutting down: closing tenants cleanly
+ABSORB u=1794635607181.522 db=cas ssts=1 rows=0 raw_kib=0 committed=1 l0_start=1 l0_end=1 lock_ms=0 read_ms=0 write_ms=0 commit_ms=0 total_ms=0
+LEASE writer_close tenant=casdb holder=loc36425 unix_ms=1794635607181 
+LEASE release_begin tenant=casdb holder=loc36425 unix_ms=1794635607181 
+LEASE release tenant=casdb holder=loc36425 unix_ms=1794635607181 ok=true
+LEASE writer_close tenant=cas holder=loc36425 unix_ms=1794635607182 
+LEASE release_begin tenant=cas holder=loc36425 unix_ms=1794635607182 
+LEASE release tenant=cas holder=loc36425 unix_ms=1794635607182 ok=true
+maintenance shutdown: waiting for the L0 watch unix_ms=1794635607182
+maintenance shutdown: waiting for the dispatcher unix_ms=1794635607993
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794635607993
+maintenance shutdown: waiting for the GC task unix_ms=1794635607993
+maintenance shutdown: done unix_ms=1794635608992
+TIMING shutdown close_ms=2 aborts_ms=0 tail_ms=1810 deadline_cuts=0 left_behind=0 held_at_deadline=0 optional_skipped=0
+tenants closed; stopping maintenance (done with the steps above)
+maintenance stopped (1812 ms)

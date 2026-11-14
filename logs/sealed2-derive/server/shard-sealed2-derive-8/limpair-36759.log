@@ -1,0 +1,45 @@
+memory budget: limit 15983 MiB (memtotal), caches 7479 MiB (block 3365, meta 1121, sealed 2991), memtable 8 MiB, first course 998 MiB, change log 32 MiB, L0 reads at once 4
+box disk floor: 4096 MiB in /tmp/fenvix-box-floor-36759
+memory budget (review round): box 373 MiB per customer, 747 MiB in flight; memtables of every database 1997 MiB (writes wait past 2996 MiB); merge read-ahead 499 MiB; absorption 16 L0 SSTs
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+admin interface listening on 127.0.0.1:25112 (bearer token required)
+mongo-server listening on 127.0.0.1:36759 (idle close after 300 s, holder limpair-36759, lease ttl 6 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:39032
+LEASE process_lease tenant=- holder=limpair-36759 unix_ms=1794632515105 inc=3ba15dc809abf6f5 gen=1
+LEASE acquired tenant=admin holder=limpair-36759 unix_ms=1794632515107 takeover_from=-
+LEASE acquired tenant=admin holder=limpair-36759 unix_ms=1794632515114 takeover_from=- new=true
+LEASE writer_open tenant=admin holder=limpair-36759 unix_ms=1794632515126 
+FXC not started db=admin reason=no_version_of_our_manifest unix_ms=1794632515126
+LEASE acquired tenant=p1 holder=limpair-36759 unix_ms=1794632515136 takeover_from=-
+LEASE acquired tenant=p1 holder=limpair-36759 unix_ms=1794632515139 takeover_from=- new=true
+FIRST_PUBLISH u=1794632515141 db=admin version=1 x_d=3 rows=7 build_ms=12 off_lock=1
+LEASE writer_open tenant=p1 holder=limpair-36759 unix_ms=1794632515151 
+FXC not started db=p1 reason=no_version_of_our_manifest unix_ms=1794632515151
+ADMIN POST /v1/databases -> 201 27 ms peer=127.0.0.1:39040
+LEASE acquired tenant=p2 holder=limpair-36759 unix_ms=1794632515176 takeover_from=-
+LEASE acquired tenant=p2 holder=limpair-36759 unix_ms=1794632515179 takeover_from=- new=true
+LEASE writer_open tenant=p2 holder=limpair-36759 unix_ms=1794632515189 
+FXC not started db=p2 reason=no_version_of_our_manifest unix_ms=1794632515189
+ADMIN POST /v1/databases -> 201 23 ms peer=127.0.0.1:39048
+netguard: client 127.0.0.8 blocked on database p1 for 300 s (block 1) after 3 failed authentications in 60 s
+ADMIN GET /v1/network -> 200 0 ms peer=127.0.0.1:39056
+ADMIN GET /v1/network -> 200 0 ms peer=127.0.0.1:39066
+shutting down: closing tenants cleanly
+LEASE writer_close tenant=p2 holder=limpair-36759 unix_ms=1794632515245 
+LEASE release_begin tenant=p2 holder=limpair-36759 unix_ms=1794632515245 
+LEASE writer_close tenant=p1 holder=limpair-36759 unix_ms=1794632515245 
+LEASE release_begin tenant=p1 holder=limpair-36759 unix_ms=1794632515245 
+LEASE release tenant=p2 holder=limpair-36759 unix_ms=1794632515248 ok=true
+LEASE release tenant=p1 holder=limpair-36759 unix_ms=1794632515248 ok=true
+ABSORB u=1794632515251.2793 db=admin ssts=1 rows=6 raw_kib=1 committed=1 l0_start=1 l0_end=1 lock_ms=0 read_ms=0 write_ms=6 commit_ms=2 total_ms=9
+LEASE writer_close tenant=admin holder=limpair-36759 unix_ms=1794632515261 
+LEASE release_begin tenant=admin holder=limpair-36759 unix_ms=1794632515261 
+LEASE release tenant=admin holder=limpair-36759 unix_ms=1794632515263 ok=true
+maintenance shutdown: waiting for the L0 watch unix_ms=1794632515263
+maintenance shutdown: waiting for the dispatcher unix_ms=1794632516030
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794632516030
+maintenance shutdown: waiting for the GC task unix_ms=1794632516030
+maintenance shutdown: done unix_ms=1794632517031
+TIMING shutdown close_ms=29 aborts_ms=0 tail_ms=1767 deadline_cuts=0 left_behind=0 held_at_deadline=0 optional_skipped=0
+tenants closed; stopping maintenance (done with the steps above)
+maintenance stopped (1797 ms)

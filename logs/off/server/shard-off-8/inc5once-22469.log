@@ -1,0 +1,29 @@
+TEST FAULT INJECTION ON (/tmp/tmp4jvbykmv.faults): never use this in production
+memory budget: limit 15983 MiB (memtotal), caches 7479 MiB (block 3365, meta 1121, sealed 2991), memtable 8 MiB, first course 998 MiB, change log 32 MiB, L0 reads at once 4
+box disk floor: 4096 MiB in /tmp/fenvix-box-floor-22469
+memory budget (review round): box 373 MiB per customer, 747 MiB in flight; memtables of every database 1997 MiB (writes wait past 2996 MiB); merge read-ahead 499 MiB; absorption 16 L0 SSTs
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+admin interface listening on 127.0.0.1:29475 (bearer token required)
+mongo-server listening on 127.0.0.1:22469 (idle close after 600 s, holder Hinc5once, lease ttl 2 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:42970
+LEASE process_lease tenant=- holder=Hinc5once unix_ms=1794632085652 inc=c4e5164345ebec5c gen=1
+LEASE acquired tenant=inc5 holder=Hinc5once unix_ms=1794632085654 takeover_from=-
+LEASE acquired tenant=inc5 holder=Hinc5once unix_ms=1794632085656 takeover_from=- new=true
+LEASE writer_open tenant=inc5 holder=Hinc5once unix_ms=1794632085664 
+TEST commit wait held 12000 ms db=inc5
+SLOW hello db=admin ms=10000 ok=true
+SLOW insert db=inc5 ms=12015 ok=true
+TEST commit wait held 12000 ms db=inc5
+FAULT delay_put processes/Hinc5once/_lease 3500
+LEASE process_lease_late tenant=- holder=Hinc5once unix_ms=1794632101879 abandoned=1
+LEASE lost tenant=inc5 holder=Hinc5once unix_ms=1794632101879 process_lease_late
+TIMING abandon db=inc5 stop_fxc_ms=0 tenant_abandon_ms=1 closed=true
+LEASE writer_close tenant=inc5 holder=Hinc5once unix_ms=1794632101881 
+LEASE process_lease_lapsed tenant=- holder=Hinc5once unix_ms=1794632101976 gen=2 abandoned=0
+SLOW hello db=admin ms=10000 ok=true
+SLOW update db=inc5 ms=12001 ok=false
+LEASE acquired tenant=inc5 holder=Hinc5once unix_ms=1794632109671 takeover_from=-
+LEASE takeover_wake tenant=inc5 holder=Hinc5once unix_ms=1794632109678 unclean=true takeover_from=-
+TEST commit wait held 12000 ms db=inc5
+SLOW hello db=admin ms=10001 ok=true
+SLOW update db=inc5 ms=12010 ok=true

@@ -1,0 +1,42 @@
+memory budget: limit 15701 MiB (memtotal), caches 7338 MiB (block 3302, meta 1100, sealed 2935), memtable 8 MiB, first course 981 MiB, change log 32 MiB, L0 reads at once 4
+box disk floor: 4096 MiB in /tmp/fenvix-box-floor-30089
+memory budget (review round): box 366 MiB per customer, 733 MiB in flight; memtables of every database 1962 MiB (writes wait past 2944 MiB); merge read-ahead 490 MiB; absorption 16 L0 SSTs
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+admin interface listening on 127.0.0.1:20740 (bearer token required)
+mongo-server listening on 127.0.0.1:30089 (idle close after 600 s, holder revenv-e0-30089, lease ttl 6 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:46602
+LEASE process_lease tenant=- holder=revenv-e0-30089 unix_ms=1794632287833 inc=95ac21ac7b655b29 gen=1
+LEASE acquired tenant=e holder=revenv-e0-30089 unix_ms=1794632287841 takeover_from=-
+LEASE acquired tenant=e holder=revenv-e0-30089 unix_ms=1794632287843 takeover_from=- new=true
+LEASE writer_open tenant=e holder=revenv-e0-30089 unix_ms=1794632287851 
+FXC not started db=e reason=no_version_of_our_manifest unix_ms=1794632287851
+FIRST_PUBLISH u=1794632287860 db=e version=1 x_d=3 rows=5 build_ms=7 off_lock=1
+ABSORB u=1794632287871.1274 db=e ssts=1 rows=7 raw_kib=0 committed=1 l0_start=1 l0_end=1 lock_ms=0 read_ms=0 write_ms=2 commit_ms=1 total_ms=4
+LEASE writer_close tenant=e holder=revenv-e0-30089 unix_ms=1794632288422 
+LEASE release_begin tenant=e holder=revenv-e0-30089 unix_ms=1794632288422 
+LEASE release tenant=e holder=revenv-e0-30089 unix_ms=1794632288423 ok=true
+ADMIN PUT /v1/databases/e/retention -> 200 576 ms peer=127.0.0.1:46606
+LEASE acquired tenant=e holder=revenv-e0-30089 unix_ms=1794632288436 takeover_from=-
+FXC not started db=e reason=not_writer unix_ms=1794632288443
+LEASE writer_open tenant=e holder=revenv-e0-30089 unix_ms=1794632288452 
+L0_RECOGNISE db=e read=1 absorbed=1 ms=1 off_lock=1
+L0_TRACE u=1794632289485.9263 db=e l0=1 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794632290508.1216 db=e l0=1 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+restore point of e: database e: checkpoint 62b4bff2-3bb0-4683-9ee3-4609c436ae05 would pair with version Some(3), below the newest version 4 (X_d 7 above the checkpoint's last L0 seq 6): a drop may have removed rows that version lacks; try again after a flush
+L0_TRACE u=1794632291529.3933 db=e l0=1 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+restore point of e: database e: checkpoint 59e08e9e-cd22-448c-b293-9d9364019745 would pair with version Some(3), below the newest version 4 (X_d 7 above the checkpoint's last L0 seq 6): a drop may have removed rows that version lacks; try again after a flush
+L0_TRACE u=1794632292552.2056 db=e l0=1 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+restore point of e: database e: checkpoint 961a1fd5-ca99-4265-b576-7d9ed9e6c3be would pair with version Some(3), below the newest version 4 (X_d 7 above the checkpoint's last L0 seq 6): a drop may have removed rows that version lacks; try again after a flush
+shutting down: closing tenants cleanly
+ABSORB u=1794632293427.3137 db=e ssts=1 rows=2009 raw_kib=114 committed=1 l0_start=2 l0_end=2 lock_ms=0 read_ms=1 write_ms=3 commit_ms=1 total_ms=7
+LEASE writer_close tenant=e holder=revenv-e0-30089 unix_ms=1794632293532 
+LEASE release_begin tenant=e holder=revenv-e0-30089 unix_ms=1794632293532 
+LEASE release tenant=e holder=revenv-e0-30089 unix_ms=1794632293534 ok=true
+maintenance shutdown: waiting for the L0 watch unix_ms=1794632293534
+maintenance shutdown: waiting for the dispatcher unix_ms=1794632293761
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794632293761
+maintenance shutdown: waiting for the GC task unix_ms=1794632293761
+maintenance shutdown: done unix_ms=1794632295759
+TIMING shutdown close_ms=118 aborts_ms=0 tail_ms=2225 deadline_cuts=0 left_behind=0 held_at_deadline=0 optional_skipped=0
+tenants closed; stopping maintenance (done with the steps above)
+maintenance stopped (2343 ms)

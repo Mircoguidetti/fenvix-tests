@@ -1,0 +1,94 @@
+memory budget: limit 15983 MiB (memtotal), caches 7479 MiB (block 3365, meta 1121, sealed 2991), memtable 8 MiB, first course 998 MiB, change log 32 MiB, L0 reads at once 4
+box disk floor: 4096 MiB in /tmp/fenvix-box-floor-32068
+memory budget (review round): box 373 MiB per customer, 747 MiB in flight; memtables of every database 1997 MiB (writes wait past 2996 MiB); merge read-ahead 499 MiB; absorption 16 L0 SSTs
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+admin interface listening on 127.0.0.1:22751 (bearer token required)
+mongo-server listening on 127.0.0.1:32068 (idle close after 3 s, holder forkttl-32068, lease ttl 6 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:36670
+LEASE process_lease tenant=- holder=forkttl-32068 unix_ms=1794629640122 inc=016cb1d9329d1070 gen=1
+LEASE acquired tenant=admin holder=forkttl-32068 unix_ms=1794629640124 takeover_from=-
+LEASE acquired tenant=tp holder=forkttl-32068 unix_ms=1794629640129 takeover_from=-
+LEASE acquired tenant=tp holder=forkttl-32068 unix_ms=1794629640130 takeover_from=- new=true
+LEASE writer_open tenant=tp holder=forkttl-32068 unix_ms=1794629640139 
+FXC not started db=tp reason=no_version_of_our_manifest unix_ms=1794629640139
+ADMIN POST /v1/databases -> 201 25 ms peer=127.0.0.1:36680
+FIRST_PUBLISH u=1794629640163 db=tp version=1 x_d=3 rows=4 build_ms=15 off_lock=1
+LEASE writer_close tenant=tp holder=forkttl-32068 unix_ms=1794629640170 
+LEASE release_begin tenant=tp holder=forkttl-32068 unix_ms=1794629640170 
+LEASE release tenant=tp holder=forkttl-32068 unix_ms=1794629640172 ok=true
+LEASE release_begin tenant=tp holder=forkttl-32068 unix_ms=1794629640211 
+LEASE release tenant=tp holder=forkttl-32068 unix_ms=1794629640212 ok=true
+LEASE release_begin tenant=tf holder=forkttl-32068 unix_ms=1794629640216 
+LEASE release tenant=tf holder=forkttl-32068 unix_ms=1794629640218 ok=true
+ADMIN POST /v1/databases/tp/fork -> 201 66 ms peer=127.0.0.1:36690
+LEASE acquired tenant=tf holder=forkttl-32068 unix_ms=1794629645077 takeover_from=-
+FXC not started db=tf reason=not_writer unix_ms=1794629645100
+LEASE writer_open tenant=tf holder=forkttl-32068 unix_ms=1794629645110 
+fx compactor tf: Absorb job: Data error: object store error (Object at location tenants/tf/compacted/01M7C467Z4VP90VP9N40JJ55XE.sst not found: Error performing GET http://127.0.0.1:9000/ctl-forkttl-edc70690/tenants/tf/compacted/01M7C467Z4VP90VP9N40JJ55XE.sst in 898.433µs - Server returned non-2xx status code: 404 Not Found: <?xml version="1.0" encoding="UTF-8"?>
+<Error><Code>NoSuchKey</Code><Message>The specified key does not exist.</Message><Key>tenants/tf/compacted/01M7C467Z4VP90VP9N40JJ55XE.sst</Key><BucketName>ctl-forkttl-edc70690</BucketName><Resource>/ctl-forkttl-edc70690/tenants/tf/compacted/01M7C467Z4VP90VP9N40JJ55XE.sst</Resource><RequestId>18E7CE2764E76EB7</RequestId><HostId>dd9025bab4ad464b049177c95eb6ebf374d3b3fd1af9251148b658df7ac2e3e8</HostId></Error>): Object at location tenants/tf/compacted/01M7C467Z4VP90VP9N40JJ55XE.sst not found: Error performing GET http://127.0.0.1:9000/ctl-forkttl-edc70690/tenants/tf/compacted/01M7C467Z4VP90VP9N40JJ55XE.sst in 898.433µs - Server returned non-2xx status code: 404 Not Found: <?xml version="1.0" encoding="UTF-8"?>
+<Error><Code>NoSuchKey</Code><Message>The specified key does not exist.</Message><Key>tenants/tf/compacted/01M7C467Z4VP90VP9N40JJ55XE.sst</Key><BucketName>ctl-forkttl-edc70690</BucketName><Resource>/ctl-forkttl-edc70690/tenants/tf/compacted/01M7C467Z4VP90VP9N40JJ55XE.sst</Resource><RequestId>18E7CE2764E76EB7</RequestId><HostId>dd9025bab4ad464b049177c95eb6ebf374d3b3fd1af9251148b658df7ac2e3e8</HostId></Error>: Error performing GET http://127.0.0.1:9000/ctl-forkttl-edc70690/tenants/tf/compacted/01M7C467Z4VP90VP9N40JJ55XE.sst in 898.433µs - Server returned non-2xx status code: 404 Not Found: <?xml version="1.0" encoding="UTF-8"?>
+<Error><Code>NoSuchKey</Code><Message>The specified key does not exist.</Message><Key>tenants/tf/compacted/01M7C467Z4VP90VP9N40JJ55XE.sst</Key><BucketName>ctl-forkttl-edc70690</BucketName><Resource>/ctl-forkttl-edc70690/tenants/tf/compacted/01M7C467Z4VP90VP9N40JJ55XE.sst</Resource><RequestId>18E7CE2764E76EB7</RequestId><HostId>dd9025bab4ad464b049177c95eb6ebf374d3b3fd1af9251148b658df7ac2e3e8</HostId></Error>: Server returned non-2xx status code: 404 Not Found: <?xml version="1.0" encoding="UTF-8"?>
+<Error><Code>NoSuchKey</Code><Message>The specified key does not exist.</Message><Key>tenants/tf/compacted/01M7C467Z4VP90VP9N40JJ55XE.sst</Key><BucketName>ctl-forkttl-edc70690</BucketName><Resource>/ctl-forkttl-edc70690/tenants/tf/compacted/01M7C467Z4VP90VP9N40JJ55XE.sst</Resource><RequestId>18E7CE2764E76EB7</RequestId><HostId>dd9025bab4ad464b049177c95eb6ebf374d3b3fd1af9251148b658df7ac2e3e8</HostId></Error>
+fx compactor tf: Absorb job: Data error: object store error (Object at location tenants/tf/compacted/01M7C467Z4VP90VP9N40JJ55XE.sst not found: Error performing GET http://127.0.0.1:9000/ctl-forkttl-edc70690/tenants/tf/compacted/01M7C467Z4VP90VP9N40JJ55XE.sst in 1.913242ms - Server returned non-2xx status code: 404 Not Found: <?xml version="1.0" encoding="UTF-8"?>
+<Error><Code>NoSuchKey</Code><Message>The specified key does not exist.</Message><Key>tenants/tf/compacted/01M7C467Z4VP90VP9N40JJ55XE.sst</Key><BucketName>ctl-forkttl-edc70690</BucketName><Resource>/ctl-forkttl-edc70690/tenants/tf/compacted/01M7C467Z4VP90VP9N40JJ55XE.sst</Resource><RequestId>18E7CE276814AD2B</RequestId><HostId>dd9025bab4ad464b049177c95eb6ebf374d3b3fd1af9251148b658df7ac2e3e8</HostId></Error>): Object at location tenants/tf/compacted/01M7C467Z4VP90VP9N40JJ55XE.sst not found: Error performing GET http://127.0.0.1:9000/ctl-forkttl-edc70690/tenants/tf/compacted/01M7C467Z4VP90VP9N40JJ55XE.sst in 1.913242ms - Server returned non-2xx status code: 404 Not Found: <?xml version="1.0" encoding="UTF-8"?>
+<Error><Code>NoSuchKey</Code><Message>The specified key does not exist.</Message><Key>tenants/tf/compacted/01M7C467Z4VP90VP9N40JJ55XE.sst</Key><BucketName>ctl-forkttl-edc70690</BucketName><Resource>/ctl-forkttl-edc70690/tenants/tf/compacted/01M7C467Z4VP90VP9N40JJ55XE.sst</Resource><RequestId>18E7CE276814AD2B</RequestId><HostId>dd9025bab4ad464b049177c95eb6ebf374d3b3fd1af9251148b658df7ac2e3e8</HostId></Error>: Error performing GET http://127.0.0.1:9000/ctl-forkttl-edc70690/tenants/tf/compacted/01M7C467Z4VP90VP9N40JJ55XE.sst in 1.913242ms - Server returned non-2xx status code: 404 Not Found: <?xml version="1.0" encoding="UTF-8"?>
+<Error><Code>NoSuchKey</Code><Message>The specified key does not exist.</Message><Key>tenants/tf/compacted/01M7C467Z4VP90VP9N40JJ55XE.sst</Key><BucketName>ctl-forkttl-edc70690</BucketName><Resource>/ctl-forkttl-edc70690/tenants/tf/compacted/01M7C467Z4VP90VP9N40JJ55XE.sst</Resource><RequestId>18E7CE276814AD2B</RequestId><HostId>dd9025bab4ad464b049177c95eb6ebf374d3b3fd1af9251148b658df7ac2e3e8</HostId></Error>: Server returned non-2xx status code: 404 Not Found: <?xml version="1.0" encoding="UTF-8"?>
+<Error><Code>NoSuchKey</Code><Message>The specified key does not exist.</Message><Key>tenants/tf/compacted/01M7C467Z4VP90VP9N40JJ55XE.sst</Key><BucketName>ctl-forkttl-edc70690</BucketName><Resource>/ctl-forkttl-edc70690/tenants/tf/compacted/01M7C467Z4VP90VP9N40JJ55XE.sst</Resource><RequestId>18E7CE276814AD2B</RequestId><HostId>dd9025bab4ad464b049177c95eb6ebf374d3b3fd1af9251148b658df7ac2e3e8</HostId></Error>
+close of tf: the last L0 SSTs were not absorbed before the close; the database is compacted at its next open
+LEASE writer_close tenant=tf holder=forkttl-32068 unix_ms=1794629645195 
+LEASE release_begin tenant=tf holder=forkttl-32068 unix_ms=1794629645195 
+LEASE release tenant=tf holder=forkttl-32068 unix_ms=1794629645198 ok=true
+LEASE acquired tenant=tp holder=forkttl-32068 unix_ms=1794629645201 takeover_from=-
+FXC not started db=tp reason=not_writer unix_ms=1794629645208
+LEASE writer_open tenant=tp holder=forkttl-32068 unix_ms=1794629645218 
+LEASE acquired tenant=tf holder=forkttl-32068 unix_ms=1794629645222 takeover_from=-
+L0_RECOGNISE db=tp read=1 absorbed=0 ms=1 off_lock=1
+ABSORB u=1794629645234.6736 db=tp ssts=2 rows=10 raw_kib=0 committed=1 l0_start=2 l0_end=2 lock_ms=0 read_ms=0 write_ms=4 commit_ms=1 total_ms=7
+LEASE acquired tenant=admin holder=forkttl-32068 unix_ms=1794629645237 takeover_from=-
+LEASE acquired tenant=cp holder=forkttl-32068 unix_ms=1794629645241 takeover_from=-
+LEASE acquired tenant=cp holder=forkttl-32068 unix_ms=1794629645244 takeover_from=- new=true
+LEASE writer_open tenant=cp holder=forkttl-32068 unix_ms=1794629645253 
+FXC not started db=cp reason=no_version_of_our_manifest unix_ms=1794629645253
+ADMIN POST /v1/databases -> 201 24 ms peer=127.0.0.1:55622
+FIRST_PUBLISH u=1794629645275 db=cp version=1 x_d=3 rows=7 build_ms=13 off_lock=1
+LEASE writer_close tenant=cp holder=forkttl-32068 unix_ms=1794629645283 
+LEASE release_begin tenant=cp holder=forkttl-32068 unix_ms=1794629645283 
+LEASE release tenant=cp holder=forkttl-32068 unix_ms=1794629645284 ok=true
+LEASE release_begin tenant=cp holder=forkttl-32068 unix_ms=1794629645325 
+LEASE release tenant=cp holder=forkttl-32068 unix_ms=1794629645326 ok=true
+LEASE release_begin tenant=cf holder=forkttl-32068 unix_ms=1794629645330 
+LEASE release tenant=cf holder=forkttl-32068 unix_ms=1794629645336 ok=true
+ADMIN POST /v1/databases/cp/fork -> 201 71 ms peer=127.0.0.1:55630
+LEASE acquired tenant=cf holder=forkttl-32068 unix_ms=1794629645340 takeover_from=-
+LEASE acquired tenant=cp holder=forkttl-32068 unix_ms=1794629645350 takeover_from=-
+FXC not started db=cf reason=not_writer unix_ms=1794629645358
+LEASE writer_open tenant=cf holder=forkttl-32068 unix_ms=1794629645367 
+FXC not started db=cf reason=catch_up_published_nothing unix_ms=1794629645379
+LEASE acquired tenant=colltxn holder=forkttl-32068 unix_ms=1794629645385 takeover_from=-
+LEASE acquired tenant=colltxn holder=forkttl-32068 unix_ms=1794629645388 takeover_from=- new=true
+LEASE writer_open tenant=colltxn holder=forkttl-32068 unix_ms=1794629645396 
+FXC not started db=colltxn reason=no_version_of_our_manifest unix_ms=1794629645396
+FIRST_PUBLISH u=1794629645408 db=colltxn version=1 x_d=3 rows=5 build_ms=9 off_lock=1
+shutting down: closing tenants cleanly
+LEASE release_begin tenant=tf holder=forkttl-32068 unix_ms=1794629645464 
+LEASE release_begin tenant=cp holder=forkttl-32068 unix_ms=1794629645464 
+LEASE release tenant=tf holder=forkttl-32068 unix_ms=1794629645467 ok=true
+LEASE release tenant=cp holder=forkttl-32068 unix_ms=1794629645467 ok=true
+LEASE writer_close tenant=cf holder=forkttl-32068 unix_ms=1794629645473 
+LEASE release_begin tenant=cf holder=forkttl-32068 unix_ms=1794629645473 
+LEASE release tenant=cf holder=forkttl-32068 unix_ms=1794629645475 ok=true
+ABSORB u=1794629645478.3208 db=colltxn ssts=1 rows=63 raw_kib=4 committed=1 l0_start=1 l0_end=1 lock_ms=0 read_ms=0 write_ms=4 commit_ms=1 total_ms=6
+LEASE writer_close tenant=colltxn holder=forkttl-32068 unix_ms=1794629645486 
+LEASE release_begin tenant=colltxn holder=forkttl-32068 unix_ms=1794629645486 
+LEASE release tenant=colltxn holder=forkttl-32068 unix_ms=1794629645488 ok=true
+LEASE writer_close tenant=tp holder=forkttl-32068 unix_ms=1794629645742 
+LEASE release_begin tenant=tp holder=forkttl-32068 unix_ms=1794629645742 
+LEASE release tenant=tp holder=forkttl-32068 unix_ms=1794629645744 ok=true
+maintenance shutdown: waiting for the L0 watch unix_ms=1794629645744
+maintenance shutdown: waiting for the dispatcher unix_ms=1794629646055
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794629646055
+maintenance shutdown: waiting for the GC task unix_ms=1794629646055
+maintenance shutdown: done unix_ms=1794629648050
+TIMING shutdown close_ms=279 aborts_ms=0 tail_ms=2306 deadline_cuts=0 left_behind=0 held_at_deadline=0 optional_skipped=0
+tenants closed; stopping maintenance (done with the steps above)
+maintenance stopped (2586 ms)

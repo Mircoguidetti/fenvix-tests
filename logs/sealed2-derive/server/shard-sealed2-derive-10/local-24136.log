@@ -1,0 +1,58 @@
+memory budget: limit 15701 MiB (memtotal), caches 7338 MiB (block 3302, meta 1100, sealed 2935), memtable 8 MiB, first course 981 MiB, change log 32 MiB, L0 reads at once 4
+box disk floor: 4096 MiB in /tmp/fenvix-box-floor-24136
+memory budget (review round): box 366 MiB per customer, 733 MiB in flight; memtables of every database 1962 MiB (writes wait past 2944 MiB); merge read-ahead 490 MiB; absorption 16 L0 SSTs
+admin interface listening on 127.0.0.1:29733 (bearer token required)
+mongo-server listening on 127.0.0.1:24136 (idle close after 60 s, holder loc24136, lease ttl 6 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:59340
+LEASE process_lease tenant=- holder=loc24136 unix_ms=1794635585069 inc=ad5945981acda50e gen=1
+LEASE acquired tenant=admin holder=loc24136 unix_ms=1794635585070 takeover_from=-
+LEASE acquired tenant=lr1 holder=loc24136 unix_ms=1794635585070 takeover_from=-
+LEASE acquired tenant=lr1 holder=loc24136 unix_ms=1794635585071 takeover_from=- new=true
+LEASE writer_open tenant=lr1 holder=loc24136 unix_ms=1794635585073 
+FXC not started db=lr1 reason=no_version_of_our_manifest unix_ms=1794635585073
+ADMIN POST /v1/databases -> 201 5 ms peer=127.0.0.1:59352
+LEASE writer_close tenant=lr1 holder=loc24136 unix_ms=1794635585076 
+LEASE release_begin tenant=lr1 holder=loc24136 unix_ms=1794635585076 
+LEASE release tenant=lr1 holder=loc24136 unix_ms=1794635585076 ok=true
+ADMIN PUT /v1/databases/lr1/retention -> 200 2 ms peer=127.0.0.1:59360
+LEASE acquired tenant=lr1 holder=loc24136 unix_ms=1794635585078 takeover_from=-
+FXC not started db=lr1 reason=not_writer unix_ms=1794635585079
+LEASE writer_open tenant=lr1 holder=loc24136 unix_ms=1794635585081 
+FXC not started db=lr1 reason=no_version_of_our_manifest unix_ms=1794635585081
+FIRST_PUBLISH u=1794635585082 db=lr1 version=1 x_d=4 rows=105 build_ms=1 off_lock=1
+L0_TRACE u=1794635586108.1309 db=lr1 l0=1 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794635587135.1016 db=lr1 l0=1 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+restore point of lr1: database lr1: checkpoint 3ab7028b-a1de-4818-8dbe-47d4b28d01de would pair with version None, below the newest version 1 (X_d 4 above the checkpoint's last L0 seq 1): a drop may have removed rows that version lacks; try again after a flush
+L0_TRACE u=1794635588159.6963 db=lr1 l0=1 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+restore point of lr1: database lr1: checkpoint f5345a21-952b-4acc-aaef-4ab8e03dcaac would pair with version None, below the newest version 1 (X_d 4 above the checkpoint's last L0 seq 1): a drop may have removed rows that version lacks; try again after a flush
+L0_TRACE u=1794635589187.7058 db=lr1 l0=1 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+restore point of lr1: database lr1: checkpoint 34509177-4dcb-476c-88db-954f36fb640a would pair with version None, below the newest version 1 (X_d 4 above the checkpoint's last L0 seq 1): a drop may have removed rows that version lacks; try again after a flush
+L0_TRACE u=1794635590213.6208 db=lr1 l0=1 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+restore point of lr1: database lr1: checkpoint f89c502a-eda7-451d-8a31-9481f23094cf would pair with version None, below the newest version 1 (X_d 4 above the checkpoint's last L0 seq 1): a drop may have removed rows that version lacks; try again after a flush
+L0_TRACE u=1794635591238.1423 db=lr1 l0=1 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+restore point of lr1: database lr1: checkpoint 380316ed-4544-4ef2-8491-46c295c5e538 would pair with version None, below the newest version 1 (X_d 4 above the checkpoint's last L0 seq 1): a drop may have removed rows that version lacks; try again after a flush
+L0_TRACE u=1794635592264.0273 db=lr1 l0=1 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+ABSORB u=1794635592888.3887 db=lr1 ssts=1 rows=42 raw_kib=1 committed=1 l0_start=2 l0_end=2 lock_ms=0 read_ms=0 write_ms=0 commit_ms=0 total_ms=0
+LEASE writer_close tenant=lr1 holder=loc24136 unix_ms=1794635592889 
+LEASE release_begin tenant=lr1 holder=loc24136 unix_ms=1794635592889 
+LEASE release tenant=lr1 holder=loc24136 unix_ms=1794635592890 ok=true
+LEASE acquired tenant=lr1 holder=loc24136 unix_ms=1794635592896 takeover_from=-
+FXC not started db=lr1 reason=not_writer unix_ms=1794635592897
+LEASE writer_open tenant=lr1 holder=loc24136 unix_ms=1794635592899 
+ABSORB u=1794635592902.083 db=lr1 ssts=1 rows=42 raw_kib=1 committed=1 l0_start=3 l0_end=3 lock_ms=0 read_ms=0 write_ms=0 commit_ms=0 total_ms=0
+LEASE writer_close tenant=lr1 holder=loc24136 unix_ms=1794635592902 
+LEASE release_begin tenant=lr1 holder=loc24136 unix_ms=1794635592902 
+LEASE release tenant=lr1 holder=loc24136 unix_ms=1794635592902 ok=true
+ADMIN POST /v1/databases/lr1/restore -> 200 17 ms peer=127.0.0.1:59530
+LEASE acquired tenant=lr1 holder=loc24136 unix_ms=1794635592904 takeover_from=-
+shutting down: closing tenants cleanly
+LEASE release_begin tenant=lr1 holder=loc24136 unix_ms=1794635592907 
+LEASE release tenant=lr1 holder=loc24136 unix_ms=1794635592907 ok=true
+maintenance shutdown: waiting for the L0 watch unix_ms=1794635592907
+maintenance shutdown: waiting for the dispatcher unix_ms=1794635593898
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794635593898
+maintenance shutdown: waiting for the GC task unix_ms=1794635593898
+maintenance shutdown: done unix_ms=1794635594894
+TIMING shutdown close_ms=0 aborts_ms=0 tail_ms=1986 deadline_cuts=0 left_behind=0 held_at_deadline=0 optional_skipped=0
+tenants closed; stopping maintenance (done with the steps above)
+maintenance stopped (1986 ms)
