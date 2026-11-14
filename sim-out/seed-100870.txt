@@ -1,0 +1,419 @@
+SEED 100870 (steps 164): 10 violations; replays failing 2 of 2
+events 164 writes issued 29 key-writes acked 427 requests 3067 faults 0; points 9 restores 7 (applied 2) forks 2 generated 0 slate-gc 3 drops 2 scrubs 1 storms 0 groups-profile false
+
+VIOLATIONS
+  reader: c00msgs/d/00002 acknowledged write lost: expected s100870-e1-2 (event 109, slot 1, issue 18), read the older s100870-e93-1 (event 93, slot 0)
+  reader: c03msgs/d/00003 acknowledged write lost: expected absent (event 109, slot 1, issue 18), read the older s100870-e93-4 (event 93, slot 0) [a deleted or erased row is readable]
+  reader: c05msgs/d/00011 acknowledged write lost: expected s100870-e140-1 (event 140, slot 2, issue 23), read the older s100870-e93-2 (event 93, slot 0)
+  reader: c05msgs/d/00016 acknowledged write lost: expected absent (event 109, slot 1, issue 18), read the older s100870-e93-3 (event 93, slot 0) [a deleted or erased row is readable]
+  reader: c05msgs/d/00017 acknowledged write lost: expected absent (event 109, slot 1, issue 18), read the older s100870-e93-5 (event 93, slot 0) [a deleted or erased row is readable]
+  writer: c00msgs/d/00002 acknowledged write lost: expected s100870-e1-2 (event 109, slot 1, issue 18), read the older s100870-e93-1 (event 93, slot 0)
+  writer: c03msgs/d/00003 acknowledged write lost: expected absent (event 109, slot 1, issue 18), read the older s100870-e93-4 (event 93, slot 0) [a deleted or erased row is readable]
+  writer: c05msgs/d/00011 acknowledged write lost: expected s100870-e140-1 (event 140, slot 2, issue 23), read the older s100870-e93-2 (event 93, slot 0)
+  writer: c05msgs/d/00016 acknowledged write lost: expected absent (event 109, slot 1, issue 18), read the older s100870-e93-3 (event 93, slot 0) [a deleted or erased row is readable]
+  writer: c05msgs/d/00017 acknowledged write lost: expected absent (event 109, slot 1, issue 18), read the older s100870-e93-5 (event 93, slot 0) [a deleted or erased row is readable]
+
+MINIMAL SCRIPT (104 events; SIM_KEEP=0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123), its run: 10 violations
+seed 100870 knobs 0 profile Profile { delay_ppm: 300000, delay_max_ms: 30, fail_ppm: 0, timeout_before_ppm: 0, timeout_after_ppm: 0, timeout_ms: 0 }
+    0 Open { p: 0, writer: true }
+    1 Write { p: 0, ops: [(0, 0, false), (0, 1, false), (0, 2, false), (0, 3, false), (0, 4, false), (0, 5, false), (0, 6, false), (0, 7, false), (0, 8, false), (0, 9, false), (0, 10, false), (0, 11, false), (0, 12, false), (0, 13, false), (0, 14, false), (0, 15, false), (0, 16, false), (0, 17, false), (0, 18, false), (0, 19, false), (0, 20, false), (0, 21, false), (0, 22, false), (0, 23, false)] }
+    2 Flush { p: 0 }
+    3 Point { p: 0, tag: 1 }
+    4 Hold { p: 0, class: FxVersion, op: Some(Put), skip: 0, land: false, all: false, rid: 1 }
+    5 Retire { p: 1 }
+    6 Publish { p: 0 }
+    7 Retire { p: 1 }
+    8 Hold { p: 0, class: FxRun, op: Some(Put), skip: 1, land: true, all: false, rid: 2 }
+    9 SlateGc { p: 0 }
+   10 CompStart { p: 0 }
+   11 Release { rid: 2 }
+   12 Gc { p: 0 }
+   13 Hold { p: 0, class: FxVersion, op: None, skip: 2, land: true, all: false, rid: 3 }
+   14 Hold { p: 0, class: FxVersion, op: Some(Put), skip: 0, land: true, all: true, rid: 4 }
+   15 Point { p: 1, tag: 2 }
+   16 FirstStart { p: 0 }
+   17 Mark { tag: 3 }
+   18 Open { p: 1, writer: true }
+   19 PointPrune { p: 1, tag: 2 }
+   20 Flush { p: 1 }
+   41 Close { p: 2 }
+   42 Mark { tag: 7 }
+   43 Close { p: 0 }
+   44 SlateGc { p: 1 }
+   45 Abandon { p: 1 }
+   46 EraseRide { p: 2 }
+   47 Open { p: 2, writer: true }
+   48 CompStart { p: 2 }
+   49 Write { p: 2, ops: [(4, 3, false), (3, 17, false), (1, 4, false)] }
+   50 Fork { p: 2, copy: false, tag: 8 }
+   51 Open { p: 0, writer: false }
+   52 Write { p: 2, ops: [(5, 21, false), (4, 19, false), (4, 16, false), (5, 4, true), (0, 11, false), (5, 12, false), (3, 1, true), (1, 5, false), (4, 10, false), (4, 6, false)] }
+   53 Hold { p: 2, class: FxVersion, op: Some(Put), skip: 0, land: true, all: true, rid: 7 }
+   54 Publish { p: 2 }
+   55 Open { p: 1, writer: true }
+   56 CompDrain { p: 1 }
+   57 Write { p: 1, ops: [(4, 17, false), (4, 4, false), (4, 20, false)] }
+   58 Flush { p: 1 }
+   59 Write { p: 1, ops: [(3, 19, false), (3, 4, false), (3, 5, false)] }
+   60 Flush { p: 1 }
+   61 Write { p: 1, ops: [(5, 19, false), (5, 8, false), (5, 10, false)] }
+   62 Flush { p: 1 }
+   63 Write { p: 1, ops: [(3, 9, false), (3, 14, false), (3, 19, false)] }
+   64 Flush { p: 1 }
+   65 Write { p: 1, ops: [(4, 18, false), (4, 17, false), (4, 16, false)] }
+   66 Flush { p: 1 }
+   67 Write { p: 1, ops: [(4, 0, false), (4, 18, false), (4, 9, false)] }
+   68 Flush { p: 1 }
+   69 Write { p: 1, ops: [(0, 2, false), (0, 16, false), (0, 13, false)] }
+   70 Flush { p: 1 }
+   71 Write { p: 1, ops: [(2, 7, false), (2, 9, false), (2, 7, false)] }
+   72 Flush { p: 1 }
+   73 Erase { p: 1, cust: 5 }
+   74 Flush { p: 1 }
+   75 Point { p: 2, tag: 9 }
+   76 Gc { p: 1 }
+   77 Restore { p: 1, mark: 7, apply: true }
+   78 Write { p: 1, ops: [(4, 5, false), (3, 3, false), (0, 7, false), (1, 19, false), (4, 14, false), (4, 1, false), (2, 13, false), (4, 22, false), (5, 16, false)] }
+   79 Release { rid: 7 }
+   80 Restore { p: 1, mark: 3, apply: false }
+   81 Write { p: 1, ops: [(3, 1, true), (2, 17, false), (1, 16, false), (2, 0, false), (2, 20, true), (2, 21, false), (0, 3, false)] }
+   82 Write { p: 2, ops: [(3, 17, false), (4, 7, false)] }
+   83 Restore { p: 1, mark: 3, apply: false }
+   84 Publish { p: 1 }
+   85 Kill { p: 2 }
+   86 SlateGc { p: 2 }
+   87 Close { p: 1 }
+   88 Upgrade { p: 0 }
+   89 Retire { p: 2 }
+   90 Hold { p: 0, class: Other, op: None, skip: 1, land: true, all: true, rid: 8 }
+   91 FirstStart { p: 0 }
+   92 Point { p: 0, tag: 10 }
+   93 Write { p: 0, ops: [(1, 13, true), (0, 2, false), (5, 11, false), (5, 16, false), (3, 3, false), (5, 17, false)] }
+   94 Write { p: 0, ops: [(3, 21, false), (5, 19, true), (5, 14, false), (2, 14, false), (2, 4, false), (1, 5, false), (5, 9, false), (0, 20, false)] }
+   95 EraseRide { p: 0 }
+   96 Sleep { ms: 246 }
+   97 Hold { p: 0, class: FxVersion, op: Some(Put), skip: 0, land: true, all: false, rid: 9 }
+   98 Write { p: 0, ops: [(1, 17, true), (1, 11, false), (4, 19, false), (1, 13, false)] }
+   99 Point { p: 2, tag: 11 }
+  100 Hold { p: 0, class: FxVersion, op: Some(Put), skip: 1, land: true, all: false, rid: 10 }
+  101 Publish { p: 0 }
+  102 Open { p: 1, writer: true }
+  103 Restore { p: 1, mark: 3, apply: false }
+  104 CompStart { p: 1 }
+  105 Restore { p: 1, mark: 3, apply: false }
+  106 Gc { p: 1 }
+  107 DropThrough { p: 1 }
+  108 Release { rid: 10 }
+  109 Restore { p: 1, mark: 7, apply: true }
+  110 Abandon { p: 0 }
+  111 Write { p: 1, ops: [(1, 19, false), (4, 21, false)] }
+  112 Release { rid: 3 }
+  113 Release { rid: 1 }
+  114 ErasePass { p: 1 }
+  115 PointPrune { p: 2, tag: 11 }
+  116 Hold { p: 0, class: Other, op: Some(Get), skip: 1, land: false, all: false, rid: 11 }
+  117 CompDrain { p: 1 }
+  118 Abandon { p: 0 }
+  119 DropThrough { p: 1 }
+  120 Hold { p: 1, class: FxVersion, op: Some(Put), skip: 0, land: true, all: true, rid: 12 }
+  121 Write { p: 1, ops: [(2, 17, false)] }
+  122 Hold { p: 1, class: Other, op: Some(Put), skip: 0, land: true, all: false, rid: 13 }
+  123 CompDrain { p: 1 }
+  ! reader: c00msgs/d/00002 acknowledged write lost: expected s100870-e1-2 (event 109, slot 1, issue 16), read the older s100870-e93-1 (event 93, slot 0)
+  ! reader: c03msgs/d/00003 acknowledged write lost: expected absent (event 109, slot 1, issue 16), read the older s100870-e93-4 (event 93, slot 0) [a deleted or erased row is readable]
+  ! reader: c05msgs/d/00011 acknowledged write lost: expected absent (event 109, slot 1, issue 16), read the older s100870-e93-2 (event 93, slot 0) [a deleted or erased row is readable]
+  ! reader: c05msgs/d/00016 acknowledged write lost: expected absent (event 109, slot 1, issue 16), read the older s100870-e93-3 (event 93, slot 0) [a deleted or erased row is readable]
+  ! reader: c05msgs/d/00017 acknowledged write lost: expected absent (event 109, slot 1, issue 16), read the older s100870-e93-5 (event 93, slot 0) [a deleted or erased row is readable]
+  ! writer: c00msgs/d/00002 acknowledged write lost: expected s100870-e1-2 (event 109, slot 1, issue 16), read the older s100870-e93-1 (event 93, slot 0)
+  ! writer: c03msgs/d/00003 acknowledged write lost: expected absent (event 109, slot 1, issue 16), read the older s100870-e93-4 (event 93, slot 0) [a deleted or erased row is readable]
+  ! writer: c05msgs/d/00011 acknowledged write lost: expected absent (event 109, slot 1, issue 16), read the older s100870-e93-2 (event 93, slot 0) [a deleted or erased row is readable]
+  ! writer: c05msgs/d/00016 acknowledged write lost: expected absent (event 109, slot 1, issue 16), read the older s100870-e93-3 (event 93, slot 0) [a deleted or erased row is readable]
+  ! writer: c05msgs/d/00017 acknowledged write lost: expected absent (event 109, slot 1, issue 16), read the older s100870-e93-5 (event 93, slot 0) [a deleted or erased row is readable]
+
+TRACE OF THE MINIMAL RUN
+  [0] seed 100870 knobs 0 profile Profile { delay_ppm: 300000, delay_max_ms: 30, fail_ppm: 0, timeout_before_ppm: 0, timeout_after_ppm: 0, timeout_ms: 0 }
+  [0] [0] Open { p: 0, writer: true } -> opened (life 0, writer epoch Some(1))
+  [1] [1] Write { p: 0, ops: [(0, 0, false), (0, 1, false), (0, 2, false), (0, 3, false), (0, 4, false), (0, 5, false), (0, 6, fal -> acked 24 keys
+  [2] [2] Flush { p: 0 } -> flushed
+  [3] [3] Point { p: 0, tag: 1 } -> restore point 1: checkpoint 11934e87-123a-4e59-a771-175003487e2a (manifest 4) paired with version None at 1794619012909
+  [4] hold rule 1 armed: life 0 Some(Put) FxVersion skip 0 land false all false
+  [5] [5] Retire { p: 1 } -> nothing to retire
+  [6] held by rule 1: life 0 Put tenants/sim-100870-61/fx/manifest/00000000000000000001
+  [6] rule 1 lets go after 1001 ms: life 0 Put tenants/sim-100870-61/fx/manifest/00000000000000000001 dropped
+  [6] [6] Publish { p: 0 } -> publish failed: publish of version 1 has an unknown outcome: Generic sim error: held request dropped: held request dropped
+  [7] [7] Retire { p: 1 } -> nothing to retire
+  [8] hold rule 2 armed: life 0 Some(Put) FxRun skip 1 land true all false
+  [9] [9] SlateGc { p: 0 } -> slate gc pass
+  [10] [10] CompStart { p: 0 } -> catch-up published nothing: no compactor yet
+  [11] hold rule 2 released (0 waiting)
+  [12] [12] Gc { p: 0 } -> no compactor (skipped)
+  [13] hold rule 3 armed: life 0 None FxVersion skip 2 land true all false
+  [14] hold rule 4 armed: life 0 Some(Put) FxVersion skip 0 land true all true
+  [15] [15] Point { p: 1, tag: 2 } -> restore point 2 failed: database sim-100870-61: checkpoint 228a393c-8e17-4e63-9022-7539eee61bdc would pair with version None, below the newest version 1 (X_d 2 above the checkpoint's l
+  [16] [16] FirstStart { p: 0 } -> no first build to start
+  [17] mark 3 at 1794619014424
+  [18] [18] Open { p: 1, writer: true } -> opened (life 1, writer epoch Some(2))
+  [19] [19] PointPrune { p: 1, tag: 2 } -> no restore point 2 (skipped)
+  [20] [20] Flush { p: 1 } -> flushed
+  [41] [41] Close { p: 2 } -> not open (skipped)
+  [42] mark 7 at 1794619014531
+  [43] [43] Close { p: 0 } -> close failed: close of tenant sim-100870-61: the memtable flush failed (Closed error: detected newer DB client); no clean marker
+  [44] [44] SlateGc { p: 1 } -> slate gc pass
+  [45] [45] Abandon { p: 1 } -> abandoned (close done true)
+  [46] [46] EraseRide { p: 2 } -> no compactor (skipped)
+  [47] [47] Open { p: 2, writer: true } -> opened (life 2, writer epoch Some(3))
+  [48] [48] CompStart { p: 2 } -> catch-up published nothing: no compactor yet
+  [49] [49] Write { p: 2, ops: [(4, 3, false), (3, 17, false), (1, 4, false)] } -> acked 3 keys
+  [50] [50] Fork { p: 2, copy: false, tag: 8 } -> fork 8 done (clone): sim-100870-61-fork8, its first version Some(3), pairing checkpoint deleted true, pair deleted true
+  [51] held by rule 3: life 0 Get tenants/sim-100870-61/fx/manifest/00000000000000000002
+  [51] event 51 still in flight after 1.5s
+  [52] [52] Write { p: 2, ops: [(5, 21, false), (4, 19, false), (4, 16, false), (5, 4, true), (0, 11, false), (5, 12, false), (3, 1, -> not open (skipped)
+  [53] hold rule 7 armed: life 2 Some(Put) FxVersion skip 0 land true all true
+  [54] [54] Publish { p: 2 } -> not open (skipped)
+  [55] [55] Open { p: 1, writer: true } -> opened (life 1, writer epoch Some(4))
+  [56] [56] CompDrain { p: 1 } -> no compactor (skipped)
+  [57] [57] Write { p: 1, ops: [(4, 17, false), (4, 4, false), (4, 20, false)] } -> acked 3 keys
+  [58] [58] Flush { p: 1 } -> flushed
+  [59] [59] Write { p: 1, ops: [(3, 19, false), (3, 4, false), (3, 5, false)] } -> acked 3 keys
+  [60] [60] Flush { p: 1 } -> flushed
+  [61] [61] Write { p: 1, ops: [(5, 19, false), (5, 8, false), (5, 10, false)] } -> acked 3 keys
+  [62] [62] Flush { p: 1 } -> flushed
+  [63] [63] Write { p: 1, ops: [(3, 9, false), (3, 14, false), (3, 19, false)] } -> acked 3 keys
+  [64] [64] Flush { p: 1 } -> flushed
+  [65] [65] Write { p: 1, ops: [(4, 18, false), (4, 17, false), (4, 16, false)] } -> acked 3 keys
+  [66] [66] Flush { p: 1 } -> flushed
+  [67] [67] Write { p: 1, ops: [(4, 0, false), (4, 18, false), (4, 9, false)] } -> acked 3 keys
+  [68] [68] Flush { p: 1 } -> flushed
+  [69] [69] Write { p: 1, ops: [(0, 2, false), (0, 16, false), (0, 13, false)] } -> acked 3 keys
+  [70] [70] Flush { p: 1 } -> flushed
+  [71] [71] Write { p: 1, ops: [(2, 7, false), (2, 9, false), (2, 7, false)] } -> acked 2 keys
+  [72] [72] Flush { p: 1 } -> flushed
+  [73] [73] Erase { p: 1, cust: 5 } -> deletes acked; erasure 00000000000000000012-768bfb2a registered, S_e 12
+  [74] [74] Flush { p: 1 } -> flushed
+  [75] [75] Point { p: 2, tag: 9 } -> restore point 9: checkpoint da534b31-8511-4603-a98f-61263b7ed839 (manifest 26) paired with version Some(4) at 1794619017164
+  [76] [76] Gc { p: 1 } -> no compactor (skipped)
+  [77] [77] Restore { p: 1, mark: 7, apply: true } -> restore checked and applied: mark 7, point 1, version None, 2 WAL objects forward
+  [78] [78] Write { p: 1, ops: [(4, 5, false), (3, 3, false), (0, 7, false), (1, 19, false), (4, 14, false), (4, 1, false), (2, 13,  -> acked 9 keys
+  [79] hold rule 7 released (0 waiting)
+  [80] [80] Restore { p: 1, mark: 3, apply: false } -> restore checked: mark 3, point 1, version None, 1 WAL objects forward, 0 wrong
+  [81] [81] Write { p: 1, ops: [(3, 1, true), (2, 17, false), (1, 16, false), (2, 0, false), (2, 20, true), (2, 21, false), (0, 3, f -> acked 7 keys
+  [82] [82] Write { p: 2, ops: [(3, 17, false), (4, 7, false)] } -> not open (skipped)
+  [83] [83] Restore { p: 1, mark: 3, apply: false } -> restore checked: mark 3, point 1, version None, 1 WAL objects forward, 0 wrong
+  [84] [84] Publish { p: 1 } -> published (x_d 15)
+  [85] kill -9 slot 2 (life 2)
+  [86] [86] SlateGc { p: 2 } -> slate gc pass
+  [87] [87] Close { p: 1 } -> closed
+  [88] [88] Upgrade { p: 0 } -> busy (skipped)
+  [89] [89] Retire { p: 2 } -> nothing to retire
+  [90] hold rule 8 armed: life 0 None Other skip 1 land true all true
+  [91] [91] FirstStart { p: 0 } -> busy (skipped)
+  [92] held by rule 8: life 0 Get tenants/sim-100870-61/gc/manifest.boundary
+  [92] rule 3 lets go after 4001 ms: life 0 Get tenants/sim-100870-61/fx/manifest/00000000000000000002 lands
+  [92] [51] Open { p: 0, writer: false } -> opened (life 0, writer epoch None)
+  [92] event 92 still in flight after 1.5s
+  [93] held by rule 8: life 0 Delete tenants/sim-100870-61/_clean
+  [93] held by rule 8: life 0 Get tenants/sim-100870-61/gc/manifest.boundary
+  [93] rule 8 lets go after 1000 ms: life 0 Delete tenants/sim-100870-61/_clean lands
+  [93] event 93 still in flight after 1.5s
+  [94] [94] Write { p: 0, ops: [(3, 21, false), (5, 19, true), (5, 14, false), (2, 14, false), (2, 4, false), (1, 5, false), (5, 9,  -> busy (skipped)
+  [95] [95] EraseRide { p: 0 } -> no compactor (skipped)
+  [97] hold rule 9 armed: life 0 Some(Put) FxVersion skip 0 land true all false
+  [98] [98] Write { p: 0, ops: [(1, 17, true), (1, 11, false), (4, 19, false), (1, 13, false)] } -> busy (skipped)
+  [99] rule 8 lets go after 4001 ms: life 0 Get tenants/sim-100870-61/gc/manifest.boundary lands
+  [99] [92] Point { p: 0, tag: 10 } -> restore point 10: checkpoint 3c541339-1640-4665-89aa-e322f9fa8684 (manifest 33) paired with version Some(5) at 1794619022277
+  [99] [99] Point { p: 2, tag: 11 } -> restore point 11: checkpoint ce596c74-7173-434a-8a67-378d27464373 (manifest 34) paired with version Some(5) at 1794619022409
+  [100] hold rule 10 armed: life 0 Some(Put) FxVersion skip 1 land true all false
+  [101] [101] Publish { p: 0 } -> busy (skipped)
+  [102] [102] Open { p: 1, writer: true } -> opened (life 1, writer epoch Some(5))
+  [103] [103] Restore { p: 1, mark: 3, apply: false } -> restore checked: mark 3, point 1, version None, 1 WAL objects forward, 0 wrong
+  [104] [104] CompStart { p: 1 } -> catch-up published nothing: no compactor yet
+  [105] [105] Restore { p: 1, mark: 3, apply: false } -> restore checked: mark 3, point 1, version None, 1 WAL objects forward, 0 wrong
+  [106] [106] Gc { p: 1 } -> no compactor (skipped)
+  [107] [107] DropThrough { p: 1 } -> no compactor (skipped)
+  [108] hold rule 10 released (0 waiting)
+  [109] [109] Restore { p: 1, mark: 7, apply: true } -> restore checked and applied: mark 7, point 1, version None, 2 WAL objects forward
+  [110] [110] Abandon { p: 0 } -> busy (skipped)
+  [111] [111] Write { p: 1, ops: [(1, 19, false), (4, 21, false)] } -> acked 2 keys
+  [112] hold rule 3 released (0 waiting)
+  [113] hold rule 1 released (0 waiting)
+  [114] [114] ErasePass { p: 1 } -> no compactor (skipped)
+  [115] [115] PointPrune { p: 2, tag: 11 } -> restore point 11 pruned
+  [116] hold rule 11 armed: life 0 Some(Get) Other skip 1 land false all false
+  [117] [117] CompDrain { p: 1 } -> no compactor (skipped)
+  [118] [118] Abandon { p: 0 } -> busy (skipped)
+  [119] [119] DropThrough { p: 1 } -> no compactor (skipped)
+  [120] hold rule 12 armed: life 1 Some(Put) FxVersion skip 0 land true all true
+  [121] [121] Write { p: 1, ops: [(2, 17, false)] } -> acked 1 keys
+  [122] hold rule 13 armed: life 1 Some(Put) Other skip 0 land true all false
+  [123] [123] CompDrain { p: 1 } -> no compactor (skipped)
+  [4294967295] rule 8 lets go after 3709 ms: life 0 Get tenants/sim-100870-61/gc/manifest.boundary lands
+  [4294967295] [93] Write { p: 0, ops: [(1, 13, true), (0, 2, false), (5, 11, false), (5, 16, false), (3, 3, false), (5, 17, false)] } -> acked 6 keys
+  [4294967295] settle: slot 0 close Ok(Ok(()))
+  [4294967295] settle: slot 1 close Ok(Err("close of tenant sim-100870-61: the memtable flush failed (Closed error: detected newer DB client); no clean marker"))
+
+FULL SCRIPT
+seed 100870 knobs 0 profile Profile { delay_ppm: 300000, delay_max_ms: 30, fail_ppm: 0, timeout_before_ppm: 0, timeout_after_ppm: 0, timeout_ms: 0 }
+    0 Open { p: 0, writer: true }
+    1 Write { p: 0, ops: [(0, 0, false), (0, 1, false), (0, 2, false), (0, 3, false), (0, 4, false), (0, 5, false), (0, 6, false), (0, 7, false), (0, 8, false), (0, 9, false), (0, 10, false), (0, 11, false), (0, 12, false), (0, 13, false), (0, 14, false), (0, 15, false), (0, 16, false), (0, 17, false), (0, 18, false), (0, 19, false), (0, 20, false), (0, 21, false), (0, 22, false), (0, 23, false)] }
+    2 Flush { p: 0 }
+    3 Point { p: 0, tag: 1 }
+    4 Hold { p: 0, class: FxVersion, op: Some(Put), skip: 0, land: false, all: false, rid: 1 }
+    5 Retire { p: 1 }
+    6 Publish { p: 0 }
+    7 Retire { p: 1 }
+    8 Hold { p: 0, class: FxRun, op: Some(Put), skip: 1, land: true, all: false, rid: 2 }
+    9 SlateGc { p: 0 }
+   10 CompStart { p: 0 }
+   11 Release { rid: 2 }
+   12 Gc { p: 0 }
+   13 Hold { p: 0, class: FxVersion, op: None, skip: 2, land: true, all: false, rid: 3 }
+   14 Hold { p: 0, class: FxVersion, op: Some(Put), skip: 0, land: true, all: true, rid: 4 }
+   15 Point { p: 1, tag: 2 }
+   16 FirstStart { p: 0 }
+   17 Mark { tag: 3 }
+   18 Open { p: 1, writer: true }
+   19 PointPrune { p: 1, tag: 2 }
+   20 Flush { p: 1 }
+   21 DropThrough { p: 1 }
+   22 Flush { p: 1 }
+   23 EraseRide { p: 1 }
+   24 Release { rid: 4 }
+   25 Retire { p: 0 }
+   26 Hold { p: 1, class: Other, op: Some(Put), skip: 1, land: true, all: false, rid: 5 }
+   27 Fork { p: 1, copy: false, tag: 4 }
+   28 FirstStart { p: 1 }
+   29 EraseRide { p: 1 }
+   30 FirstStart { p: 1 }
+   31 Flush { p: 1 }
+   32 Hold { p: 1, class: FxRun, op: Some(List), skip: 0, land: true, all: false, rid: 6 }
+   33 Point { p: 1, tag: 5 }
+   34 Publish { p: 1 }
+   35 Open { p: 2, writer: true }
+   36 CompDrain { p: 2 }
+   37 Write { p: 2, ops: [(4, 11, false), (4, 12, false), (5, 4, true), (4, 10, false), (0, 1, false), (1, 18, false), (1, 7, false), (0, 23, true)] }
+   38 Release { rid: 6 }
+   39 Point { p: 2, tag: 6 }
+   40 Write { p: 2, ops: [(4, 1, true), (0, 17, false), (0, 8, false), (0, 6, true), (2, 10, false), (4, 17, false), (4, 14, false), (0, 6, false), (5, 19, true)] }
+   41 Close { p: 2 }
+   42 Mark { tag: 7 }
+   43 Close { p: 0 }
+   44 SlateGc { p: 1 }
+   45 Abandon { p: 1 }
+   46 EraseRide { p: 2 }
+   47 Open { p: 2, writer: true }
+   48 CompStart { p: 2 }
+   49 Write { p: 2, ops: [(4, 3, false), (3, 17, false), (1, 4, false)] }
+   50 Fork { p: 2, copy: false, tag: 8 }
+   51 Open { p: 0, writer: false }
+   52 Write { p: 2, ops: [(5, 21, false), (4, 19, false), (4, 16, false), (5, 4, true), (0, 11, false), (5, 12, false), (3, 1, true), (1, 5, false), (4, 10, false), (4, 6, false)] }
+   53 Hold { p: 2, class: FxVersion, op: Some(Put), skip: 0, land: true, all: true, rid: 7 }
+   54 Publish { p: 2 }
+   55 Open { p: 1, writer: true }
+   56 CompDrain { p: 1 }
+   57 Write { p: 1, ops: [(4, 17, false), (4, 4, false), (4, 20, false)] }
+   58 Flush { p: 1 }
+   59 Write { p: 1, ops: [(3, 19, false), (3, 4, false), (3, 5, false)] }
+   60 Flush { p: 1 }
+   61 Write { p: 1, ops: [(5, 19, false), (5, 8, false), (5, 10, false)] }
+   62 Flush { p: 1 }
+   63 Write { p: 1, ops: [(3, 9, false), (3, 14, false), (3, 19, false)] }
+   64 Flush { p: 1 }
+   65 Write { p: 1, ops: [(4, 18, false), (4, 17, false), (4, 16, false)] }
+   66 Flush { p: 1 }
+   67 Write { p: 1, ops: [(4, 0, false), (4, 18, false), (4, 9, false)] }
+   68 Flush { p: 1 }
+   69 Write { p: 1, ops: [(0, 2, false), (0, 16, false), (0, 13, false)] }
+   70 Flush { p: 1 }
+   71 Write { p: 1, ops: [(2, 7, false), (2, 9, false), (2, 7, false)] }
+   72 Flush { p: 1 }
+   73 Erase { p: 1, cust: 5 }
+   74 Flush { p: 1 }
+   75 Point { p: 2, tag: 9 }
+   76 Gc { p: 1 }
+   77 Restore { p: 1, mark: 7, apply: true }
+   78 Write { p: 1, ops: [(4, 5, false), (3, 3, false), (0, 7, false), (1, 19, false), (4, 14, false), (4, 1, false), (2, 13, false), (4, 22, false), (5, 16, false)] }
+   79 Release { rid: 7 }
+   80 Restore { p: 1, mark: 3, apply: false }
+   81 Write { p: 1, ops: [(3, 1, true), (2, 17, false), (1, 16, false), (2, 0, false), (2, 20, true), (2, 21, false), (0, 3, false)] }
+   82 Write { p: 2, ops: [(3, 17, false), (4, 7, false)] }
+   83 Restore { p: 1, mark: 3, apply: false }
+   84 Publish { p: 1 }
+   85 Kill { p: 2 }
+   86 SlateGc { p: 2 }
+   87 Close { p: 1 }
+   88 Upgrade { p: 0 }
+   89 Retire { p: 2 }
+   90 Hold { p: 0, class: Other, op: None, skip: 1, land: true, all: true, rid: 8 }
+   91 FirstStart { p: 0 }
+   92 Point { p: 0, tag: 10 }
+   93 Write { p: 0, ops: [(1, 13, true), (0, 2, false), (5, 11, false), (5, 16, false), (3, 3, false), (5, 17, false)] }
+   94 Write { p: 0, ops: [(3, 21, false), (5, 19, true), (5, 14, false), (2, 14, false), (2, 4, false), (1, 5, false), (5, 9, false), (0, 20, false)] }
+   95 EraseRide { p: 0 }
+   96 Sleep { ms: 246 }
+   97 Hold { p: 0, class: FxVersion, op: Some(Put), skip: 0, land: true, all: false, rid: 9 }
+   98 Write { p: 0, ops: [(1, 17, true), (1, 11, false), (4, 19, false), (1, 13, false)] }
+   99 Point { p: 2, tag: 11 }
+  100 Hold { p: 0, class: FxVersion, op: Some(Put), skip: 1, land: true, all: false, rid: 10 }
+  101 Publish { p: 0 }
+  102 Open { p: 1, writer: true }
+  103 Restore { p: 1, mark: 3, apply: false }
+  104 CompStart { p: 1 }
+  105 Restore { p: 1, mark: 3, apply: false }
+  106 Gc { p: 1 }
+  107 DropThrough { p: 1 }
+  108 Release { rid: 10 }
+  109 Restore { p: 1, mark: 7, apply: true }
+  110 Abandon { p: 0 }
+  111 Write { p: 1, ops: [(1, 19, false), (4, 21, false)] }
+  112 Release { rid: 3 }
+  113 Release { rid: 1 }
+  114 ErasePass { p: 1 }
+  115 PointPrune { p: 2, tag: 11 }
+  116 Hold { p: 0, class: Other, op: Some(Get), skip: 1, land: false, all: false, rid: 11 }
+  117 CompDrain { p: 1 }
+  118 Abandon { p: 0 }
+  119 DropThrough { p: 1 }
+  120 Hold { p: 1, class: FxVersion, op: Some(Put), skip: 0, land: true, all: true, rid: 12 }
+  121 Write { p: 1, ops: [(2, 17, false)] }
+  122 Hold { p: 1, class: Other, op: Some(Put), skip: 0, land: true, all: false, rid: 13 }
+  123 CompDrain { p: 1 }
+  124 Open { p: 0, writer: true }
+  125 Gc { p: 0 }
+  126 Point { p: 2, tag: 12 }
+  127 Flush { p: 0 }
+  128 EraseRide { p: 0 }
+  129 Flush { p: 0 }
+  130 EraseRide { p: 0 }
+  131 Flush { p: 0 }
+  132 CompDrain { p: 0 }
+  133 CompDrain { p: 0 }
+  134 Release { rid: 13 }
+  135 Open { p: 2, writer: true }
+  136 Gc { p: 2 }
+  137 Write { p: 1, ops: [(5, 21, false)] }
+  138 Write { p: 2, ops: [(1, 1, false), (1, 18, false), (1, 17, false)] }
+  139 Flush { p: 2 }
+  140 Write { p: 2, ops: [(5, 0, false), (5, 11, false), (5, 4, false)] }
+  141 Flush { p: 2 }
+  142 Write { p: 2, ops: [(1, 10, false), (1, 20, false), (1, 11, false)] }
+  143 Flush { p: 2 }
+  144 Write { p: 2, ops: [(5, 8, false), (5, 22, false), (5, 10, false)] }
+  145 Flush { p: 2 }
+  146 Write { p: 2, ops: [(0, 4, false), (0, 10, false), (0, 12, false)] }
+  147 Flush { p: 2 }
+  148 Write { p: 2, ops: [(4, 13, false), (4, 0, false), (4, 22, false)] }
+  149 Flush { p: 2 }
+  150 Write { p: 2, ops: [(4, 20, false), (4, 1, false), (4, 10, false)] }
+  151 Flush { p: 2 }
+  152 Write { p: 2, ops: [(3, 9, false), (3, 6, false), (3, 10, false)] }
+  153 Flush { p: 2 }
+  154 Abandon { p: 0 }
+  155 FirstStart { p: 2 }
+  156 Gc { p: 2 }
+  157 Hold { p: 2, class: Other, op: Some(Put), skip: 2, land: true, all: false, rid: 14 }
+  158 Retire { p: 2 }
+  159 FirstStart { p: 2 }
+  160 CompDrain { p: 1 }
+  161 EraseRide { p: 2 }
+  162 Kill { p: 1 }
+  163 Restore { p: 2, mark: 7, apply: false }
