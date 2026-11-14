@@ -149,7 +149,7 @@ jobs:
               [ -d "result/$m" ] || continue
               echo "## log $m"; echo
               cat "result/$m/job.json" 2>/dev/null; echo
-              s=$(ls result/$m/out/*takeovers*summary*.json 2>/dev/null | head -1)
+              s=$(find result/$m/out -name "*takeovers*summary*.json" 2>/dev/null | head -1)
               if [ -n "$s" ]; then echo '```'; cat "$s"; echo; echo '```'; else echo "no takeovers summary (see harness.log)"; fi
               { grep -h "TAKEOVERS:" result/$m/out/* result/$m/run-*.log 2>/dev/null || true; } | tail -2
               echo; echo "harness.log, last lines:"; echo '```'; tail -40 "result/$m/harness.log" 2>/dev/null || true; echo '```'
