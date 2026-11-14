@@ -21,6 +21,10 @@ on:
       steps:
         description: "events per script"
         default: "90"
+      sim_env:
+        description: "Extra simulator environment, space separated NAME=VALUE with SIM_ names only (e.g. SIM_GEN=3 SIM_PATTERN=mix); empty = none"
+        required: false
+        default: ""
 
 permissions:
   contents: write
@@ -75,8 +79,12 @@ jobs:
         run: cargo test --release --lib --no-run
       - name: seeds
         working-directory: engine
-        env: { F: "${{ inputs.first_seed }}", P: "${{ inputs.seeds_per_job }}", S: "${{ inputs.steps }}", K: "${{ matrix.shard }}" }
+        env: { F: "${{ inputs.first_seed }}", P: "${{ inputs.seeds_per_job }}", S: "${{ inputs.steps }}", K: "${{ matrix.shard }}", SIM_ENV_IN: "${{ inputs.sim_env }}" }
         run: |
+          for kv in $SIM_ENV_IN; do
+            case "$kv" in SIM_*=*) n=${kv%%=*}; case "$n" in *[!A-Z0-9_]*) echo "sim_env: $n not allowed"; exit 1 ;; esac; export "$kv"; echo "sim_env: $kv" ;;
+              *) echo "sim_env: only SIM_ names"; exit 1 ;; esac
+          done
           A=$(( F + K * P )); B=$(( A + P ))
           echo "seeds $A..$B"
           SIM_SEEDS=$A..$B SIM_STEPS=$S SIM_PAR=4 SIM_REPLAYS=3 SIM_MIN_BUDGET=24 SIM_OUT=sim-out \
@@ -108,6 +116,7 @@ jobs:
           F: ${{ inputs.first_seed }}
           P: ${{ inputs.seeds_per_job }}
           S: ${{ inputs.steps }}
+          SIM_ENV_IN: ${{ inputs.sim_env }}
         run: |
           set -eu
           mkdir -p result; for d in arts/*/; do cp -r "$d"* result/ 2>/dev/null || true; done
@@ -116,7 +125,7 @@ jobs:
           panics=$(cat result/sim-*.log 2>/dev/null | grep -c "panicked" || true)
           {
             echo "# sim-test, engine $COMMIT"; echo; echo "Run: $RUN_URL"; echo
-            echo "Seeds $F..$(( F + 20 * P )) (20 jobs x $P), $S events per script."
+            echo "Seeds $F..$(( F + 20 * P )) (20 jobs x $P), $S events per script. sim_env: ${SIM_ENV_IN:-none}."
             seeds=$(cat result/sim-*.log 2>/dev/null | grep -c '^SIM seed' || true)
             echo "Job logs found: $logs of 20. Seeds reported run (lines \"SIM seed\"): $seeds. Lines \"SIM VIOLATION\": $viol. Lines \"panicked\": $panics."
             if [ "$logs" = 20 ] && [ "$seeds" -gt 0 ] && [ "$viol" = 0 ] && [ "$panics" = 0 ]; then echo "Verdict: PASS"; else echo "Verdict: FAIL"; fi
