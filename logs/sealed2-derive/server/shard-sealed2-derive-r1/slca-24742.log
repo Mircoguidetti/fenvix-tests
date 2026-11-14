@@ -1,0 +1,25 @@
+TEST FAULT INJECTION ON (/tmp/slcfarhz_toch): never use this in production
+memory budget: limit 15701 MiB (memtotal), caches 7338 MiB (block 3302, meta 1100, sealed 2935), memtable 8 MiB, first course 981 MiB, change log 32 MiB, L0 reads at once 4
+box disk floor: 4096 MiB in /tmp/fenvix-box-floor-24742
+memory budget (review round): box 366 MiB per customer, 733 MiB in flight; memtables of every database 1962 MiB (writes wait past 2944 MiB); merge read-ahead 490 MiB; absorption 16 L0 SSTs
+quaderno: writes are acknowledged by the replicated log at 127.0.0.1:23897,127.0.0.1:35224,127.0.0.1:33973
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+quaderno: restart read 120 records of 1 databases from the log
+LEASE process_lease tenant=- holder=slca-24742 unix_ms=1794626995908 inc=8dfc43ce57d53785 gen=1
+local log: replay of database tkr failed (tenant tkr is owned by server process slcb-21681 (lease valid for another 4921 ms); retry); its 120 records are kept, the database is refused until they are applied
+FAULT hold_kept_records tkr
+FAULT hold_kept_records released tkr
+quaderno: database tkr: its replay was refused before it took the lease; its 120 records stay in the log as they are (no copies)
+local log: 1 databases kept their records; retried in the background
+quaderno: restart applied 0 records to 0 databases in 6.0 s
+admin interface listening on 127.0.0.1:33712 (bearer token required)
+mongo-server listening on 127.0.0.1:24742 (idle close after 600 s, holder slca-24742, lease ttl 6 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:48842
+quaderno: database tkr: not the lease holder: the log is told only up to position 117612674787639297, the highest this process read at its start
+local log: database tkr: kept records applied by the retry; the database is open again
+LEASE process_lease_revoked tenant=tkr holder=slca-24742 unix_ms=1794627011036 of=slcb-21681
+LEASE acquired tenant=tkr holder=slca-24742 unix_ms=1794627011038 takeover_from=slcb-21681
+LEASE takeover_wake tenant=tkr holder=slca-24742 unix_ms=1794627011048 unclean=true takeover_from=slcb-21681
+FXC not started db=tkr reason=not_writer unix_ms=1794627011054
+LEASE writer_open tenant=tkr holder=slca-24742 unix_ms=1794627011068 
+quaderno: takeover of tkr: 120 records applied from the log (after record 117612674787639297)

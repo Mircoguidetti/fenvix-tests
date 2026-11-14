@@ -1,0 +1,21 @@
+TEST FAULT INJECTION ON (/tmp/slcfaz3ea8e1k): never use this in production
+memory budget: limit 15983 MiB (memtotal), caches 7479 MiB (block 3365, meta 1121, sealed 2991), memtable 8 MiB, first course 998 MiB, change log 32 MiB, L0 reads at once 4
+box disk floor: 4096 MiB in /tmp/fenvix-box-floor-28436
+memory budget (review round): box 373 MiB per customer, 747 MiB in flight; memtables of every database 1997 MiB (writes wait past 2996 MiB); merge read-ahead 499 MiB; absorption 16 L0 SSTs
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+TEST: the old handling of kept records is on (MONGO_TEST_KEPT_RETRY_OLD): it loses acknowledged writes; never use this in production
+quaderno: writes are acknowledged by the replicated log at 127.0.0.1:20988,127.0.0.1:21677,127.0.0.1:31359
+quaderno: restart read 120 records of 1 databases from the log
+LEASE process_lease tenant=- holder=slca-28436 unix_ms=1794627130794 inc=f92eede1c7c1646c gen=1
+local log: replay of database tkr failed (tenant tkr is owned by server process slcb-34566 (lease valid for another 4591 ms); retry); its 120 records are kept, the database is refused until they are applied
+FAULT hold_kept_records tkr
+FAULT hold_kept_records released tkr
+local log: 1 databases kept their records; retried in the background
+quaderno: restart applied 0 records to 0 databases in 6.5 s
+admin interface listening on 127.0.0.1:27250 (bearer token required)
+mongo-server listening on 127.0.0.1:28436 (idle close after 600 s, holder slca-28436, lease ttl 6 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:38644
+local log: database tkr: kept records applied by the retry; the database is open again
+LEASE process_lease_revoked tenant=tkr holder=slca-28436 unix_ms=1794627145552 of=slcb-34566
+LEASE acquired tenant=tkr holder=slca-28436 unix_ms=1794627145555 takeover_from=slcb-34566
+LEASE takeover_wake tenant=tkr holder=slca-28436 unix_ms=1794627145571 unclean=true takeover_from=slcb-34566
