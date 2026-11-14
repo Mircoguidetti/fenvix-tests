@@ -1,0 +1,141 @@
+cpu: the process may use 2 core(s) and runs on CPU(s) [1, 2]
+memory budget: limit 8192 MiB (cgroup2), caches 3584 MiB (block 1612, meta 537, sealed 1433), memtable 8 MiB, first course 512 MiB, change log 32 MiB, L0 reads at once 4
+box disk floor: 4096 MiB in /tmp/fenvix-box-floor-27018
+memory budget (review round): box 179 MiB per customer, 358 MiB in flight; memtables of every database 1024 MiB (writes wait past 1536 MiB); merge read-ahead 256 MiB; absorption 16 L0 SSTs
+quaderno: writes are acknowledged by the replicated log at 172.18.0.2:7200,172.18.0.4:7200,172.18.0.5:7200
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+quaderno: restart read 1589 records of 1 databases from the log
+LEASE process_lease tenant=- holder=tk-server-1-26 unix_ms=1794616052417 inc=a34bba304bbacf09 gen=1
+local log: replay of database tk_app failed (tenant tk_app is owned by server process tk-spare-25 (lease valid for another 3484 ms); retry); its 1589 records are kept, the database is refused until they are applied
+quaderno: database tk_app: its replay was refused before it took the lease; its 1589 records stay in the log as they are (no copies)
+local log: 1 databases kept their records; retried in the background
+quaderno: restart applied 0 records to 0 databases in 0.3 s
+mongo-server listening on 0.0.0.0:27018 (idle close after 60 s, holder tk-server-1-26, lease ttl 4 s)
+local log: retry of database tk_app failed (tenant tk_app is owned by server process tk-spare-25 (lease valid for another 3709 ms); retry); retried later
+local log: retry of database tk_app failed (tenant tk_app is owned by server process tk-spare-25 (lease valid for another 2818 ms); retry); retried later
+local log: retry of database tk_app failed (tenant tk_app is owned by server process tk-spare-25 (lease valid for another 91 ms); retry); retried later
+SLOW hello db=admin ms=10001 ok=true
+SLOW hello db=admin ms=10000 ok=true
+SLOW hello db=admin ms=10002 ok=true
+SLOW hello db=admin ms=10002 ok=true
+LEASE process_lease_revoked tenant=admin holder=tk-server-1-26 unix_ms=1794616067919 of=tk-spare-25
+LEASE acquired tenant=admin holder=tk-server-1-26 unix_ms=1794616067923 takeover_from=tk-spare-25
+LEASE takeover_wake tenant=admin holder=tk-server-1-26 unix_ms=1794616067943 unclean=true takeover_from=tk-spare-25
+LEASE acquired tenant=tk_app holder=tk-server-1-26 unix_ms=1794616068222 takeover_from=tk-spare-25
+LEASE takeover_wake tenant=tk_app holder=tk-server-1-26 unix_ms=1794616068371 unclean=true takeover_from=tk-spare-25
+FXC not started db=tk_app reason=not_writer unix_ms=1794616068441
+LEASE writer_open tenant=tk_app holder=tk-server-1-26 unix_ms=1794616068582 
+quaderno: takeover of tk_app: 11295 records applied from the log (after record 117611956753465344)
+local log: database tk_app: kept records applied by the retry; the database is open again
+L0_RECOGNISE db=tk_app read=3 absorbed=0 ms=791 off_lock=1
+SLOW hello db=admin ms=10001 ok=true
+L0_TRACE u=1794616069624.8396 db=tk_app l0=3 unabs=3 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794616070652.4873 db=tk_app l0=3 unabs=3 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794616071685.2666 db=tk_app l0=3 unabs=3 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794616072719.3022 db=tk_app l0=3 unabs=3 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794616073744.5571 db=tk_app l0=3 unabs=3 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794616074771.0813 db=tk_app l0=3 unabs=3 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794616075794.0923 db=tk_app l0=3 unabs=3 absorbing=0 slate_jobs=0/0 slate_job=-
+SLOW hello db=admin ms=10001 ok=true
+L0_TRACE u=1794616076816.9243 db=tk_app l0=3 unabs=3 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794616077841.3906 db=tk_app l0=3 unabs=3 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794616078865.7302 db=tk_app l0=3 unabs=3 absorbing=0 slate_jobs=0/0 slate_job=-
+SLOW hello db=admin ms=10001 ok=true
+L0_TRACE u=1794616079888.1602 db=tk_app l0=3 unabs=3 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794616080910.7002 db=tk_app l0=3 unabs=3 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794616081934.3875 db=tk_app l0=3 unabs=3 absorbing=0 slate_jobs=0/0 slate_job=-
+SLOW hello db=admin ms=10001 ok=true
+L0_TRACE u=1794616082959.6584 db=tk_app l0=4 unabs=4 absorbing=1 slate_jobs=0/0 slate_job=-
+ABSORB u=1794616083700.549 db=tk_app ssts=4 rows=459343 raw_kib=22428 committed=1 l0_start=4 l0_end=4 lock_ms=0 read_ms=1115 write_ms=133 commit_ms=4 total_ms=1253
+L0_TRACE u=1794616083983.0552 db=tk_app l0=4 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794616085007.428 db=tk_app l0=4 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794616086029.8105 db=tk_app l0=4 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+SLOW hello db=admin ms=10001 ok=true
+L0_TRACE u=1794616087053.3472 db=tk_app l0=4 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794616088077.447 db=tk_app l0=4 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794616089101.013 db=tk_app l0=4 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+SLOW hello db=admin ms=10001 ok=true
+L0_TRACE u=1794616090125.1724 db=tk_app l0=4 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794616091149.6692 db=tk_app l0=4 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794616092174.2375 db=tk_app l0=4 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794616093196.4517 db=tk_app l0=4 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794616094220.6536 db=tk_app l0=4 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794616095244.63 db=tk_app l0=4 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794616096270.0283 db=tk_app l0=4 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+SLOW hello db=admin ms=10001 ok=true
+L0_TRACE u=1794616097294.1514 db=tk_app l0=4 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794616098315.3967 db=tk_app l0=4 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794616099340.633 db=tk_app l0=4 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+SLOW hello db=admin ms=10001 ok=true
+L0_TRACE u=1794616100366.1594 db=tk_app l0=4 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794616101389.428 db=tk_app l0=4 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794616102414.0605 db=tk_app l0=4 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794616103436.1482 db=tk_app l0=4 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794616104458.848 db=tk_app l0=4 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794616105483.2979 db=tk_app l0=4 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794616106508.2195 db=tk_app l0=4 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+SLOW hello db=admin ms=10001 ok=true
+L0_TRACE u=1794616107531.592 db=tk_app l0=4 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794616108555.4482 db=tk_app l0=4 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+SLOW hello db=admin ms=10001 ok=true
+L0_TRACE u=1794616109581.918 db=tk_app l0=4 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794616110606.3855 db=tk_app l0=4 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794616111630.4624 db=tk_app l0=4 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794616112653.4673 db=tk_app l0=4 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794616113677.6172 db=tk_app l0=4 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794616114701.0046 db=tk_app l0=4 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794616115725.0635 db=tk_app l0=4 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+SLOW hello db=admin ms=10000 ok=true
+L0_TRACE u=1794616116749.2888 db=tk_app l0=4 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794616117774.1584 db=tk_app l0=4 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794616118796.297 db=tk_app l0=4 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+SLOW hello db=admin ms=10001 ok=true
+L0_TRACE u=1794616119822.1624 db=tk_app l0=4 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794616120845.623 db=tk_app l0=4 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794616121870.7937 db=tk_app l0=4 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794616122896.019 db=tk_app l0=4 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794616123919.7617 db=tk_app l0=4 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794616124942.294 db=tk_app l0=4 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794616125966.2278 db=tk_app l0=4 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+SLOW hello db=admin ms=10001 ok=true
+L0_TRACE u=1794616126991.0715 db=tk_app l0=4 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794616128013.6296 db=tk_app l0=4 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794616129037.402 db=tk_app l0=4 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+SLOW hello db=admin ms=10001 ok=true
+L0_TRACE u=1794616130062.8945 db=tk_app l0=4 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794616131087.7349 db=tk_app l0=4 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794616132109.9717 db=tk_app l0=4 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+FXC not started db=admin reason=not_writer unix_ms=1794616132273
+LEASE release_begin tenant=admin holder=tk-server-1-26 unix_ms=1794616132273 
+LEASE release tenant=admin holder=tk-server-1-26 unix_ms=1794616132276 ok=true
+L0_TRACE u=1794616133133.4714 db=tk_app l0=4 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794616134156.7888 db=tk_app l0=4 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+ABSORB u=1794616134795.242 db=tk_app ssts=1 rows=1989 raw_kib=97 committed=1 l0_start=5 l0_end=5 lock_ms=0 read_ms=1 write_ms=4 commit_ms=1 total_ms=8
+LEASE writer_close tenant=tk_app holder=tk-server-1-26 unix_ms=1794616134801 
+LEASE release_begin tenant=tk_app holder=tk-server-1-26 unix_ms=1794616134802 
+LEASE release tenant=tk_app holder=tk-server-1-26 unix_ms=1794616134804 ok=true
+SLOW hello db=admin ms=10001 ok=true
+SLOW hello db=admin ms=10001 ok=true
+SLOW hello db=admin ms=10001 ok=true
+SLOW hello db=admin ms=10000 ok=true
+SLOW hello db=admin ms=10000 ok=true
+SLOW hello db=admin ms=10000 ok=true
+LEASE acquired tenant=admin holder=tk-server-1-26 unix_ms=1794616164744 takeover_from=-
+LEASE takeover_wake tenant=admin holder=tk-server-1-26 unix_ms=1794616164754 unclean=true takeover_from=-
+LEASE acquired tenant=tk_app holder=tk-server-1-26 unix_ms=1794616164763 takeover_from=-
+SLOW hello db=admin ms=10000 ok=true
+SSTGC closed tenant=tk_app left_unreferenced=5: another pass in 125s
+shutting down: closing tenants cleanly
+LEASE release_begin tenant=tk_app holder=tk-server-1-26 unix_ms=1794616168883 
+LEASE release_begin tenant=admin holder=tk-server-1-26 unix_ms=1794616168883 
+LEASE release tenant=tk_app holder=tk-server-1-26 unix_ms=1794616168886 ok=true
+LEASE release tenant=admin holder=tk-server-1-26 unix_ms=1794616168886 ok=true
+maintenance shutdown: waiting for the L0 watch unix_ms=1794616168886
+maintenance shutdown: waiting for the dispatcher unix_ms=1794616169230
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794616169231
+maintenance shutdown: waiting for the GC task unix_ms=1794616169231
+SLOW hello db=admin ms=10001 ok=true
+maintenance shutdown: done unix_ms=1794616170737
+TIMING shutdown close_ms=2 aborts_ms=0 tail_ms=1851 deadline_cuts=0 left_behind=0 held_at_deadline=0 optional_skipped=0
+tenants closed; stopping maintenance (done with the steps above)
+maintenance stopped (1854 ms)
