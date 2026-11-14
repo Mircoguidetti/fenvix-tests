@@ -1,0 +1,62 @@
+memory budget: limit 15983 MiB (memtotal), caches 7479 MiB (block 3365, meta 1121, sealed 2991), memtable 8 MiB, first course 998 MiB, change log 32 MiB, L0 reads at once 4
+box disk floor: 4096 MiB in /tmp/fenvix-box-floor-30150
+memory budget (review round): box 373 MiB per customer, 747 MiB in flight; memtables of every database 1997 MiB (writes wait past 2996 MiB); merge read-ahead 499 MiB; absorption 16 L0 SSTs
+admin interface listening on 127.0.0.1:24868 (bearer token required)
+mongo-server listening on 127.0.0.1:30150 (idle close after 60 s, holder loc30150, lease ttl 6 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:56208
+LEASE process_lease tenant=- holder=loc30150 unix_ms=1794619695959 inc=90c1ac64c8d8517a gen=1
+LEASE acquired tenant=admin holder=loc30150 unix_ms=1794619695959 takeover_from=-
+LEASE acquired tenant=lc1 holder=loc30150 unix_ms=1794619695960 takeover_from=-
+LEASE acquired tenant=lc1 holder=loc30150 unix_ms=1794619695960 takeover_from=- new=true
+LEASE writer_open tenant=lc1 holder=loc30150 unix_ms=1794619695962 
+FXC not started db=lc1 reason=no_version_of_our_manifest unix_ms=1794619695962
+ADMIN POST /v1/databases -> 201 4 ms peer=127.0.0.1:56218
+FIRST_PUBLISH u=1794619695968 db=lc1 version=1 x_d=2 rows=2 build_ms=2 off_lock=1
+LEASE writer_close tenant=lc1 holder=loc30150 unix_ms=1794619695969 
+LEASE release_begin tenant=lc1 holder=loc30150 unix_ms=1794619695969 
+LEASE release tenant=lc1 holder=loc30150 unix_ms=1794619695969 ok=true
+LEASE release_begin tenant=lc1 holder=loc30150 unix_ms=1794619695972 
+LEASE release tenant=lc1 holder=loc30150 unix_ms=1794619695972 ok=true
+LEASE release_begin tenant=lcf_clone holder=loc30150 unix_ms=1794619695973 
+LEASE release tenant=lcf_clone holder=loc30150 unix_ms=1794619695973 ok=true
+ADMIN POST /v1/databases/lc1/fork -> 201 6 ms peer=127.0.0.1:56226
+LEASE acquired tenant=lcf_clone holder=loc30150 unix_ms=1794619695974 takeover_from=-
+FXC not started db=lcf_clone reason=not_writer unix_ms=1794619695979
+LEASE writer_open tenant=lcf_clone holder=loc30150 unix_ms=1794619695981 
+LEASE acquired tenant=lc1 holder=loc30150 unix_ms=1794619695981 takeover_from=-
+FXC not started db=lc1 reason=not_writer unix_ms=1794619695987
+LEASE release_begin tenant=lc1 holder=loc30150 unix_ms=1794619695987 
+LEASE release tenant=lc1 holder=loc30150 unix_ms=1794619695988 ok=true
+LEASE release_begin tenant=lc1 holder=loc30150 unix_ms=1794619695992 
+LEASE release tenant=lc1 holder=loc30150 unix_ms=1794619695992 ok=true
+LEASE release_begin tenant=lcf_copy holder=loc30150 unix_ms=1794619695993 
+LEASE release tenant=lcf_copy holder=loc30150 unix_ms=1794619695993 ok=true
+ADMIN POST /v1/databases/lc1/fork -> 201 6 ms peer=127.0.0.1:56238
+LEASE acquired tenant=lcf_copy holder=loc30150 unix_ms=1794619695993 takeover_from=-
+FXC not started db=lcf_copy reason=not_writer unix_ms=1794619695998
+LEASE writer_open tenant=lcf_copy holder=loc30150 unix_ms=1794619695999 
+LEASE acquired tenant=lc1 holder=loc30150 unix_ms=1794619696000 takeover_from=-
+ADMIN PUT /v1/databases/lc1/keep-awake -> 200 1 ms peer=127.0.0.1:56248
+ADMIN DELETE /v1/databases/lc1/keep-awake -> 200 1 ms peer=127.0.0.1:56264
+FXC not started db=lc1 reason=not_writer unix_ms=1794619696008
+LEASE release_begin tenant=lc1 holder=loc30150 unix_ms=1794619696008 
+LEASE release tenant=lc1 holder=loc30150 unix_ms=1794619696009 ok=true
+ADMIN PUT /v1/databases/lc1/retention -> 200 2 ms peer=127.0.0.1:56268
+LEASE release_begin tenant=lc1 holder=loc30150 unix_ms=1794619696013 
+LEASE release tenant=lc1 holder=loc30150 unix_ms=1794619696013 ok=true
+ADMIN POST /v1/databases/lc1/exports -> 201 2 ms peer=127.0.0.1:56278
+TIMING abandon db=lcf_clone stop_fxc_ms=0 tenant_abandon_ms=0 closed=true
+LEASE writer_close tenant=lcf_clone holder=loc30150 unix_ms=1794619696014 
+ADMIN DELETE /v1/databases/lcf_clone -> 200 5 ms peer=127.0.0.1:56282
+TIMING abandon db=lcf_copy stop_fxc_ms=0 tenant_abandon_ms=0 closed=true
+LEASE writer_close tenant=lcf_copy holder=loc30150 unix_ms=1794619696020 
+ADMIN DELETE /v1/databases/lcf_copy -> 200 4 ms peer=127.0.0.1:56288
+shutting down: closing tenants cleanly
+maintenance shutdown: waiting for the L0 watch unix_ms=1794619696024
+maintenance shutdown: waiting for the dispatcher unix_ms=1794619696774
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794619696774
+maintenance shutdown: waiting for the GC task unix_ms=1794619696774
+maintenance shutdown: done unix_ms=1794619697775
+TIMING shutdown close_ms=0 aborts_ms=0 tail_ms=1750 deadline_cuts=0 left_behind=0 held_at_deadline=0 optional_skipped=0
+tenants closed; stopping maintenance (done with the steps above)
+maintenance stopped (1750 ms)

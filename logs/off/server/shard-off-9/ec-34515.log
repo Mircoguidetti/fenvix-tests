@@ -1,0 +1,54 @@
+memory budget: limit 15983 MiB (memtotal), caches 7479 MiB (block 3365, meta 1121, sealed 2991), memtable 8 MiB, first course 998 MiB, change log 32 MiB, L0 reads at once 4
+box disk floor: 4096 MiB in /tmp/fenvix-box-floor-34515
+memory budget (review round): box 373 MiB per customer, 747 MiB in flight; memtables of every database 1997 MiB (writes wait past 2996 MiB); merge read-ahead 499 MiB; absorption 16 L0 SSTs
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+admin interface listening on 127.0.0.1:27367 (bearer token required)
+mongo-server listening on 127.0.0.1:34515 (idle close after 300 s, holder ec-34515, lease ttl 6 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:41604
+LEASE process_lease tenant=- holder=ec-34515 unix_ms=1794620241622 inc=bf77b55255b6867e gen=1
+LEASE acquired tenant=victim holder=ec-34515 unix_ms=1794620241624 takeover_from=-
+LEASE acquired tenant=victim holder=ec-34515 unix_ms=1794620241642 takeover_from=- new=true
+LEASE writer_open tenant=victim holder=ec-34515 unix_ms=1794620241653 
+LEASE writer_close tenant=victim holder=ec-34515 unix_ms=1794620241690 
+LEASE release_begin tenant=victim holder=ec-34515 unix_ms=1794620241690 
+LEASE release tenant=victim holder=ec-34515 unix_ms=1794620241692 ok=true
+LEASE acquired tenant=bystander holder=ec-34515 unix_ms=1794620241696 takeover_from=-
+LEASE acquired tenant=bystander holder=ec-34515 unix_ms=1794620241701 takeover_from=- new=true
+LEASE writer_open tenant=bystander holder=ec-34515 unix_ms=1794620241710 
+LEASE acquired tenant=admin holder=ec-34515 unix_ms=1794620241723 takeover_from=-
+LEASE release_begin tenant=victim holder=ec-34515 unix_ms=1794620241763 
+LEASE release tenant=victim holder=ec-34515 unix_ms=1794620241764 ok=true
+LEASE release_begin tenant=victim2 holder=ec-34515 unix_ms=1794620241769 
+LEASE release tenant=victim2 holder=ec-34515 unix_ms=1794620241771 ok=true
+ADMIN POST /v1/databases/victim/fork -> 201 52 ms peer=127.0.0.1:41620
+FAILPOINT erase.after_intent reached
+memory budget: limit 15983 MiB (memtotal), caches 7479 MiB (block 3365, meta 1121, sealed 2991), memtable 8 MiB, first course 998 MiB, change log 32 MiB, L0 reads at once 4
+box disk floor: 4096 MiB in /tmp/fenvix-box-floor-34515
+memory budget (review round): box 373 MiB per customer, 747 MiB in flight; memtables of every database 1997 MiB (writes wait past 2996 MiB); merge read-ahead 499 MiB; absorption 16 L0 SSTs
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+ctl recovery: erase of victim2 was interrupted; finishing it
+TIMING abandon db=victim2 stop_fxc_ms=0 tenant_abandon_ms=0 closed=true
+LEASE process_lease tenant=- holder=ec-34515 unix_ms=1794620242016 inc=7826b65d504f70bd gen=1
+LEASE acquired tenant=admin holder=ec-34515 unix_ms=1794620242035 takeover_from=-
+ctl recovery: erase of victim2 finished
+admin interface listening on 127.0.0.1:27367 (bearer token required)
+mongo-server listening on 127.0.0.1:34515 (idle close after 300 s, holder ec-34515, lease ttl 6 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:41648
+ADMIN GET /v1/databases/victim2 -> 404 1 ms peer=127.0.0.1:41650
+LEASE acquired tenant=bystander holder=ec-34515 unix_ms=1794620242173 takeover_from=-
+LEASE takeover_wake tenant=bystander holder=ec-34515 unix_ms=1794620242183 unclean=true takeover_from=-
+ADMIN GET /v1/databases/victim/checkpoints -> 200 3 ms peer=127.0.0.1:41652
+LEASE acquired tenant=victim holder=ec-34515 unix_ms=1794620242202 takeover_from=-
+TIMING abandon db=victim stop_fxc_ms=0 tenant_abandon_ms=0 closed=true
+ADMIN DELETE /v1/databases/victim -> 200 45 ms peer=127.0.0.1:41660
+shutting down: closing tenants cleanly
+LEASE release_begin tenant=bystander holder=ec-34515 unix_ms=1794620242325 
+LEASE release tenant=bystander holder=ec-34515 unix_ms=1794620242327 ok=true
+maintenance shutdown: waiting for the L0 watch unix_ms=1794620242327
+maintenance shutdown: waiting for the dispatcher unix_ms=1794620243009
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794620243009
+maintenance shutdown: waiting for the GC task unix_ms=1794620243009
+maintenance shutdown: done unix_ms=1794620244009
+TIMING shutdown close_ms=2 aborts_ms=0 tail_ms=1681 deadline_cuts=0 left_behind=0 held_at_deadline=0 optional_skipped=0
+tenants closed; stopping maintenance (done with the steps above)
+maintenance stopped (1684 ms)

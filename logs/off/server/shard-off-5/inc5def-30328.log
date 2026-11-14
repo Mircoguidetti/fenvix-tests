@@ -1,0 +1,26 @@
+TEST FAULT INJECTION ON (/tmp/tmp762lvo6v.faults): never use this in production
+memory budget: limit 15701 MiB (memtotal), caches 7338 MiB (block 3302, meta 1100, sealed 2935), memtable 8 MiB, first course 981 MiB, change log 32 MiB, L0 reads at once 4
+box disk floor: 4096 MiB in /tmp/fenvix-box-floor-30328
+memory budget (review round): box 366 MiB per customer, 733 MiB in flight; memtables of every database 1962 MiB (writes wait past 2944 MiB); merge read-ahead 490 MiB; absorption 16 L0 SSTs
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+admin interface listening on 127.0.0.1:25868 (bearer token required)
+mongo-server listening on 127.0.0.1:30328 (idle close after 600 s, holder Hinc5def, lease ttl 2 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:43556
+LEASE process_lease tenant=- holder=Hinc5def unix_ms=1794620694023 inc=c6dd8164a9395501 gen=1
+LEASE acquired tenant=inc5 holder=Hinc5def unix_ms=1794620694024 takeover_from=-
+LEASE acquired tenant=inc5 holder=Hinc5def unix_ms=1794620694027 takeover_from=- new=true
+LEASE writer_open tenant=inc5 holder=Hinc5def unix_ms=1794620694034 
+TEST commit wait held 12000 ms db=inc5
+SLOW hello db=admin ms=10001 ok=true
+SLOW insert db=inc5 ms=12014 ok=true
+TEST commit wait held 12000 ms db=inc5
+FAULT delay_put processes/Hinc5def/_lease 3500
+LEASE process_lease_late tenant=- holder=Hinc5def unix_ms=1794620710247 abandoned=1
+LEASE lost tenant=inc5 holder=Hinc5def unix_ms=1794620710247 process_lease_late
+TIMING abandon db=inc5 stop_fxc_ms=0 tenant_abandon_ms=1 closed=true
+LEASE writer_close tenant=inc5 holder=Hinc5def unix_ms=1794620710249 
+LEASE process_lease_lapsed tenant=- holder=Hinc5def unix_ms=1794620710345 gen=2 abandoned=0
+SLOW hello db=admin ms=10001 ok=true
+SLOW update db=inc5 ms=12001 ok=false
+LEASE acquired tenant=inc5 holder=Hinc5def unix_ms=1794620718045 takeover_from=-
+LEASE takeover_wake tenant=inc5 holder=Hinc5def unix_ms=1794620718053 unclean=true takeover_from=-

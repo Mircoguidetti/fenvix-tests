@@ -1,0 +1,50 @@
+..F                                                                      [100%]
+=================================== FAILURES ===================================
+_ test_reads_of_an_absent_database_leave_nothing_and_a_dropped_one_keeps_its_usage _
+test_73_absent_leaves_no_usage.py:107: in test_reads_of_an_absent_database_leave_nothing_and_a_dropped_one_keeps_its_usage
+    assert left == {"gone": [], "never": []}, left
+E   AssertionError: {'gone': ['tenants/gone/_lease'], 'never': ['tenants/never/_lease']}
+E   assert {'gone': ['te...ever/_lease']} == {'gone': [], 'never': []}
+E     
+E     Differing items:
+E     {'gone': ['tenants/gone/_lease']} != {'gone': []}
+E     {'never': ['tenants/never/_lease']} != {'never': []}
+E     
+E     Full diff: (-: missing in left side, +: extra in left side)
+E       {
+E     -     'gone': [],
+E     ?              --
+E     +     'gone': [
+E     +         'tenants/gone/_lease',
+E     +     ],
+E     -     'never': [],
+E     ?               --
+E     +     'never': [
+E     +         'tenants/never/_lease',
+E     +     ],
+E       }
+----------------------------- Captured stdout call -----------------------------
+usage query of the dropped database: 404
+objects left under absent names: {'gone': ['tenants/gone/_lease'], 'never': ['tenants/never/_lease']}; usage records of the dropped database before ['control/usage/dropped/2026-11-14/absreads-26097-24b59fd8.json'], after ['control/usage/dropped/2026-11-14/absreads-26097-24b59fd8.json']
+=========================== short test summary info ============================
+FAILED test_73_absent_leaves_no_usage.py::test_reads_of_an_absent_database_leave_nothing_and_a_dropped_one_keeps_its_usage - AssertionError: {'gone': ['tenants/gone/_lease'], 'never': ['tenants/never/_lease']}
+assert {'gone': ['te...ever/_lease']} == {'gone': [], 'never': []}
+  
+  Differing items:
+  {'gone': ['tenants/gone/_lease']} != {'gone': []}
+  {'never': ['tenants/never/_lease']} != {'never': []}
+  
+  Full diff: (-: missing in left side, +: extra in left side)
+    {
+  -     'gone': [],
+  ?              --
+  +     'gone': [
+  +         'tenants/gone/_lease',
+  +     ],
+  -     'never': [],
+  ?               --
+  +     'never': [
+  +         'tenants/never/_lease',
+  +     ],
+    }
+1 failed, 2 passed in 20.40s

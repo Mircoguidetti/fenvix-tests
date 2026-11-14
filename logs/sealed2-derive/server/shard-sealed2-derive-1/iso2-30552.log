@@ -1,0 +1,45 @@
+memory budget: limit 15983 MiB (memtotal), caches 7479 MiB (block 3365, meta 1121, sealed 2991), memtable 8 MiB, first course 998 MiB, change log 32 MiB, L0 reads at once 4
+box disk floor: 4096 MiB in /tmp/fenvix-box-floor-30552
+memory budget (review round): box 373 MiB per customer, 747 MiB in flight; memtables of every database 1997 MiB (writes wait past 2996 MiB); merge read-ahead 499 MiB; absorption 16 L0 SSTs
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+admin interface listening on 127.0.0.1:32213 (bearer token required)
+mongo-server listening on 127.0.0.1:30552 (idle close after 600 s, holder iso2-30552, lease ttl 6 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:54970
+LEASE process_lease tenant=- holder=iso2-30552 unix_ms=1794617045825 inc=509b272780fc3747 gen=1
+LEASE acquired tenant=q holder=iso2-30552 unix_ms=1794617045827 takeover_from=-
+LEASE acquired tenant=q holder=iso2-30552 unix_ms=1794617045832 takeover_from=- new=true
+LEASE writer_open tenant=q holder=iso2-30552 unix_ms=1794617045845 
+FXC not started db=q reason=no_version_of_our_manifest unix_ms=1794617045845
+LEASE acquired tenant=free holder=iso2-30552 unix_ms=1794617045854 takeover_from=-
+LEASE acquired tenant=free holder=iso2-30552 unix_ms=1794617045858 takeover_from=- new=true
+FIRST_PUBLISH u=1794617045863 db=q version=1 x_d=3 rows=405 build_ms=14 off_lock=1
+LEASE writer_open tenant=free holder=iso2-30552 unix_ms=1794617045872 
+FXC not started db=free reason=no_version_of_our_manifest unix_ms=1794617045872
+ADMIN PUT /v1/databases/q/quota -> 200 0 ms peer=127.0.0.1:54974
+ADMIN GET /v1/databases/q/quota -> 200 0 ms peer=127.0.0.1:54982
+ADMIN PUT /v1/databases/q/quota -> 400 0 ms peer=127.0.0.1:54990
+FIRST_PUBLISH u=1794617045888 db=free version=1 x_d=2 rows=6 build_ms=13 off_lock=1
+L0_TRACE u=1794617046892.8518 db=q l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794617046915.049 db=free l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+ADMIN GET /v1/metrics/databases -> 200 0 ms peer=127.0.0.1:55000
+ADMIN GET /v1/metrics/databases -> 200 0 ms peer=127.0.0.1:55006
+ADMIN DELETE /v1/databases/q/quota -> 200 0 ms peer=127.0.0.1:55016
+ADMIN GET /v1/metrics/databases -> 200 0 ms peer=127.0.0.1:55020
+ADMIN GET /v1/metrics/databases -> 200 0 ms peer=127.0.0.1:55026
+shutting down: closing tenants cleanly
+ABSORB u=1794617047162.883 db=q ssts=1 rows=0 raw_kib=0 committed=1 l0_start=1 l0_end=1 lock_ms=0 read_ms=1 write_ms=0 commit_ms=2 total_ms=4
+LEASE writer_close tenant=q holder=iso2-30552 unix_ms=1794617047172 
+LEASE release_begin tenant=q holder=iso2-30552 unix_ms=1794617047172 
+LEASE release tenant=q holder=iso2-30552 unix_ms=1794617047174 ok=true
+ABSORB u=1794617047179.9119 db=free ssts=1 rows=1 raw_kib=0 committed=1 l0_start=1 l0_end=1 lock_ms=0 read_ms=1 write_ms=4 commit_ms=2 total_ms=8
+LEASE writer_close tenant=free holder=iso2-30552 unix_ms=1794617047269 
+LEASE release_begin tenant=free holder=iso2-30552 unix_ms=1794617047269 
+LEASE release tenant=free holder=iso2-30552 unix_ms=1794617047271 ok=true
+maintenance shutdown: waiting for the L0 watch unix_ms=1794617047271
+maintenance shutdown: waiting for the dispatcher unix_ms=1794617047751
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794617047751
+maintenance shutdown: waiting for the GC task unix_ms=1794617047751
+maintenance shutdown: done unix_ms=1794617049751
+TIMING shutdown close_ms=121 aborts_ms=0 tail_ms=2479 deadline_cuts=0 left_behind=0 held_at_deadline=0 optional_skipped=0
+tenants closed; stopping maintenance (done with the steps above)
+maintenance stopped (2601 ms)

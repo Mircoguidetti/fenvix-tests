@@ -1,0 +1,47 @@
+memory budget: limit 15701 MiB (memtotal), caches 7338 MiB (block 3302, meta 1100, sealed 2935), memtable 8 MiB, first course 981 MiB, change log 32 MiB, L0 reads at once 4
+box disk floor: 4096 MiB in /tmp/fenvix-box-floor-30197
+memory budget (review round): box 366 MiB per customer, 733 MiB in flight; memtables of every database 1962 MiB (writes wait past 2944 MiB); merge read-ahead 490 MiB; absorption 16 L0 SSTs
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+admin interface listening on 127.0.0.1:20039 (bearer token required)
+mongo-server listening on 127.0.0.1:30197 (idle close after 300 s, holder unlisted-30197, lease ttl 6 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:55698
+LEASE process_lease tenant=- holder=unlisted-30197 unix_ms=1794618730872 inc=b0bcab0710f53134 gen=1
+LEASE acquired tenant=victim holder=unlisted-30197 unix_ms=1794618730873 takeover_from=-
+LEASE acquired tenant=victim holder=unlisted-30197 unix_ms=1794618730876 takeover_from=- new=true
+LEASE writer_open tenant=victim holder=unlisted-30197 unix_ms=1794618730884 
+FXC not started db=victim reason=no_version_of_our_manifest unix_ms=1794618730884
+LEASE acquired tenant=keep holder=unlisted-30197 unix_ms=1794618730890 takeover_from=-
+LEASE acquired tenant=keep holder=unlisted-30197 unix_ms=1794618730892 takeover_from=- new=true
+FIRST_PUBLISH u=1794618730894 db=victim version=1 x_d=3 rows=205 build_ms=8 off_lock=1
+LEASE writer_open tenant=keep holder=unlisted-30197 unix_ms=1794618730901 
+FXC not started db=keep reason=no_version_of_our_manifest unix_ms=1794618730901
+FIRST_PUBLISH u=1794618730910 db=keep version=1 x_d=3 rows=7 build_ms=7 off_lock=1
+ABSORB u=1794618730952.7327 db=victim ssts=1 rows=0 raw_kib=0 committed=1 l0_start=1 l0_end=1 lock_ms=0 read_ms=0 write_ms=0 commit_ms=1 total_ms=2
+LEASE writer_close tenant=victim holder=unlisted-30197 unix_ms=1794618731017 
+LEASE release_begin tenant=victim holder=unlisted-30197 unix_ms=1794618731017 
+LEASE release tenant=victim holder=unlisted-30197 unix_ms=1794618731018 ok=true
+TIMING abandon db=victim stop_fxc_ms=0 tenant_abandon_ms=0 closed=true
+LEASE acquired tenant=admin holder=unlisted-30197 unix_ms=1794618731050 takeover_from=-
+ADMIN DELETE /v1/databases/victim -> 200 39 ms peer=127.0.0.1:55708
+ADMIN GET /v1/databases/victim -> 404 0 ms peer=127.0.0.1:55712
+LEASE acquired tenant=victim holder=unlisted-30197 unix_ms=1794618731099 takeover_from=gone
+LEASE acquired tenant=victim holder=unlisted-30197 unix_ms=1794618731105 takeover_from=- new=true
+LEASE writer_open tenant=victim holder=unlisted-30197 unix_ms=1794618731113 
+FXC not started db=victim reason=no_version_of_our_manifest unix_ms=1794618731113
+shutting down: closing tenants cleanly
+FIRST_PUBLISH u=1794618731123 db=victim version=1 x_d=3 rows=7 build_ms=8 off_lock=1
+LEASE writer_close tenant=victim holder=unlisted-30197 unix_ms=1794618731131 
+LEASE release_begin tenant=victim holder=unlisted-30197 unix_ms=1794618731131 
+LEASE release tenant=victim holder=unlisted-30197 unix_ms=1794618731132 ok=true
+ABSORB u=1794618731170.4138 db=keep ssts=1 rows=0 raw_kib=0 committed=1 l0_start=1 l0_end=1 lock_ms=0 read_ms=0 write_ms=0 commit_ms=1 total_ms=2
+LEASE writer_close tenant=keep holder=unlisted-30197 unix_ms=1794618731234 
+LEASE release_begin tenant=keep holder=unlisted-30197 unix_ms=1794618731234 
+LEASE release tenant=keep holder=unlisted-30197 unix_ms=1794618731247 ok=true
+maintenance shutdown: waiting for the L0 watch unix_ms=1794618731247
+maintenance shutdown: waiting for the dispatcher unix_ms=1794618731794
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794618731794
+maintenance shutdown: waiting for the GC task unix_ms=1794618731794
+maintenance shutdown: done unix_ms=1794618732794
+TIMING shutdown close_ms=126 aborts_ms=0 tail_ms=1547 deadline_cuts=0 left_behind=0 held_at_deadline=0 optional_skipped=0
+tenants closed; stopping maintenance (done with the steps above)
+maintenance stopped (1673 ms)

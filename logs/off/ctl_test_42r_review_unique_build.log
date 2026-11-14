@@ -1,0 +1,91 @@
+..                                                                       [100%]
+=============================== warnings summary ===============================
+test_42r_review_unique_build.py::test_unique_build_with_duplicate_written_behind_the_cursor[ours]
+  /home/runner/.fenvix-judge/env/lib/python3.12/site-packages/_pytest/threadexception.py:54: PytestUnhandledThreadExceptionWarning: Exception in thread Thread-1 (build)
+  
+  Traceback (most recent call last):
+    File "/home/runner/.fenvix-judge/env/lib/python3.12/site-packages/pymongo/synchronous/pool.py", line 455, in receive_message
+      return receive_message(self, request_id, self.max_message_size)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "/home/runner/.fenvix-judge/env/lib/python3.12/site-packages/pymongo/network_layer.py", line 748, in receive_message
+      length, _, response_to, op_code = _UNPACK_HEADER(receive_data(conn, 16, deadline))
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "/home/runner/.fenvix-judge/env/lib/python3.12/site-packages/pymongo/network_layer.py", line 331, in receive_data
+      chunk_length = conn.conn.recv_into(mv[bytes_read:])
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "/home/runner/.fenvix-judge/env/lib/python3.12/site-packages/pymongo/network_layer.py", line 443, in recv_into
+      return self.conn.recv_into(buffer)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  TimeoutError: timed out
+  
+  The above exception was the direct cause of the following exception:
+  
+  Traceback (most recent call last):
+    File "/home/runner/.fenvix-judge/env/lib/python3.12/threading.py", line 1075, in _bootstrap_inner
+      self.run()
+    File "/home/runner/.fenvix-judge/env/lib/python3.12/threading.py", line 1012, in run
+      self._target(*self._args, **self._kwargs)
+    File "/home/runner/work/fenvix-tests/fenvix-tests/engine/ctl-tests/test_42r_review_unique_build.py", line 64, in build
+      co.create_index("k", unique=True)
+    File "/home/runner/.fenvix-judge/env/lib/python3.12/site-packages/pymongo/synchronous/collection.py", line 2369, in create_index
+      return (self._create_indexes([index], session, **cmd_options))[0]
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "/home/runner/.fenvix-judge/env/lib/python3.12/site-packages/pymongo/_csot.py", line 126, in csot_wrapper
+      return func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "/home/runner/.fenvix-judge/env/lib/python3.12/site-packages/pymongo/synchronous/collection.py", line 2251, in _create_indexes
+      return self.database.client._retryable_write(False, inner, session, _Op.CREATE_INDEXES)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "/home/runner/.fenvix-judge/env/lib/python3.12/site-packages/pymongo/synchronous/mongo_client.py", line 2154, in _retryable_write
+      return self._retry_with_session(retryable, func, s, bulk, operation, operation_id)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "/home/runner/.fenvix-judge/env/lib/python3.12/site-packages/pymongo/synchronous/mongo_client.py", line 2024, in _retry_with_session
+      return self._retry_internal(
+             ^^^^^^^^^^^^^^^^^^^^^
+    File "/home/runner/.fenvix-judge/env/lib/python3.12/site-packages/pymongo/_csot.py", line 126, in csot_wrapper
+      return func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "/home/runner/.fenvix-judge/env/lib/python3.12/site-packages/pymongo/synchronous/mongo_client.py", line 2077, in _retry_internal
+      ).run()
+        ^^^^^
+    File "/home/runner/.fenvix-judge/env/lib/python3.12/site-packages/pymongo/synchronous/mongo_client.py", line 2947, in run
+      res = self._read() if self._is_read else self._write()
+                                               ^^^^^^^^^^^^^
+    File "/home/runner/.fenvix-judge/env/lib/python3.12/site-packages/pymongo/synchronous/mongo_client.py", line 3160, in _write
+      return self._func(self._session, conn, self._retryable)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "/home/runner/.fenvix-judge/env/lib/python3.12/site-packages/pymongo/synchronous/collection.py", line 2241, in inner
+      self._command(
+    File "/home/runner/.fenvix-judge/env/lib/python3.12/site-packages/pymongo/synchronous/collection.py", line 600, in _command
+      return conn.command(
+             ^^^^^^^^^^^^^
+    File "/home/runner/.fenvix-judge/env/lib/python3.12/site-packages/pymongo/synchronous/helpers.py", line 50, in inner
+      return func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+    File "/home/runner/.fenvix-judge/env/lib/python3.12/site-packages/pymongo/synchronous/pool.py", line 430, in command
+      self._raise_connection_failure(error)
+    File "/home/runner/.fenvix-judge/env/lib/python3.12/site-packages/pymongo/synchronous/pool.py", line 576, in _raise_connection_failure
+      raise error
+    File "/home/runner/.fenvix-judge/env/lib/python3.12/site-packages/pymongo/synchronous/pool.py", line 405, in command
+      return run_command(
+             ^^^^^^^^^^^^
+    File "/home/runner/.fenvix-judge/env/lib/python3.12/site-packages/pymongo/synchronous/command_runner.py", line 440, in run_command
+      docs, _, _ = _run_command(
+                   ^^^^^^^^^^^^^
+    File "/home/runner/.fenvix-judge/env/lib/python3.12/site-packages/pymongo/synchronous/command_runner.py", line 192, in _run_command
+      reply = conn.receive_message(request_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "/home/runner/.fenvix-judge/env/lib/python3.12/site-packages/pymongo/synchronous/pool.py", line 458, in receive_message
+      self._raise_connection_failure(error)
+    File "/home/runner/.fenvix-judge/env/lib/python3.12/site-packages/pymongo/synchronous/pool.py", line 574, in _raise_connection_failure
+      _raise_connection_failure(self.address, error, timeout_details=details)
+    File "/home/runner/.fenvix-judge/env/lib/python3.12/site-packages/pymongo/pool_shared.py", line 167, in _raise_connection_failure
+      raise NetworkTimeout(msg) from error
+  pymongo.errors.NetworkTimeout: 127.0.0.1:31061: timed out (configured timeouts: socketTimeoutMS: 120000.0ms, connectTimeoutMS: 20000.0ms)
+  
+  Enable tracemalloc to get traceback where the object was allocated.
+  See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+    warnings.warn(pytest.PytestUnhandledThreadExceptionWarning(msg))
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+2 passed, 1 warning in 122.65s (0:02:02)

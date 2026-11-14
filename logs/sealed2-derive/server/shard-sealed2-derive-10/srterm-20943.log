@@ -1,0 +1,48 @@
+memory budget: limit 15983 MiB (memtotal), caches 7479 MiB (block 3365, meta 1121, sealed 2991), memtable 8 MiB, first course 998 MiB, change log 32 MiB, L0 reads at once 4
+box disk floor: 4096 MiB in /tmp/fenvix-box-floor-20943
+memory budget (review round): box 373 MiB per customer, 747 MiB in flight; memtables of every database 1997 MiB (writes wait past 2996 MiB); merge read-ahead 499 MiB; absorption 16 L0 SSTs
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+admin interface listening on 127.0.0.1:26470 (bearer token required)
+mongo-server listening on 127.0.0.1:20943 (idle close after 600 s, holder srterm-20943, lease ttl 30 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:60610
+LEASE process_lease tenant=- holder=srterm-20943 unix_ms=1794618783753 inc=67fad9be6ce36ec8 gen=1
+LEASE acquired tenant=d holder=srterm-20943 unix_ms=1794618783838 takeover_from=-
+LEASE acquired tenant=d holder=srterm-20943 unix_ms=1794618784008 takeover_from=- new=true
+LEASE writer_open tenant=d holder=srterm-20943 unix_ms=1794618784279 
+FXC not started db=d reason=no_version_of_our_manifest unix_ms=1794618784280
+SLOW insert db=d ms=577 ok=true
+FIRST_PUBLISH db=d failed build_ms=2370: Generic S3 error: Error performing POST http://127.0.0.1:40597/ctl-srterm-f7201d64/tenants/d/fx/run/g0/00000000000000000003-1-a210189f?uploads= in 2.368011809s, after 10 retries, max_retries: 10, retry_timeout: 180s  - Server returned non-2xx status code: 507 Insufficient Storage: <?xml version="1.0" encoding="UTF-8"?>
+<Error><Code>XMinioStorageFull</Code><Message>Storage backend has reached its minimum free drive threshold.</Message></Error>: Error performing POST http://127.0.0.1:40597/ctl-srterm-f7201d64/tenants/d/fx/run/g0/00000000000000000003-1-a210189f?uploads= in 2.368011809s, after 10 retries, max_retries: 10, retry_timeout: 180s  - Server returned non-2xx status code: 507 Insufficient Storage: <?xml version="1.0" encoding="UTF-8"?>
+<Error><Code>XMinioStorageFull</Code><Message>Storage backend has reached its minimum free drive threshold.</Message></Error>: Server returned non-2xx status code: 507 Insufficient Storage: <?xml version="1.0" encoding="UTF-8"?>
+<Error><Code>XMinioStorageFull</Code><Message>Storage backend has reached its minimum free drive threshold.</Message></Error>
+sealed runs: first publish of database d failed: Generic S3 error: Error performing POST http://127.0.0.1:40597/ctl-srterm-f7201d64/tenants/d/fx/run/g0/00000000000000000003-1-a210189f?uploads= in 2.368011809s, after 10 retries, max_retries: 10, retry_timeout: 180s  - Server returned non-2xx status code: 507 Insufficient Storage: <?xml version="1.0" encoding="UTF-8"?>
+<Error><Code>XMinioStorageFull</Code><Message>Storage backend has reached its minimum free drive threshold.</Message></Error>: Error performing POST http://127.0.0.1:40597/ctl-srterm-f7201d64/tenants/d/fx/run/g0/00000000000000000003-1-a210189f?uploads= in 2.368011809s, after 10 retries, max_retries: 10, retry_timeout: 180s  - Server returned non-2xx status code: 507 Insufficient Storage: <?xml version="1.0" encoding="UTF-8"?>
+<Error><Code>XMinioStorageFull</Code><Message>Storage backend has reached its minimum free drive threshold.</Message></Error>: Server returned non-2xx status code: 507 Insufficient Storage: <?xml version="1.0" encoding="UTF-8"?>
+<Error><Code>XMinioStorageFull</Code><Message>Storage backend has reached its minimum free drive threshold.</Message></Error>
+SLOW_PUT u=1794618786758 db=d kind=wal ms=2461 bytes=341
+SLOW_PUT u=1794618788994 db=d kind=wal ms=2135 bytes=341
+shutting down: closing tenants cleanly
+SLOW_PUT u=1794618792114 db=d kind=l0 ms=2826 bytes=754
+SLOW hello db=admin ms=10001 ok=true
+SLOW hello db=admin ms=10001 ok=true
+SLOW_PUT u=1794618794818 db=d kind=l0 ms=2602 bytes=754
+SLOW_PUT u=1794618796095 db=d kind=wal ms=6900 bytes=341
+close of tenant d: final flush did not finish in 6.999879795s; closing without it (unclean)
+SLOW_PUT u=1794618796972 db=d kind=l0 ms=1953 bytes=754
+close of tenant d: SlateDB's close without a flush did not end in 1s; left behind, the lease is kept
+TIMING close db=d hint_ms=0 fxc_ms=0 tenant_ms=8002 ok=false stopped=false
+LEASE writer_close tenant=d holder=srterm-20943 unix_ms=1794618797289 
+close of d failed: final flush timed out
+maintenance shutdown: waiting for the L0 watch unix_ms=1794618797290
+maintenance shutdown: waiting for the dispatcher unix_ms=1794618797553
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794618797553
+maintenance shutdown: waiting for the GC task unix_ms=1794618797553
+process lease renewal failed: Generic S3 error: Error performing PUT http://127.0.0.1:40597/ctl-srterm-f7201d64/processes/srterm-20943/_lease in 4.044922034s, after 10 retries, max_retries: 10, retry_timeout: 180s  - Server returned non-2xx status code: 507 Insufficient Storage: <?xml version="1.0" encoding="UTF-8"?>
+<Error><Code>XMinioStorageFull</Code><Message>Storage backend has reached its minimum free drive threshold.</Message></Error>
+SLOW_PUT u=1794618798389 db=d kind=wal ms=1892 bytes=341
+shutdown: the pins and the last usage counters were not written in time
+shutdown: the process lease was not released in time; it runs out by itself
+shutdown: maintenance did not stop in time
+TIMING shutdown close_ms=8002 aborts_ms=0 tail_ms=1999 deadline_cuts=1 left_behind=1 held_at_deadline=0 optional_skipped=0
+tenants closed; stopping maintenance (done with the steps above)
+maintenance stopped (10002 ms)

@@ -1,0 +1,59 @@
+memory budget: limit 15983 MiB (memtotal), caches 7479 MiB (block 3365, meta 1121, sealed 2991), memtable 8 MiB, first course 998 MiB, change log 32 MiB, L0 reads at once 4
+box disk floor: 4096 MiB in /tmp/fenvix-box-floor-25224
+memory budget (review round): box 373 MiB per customer, 747 MiB in flight; memtables of every database 1997 MiB (writes wait past 2996 MiB); merge read-ahead 499 MiB; absorption 16 L0 SSTs
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+admin interface listening on 127.0.0.1:30959 (bearer token required)
+mongo-server listening on 127.0.0.1:25224 (idle close after 300 s, holder ec-25224, lease ttl 6 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:57832
+LEASE process_lease tenant=- holder=ec-25224 unix_ms=1794618449592 inc=c43a1211fe8326be gen=1
+LEASE acquired tenant=victim holder=ec-25224 unix_ms=1794618449593 takeover_from=-
+LEASE acquired tenant=victim holder=ec-25224 unix_ms=1794618449605 takeover_from=- new=true
+LEASE writer_open tenant=victim holder=ec-25224 unix_ms=1794618449613 
+FXC not started db=victim reason=no_version_of_our_manifest unix_ms=1794618449613
+FIRST_PUBLISH u=1794618449633 db=victim version=1 x_d=3 rows=4005 build_ms=13 off_lock=1
+LEASE writer_close tenant=victim holder=ec-25224 unix_ms=1794618449645 
+LEASE release_begin tenant=victim holder=ec-25224 unix_ms=1794618449645 
+LEASE release tenant=victim holder=ec-25224 unix_ms=1794618449646 ok=true
+LEASE acquired tenant=bystander holder=ec-25224 unix_ms=1794618449650 takeover_from=-
+LEASE acquired tenant=bystander holder=ec-25224 unix_ms=1794618449652 takeover_from=- new=true
+LEASE writer_open tenant=bystander holder=ec-25224 unix_ms=1794618449659 
+FXC not started db=bystander reason=no_version_of_our_manifest unix_ms=1794618449659
+LEASE acquired tenant=admin holder=ec-25224 unix_ms=1794618449671 takeover_from=-
+FIRST_PUBLISH u=1794618449672 db=bystander version=1 x_d=3 rows=605 build_ms=10 off_lock=1
+LEASE release_begin tenant=victim holder=ec-25224 unix_ms=1794618449718 
+LEASE release tenant=victim holder=ec-25224 unix_ms=1794618449719 ok=true
+LEASE release_begin tenant=victim2 holder=ec-25224 unix_ms=1794618449722 
+LEASE release tenant=victim2 holder=ec-25224 unix_ms=1794618449724 ok=true
+ADMIN POST /v1/databases/victim/fork -> 201 56 ms peer=127.0.0.1:57846
+TIMING abandon db=victim2 stop_fxc_ms=0 tenant_abandon_ms=0 closed=true
+FAILPOINT erase.after_tenant reached
+memory budget: limit 15983 MiB (memtotal), caches 7479 MiB (block 3365, meta 1121, sealed 2991), memtable 8 MiB, first course 998 MiB, change log 32 MiB, L0 reads at once 4
+box disk floor: 4096 MiB in /tmp/fenvix-box-floor-25224
+memory budget (review round): box 373 MiB per customer, 747 MiB in flight; memtables of every database 1997 MiB (writes wait past 2996 MiB); merge read-ahead 499 MiB; absorption 16 L0 SSTs
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+ctl recovery: erase of victim2 was interrupted; finishing it
+TIMING abandon db=victim2 stop_fxc_ms=0 tenant_abandon_ms=0 closed=true
+LEASE process_lease tenant=- holder=ec-25224 unix_ms=1794618449970 inc=5ea39e0932a33212 gen=1
+LEASE acquired tenant=admin holder=ec-25224 unix_ms=1794618449973 takeover_from=-
+ctl recovery: erase of victim2 finished
+admin interface listening on 127.0.0.1:30959 (bearer token required)
+mongo-server listening on 127.0.0.1:25224 (idle close after 300 s, holder ec-25224, lease ttl 6 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:57882
+ADMIN GET /v1/databases/victim2 -> 404 1 ms peer=127.0.0.1:57898
+LEASE acquired tenant=bystander holder=ec-25224 unix_ms=1794618450078 takeover_from=-
+LEASE takeover_wake tenant=bystander holder=ec-25224 unix_ms=1794618450085 unclean=true takeover_from=-
+ADMIN GET /v1/databases/victim/checkpoints -> 200 2 ms peer=127.0.0.1:57904
+LEASE acquired tenant=victim holder=ec-25224 unix_ms=1794618450098 takeover_from=-
+TIMING abandon db=victim stop_fxc_ms=0 tenant_abandon_ms=0 closed=true
+ADMIN DELETE /v1/databases/victim -> 200 35 ms peer=127.0.0.1:57916
+shutting down: closing tenants cleanly
+LEASE release_begin tenant=bystander holder=ec-25224 unix_ms=1794618450189 
+LEASE release tenant=bystander holder=ec-25224 unix_ms=1794618450191 ok=true
+maintenance shutdown: waiting for the L0 watch unix_ms=1794618450191
+maintenance shutdown: waiting for the dispatcher unix_ms=1794618450959
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794618450959
+maintenance shutdown: waiting for the GC task unix_ms=1794618450959
+maintenance shutdown: done unix_ms=1794618451959
+TIMING shutdown close_ms=2 aborts_ms=0 tail_ms=1768 deadline_cuts=0 left_behind=0 held_at_deadline=0 optional_skipped=0
+tenants closed; stopping maintenance (done with the steps above)
+maintenance stopped (1770 ms)

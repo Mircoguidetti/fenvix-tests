@@ -1,0 +1,21 @@
+TEST FAULT INJECTION ON (/tmp/tkrfagtjl1cpv): never use this in production
+memory budget: limit 15701 MiB (memtotal), caches 7338 MiB (block 3302, meta 1100, sealed 2935), memtable 8 MiB, first course 981 MiB, change log 32 MiB, L0 reads at once 4
+box disk floor: 4096 MiB in /tmp/fenvix-box-floor-25309
+memory budget (review round): box 366 MiB per customer, 733 MiB in flight; memtables of every database 1962 MiB (writes wait past 2944 MiB); merge read-ahead 490 MiB; absorption 16 L0 SSTs
+TEST: the old handling of kept records is on (MONGO_TEST_KEPT_RETRY_OLD): it loses acknowledged writes; never use this in production
+quaderno: writes are acknowledged by the replicated log at 127.0.0.1:20735,127.0.0.1:26291,127.0.0.1:38012
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+quaderno: restart read 120 records of 1 databases from the log
+LEASE process_lease tenant=- holder=tkra-25309 unix_ms=1794620679932 inc=29bec0dcb0e89313 gen=1
+local log: replay of database tkr failed (tenant tkr is owned by server process tkrb-26304 (lease valid for another 5198 ms); retry); its 120 records are kept, the database is refused until they are applied
+FAULT hold_kept_records tkr
+FAULT hold_kept_records released tkr
+local log: 1 databases kept their records; retried in the background
+quaderno: restart applied 0 records to 0 databases in 6.4 s
+admin interface listening on 127.0.0.1:39772 (bearer token required)
+mongo-server listening on 127.0.0.1:25309 (idle close after 600 s, holder tkra-25309, lease ttl 6 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:49398
+local log: database tkr: kept records applied by the retry; the database is open again
+LEASE process_lease_revoked tenant=tkr holder=tkra-25309 unix_ms=1794620695453 of=tkrb-26304
+LEASE acquired tenant=tkr holder=tkra-25309 unix_ms=1794620695455 takeover_from=tkrb-26304
+LEASE takeover_wake tenant=tkr holder=tkra-25309 unix_ms=1794620695463 unclean=true takeover_from=tkrb-26304

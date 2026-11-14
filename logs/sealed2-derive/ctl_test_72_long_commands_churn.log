@@ -1,0 +1,56 @@
+..F                                                                      [100%]
+=================================== FAILURES ===================================
+___________________ test_takeover_in_the_middle_of_a_cursor ____________________
+test_72_long_commands_churn.py:150: in test_takeover_in_the_middle_of_a_cursor
+    c2.d.t.delete_many({"_id": {"$gte": 3000, "$lt": 3500}})
+/home/runner/.fenvix-judge/env/lib/python3.12/site-packages/pymongo/synchronous/collection.py:1684: in delete_many
+    self._delete_retryable(
+/home/runner/.fenvix-judge/env/lib/python3.12/site-packages/pymongo/synchronous/collection.py:1560: in _delete_retryable
+    return self._database.client._retryable_write(
+/home/runner/.fenvix-judge/env/lib/python3.12/site-packages/pymongo/synchronous/mongo_client.py:2154: in _retryable_write
+    return self._retry_with_session(retryable, func, s, bulk, operation, operation_id)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/runner/.fenvix-judge/env/lib/python3.12/site-packages/pymongo/synchronous/mongo_client.py:2024: in _retry_with_session
+    return self._retry_internal(
+/home/runner/.fenvix-judge/env/lib/python3.12/site-packages/pymongo/_csot.py:126: in csot_wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/runner/.fenvix-judge/env/lib/python3.12/site-packages/pymongo/synchronous/mongo_client.py:2077: in _retry_internal
+    ).run()
+      ^^^^^
+/home/runner/.fenvix-judge/env/lib/python3.12/site-packages/pymongo/synchronous/mongo_client.py:2947: in run
+    res = self._read() if self._is_read else self._write()
+                                             ^^^^^^^^^^^^^
+/home/runner/.fenvix-judge/env/lib/python3.12/site-packages/pymongo/synchronous/mongo_client.py:3160: in _write
+    return self._func(self._session, conn, self._retryable)  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/runner/.fenvix-judge/env/lib/python3.12/site-packages/pymongo/synchronous/collection.py:1545: in _delete
+    return self._delete(
+/home/runner/.fenvix-judge/env/lib/python3.12/site-packages/pymongo/synchronous/collection.py:1515: in _delete
+    result = conn.command(
+/home/runner/.fenvix-judge/env/lib/python3.12/site-packages/pymongo/synchronous/helpers.py:50: in inner
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+/home/runner/.fenvix-judge/env/lib/python3.12/site-packages/pymongo/synchronous/pool.py:405: in command
+    return run_command(
+/home/runner/.fenvix-judge/env/lib/python3.12/site-packages/pymongo/synchronous/command_runner.py:440: in run_command
+    docs, _, _ = _run_command(
+/home/runner/.fenvix-judge/env/lib/python3.12/site-packages/pymongo/synchronous/command_runner.py:214: in _run_command
+    helpers_shared._check_command_response(
+/home/runner/.fenvix-judge/env/lib/python3.12/site-packages/pymongo/helpers_shared.py:327: in _check_command_response
+    raise OperationFailure(errmsg, code, response, max_wire_version)
+E   pymongo.errors.OperationFailure: tenant d is owned by server process P1 (lease valid for another 2342 ms); retry, full error: {'ok': 0.0, 'errmsg': 'tenant d is owned by server process P1 (lease valid for another 2342 ms); retry', 'code': 134, 'codeName': 'TenantLeaseHeld', 'errorLabels': ['RetryableWriteError']}
+
+During handling of the above exception, another exception occurred:
+test_72_long_commands_churn.py:154: in test_takeover_in_the_middle_of_a_cursor
+    assert time.time() < deadline, "P2 never took the database over"
+E   AssertionError: P2 never took the database over
+E   assert 1794619502.7772703 < 1794619502.6631544
+E    +  where 1794619502.7772703 = <built-in function time>()
+E    +    where <built-in function time> = time.time
+=========================== short test summary info ============================
+FAILED test_72_long_commands_churn.py::test_takeover_in_the_middle_of_a_cursor - AssertionError: P2 never took the database over
+assert 1794619502.7772703 < 1794619502.6631544
+ +  where 1794619502.7772703 = <built-in function time>()
+ +    where <built-in function time> = time.time
+1 failed, 2 passed in 95.15s (0:01:35)

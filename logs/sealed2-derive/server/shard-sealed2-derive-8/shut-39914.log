@@ -1,0 +1,37 @@
+memory budget: limit 15983 MiB (memtotal), caches 7479 MiB (block 3365, meta 1121, sealed 2991), memtable 8 MiB, first course 998 MiB, change log 32 MiB, L0 reads at once 4
+box disk floor: 4096 MiB in /tmp/fenvix-box-floor-39914
+memory budget (review round): box 373 MiB per customer, 747 MiB in flight; memtables of every database 1997 MiB (writes wait past 2996 MiB); merge read-ahead 499 MiB; absorption 16 L0 SSTs
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+admin interface listening on 127.0.0.1:28066 (bearer token required)
+mongo-server listening on 127.0.0.1:39914 (idle close after 300 s, holder shut-39914, lease ttl 6 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:52822
+LEASE process_lease tenant=- holder=shut-39914 unix_ms=1794617759303 inc=f016546f1e7b4689 gen=1
+LEASE acquired tenant=admin holder=shut-39914 unix_ms=1794617759305 takeover_from=-
+LEASE acquired tenant=admin holder=shut-39914 unix_ms=1794617759311 takeover_from=- new=true
+LEASE writer_open tenant=admin holder=shut-39914 unix_ms=1794617759321 
+FXC not started db=admin reason=no_version_of_our_manifest unix_ms=1794617759321
+LEASE acquired tenant=shdb holder=shut-39914 unix_ms=1794617759330 takeover_from=-
+LEASE acquired tenant=shdb holder=shut-39914 unix_ms=1794617759332 takeover_from=- new=true
+FIRST_PUBLISH u=1794617759333 db=admin version=1 x_d=3 rows=7 build_ms=9 off_lock=1
+LEASE writer_open tenant=shdb holder=shut-39914 unix_ms=1794617759343 
+FXC not started db=shdb reason=no_version_of_our_manifest unix_ms=1794617759343
+ADMIN POST /v1/databases -> 201 22 ms peer=127.0.0.1:52836
+FIRST_PUBLISH u=1794617759364 db=shdb version=1 x_d=2 rows=2 build_ms=9 off_lock=1
+ADMIN PUT /v1/databases/shdb/keep-awake -> 200 9 ms peer=127.0.0.1:52848
+shutting down: closing tenants cleanly
+ABSORB u=1794617759388.865 db=admin ssts=1 rows=0 raw_kib=0 committed=1 l0_start=1 l0_end=1 lock_ms=0 read_ms=0 write_ms=0 commit_ms=5 total_ms=6
+LEASE writer_close tenant=admin holder=shut-39914 unix_ms=1794617759396 
+LEASE release_begin tenant=admin holder=shut-39914 unix_ms=1794617759396 
+LEASE release tenant=admin holder=shut-39914 unix_ms=1794617759398 ok=true
+ABSORB u=1794617759550.6309 db=shdb ssts=1 rows=44 raw_kib=2 committed=1 l0_start=1 l0_end=1 lock_ms=0 read_ms=0 write_ms=128 commit_ms=2 total_ms=131
+LEASE writer_close tenant=shdb holder=shut-39914 unix_ms=1794617759558 
+LEASE release_begin tenant=shdb holder=shut-39914 unix_ms=1794617759558 
+LEASE release tenant=shdb holder=shut-39914 unix_ms=1794617759560 ok=true
+maintenance shutdown: waiting for the L0 watch unix_ms=1794617759560
+maintenance shutdown: waiting for the dispatcher unix_ms=1794617760226
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794617760226
+maintenance shutdown: waiting for the GC task unix_ms=1794617760226
+maintenance shutdown: done unix_ms=1794617761226
+TIMING shutdown close_ms=183 aborts_ms=0 tail_ms=1666 deadline_cuts=0 left_behind=0 held_at_deadline=0 optional_skipped=0
+tenants closed; stopping maintenance (done with the steps above)
+maintenance stopped (1850 ms)
