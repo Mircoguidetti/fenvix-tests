@@ -1,0 +1,192 @@
+SEED 301247 (steps 97): 1 violations; replays failing 2 of 2
+events 97 writes issued 20 key-writes acked 558 requests 619 faults 0; x3: log-acked 0 ack-refused 0 uploads 0 flush-done 0 restarts 0 replay-refused 0 kept-copies 0 retries 0 takeover-replays 0 (applied 0) drops 3 erases 0
+
+VIOLATIONS
+  fresh opening failed: Data error: failed to find latest transactional object (e.g. manifest) version
+
+MINIMAL SCRIPT (37 events; SIM_KEEP=0,37,38,39,40,41,42,43,44,45,46,47,48,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96), its run: 1 violations
+seed 301247 knobs 0 profile Profile { delay_ppm: 0, delay_max_ms: 0, fail_ppm: 0, timeout_before_ppm: 0, timeout_after_ppm: 0, timeout_ms: 0 }
+    0 Open { p: 0, writer: true }
+   37 Erase { p: 0, cust: 0 }
+   38 Abandon { p: 2 }
+   39 Hold { p: 1, class: FxOther, op: Some(Put), skip: 2, land: false, all: false, rid: 3 }
+   40 Publish { p: 1 }
+   41 Release { rid: 2 }
+   42 ErasePass { p: 0 }
+   43 FirstPoll { p: 1 }
+   44 FirstPoll { p: 1 }
+   45 Hold { p: 1, class: FxVersion, op: Some(List), skip: 0, land: true, all: false, rid: 4 }
+   46 ErasePass { p: 0 }
+   47 CompDrain { p: 0 }
+   48 Publish { p: 1 }
+   73 Open { p: 1, writer: true }
+   74 Open { p: 2, writer: false }
+   75 Upgrade { p: 2 }
+   76 Erase { p: 0, cust: 2 }
+   77 Kill { p: 0 }
+   78 Write { p: 1, ops: [(2, 19, false), (5, 22, false), (5, 14, false), (1, 13, false), (4, 16, false)] }
+   79 Hold { p: 1, class: Other, op: Some(Delete), skip: 0, land: false, all: false, rid: 7 }
+   80 Erase { p: 2, cust: 1 }
+   81 CompStart { p: 2 }
+   82 DropThrough { p: 2 }
+   83 DropDb { p: 2 }
+   84 Open { p: 2, writer: true }
+   85 Flush { p: 1 }
+   86 Flush { p: 2 }
+   87 FirstPoll { p: 1 }
+   88 Release { rid: 3 }
+   89 Hold { p: 1, class: SlateManifest, op: Some(Put), skip: 2, land: true, all: false, rid: 8 }
+   90 Open { p: 0, writer: true }
+   91 DropDb { p: 0 }
+   92 Flush { p: 0 }
+   93 ErasePass { p: 2 }
+   94 Write { p: 0, ops: [(0, 5, true), (5, 8, false), (3, 6, false)] }
+   95 FirstPoll { p: 0 }
+   96 Write { p: 0, ops: [(2, 11, true), (2, 12, true), (1, 23, true), (5, 8, false), (1, 3, false), (3, 9, false), (5, 12, false), (5, 18, false)] }
+  ! fresh opening failed: Data error: failed to find latest transactional object (e.g. manifest) version
+
+TRACE OF THE MINIMAL RUN
+  [0] seed 301247 knobs 0 profile Profile { delay_ppm: 0, delay_max_ms: 0, fail_ppm: 0, timeout_before_ppm: 0, timeout_after_ppm: 0, timeout_ms: 0 }
+  [0] [0] Open { p: 0, writer: true } -> opened as writer (life 0, incarnation 0, writer epoch Some(1), created)
+  [37] [37] Erase { p: 0, cust: 0 } -> deletes acked 24 keys; erasure 00000000000000000001-375b4fd0 registered, S_e 1
+  [38] [38] Abandon { p: 2 } -> not open (skipped)
+  [39] hold rule 3 armed: life 1 Some(Put) FxOther skip 2 land false all false
+  [40] [40] Publish { p: 1 } -> not open (skipped)
+  [41] hold rule 2 released (0 waiting)
+  [42] [42] ErasePass { p: 0 } -> no compactor (skipped)
+  [43] [43] FirstPoll { p: 1 } -> not open (skipped)
+  [44] [44] FirstPoll { p: 1 } -> not open (skipped)
+  [45] hold rule 4 armed: life 1 Some(List) FxVersion skip 0 land true all false
+  [46] [46] ErasePass { p: 0 } -> no compactor (skipped)
+  [47] [47] CompDrain { p: 0 } -> no compactor (skipped)
+  [48] [48] Publish { p: 1 } -> not open (skipped)
+  [73] held by rule 4: life 1 List tenants/sim-301247-26/fx/manifest/
+  [73] event 73 still in flight after 1.5s
+  [74] [74] Open { p: 2, writer: false } -> opened as reader (life 2, incarnation 0)
+  [75] [75] Upgrade { p: 2 } -> upgraded (epoch Some(2))
+  [76] [76] Erase { p: 0, cust: 2 } -> deletes: failed: Closed error: detected newer DB client
+  [77] kill -9 slot 0 (life 0)
+  [78] [78] Write { p: 1, ops: [(2, 19, false), (5, 22, false), (5, 14, false), (1, 13, false), (4, 16, false)] } -> busy (skipped)
+  [79] hold rule 7 armed: life 1 Some(Delete) Other skip 0 land false all false
+  [80] [80] Erase { p: 2, cust: 1 } -> deletes acked 24 keys; erasure 00000000000000000002-8d4d3530 registered, S_e 2
+  [81] [81] CompStart { p: 2 } -> no writer, no version, or a first build running (skipped)
+  [82] [82] DropThrough { p: 2 } -> no compactor (skipped)
+  [83] [83] DropDb { p: 2 } -> drop done: incarnation 0 -> 1, 13 objects deleted
+  [84] [84] Open { p: 2, writer: true } -> opened as writer (life 2, incarnation 1, writer epoch Some(1), created)
+  [85] [85] Flush { p: 1 } -> busy (skipped)
+  [86] [86] Flush { p: 2 } -> flushed
+  [87] [87] FirstPoll { p: 1 } -> busy (skipped)
+  [88] hold rule 3 released (0 waiting)
+  [89] hold rule 8 armed: life 1 Some(Put) SlateManifest skip 2 land true all false
+  [90] [90] Open { p: 0, writer: true } -> opened as writer (life 3, incarnation 1, writer epoch Some(2))
+  [91] [91] DropDb { p: 0 } -> drop done: incarnation 1 -> 2, 7 objects deleted
+  [92] [92] Flush { p: 0 } -> not open (skipped)
+  [93] [93] ErasePass { p: 2 } -> no compactor (skipped)
+  [94] [94] Write { p: 0, ops: [(0, 5, true), (5, 8, false), (3, 6, false)] } -> not open (skipped)
+  [95] [95] FirstPoll { p: 0 } -> not open (skipped)
+  [96] [96] Write { p: 0, ops: [(2, 11, true), (2, 12, true), (1, 23, true), (5, 8, false), (1, 3, false), (3, 9, false), (5, 12, fa -> not open (skipped)
+  [4294967295] rule 4 lets go after 1505 ms: life 1 List tenants/sim-301247-26/fx/manifest/ lands
+  [4294967295] [73] Open { p: 1, writer: true } -> opened as writer (life 1, incarnation 0, writer epoch Some(1))
+  [4294967295] settle: slot 1 close Ok(Ok(()))
+  [4294967295] settle: slot 2 close Ok(Ok(()))
+  [4294967295] oracle: incarnation 2 versions []: 
+
+FULL SCRIPT
+seed 301247 knobs 0 profile Profile { delay_ppm: 0, delay_max_ms: 0, fail_ppm: 0, timeout_before_ppm: 0, timeout_after_ppm: 0, timeout_ms: 0 }
+    0 Open { p: 0, writer: true }
+    1 Sleep { ms: 219 }
+    2 Publish { p: 0 }
+    3 CompStart { p: 0 }
+    4 Open { p: 1, writer: false }
+    5 CompDrain { p: 0 }
+    6 Write { p: 0, ops: [(1, 22, false), (3, 13, false), (5, 0, false), (4, 3, false), (3, 19, true)] }
+    7 ErasePass { p: 0 }
+    8 Open { p: 2, writer: true }
+    9 Flush { p: 2 }
+   10 Flush { p: 2 }
+   11 Close { p: 2 }
+   12 Sleep { ms: 168 }
+   13 GcClosed { p: 2 }
+   14 Flush { p: 0 }
+   15 Upgrade { p: 1 }
+   16 CompDrain { p: 0 }
+   17 Hold { p: 1, class: FxVersion, op: None, skip: 1, land: true, all: false, rid: 1 }
+   18 Publish { p: 1 }
+   19 Open { p: 2, writer: true }
+   20 AdminCheck { p: 2 }
+   21 Write { p: 2, ops: [(1, 19, false), (1, 6, false), (2, 22, false), (2, 11, false), (0, 2, false), (5, 16, false), (5, 9, false), (5, 1, false), (0, 17, true), (3, 22, false)] }
+   22 Write { p: 2, ops: [(5, 0, false), (3, 1, false), (1, 2, false), (2, 13, false), (5, 11, false), (3, 15, false), (1, 14, false), (3, 18, false), (5, 17, false)] }
+   23 Release { rid: 1 }
+   24 FirstPoll { p: 1 }
+   25 Write { p: 2, ops: [(5, 11, false), (2, 1, false), (4, 10, false), (1, 18, false), (1, 16, false), (4, 7, false), (4, 13, false)] }
+   26 Sleep { ms: 193 }
+   27 FirstStart { p: 2 }
+   28 CompStart { p: 2 }
+   29 Hold { p: 2, class: Other, op: None, skip: 2, land: true, all: false, rid: 2 }
+   30 ErasePass { p: 0 }
+   31 Write { p: 2, ops: [(3, 16, false), (2, 18, false), (1, 12, false), (1, 18, false), (1, 2, false), (5, 23, false), (2, 11, false), (1, 20, false), (5, 4, false), (5, 3, false)] }
+   32 Write { p: 2, ops: [(4, 2, false), (1, 12, false), (5, 22, false), (2, 22, false), (2, 5, false), (5, 5, false), (2, 19, false)] }
+   33 Write { p: 2, ops: [(3, 15, false), (2, 13, false)] }
+   34 Erase { p: 0, cust: 2 }
+   35 Write { p: 2, ops: [(2, 1, false), (2, 2, false), (4, 7, true), (5, 15, false), (4, 15, false), (2, 21, false), (0, 21, true), (4, 13, false), (3, 17, true), (5, 6, false), (5, 4, false)] }
+   36 Flush { p: 2 }
+   37 Erase { p: 0, cust: 0 }
+   38 Abandon { p: 2 }
+   39 Hold { p: 1, class: FxOther, op: Some(Put), skip: 2, land: false, all: false, rid: 3 }
+   40 Publish { p: 1 }
+   41 Release { rid: 2 }
+   42 ErasePass { p: 0 }
+   43 FirstPoll { p: 1 }
+   44 FirstPoll { p: 1 }
+   45 Hold { p: 1, class: FxVersion, op: Some(List), skip: 0, land: true, all: false, rid: 4 }
+   46 ErasePass { p: 0 }
+   47 CompDrain { p: 0 }
+   48 Publish { p: 1 }
+   49 Abandon { p: 0 }
+   50 Open { p: 0, writer: true }
+   51 Publish { p: 1 }
+   52 DropDb { p: 0 }
+   53 Open { p: 0, writer: true }
+   54 Write { p: 0, ops: [(2, 22, false), (1, 15, false), (0, 9, false), (4, 23, false), (0, 12, false), (0, 5, false), (3, 4, false), (5, 19, false)] }
+   55 Write { p: 1, ops: [(2, 7, true), (2, 9, false), (0, 0, false), (1, 1, false), (0, 9, false), (4, 4, false), (3, 19, false), (1, 21, false)] }
+   56 Hold { p: 0, class: FxVersion, op: Some(List), skip: 2, land: true, all: true, rid: 5 }
+   57 Hold { p: 1, class: FxErasure, op: Some(Put), skip: 1, land: false, all: false, rid: 6 }
+   58 Write { p: 0, ops: [(3, 21, false), (2, 14, false), (4, 22, false), (1, 0, false), (2, 0, false), (5, 2, true), (2, 11, false), (2, 11, false), (3, 19, false), (0, 7, false)] }
+   59 Erase { p: 0, cust: 4 }
+   60 Erase { p: 0, cust: 2 }
+   61 DropDb { p: 0 }
+   62 Write { p: 0, ops: [(3, 10, false), (5, 16, false), (5, 16, false), (3, 12, false), (3, 12, false), (0, 18, true), (2, 8, true), (0, 23, false), (4, 23, true), (5, 18, false)] }
+   63 Retire { p: 0 }
+   64 Erase { p: 0, cust: 4 }
+   65 Erase { p: 1, cust: 1 }
+   66 Flush { p: 1 }
+   67 Write { p: 0, ops: [(5, 2, false), (0, 5, true), (5, 4, false), (1, 1, true), (1, 10, false), (4, 13, false), (5, 18, false), (0, 15, false), (1, 2, false), (1, 16, false)] }
+   68 Write { p: 0, ops: [(0, 0, false), (3, 8, false), (2, 13, false), (0, 13, false), (2, 11, false), (0, 21, false), (0, 16, true), (0, 23, false), (2, 2, true), (2, 21, false)] }
+   69 Write { p: 1, ops: [(2, 14, false), (1, 8, false), (4, 14, false), (4, 10, false), (5, 1, false), (0, 20, false)] }
+   70 Abandon { p: 1 }
+   71 Open { p: 1, writer: false }
+   72 Abandon { p: 1 }
+   73 Open { p: 1, writer: true }
+   74 Open { p: 2, writer: false }
+   75 Upgrade { p: 2 }
+   76 Erase { p: 0, cust: 2 }
+   77 Kill { p: 0 }
+   78 Write { p: 1, ops: [(2, 19, false), (5, 22, false), (5, 14, false), (1, 13, false), (4, 16, false)] }
+   79 Hold { p: 1, class: Other, op: Some(Delete), skip: 0, land: false, all: false, rid: 7 }
+   80 Erase { p: 2, cust: 1 }
+   81 CompStart { p: 2 }
+   82 DropThrough { p: 2 }
+   83 DropDb { p: 2 }
+   84 Open { p: 2, writer: true }
+   85 Flush { p: 1 }
+   86 Flush { p: 2 }
+   87 FirstPoll { p: 1 }
+   88 Release { rid: 3 }
+   89 Hold { p: 1, class: SlateManifest, op: Some(Put), skip: 2, land: true, all: false, rid: 8 }
+   90 Open { p: 0, writer: true }
+   91 DropDb { p: 0 }
+   92 Flush { p: 0 }
+   93 ErasePass { p: 2 }
+   94 Write { p: 0, ops: [(0, 5, true), (5, 8, false), (3, 6, false)] }
+   95 FirstPoll { p: 0 }
+   96 Write { p: 0, ops: [(2, 11, true), (2, 12, true), (1, 23, true), (5, 8, false), (1, 3, false), (3, 9, false), (5, 12, false), (5, 18, false)] }

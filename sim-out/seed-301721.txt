@@ -1,0 +1,206 @@
+SEED 301721 (steps 117): 6 violations; replays failing 2 of 2
+events 117 writes issued 11 key-writes acked 360 requests 4314 faults 100; x3: log-acked 9 ack-refused 0 uploads 2 flush-done 5 restarts 2 replay-refused 1 kept-copies 0 retries 1 takeover-replays 0 (applied 0) drops 2 erases 0 log confirmed 11 unconfirmed-dropped 0 refused 0
+
+VIOLATIONS
+  reader: c03msgs/d/00020 acknowledged write lost: expected absent (event 91, slot 0, issue 11), read the older s301721-e85-3 (event 85, slot 0) [a deleted or erased row is readable]
+  reader: c04msgs/d/00007 acknowledged write lost: expected absent (event 91, slot 0, issue 11), read the older s301721-e85-0 (event 85, slot 0) [a deleted or erased row is readable]
+  reader: c04msgs/d/00009 acknowledged write lost: expected absent (event 91, slot 0, issue 11), read the older s301721-e85-2 (event 85, slot 0) [a deleted or erased row is readable]
+  writer: c03msgs/d/00020 acknowledged write lost: expected absent (event 91, slot 0, issue 11), read the older s301721-e85-3 (event 85, slot 0) [a deleted or erased row is readable]
+  writer: c04msgs/d/00007 acknowledged write lost: expected absent (event 91, slot 0, issue 11), read the older s301721-e85-0 (event 85, slot 0) [a deleted or erased row is readable]
+  writer: c04msgs/d/00009 acknowledged write lost: expected absent (event 91, slot 0, issue 11), read the older s301721-e85-2 (event 85, slot 0) [a deleted or erased row is readable]
+
+MINIMAL SCRIPT (29 events; SIM_KEEP=0,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100), its run: 6 violations
+seed 301721 knobs 1 profile Profile { delay_ppm: 100000, delay_max_ms: 120, fail_ppm: 15000, timeout_before_ppm: 5000, timeout_after_ppm: 8000, timeout_ms: 400 }
+    0 Open { p: 0, writer: true }
+   73 Upgrade { p: 2 }
+   74 CompStart { p: 2 }
+   75 Gc { p: 2 }
+   76 Sleep { ms: 44 }
+   77 Upload { p: 2 }
+   78 Hold { p: 2, class: FxVersion, op: Some(List), skip: 2, land: true, all: false, rid: 4 }
+   79 DropThrough { p: 2 }
+   80 Hold { p: 2, class: FxVersion, op: Some(List), skip: 1, land: true, all: false, rid: 5 }
+   81 FirstStart { p: 2 }
+   82 Open { p: 0, writer: true }
+   83 CompDrain { p: 0 }
+   84 CompDrain { p: 0 }
+   85 Write { p: 0, ops: [(4, 7, false), (4, 4, true), (4, 9, false), (3, 20, false)] }
+   86 CompStart { p: 0 }
+   87 Gc { p: 0 }
+   88 Restart { p: 2 }
+   89 Release { rid: 5 }
+   90 FirstPoll { p: 2 }
+   91 DropDb { p: 0 }
+   92 ErasePass { p: 0 }
+   93 Gc { p: 0 }
+   94 Flush { p: 0 }
+   95 Upload { p: 2 }
+   96 Write { p: 0, ops: [(5, 4, false), (0, 9, true)] }
+   97 Gc { p: 2 }
+   98 LogRetry { p: 1 }
+   99 Sleep { ms: 17 }
+  100 Kept { p: 2 }
+  ! reader: c03msgs/d/00020 acknowledged write lost: expected absent (event 91, slot 0, issue 2), read the older s301721-e85-3 (event 85, slot 0) [a deleted or erased row is readable]
+  ! reader: c04msgs/d/00007 acknowledged write lost: expected absent (event 91, slot 0, issue 2), read the older s301721-e85-0 (event 85, slot 0) [a deleted or erased row is readable]
+  ! reader: c04msgs/d/00009 acknowledged write lost: expected absent (event 91, slot 0, issue 2), read the older s301721-e85-2 (event 85, slot 0) [a deleted or erased row is readable]
+  ! writer: c03msgs/d/00020 acknowledged write lost: expected absent (event 91, slot 0, issue 2), read the older s301721-e85-3 (event 85, slot 0) [a deleted or erased row is readable]
+  ! writer: c04msgs/d/00007 acknowledged write lost: expected absent (event 91, slot 0, issue 2), read the older s301721-e85-0 (event 85, slot 0) [a deleted or erased row is readable]
+  ! writer: c04msgs/d/00009 acknowledged write lost: expected absent (event 91, slot 0, issue 2), read the older s301721-e85-2 (event 85, slot 0) [a deleted or erased row is readable]
+
+TRACE OF THE MINIMAL RUN
+  [0] seed 301721 knobs 1 profile Profile { delay_ppm: 100000, delay_max_ms: 120, fail_ppm: 15000, timeout_before_ppm: 5000, timeout_after_ppm: 8000, timeout_ms: 400 }
+  [0] [0] Open { p: 0, writer: true } -> opened as writer (life 0, incarnation 0, writer epoch Some(1), created)
+  [73] [73] Upgrade { p: 2 } -> not open (skipped)
+  [74] [74] CompStart { p: 2 } -> not open (skipped)
+  [75] [75] Gc { p: 2 } -> no compactor (skipped)
+  [77] [77] Upload { p: 2 } -> nothing to upload
+  [78] hold rule 4 armed: life 2 Some(List) FxVersion skip 2 land true all false
+  [79] [79] DropThrough { p: 2 } -> no compactor (skipped)
+  [80] hold rule 5 armed: life 2 Some(List) FxVersion skip 1 land true all false
+  [81] [81] FirstStart { p: 2 } -> not open (skipped)
+  [82] [82] Open { p: 0, writer: true } -> already open (skipped)
+  [83] [83] CompDrain { p: 0 } -> no compactor (skipped)
+  [84] [84] CompDrain { p: 0 } -> no compactor (skipped)
+  [85] [85] Write { p: 0, ops: [(4, 7, false), (4, 4, true), (4, 9, false), (3, 20, false)] } -> acked 4 keys (seq 117611802721648640, epoch 1, log position 1)
+  [86] [86] CompStart { p: 0 } -> no writer, no version, or a first build running (skipped)
+  [87] [87] Gc { p: 0 } -> no compactor (skipped)
+  [88] kill -9 slot 2 (life 2)
+  [88] fault Fail: life 3 Get tenants/sim-301721-62/manifest/00000000000000000002.manifest
+  [88] fault Fail: life 3 Get tenants/sim-301721-62/wal/00000000000000000001.sst
+  [88] [88] Restart { p: 2 } -> restart: 1 records read; replay failed (tenant sim-301721-62 is owned by another server process); stopped at hold_kept_records (took the lease: false)
+  [89] hold rule 5 released (0 waiting)
+  [90] [90] FirstPoll { p: 2 } -> not open (skipped)
+  [91] fault Fail: life 0 Get tenants/sim-301721-62/gc/manifest.boundary
+  [91] [91] DropDb { p: 0 } -> drop done: incarnation 0 -> 1, 8 objects deleted
+  [92] [92] ErasePass { p: 0 } -> no compactor (skipped)
+  [93] [93] Gc { p: 0 } -> no compactor (skipped)
+  [94] [94] Flush { p: 0 } -> not open (skipped)
+  [95] [95] Upload { p: 2 } -> nothing to upload
+  [96] [96] Write { p: 0, ops: [(5, 4, false), (0, 9, true)] } -> not open (skipped)
+  [97] [97] Gc { p: 2 } -> no compactor (skipped)
+  [98] [98] LogRetry { p: 1 } -> nothing kept
+  [100] [100] Kept { p: 2 } -> 1 records kept in memory only (the replay never took the lease: no copies)
+  [4294967295] settle: slot 2 retry: retry: kept records stored (holder true); log told 1 (its committed position) Ok(())
+  [4294967295] settle: slot 2 close Ok(Ok(()))
+  [4294967295] oracle: incarnation 1 versions []: 
+  [4294967295] before the oracle: opened as writer (life 3000003, incarnation 1, writer epoch Some(2))
+
+FULL SCRIPT
+seed 301721 knobs 1 profile Profile { delay_ppm: 100000, delay_max_ms: 120, fail_ppm: 15000, timeout_before_ppm: 5000, timeout_after_ppm: 8000, timeout_ms: 400 }
+    0 Open { p: 0, writer: true }
+    1 Sleep { ms: 259 }
+    2 Hold { p: 0, class: FxRun, op: Some(List), skip: 0, land: true, all: false, rid: 1 }
+    3 Publish { p: 0 }
+    4 LogRetry { p: 1 }
+    5 Open { p: 1, writer: true }
+    6 Write { p: 1, ops: [(2, 2, false), (1, 10, false), (1, 14, false), (3, 18, false), (3, 11, false), (5, 17, true)] }
+    7 Upload { p: 1 }
+    8 Publish { p: 1 }
+    9 Write { p: 1, ops: [(1, 5, false), (3, 8, false), (1, 8, false), (4, 18, true), (1, 22, false), (1, 11, false)] }
+   10 CompStart { p: 1 }
+   11 Gc { p: 1 }
+   12 CompDrain { p: 1 }
+   13 LogCopy { r: 1, up: false }
+   14 Erase { p: 1, cust: 4 }
+   15 CompStart { p: 1 }
+   16 Gc { p: 1 }
+   17 Write { p: 1, ops: [(2, 23, false), (1, 22, false), (0, 12, true), (2, 4, false)] }
+   18 Release { rid: 1 }
+   19 Write { p: 1, ops: [(2, 12, false), (1, 23, false), (4, 0, false), (5, 7, false), (3, 11, true)] }
+   20 Upload { p: 1 }
+   21 Gc { p: 1 }
+   22 Flush { p: 1 }
+   23 AdminCheck { p: 1 }
+   24 Open { p: 2, writer: false }
+   25 Hold { p: 0, class: Other, op: Some(Put), skip: 2, land: false, all: false, rid: 2 }
+   26 Flush { p: 1 }
+   27 Flush { p: 1 }
+   28 CompDrain { p: 1 }
+   29 ErasePass { p: 1 }
+   30 Flush { p: 1 }
+   31 DropThrough { p: 1 }
+   32 Upload { p: 1 }
+   33 CompStop { p: 1 }
+   34 LogLeader
+   35 Abandon { p: 1 }
+   36 Abandon { p: 0 }
+   37 AdminCheck { p: 0 }
+   38 Open { p: 1, writer: true }
+   39 Upload { p: 1 }
+   40 Retire { p: 2 }
+   41 LogCopy { r: 1, up: true }
+   42 Release { rid: 2 }
+   43 Hold { p: 1, class: Wal, op: None, skip: 0, land: true, all: false, rid: 3 }
+   44 DropDb { p: 1 }
+   45 Open { p: 2, writer: true }
+   46 FirstStart { p: 1 }
+   47 Open { p: 0, writer: true }
+   48 AdminCheck { p: 0 }
+   49 Write { p: 0, ops: [(5, 0, false), (4, 22, false), (1, 10, false), (3, 7, false), (1, 19, false), (2, 17, false), (5, 14, false), (2, 1, true), (4, 12, false)] }
+   50 Publish { p: 0 }
+   51 Release { rid: 3 }
+   52 Write { p: 0, ops: [(2, 18, false), (5, 17, false), (3, 8, false), (4, 5, false), (1, 18, true), (2, 16, false), (0, 19, false)] }
+   53 CompStart { p: 0 }
+   54 LogLeader
+   55 CompDrain { p: 0 }
+   56 Write { p: 1, ops: [(5, 13, false), (1, 23, false), (3, 16, false), (4, 8, false)] }
+   57 Write { p: 0, ops: [(4, 7, false), (2, 14, false), (0, 13, false), (0, 20, false), (5, 1, false), (0, 6, true), (5, 18, false)] }
+   58 Flush { p: 0 }
+   59 DropDb { p: 0 }
+   60 Flush { p: 0 }
+   61 Write { p: 0, ops: [(5, 15, false), (1, 15, false), (0, 0, false), (0, 8, false)] }
+   62 CompDrain { p: 0 }
+   63 Write { p: 1, ops: [(3, 21, false), (3, 11, false), (0, 0, true), (4, 10, false), (1, 12, false), (3, 22, false), (3, 19, false), (5, 1, false)] }
+   64 Write { p: 0, ops: [(1, 1, false), (0, 13, false), (1, 6, false), (1, 1, false), (4, 6, false), (5, 10, false), (3, 19, false), (4, 23, false), (0, 12, false)] }
+   65 Upload { p: 1 }
+   66 ErasePass { p: 0 }
+   67 Kill { p: 1 }
+   68 Retire { p: 1 }
+   69 Sleep { ms: 151 }
+   70 Upload { p: 0 }
+   71 Retire { p: 0 }
+   72 Close { p: 0 }
+   73 Upgrade { p: 2 }
+   74 CompStart { p: 2 }
+   75 Gc { p: 2 }
+   76 Sleep { ms: 44 }
+   77 Upload { p: 2 }
+   78 Hold { p: 2, class: FxVersion, op: Some(List), skip: 2, land: true, all: false, rid: 4 }
+   79 DropThrough { p: 2 }
+   80 Hold { p: 2, class: FxVersion, op: Some(List), skip: 1, land: true, all: false, rid: 5 }
+   81 FirstStart { p: 2 }
+   82 Open { p: 0, writer: true }
+   83 CompDrain { p: 0 }
+   84 CompDrain { p: 0 }
+   85 Write { p: 0, ops: [(4, 7, false), (4, 4, true), (4, 9, false), (3, 20, false)] }
+   86 CompStart { p: 0 }
+   87 Gc { p: 0 }
+   88 Restart { p: 2 }
+   89 Release { rid: 5 }
+   90 FirstPoll { p: 2 }
+   91 DropDb { p: 0 }
+   92 ErasePass { p: 0 }
+   93 Gc { p: 0 }
+   94 Flush { p: 0 }
+   95 Upload { p: 2 }
+   96 Write { p: 0, ops: [(5, 4, false), (0, 9, true)] }
+   97 Gc { p: 2 }
+   98 LogRetry { p: 1 }
+   99 Sleep { ms: 17 }
+  100 Kept { p: 2 }
+  101 LogRetry { p: 2 }
+  102 Release { rid: 4 }
+  103 Open { p: 1, writer: false }
+  104 Erase { p: 0, cust: 3 }
+  105 Close { p: 2 }
+  106 Write { p: 0, ops: [(2, 12, false), (2, 6, false), (0, 17, false), (5, 17, false), (0, 16, false), (5, 4, false), (3, 23, true)] }
+  107 Write { p: 0, ops: [(4, 23, false), (0, 3, true), (0, 4, false), (3, 4, false), (0, 1, false), (2, 18, false), (2, 15, false), (0, 4, false), (4, 6, false), (4, 8, false), (4, 17, false)] }
+  108 Hold { p: 0, class: FxOther, op: Some(Put), skip: 1, land: true, all: true, rid: 6 }
+  109 Upload { p: 2 }
+  110 Hold { p: 0, class: FxVersion, op: Some(Put), skip: 2, land: false, all: false, rid: 7 }
+  111 DropThrough { p: 0 }
+  112 Open { p: 2, writer: false }
+  113 Restart { p: 1 }
+  114 Hold { p: 0, class: FxVersion, op: Some(Delete), skip: 0, land: true, all: false, rid: 8 }
+  115 AdminCheck { p: 2 }
+  116 Sleep { ms: 350 }

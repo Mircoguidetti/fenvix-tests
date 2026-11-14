@@ -1,0 +1,198 @@
+SEED 303841 (steps 100): 1 violations; replays failing 2 of 2
+events 100 writes issued 3 key-writes acked 44 requests 479 faults 11; x3: log-acked 0 ack-refused 0 uploads 0 flush-done 0 restarts 0 replay-refused 0 kept-copies 0 retries 0 takeover-replays 0 (applied 0) drops 0 erases 0
+
+VIOLATIONS
+  fresh opening failed: Data error: failed to find latest transactional object (e.g. manifest) version
+
+MINIMAL SCRIPT (40 events; SIM_KEEP=0,1,2,3,4,5,6,7,8,9,10,11,12,37,38,39,40,41,42,43,44,45,46,47,48,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75), its run: 1 violations
+seed 303841 knobs 1 profile Profile { delay_ppm: 100000, delay_max_ms: 120, fail_ppm: 15000, timeout_before_ppm: 5000, timeout_after_ppm: 8000, timeout_ms: 400 }
+    0 Open { p: 0, writer: true }
+    1 FirstPoll { p: 0 }
+    2 Hold { p: 0, class: Other, op: Some(Delete), skip: 0, land: false, all: false, rid: 1 }
+    3 Write { p: 0, ops: [(1, 7, false), (5, 14, false), (0, 11, false), (3, 2, false), (3, 3, false), (2, 4, false), (1, 17, false), (1, 9, false), (4, 7, false), (1, 2, false)] }
+    4 Write { p: 0, ops: [(2, 18, true), (3, 21, false), (0, 1, false), (0, 12, false), (4, 21, false), (4, 13, false), (4, 0, false), (3, 4, false), (2, 6, false), (4, 20, true)] }
+    5 AdminCheck { p: 1 }
+    6 Publish { p: 0 }
+    7 CompStart { p: 0 }
+    8 AdminCheck { p: 0 }
+    9 Gc { p: 0 }
+   10 Erase { p: 0, cust: 3 }
+   11 Kill { p: 0 }
+   12 Open { p: 2, writer: true }
+   37 Release { rid: 3 }
+   38 Kill { p: 0 }
+   39 AdminCheck { p: 0 }
+   40 Sleep { ms: 241 }
+   41 GcClosed { p: 0 }
+   42 Kill { p: 2 }
+   43 Open { p: 1, writer: true }
+   44 Flush { p: 1 }
+   45 Erase { p: 1, cust: 2 }
+   46 Erase { p: 1, cust: 0 }
+   47 CompStart { p: 1 }
+   48 Sleep { ms: 70 }
+   61 Open { p: 0, writer: true }
+   62 Write { p: 0, ops: [(4, 3, false), (3, 13, false), (0, 11, false), (5, 8, false), (3, 6, false), (1, 18, false), (5, 20, false), (3, 4, false)] }
+   63 Erase { p: 0, cust: 2 }
+   64 Write { p: 0, ops: [(3, 21, false), (2, 13, false), (0, 15, false), (3, 11, false), (4, 19, false), (2, 14, false), (2, 12, false), (4, 18, false), (5, 3, false), (0, 13, false), (0, 2, false)] }
+   65 EraseDb { p: 0 }
+   66 AdminCheck { p: 1 }
+   67 Open { p: 0, writer: true }
+   68 CompStart { p: 0 }
+   69 Write { p: 0, ops: [(2, 23, false), (0, 17, false), (1, 22, false), (2, 14, false), (4, 13, false)] }
+   70 Flush { p: 0 }
+   71 Hold { p: 0, class: FxVersion, op: Some(List), skip: 0, land: false, all: false, rid: 5 }
+   72 CompDrain { p: 0 }
+   73 Open { p: 1, writer: true }
+   74 Gc { p: 1 }
+   75 Flush { p: 1 }
+  ! fresh opening failed: Data error: failed to find latest transactional object (e.g. manifest) version
+
+TRACE OF THE MINIMAL RUN
+  [0] seed 303841 knobs 1 profile Profile { delay_ppm: 100000, delay_max_ms: 120, fail_ppm: 15000, timeout_before_ppm: 5000, timeout_after_ppm: 8000, timeout_ms: 400 }
+  [0] [0] Open { p: 0, writer: true } -> opened as writer (life 0, incarnation 0, writer epoch Some(1), created)
+  [1] [1] FirstPoll { p: 0 } -> no first version yet
+  [2] hold rule 1 armed: life 0 Some(Delete) Other skip 0 land false all false
+  [3] [3] Write { p: 0, ops: [(1, 7, false), (5, 14, false), (0, 11, false), (3, 2, false), (3, 3, false), (2, 4, false), (1, 17,  -> acked 10 keys
+  [4] [4] Write { p: 0, ops: [(2, 18, true), (3, 21, false), (0, 1, false), (0, 12, false), (4, 21, false), (4, 13, false), (4, 0, -> acked 10 keys
+  [5] [5] AdminCheck { p: 1 } -> admin check: incarnation Ok(0), exists Ok(true)
+  [6] [6] Publish { p: 0 } -> published (x_d 3)
+  [7] [7] CompStart { p: 0 } -> catch-up published nothing: no compactor yet
+  [8] [8] AdminCheck { p: 0 } -> admin check: incarnation Ok(0), exists Ok(true)
+  [9] [9] Gc { p: 0 } -> no compactor (skipped)
+  [10] [10] Erase { p: 0, cust: 3 } -> deletes acked 24 keys; erasure 00000000000000000004-195bca23 registered, S_e 4
+  [11] kill -9 slot 0 (life 0)
+  [12] [12] Open { p: 2, writer: true } -> opened as writer (life 2, incarnation 0, writer epoch Some(2))
+  [37] hold rule 3 released (0 waiting)
+  [38] kill -9 slot 0 (life 3)
+  [39] fault Fail: life 4 Get control/incarnations/25b7ac2559b69c5f49e074fd8c3c964e
+  [39] [39] AdminCheck { p: 0 } -> admin check: incarnation Err("Generic sim error: 503 slow down (simulated): 503 slow down (simulated)"), exists Ok(true)
+  [41] [41] GcClosed { p: 0 } -> closed gc pass
+  [42] kill -9 slot 2 (life 2)
+  [43] fault Fail: life 1 Get tenants/sim-303841-65/_clean
+  [43] [43] Open { p: 1, writer: true } -> open failed: Generic sim error: 503 slow down (simulated): 503 slow down (simulated)
+  [44] [44] Flush { p: 1 } -> not open (skipped)
+  [45] [45] Erase { p: 1, cust: 2 } -> not open (skipped)
+  [46] [46] Erase { p: 1, cust: 0 } -> not open (skipped)
+  [47] [47] CompStart { p: 1 } -> not open (skipped)
+  [61] fault Fail: life 4 Get control/incarnations/25b7ac2559b69c5f49e074fd8c3c964e
+  [61] [61] Open { p: 0, writer: true } -> open failed: Generic sim error: 503 slow down (simulated): 503 slow down (simulated)
+  [62] [62] Write { p: 0, ops: [(4, 3, false), (3, 13, false), (0, 11, false), (5, 8, false), (3, 6, false), (1, 18, false), (5, 20, -> not open (skipped)
+  [63] [63] Erase { p: 0, cust: 2 } -> not open (skipped)
+  [64] [64] Write { p: 0, ops: [(3, 21, false), (2, 13, false), (0, 15, false), (3, 11, false), (4, 19, false), (2, 14, false), (2,  -> not open (skipped)
+  [65] fault Fail: life 4 List tenants/sim-303841-65/
+  [65] [65] EraseDb { p: 0 } -> erase failed while listing: Generic sim error: 503 slow down (simulated) (13 objects deleted; the client retries)
+  [66] [66] AdminCheck { p: 1 } -> admin check: incarnation Ok(1), exists Ok(false)
+  [67] [67] Open { p: 0, writer: true } -> open failed: Data error: failed to find latest transactional object (e.g. manifest) version
+  [68] [68] CompStart { p: 0 } -> not open (skipped)
+  [69] [69] Write { p: 0, ops: [(2, 23, false), (0, 17, false), (1, 22, false), (2, 14, false), (4, 13, false)] } -> not open (skipped)
+  [70] [70] Flush { p: 0 } -> not open (skipped)
+  [71] hold rule 5 armed: life 4 Some(List) FxVersion skip 0 land false all false
+  [72] [72] CompDrain { p: 0 } -> no compactor (skipped)
+  [73] [73] Open { p: 1, writer: true } -> open failed: Data error: failed to find latest transactional object (e.g. manifest) version
+  [74] [74] Gc { p: 1 } -> no compactor (skipped)
+  [75] [75] Flush { p: 1 } -> not open (skipped)
+  [4294967295] oracle: incarnation 1 versions []: 
+
+FULL SCRIPT
+seed 303841 knobs 1 profile Profile { delay_ppm: 100000, delay_max_ms: 120, fail_ppm: 15000, timeout_before_ppm: 5000, timeout_after_ppm: 8000, timeout_ms: 400 }
+    0 Open { p: 0, writer: true }
+    1 FirstPoll { p: 0 }
+    2 Hold { p: 0, class: Other, op: Some(Delete), skip: 0, land: false, all: false, rid: 1 }
+    3 Write { p: 0, ops: [(1, 7, false), (5, 14, false), (0, 11, false), (3, 2, false), (3, 3, false), (2, 4, false), (1, 17, false), (1, 9, false), (4, 7, false), (1, 2, false)] }
+    4 Write { p: 0, ops: [(2, 18, true), (3, 21, false), (0, 1, false), (0, 12, false), (4, 21, false), (4, 13, false), (4, 0, false), (3, 4, false), (2, 6, false), (4, 20, true)] }
+    5 AdminCheck { p: 1 }
+    6 Publish { p: 0 }
+    7 CompStart { p: 0 }
+    8 AdminCheck { p: 0 }
+    9 Gc { p: 0 }
+   10 Erase { p: 0, cust: 3 }
+   11 Kill { p: 0 }
+   12 Open { p: 2, writer: true }
+   13 Release { rid: 1 }
+   14 Sleep { ms: 61 }
+   15 Flush { p: 2 }
+   16 Hold { p: 2, class: FxVersion, op: None, skip: 0, land: true, all: false, rid: 2 }
+   17 Publish { p: 2 }
+   18 Open { p: 0, writer: true }
+   19 CompDrain { p: 0 }
+   20 Flush { p: 0 }
+   21 Write { p: 0, ops: [(5, 11, false)] }
+   22 Erase { p: 0, cust: 1 }
+   23 Gc { p: 0 }
+   24 CompStart { p: 0 }
+   25 EraseDb { p: 0 }
+   26 AdminCheck { p: 1 }
+   27 Open { p: 0, writer: true }
+   28 Release { rid: 2 }
+   29 Abandon { p: 2 }
+   30 Write { p: 0, ops: [(0, 17, false), (0, 20, false)] }
+   31 ErasePass { p: 0 }
+   32 Write { p: 2, ops: [(2, 11, false), (0, 16, false), (0, 16, false), (2, 14, false), (5, 12, false)] }
+   33 Retire { p: 0 }
+   34 Write { p: 0, ops: [(1, 21, false), (3, 10, false), (3, 8, false)] }
+   35 Hold { p: 0, class: FxErasure, op: Some(Get), skip: 0, land: false, all: false, rid: 3 }
+   36 Flush { p: 0 }
+   37 Release { rid: 3 }
+   38 Kill { p: 0 }
+   39 AdminCheck { p: 0 }
+   40 Sleep { ms: 241 }
+   41 GcClosed { p: 0 }
+   42 Kill { p: 2 }
+   43 Open { p: 1, writer: true }
+   44 Flush { p: 1 }
+   45 Erase { p: 1, cust: 2 }
+   46 Erase { p: 1, cust: 0 }
+   47 CompStart { p: 1 }
+   48 Sleep { ms: 70 }
+   49 Retire { p: 0 }
+   50 Write { p: 1, ops: [(0, 5, true), (0, 11, false), (5, 17, false), (2, 18, false)] }
+   51 Gc { p: 1 }
+   52 Hold { p: 1, class: Other, op: Some(Put), skip: 2, land: true, all: true, rid: 4 }
+   53 CompDrain { p: 1 }
+   54 Sleep { ms: 261 }
+   55 Write { p: 1, ops: [(0, 9, false)] }
+   56 Close { p: 1 }
+   57 Sleep { ms: 101 }
+   58 GcClosed { p: 2 }
+   59 Release { rid: 4 }
+   60 Sleep { ms: 39 }
+   61 Open { p: 0, writer: true }
+   62 Write { p: 0, ops: [(4, 3, false), (3, 13, false), (0, 11, false), (5, 8, false), (3, 6, false), (1, 18, false), (5, 20, false), (3, 4, false)] }
+   63 Erase { p: 0, cust: 2 }
+   64 Write { p: 0, ops: [(3, 21, false), (2, 13, false), (0, 15, false), (3, 11, false), (4, 19, false), (2, 14, false), (2, 12, false), (4, 18, false), (5, 3, false), (0, 13, false), (0, 2, false)] }
+   65 EraseDb { p: 0 }
+   66 AdminCheck { p: 1 }
+   67 Open { p: 0, writer: true }
+   68 CompStart { p: 0 }
+   69 Write { p: 0, ops: [(2, 23, false), (0, 17, false), (1, 22, false), (2, 14, false), (4, 13, false)] }
+   70 Flush { p: 0 }
+   71 Hold { p: 0, class: FxVersion, op: Some(List), skip: 0, land: false, all: false, rid: 5 }
+   72 CompDrain { p: 0 }
+   73 Open { p: 1, writer: true }
+   74 Gc { p: 1 }
+   75 Flush { p: 1 }
+   76 Flush { p: 1 }
+   77 Flush { p: 1 }
+   78 Publish { p: 1 }
+   79 Gc { p: 1 }
+   80 Release { rid: 5 }
+   81 CompDrain { p: 0 }
+   82 Abandon { p: 0 }
+   83 CompStart { p: 1 }
+   84 CompDrain { p: 1 }
+   85 ErasePass { p: 1 }
+   86 Hold { p: 1, class: SlateManifest, op: Some(Put), skip: 1, land: true, all: true, rid: 6 }
+   87 Write { p: 1, ops: [(5, 6, false), (0, 17, true), (0, 6, false), (0, 2, true), (4, 1, false), (5, 21, false)] }
+   88 Sleep { ms: 273 }
+   89 Hold { p: 1, class: Wal, op: Some(Put), skip: 1, land: true, all: false, rid: 7 }
+   90 Erase { p: 1, cust: 1 }
+   91 Hold { p: 1, class: FxOther, op: Some(Put), skip: 0, land: true, all: false, rid: 8 }
+   92 Write { p: 1, ops: [(4, 12, false), (0, 5, false), (4, 9, false), (3, 16, false), (3, 2, false)] }
+   93 Write { p: 1, ops: [(0, 21, false), (1, 11, false), (3, 15, true), (0, 23, false)] }
+   94 Retire { p: 1 }
+   95 Write { p: 1, ops: [(0, 9, false), (1, 21, false), (4, 9, false), (2, 21, false)] }
+   96 Hold { p: 1, class: FxVersion, op: Some(Put), skip: 1, land: true, all: false, rid: 9 }
+   97 AdminCheck { p: 1 }
+   98 Abandon { p: 1 }
+   99 ClosePass { p: 0 }

@@ -1,0 +1,189 @@
+SEED 300875 (steps 95): 30 violations; replays failing 2 of 2
+events 95 writes issued 17 key-writes acked 242 requests 2557 faults 0; x3: log-acked 0 ack-refused 0 uploads 0 flush-done 0 restarts 0 replay-refused 0 kept-copies 0 retries 0 takeover-replays 0 (applied 0) drops 1 erases 0
+
+VIOLATIONS
+  reader: c00msgs/d/00009 acknowledged write lost: expected s300875-e92-6 (event 92, slot 2, issue 16), read the older absent (event 68, slot 0)
+  reader: c00msgs/d/00021 acknowledged write lost: expected s300875-e92-4 (event 92, slot 2, issue 16), read the older absent (event 68, slot 0)
+  reader: c01msgs/d/00003 acknowledged write lost: expected s300875-e92-7 (event 92, slot 2, issue 16), read the older absent (event 68, slot 0)
+  reader: c02msgs/d/00017 acknowledged write lost: expected s300875-e78-2 (event 78, slot 2, issue 14), read the older absent (event 36, slot 2)
+  reader: c03msgs/d/00000 acknowledged write lost: expected s300875-e93-2 (event 93, slot 2, issue 17), read the older absent (event 68, slot 0)
+  reader: c03msgs/d/00013 acknowledged write lost: expected s300875-e78-5 (event 78, slot 2, issue 14), read the older absent (event 68, slot 0)
+  reader: c03msgs/d/00016 acknowledged write lost: expected s300875-e92-1 (event 92, slot 2, issue 16), read the older absent (event 68, slot 0)
+  reader: c04msgs/d/00007 acknowledged write lost: expected s300875-e92-0 (event 92, slot 2, issue 16), read the older absent (event 68, slot 0)
+  reader: c04msgs/d/00008 acknowledged write lost: expected s300875-e78-4 (event 78, slot 2, issue 14), read the older absent (event 68, slot 0)
+  reader: c04msgs/d/00010 acknowledged write lost: expected s300875-e93-0 (event 93, slot 2, issue 17), read the older absent (event 68, slot 0)
+  reader: c04msgs/d/00012 acknowledged write lost: expected s300875-e92-5 (event 92, slot 2, issue 16), read the older absent (event 68, slot 0)
+  reader: c04msgs/d/00023 acknowledged write lost: expected s300875-e78-6 (event 78, slot 2, issue 14), read the older absent (event 46, slot 1)
+  reader: c05msgs/d/00004 acknowledged write lost: expected s300875-e93-1 (event 93, slot 2, issue 17), read the older absent (event 68, slot 0)
+  reader: c05msgs/d/00007 acknowledged write lost: expected s300875-e92-3 (event 92, slot 2, issue 16), read the older absent (event 68, slot 0)
+  reader: c05msgs/d/00015 acknowledged write lost: expected s300875-e92-8 (event 92, slot 2, issue 16), read the older absent (event 68, slot 0)
+  writer: c00msgs/d/00009 acknowledged write lost: expected s300875-e92-6 (event 92, slot 2, issue 16), read the older absent (event 68, slot 0)
+  writer: c00msgs/d/00021 acknowledged write lost: expected s300875-e92-4 (event 92, slot 2, issue 16), read the older absent (event 68, slot 0)
+  writer: c01msgs/d/00003 acknowledged write lost: expected s300875-e92-7 (event 92, slot 2, issue 16), read the older absent (event 68, slot 0)
+  writer: c02msgs/d/00017 acknowledged write lost: expected s300875-e78-2 (event 78, slot 2, issue 14), read the older absent (event 36, slot 2)
+  writer: c03msgs/d/00000 acknowledged write lost: expected s300875-e93-2 (event 93, slot 2, issue 17), read the older absent (event 68, slot 0)
+  writer: c03msgs/d/00013 acknowledged write lost: expected s300875-e78-5 (event 78, slot 2, issue 14), read the older absent (event 68, slot 0)
+  writer: c03msgs/d/00016 acknowledged write lost: expected s300875-e92-1 (event 92, slot 2, issue 16), read the older absent (event 68, slot 0)
+  writer: c04msgs/d/00007 acknowledged write lost: expected s300875-e92-0 (event 92, slot 2, issue 16), read the older absent (event 68, slot 0)
+  writer: c04msgs/d/00008 acknowledged write lost: expected s300875-e78-4 (event 78, slot 2, issue 14), read the older absent (event 68, slot 0)
+  writer: c04msgs/d/00010 acknowledged write lost: expected s300875-e93-0 (event 93, slot 2, issue 17), read the older absent (event 68, slot 0)
+  writer: c04msgs/d/00012 acknowledged write lost: expected s300875-e92-5 (event 92, slot 2, issue 16), read the older absent (event 68, slot 0)
+  writer: c04msgs/d/00023 acknowledged write lost: expected s300875-e78-6 (event 78, slot 2, issue 14), read the older absent (event 46, slot 1)
+  writer: c05msgs/d/00004 acknowledged write lost: expected s300875-e93-1 (event 93, slot 2, issue 17), read the older absent (event 68, slot 0)
+  writer: c05msgs/d/00007 acknowledged write lost: expected s300875-e92-3 (event 92, slot 2, issue 16), read the older absent (event 68, slot 0)
+  writer: c05msgs/d/00015 acknowledged write lost: expected s300875-e92-8 (event 92, slot 2, issue 16), read the older absent (event 68, slot 0)
+
+MINIMAL SCRIPT (14 events; SIM_KEEP=0,59,60,61,62,63,64,65,66,67,68,69,92,93), its run: 22 violations
+seed 300875 knobs 0 profile Profile { delay_ppm: 0, delay_max_ms: 0, fail_ppm: 0, timeout_before_ppm: 0, timeout_after_ppm: 0, timeout_ms: 0 }
+    0 Open { p: 0, writer: true }
+   59 Open { p: 0, writer: true }
+   60 Kill { p: 2 }
+   61 Write { p: 0, ops: [(1, 21, true), (1, 20, false), (3, 3, false), (3, 10, false), (2, 2, false), (3, 22, false), (3, 19, false), (3, 10, false)] }
+   62 Release { rid: 2 }
+   63 Open { p: 2, writer: false }
+   64 Release { rid: 7 }
+   65 Retire { p: 0 }
+   66 Write { p: 0, ops: [(5, 19, false), (2, 22, true), (2, 5, false)] }
+   67 Write { p: 0, ops: [(0, 8, false), (3, 1, false), (3, 0, false), (2, 6, false), (0, 21, false), (3, 16, false)] }
+   68 DropDb { p: 0 }
+   69 Open { p: 0, writer: true }
+   92 Write { p: 2, ops: [(4, 7, false), (3, 16, false), (4, 12, false), (5, 7, false), (0, 21, false), (4, 12, false), (0, 9, false), (1, 3, false), (5, 15, false)] }
+   93 Write { p: 2, ops: [(4, 10, false), (5, 4, false), (3, 0, false)] }
+  ! reader: c00msgs/d/00009 acknowledged write lost: expected s300875-e92-6 (event 92, slot 2, issue 5), read the older absent (event 68, slot 0)
+  ! reader: c00msgs/d/00021 acknowledged write lost: expected s300875-e92-4 (event 92, slot 2, issue 5), read the older absent (event 68, slot 0)
+  ! reader: c01msgs/d/00003 acknowledged write lost: expected s300875-e92-7 (event 92, slot 2, issue 5), read the older absent (event 68, slot 0)
+  ! reader: c03msgs/d/00000 acknowledged write lost: expected s300875-e93-2 (event 93, slot 2, issue 6), read the older absent (event 68, slot 0)
+  ! reader: c03msgs/d/00016 acknowledged write lost: expected s300875-e92-1 (event 92, slot 2, issue 5), read the older absent (event 68, slot 0)
+  ! reader: c04msgs/d/00007 acknowledged write lost: expected s300875-e92-0 (event 92, slot 2, issue 5), read the older absent (event 68, slot 0)
+  ! reader: c04msgs/d/00010 acknowledged write lost: expected s300875-e93-0 (event 93, slot 2, issue 6), read the older absent (event 68, slot 0)
+  ! reader: c04msgs/d/00012 acknowledged write lost: expected s300875-e92-5 (event 92, slot 2, issue 5), read the older absent (event 68, slot 0)
+  ! reader: c05msgs/d/00004 acknowledged write lost: expected s300875-e93-1 (event 93, slot 2, issue 6), read the older absent (event 68, slot 0)
+  ! reader: c05msgs/d/00007 acknowledged write lost: expected s300875-e92-3 (event 92, slot 2, issue 5), read the older absent (event 68, slot 0)
+  ! reader: c05msgs/d/00015 acknowledged write lost: expected s300875-e92-8 (event 92, slot 2, issue 5), read the older absent (event 68, slot 0)
+  ! writer: c00msgs/d/00009 acknowledged write lost: expected s300875-e92-6 (event 92, slot 2, issue 5), read the older absent (event 68, slot 0)
+  ! writer: c00msgs/d/00021 acknowledged write lost: expected s300875-e92-4 (event 92, slot 2, issue 5), read the older absent (event 68, slot 0)
+  ! writer: c01msgs/d/00003 acknowledged write lost: expected s300875-e92-7 (event 92, slot 2, issue 5), read the older absent (event 68, slot 0)
+  ! writer: c03msgs/d/00000 acknowledged write lost: expected s300875-e93-2 (event 93, slot 2, issue 6), read the older absent (event 68, slot 0)
+  ! writer: c03msgs/d/00016 acknowledged write lost: expected s300875-e92-1 (event 92, slot 2, issue 5), read the older absent (event 68, slot 0)
+  ! writer: c04msgs/d/00007 acknowledged write lost: expected s300875-e92-0 (event 92, slot 2, issue 5), read the older absent (event 68, slot 0)
+  ! writer: c04msgs/d/00010 acknowledged write lost: expected s300875-e93-0 (event 93, slot 2, issue 6), read the older absent (event 68, slot 0)
+  ! writer: c04msgs/d/00012 acknowledged write lost: expected s300875-e92-5 (event 92, slot 2, issue 5), read the older absent (event 68, slot 0)
+  ! writer: c05msgs/d/00004 acknowledged write lost: expected s300875-e93-1 (event 93, slot 2, issue 6), read the older absent (event 68, slot 0)
+
+TRACE OF THE MINIMAL RUN
+  [0] seed 300875 knobs 0 profile Profile { delay_ppm: 0, delay_max_ms: 0, fail_ppm: 0, timeout_before_ppm: 0, timeout_after_ppm: 0, timeout_ms: 0 }
+  [0] [0] Open { p: 0, writer: true } -> opened as writer (life 0, incarnation 0, writer epoch Some(1), created)
+  [59] [59] Open { p: 0, writer: true } -> already open (skipped)
+  [60] kill -9 slot 2 (life 2)
+  [61] [61] Write { p: 0, ops: [(1, 21, true), (1, 20, false), (3, 3, false), (3, 10, false), (2, 2, false), (3, 22, false), (3, 19, -> acked 7 keys
+  [62] hold rule 2 released (0 waiting)
+  [63] [63] Open { p: 2, writer: false } -> opened as reader (life 3, incarnation 0)
+  [64] hold rule 7 released (0 waiting)
+  [65] [65] Retire { p: 0 } -> nothing to retire
+  [66] [66] Write { p: 0, ops: [(5, 19, false), (2, 22, true), (2, 5, false)] } -> acked 3 keys
+  [67] [67] Write { p: 0, ops: [(0, 8, false), (3, 1, false), (3, 0, false), (2, 6, false), (0, 21, false), (3, 16, false)] } -> acked 6 keys
+  [68] [68] DropDb { p: 0 } -> drop done: incarnation 0 -> 1, 10 objects deleted
+  [69] [69] Open { p: 0, writer: true } -> opened as writer (life 0, incarnation 1, writer epoch Some(1), created)
+  [92] [92] Write { p: 2, ops: [(4, 7, false), (3, 16, false), (4, 12, false), (5, 7, false), (0, 21, false), (4, 12, false), (0, 9, -> acked 8 keys
+  [93] [93] Write { p: 2, ops: [(4, 10, false), (5, 4, false), (3, 0, false)] } -> acked 3 keys
+  [4294967295] settle: slot 0 close Ok(Ok(()))
+  [4294967295] settle: slot 2 close Ok(Ok(()))
+  [4294967295] oracle: incarnation 1 versions []: 
+
+FULL SCRIPT
+seed 300875 knobs 0 profile Profile { delay_ppm: 0, delay_max_ms: 0, fail_ppm: 0, timeout_before_ppm: 0, timeout_after_ppm: 0, timeout_ms: 0 }
+    0 Open { p: 0, writer: true }
+    1 Retire { p: 1 }
+    2 Hold { p: 0, class: FxVersion, op: Some(Put), skip: 1, land: true, all: false, rid: 1 }
+    3 Publish { p: 0 }
+    4 Open { p: 1, writer: true }
+    5 Write { p: 1, ops: [(3, 13, false), (1, 5, true), (5, 12, false), (5, 0, false), (1, 19, true)] }
+    6 Publish { p: 1 }
+    7 Write { p: 1, ops: [(1, 14, false), (2, 0, false), (3, 23, false), (5, 14, false), (3, 4, true), (4, 5, true), (4, 2, true), (3, 8, false), (5, 19, false), (4, 9, false)] }
+    8 CompStart { p: 1 }
+    9 Write { p: 1, ops: [(3, 8, false), (3, 0, false), (2, 19, false), (4, 4, true)] }
+   10 Flush { p: 1 }
+   11 Write { p: 1, ops: [(1, 17, false), (2, 5, false), (3, 5, true), (0, 22, false), (5, 1, false), (4, 15, false), (2, 8, false)] }
+   12 Release { rid: 1 }
+   13 Abandon { p: 0 }
+   14 DropThrough { p: 1 }
+   15 FirstPoll { p: 0 }
+   16 Abandon { p: 1 }
+   17 Open { p: 2, writer: false }
+   18 Sleep { ms: 967 }
+   19 GcClosed { p: 2 }
+   20 Sleep { ms: 277 }
+   21 Hold { p: 0, class: Other, op: Some(Put), skip: 0, land: true, all: false, rid: 2 }
+   22 GcClosed { p: 2 }
+   23 AdminCheck { p: 0 }
+   24 GcClosed { p: 2 }
+   25 Abandon { p: 2 }
+   26 Hold { p: 0, class: Other, op: Some(Put), skip: 2, land: true, all: false, rid: 3 }
+   27 Release { rid: 3 }
+   28 ClosePass { p: 0 }
+   29 Hold { p: 0, class: FxRun, op: Some(Multipart), skip: 2, land: true, all: false, rid: 4 }
+   30 Release { rid: 4 }
+   31 ClosePass { p: 0 }
+   32 Retire { p: 1 }
+   33 Hold { p: 0, class: FxOther, op: Some(Put), skip: 0, land: true, all: false, rid: 5 }
+   34 Sleep { ms: 242 }
+   35 Open { p: 2, writer: true }
+   36 Erase { p: 2, cust: 2 }
+   37 Open { p: 1, writer: true }
+   38 Write { p: 1, ops: [(0, 13, false), (1, 16, false)] }
+   39 Kill { p: 1 }
+   40 Open { p: 1, writer: true }
+   41 Write { p: 1, ops: [(4, 10, false), (3, 23, false), (2, 19, false), (5, 12, false), (0, 17, false), (3, 4, false), (0, 6, false), (4, 23, false)] }
+   42 Abandon { p: 2 }
+   43 Flush { p: 0 }
+   44 Sleep { ms: 243 }
+   45 FirstPoll { p: 1 }
+   46 Write { p: 1, ops: [(1, 18, false), (4, 6, false), (2, 18, false), (3, 15, false), (4, 23, true)] }
+   47 Retire { p: 1 }
+   48 Hold { p: 1, class: Wal, op: None, skip: 0, land: true, all: true, rid: 6 }
+   49 FirstStart { p: 1 }
+   50 Open { p: 2, writer: true }
+   51 Flush { p: 2 }
+   52 CompStart { p: 2 }
+   53 Gc { p: 2 }
+   54 AdminCheck { p: 0 }
+   55 Release { rid: 6 }
+   56 Hold { p: 0, class: SlateManifest, op: Some(Put), skip: 0, land: true, all: false, rid: 7 }
+   57 Write { p: 0, ops: [(5, 14, true), (1, 10, false), (4, 0, false), (3, 12, false), (5, 8, false), (3, 4, false)] }
+   58 Abandon { p: 0 }
+   59 Open { p: 0, writer: true }
+   60 Kill { p: 2 }
+   61 Write { p: 0, ops: [(1, 21, true), (1, 20, false), (3, 3, false), (3, 10, false), (2, 2, false), (3, 22, false), (3, 19, false), (3, 10, false)] }
+   62 Release { rid: 2 }
+   63 Open { p: 2, writer: false }
+   64 Release { rid: 7 }
+   65 Retire { p: 0 }
+   66 Write { p: 0, ops: [(5, 19, false), (2, 22, true), (2, 5, false)] }
+   67 Write { p: 0, ops: [(0, 8, false), (3, 1, false), (3, 0, false), (2, 6, false), (0, 21, false), (3, 16, false)] }
+   68 DropDb { p: 0 }
+   69 Open { p: 0, writer: true }
+   70 Flush { p: 1 }
+   71 AdminCheck { p: 0 }
+   72 Hold { p: 0, class: Wal, op: None, skip: 1, land: true, all: false, rid: 8 }
+   73 Abandon { p: 0 }
+   74 Hold { p: 1, class: Other, op: Some(Put), skip: 1, land: true, all: true, rid: 9 }
+   75 GcClosed { p: 0 }
+   76 Hold { p: 1, class: SlateManifest, op: Some(Delete), skip: 1, land: true, all: false, rid: 10 }
+   77 Write { p: 1, ops: [(1, 16, false), (4, 20, false), (3, 9, false), (3, 10, false), (4, 2, false), (5, 10, false), (3, 10, true), (4, 2, false), (0, 17, true), (1, 21, false)] }
+   78 Write { p: 2, ops: [(5, 13, true), (1, 3, true), (2, 17, false), (1, 3, false), (4, 8, false), (3, 13, false), (4, 23, false)] }
+   79 Write { p: 1, ops: [(5, 17, false), (4, 13, false), (1, 19, false), (1, 14, true), (0, 21, false)] }
+   80 FirstPoll { p: 1 }
+   81 Close { p: 1 }
+   82 Sleep { ms: 250 }
+   83 Open { p: 0, writer: true }
+   84 Write { p: 0, ops: [(0, 21, false), (2, 6, false), (2, 15, false)] }
+   85 Sleep { ms: 69 }
+   86 FirstStart { p: 0 }
+   87 Write { p: 0, ops: [(0, 7, true), (0, 2, true), (3, 7, false), (2, 8, false), (4, 19, true), (1, 2, true)] }
+   88 Upgrade { p: 2 }
+   89 Hold { p: 2, class: FxErasure, op: Some(Put), skip: 1, land: false, all: true, rid: 11 }
+   90 CompStart { p: 2 }
+   91 Flush { p: 2 }
+   92 Write { p: 2, ops: [(4, 7, false), (3, 16, false), (4, 12, false), (5, 7, false), (0, 21, false), (4, 12, false), (0, 9, false), (1, 3, false), (5, 15, false)] }
+   93 Write { p: 2, ops: [(4, 10, false), (5, 4, false), (3, 0, false)] }
+   94 CompDrain { p: 2 }
