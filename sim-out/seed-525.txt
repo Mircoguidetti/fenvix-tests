@@ -1,0 +1,169 @@
+SEED 525 (steps 90; SIM_GEN=1 SIM_PATTERN=mix): 16 violations; replays failing 3 of 3
+events 90 writes issued 17 key-writes acked 139 requests 1035 faults 0
+
+VIOLATIONS
+  reader: c00msgs/d/00008 acknowledged write lost: expected s525-e81-6 (event 81, slot 0, issue 16), read the older absent (event 46, slot 2)
+  reader: c01msgs/d/00021 acknowledged write lost: expected s525-e81-3 (event 81, slot 0, issue 16), read the older s525-e42-3 (event 42, slot 0)
+  reader: c02msgs/d/00005 acknowledged write lost: expected s525-e81-0 (event 81, slot 0, issue 16), read the older absent (event 20, slot 1)
+  reader: c02msgs/d/00022 acknowledged write lost: expected s525-e81-5 (event 81, slot 0, issue 16), read the older absent (event 20, slot 1)
+  reader: c03msgs/d/00008 acknowledged write lost: expected s525-e81-1 (event 81, slot 0), read absent
+  reader: c03msgs/d/00020 acknowledged write lost: expected s525-e81-2 (event 81, slot 0), read absent
+  reader: c05msgs/d/00011 acknowledged write lost: expected s525-e81-4 (event 81, slot 0), read absent
+  reader: c05msgs/d/00013 acknowledged write lost: expected s525-e81-7 (event 81, slot 0, issue 16), read the older s525-e11-4 (event 11, slot 0)
+  writer: c00msgs/d/00008 acknowledged write lost: expected s525-e81-6 (event 81, slot 0, issue 16), read the older absent (event 46, slot 2)
+  writer: c01msgs/d/00021 acknowledged write lost: expected s525-e81-3 (event 81, slot 0, issue 16), read the older s525-e42-3 (event 42, slot 0)
+  writer: c02msgs/d/00005 acknowledged write lost: expected s525-e81-0 (event 81, slot 0, issue 16), read the older absent (event 20, slot 1)
+  writer: c02msgs/d/00022 acknowledged write lost: expected s525-e81-5 (event 81, slot 0, issue 16), read the older absent (event 20, slot 1)
+  writer: c03msgs/d/00008 acknowledged write lost: expected s525-e81-1 (event 81, slot 0), read absent
+  writer: c03msgs/d/00020 acknowledged write lost: expected s525-e81-2 (event 81, slot 0), read absent
+  writer: c05msgs/d/00011 acknowledged write lost: expected s525-e81-4 (event 81, slot 0), read absent
+  writer: c05msgs/d/00013 acknowledged write lost: expected s525-e81-7 (event 81, slot 0, issue 16), read the older s525-e11-4 (event 11, slot 0)
+
+MINIMAL SCRIPT (16 events; SIM_KEEP=0,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82), its run: 16 violations
+seed 525 knobs 0 profile Profile { delay_ppm: 300000, delay_max_ms: 30, fail_ppm: 0, timeout_before_ppm: 0, timeout_after_ppm: 0, timeout_ms: 0 }
+    0 Open { p: 0, writer: true }
+   68 Hold { p: 1, class: FxVersion, op: Some(Put), skip: 1, land: true, all: false, rid: 10 }
+   69 FirstStart { p: 1 }
+   70 Open { p: 2, writer: true }
+   71 Flush { p: 2 }
+   72 Write { p: 2, ops: [(3, 19, false), (4, 0, false), (1, 9, false), (4, 12, false), (0, 17, false), (2, 2, false), (3, 0, false)] }
+   73 Write { p: 2, ops: [(5, 10, false), (3, 0, false), (2, 10, true), (5, 4, false)] }
+   74 Flush { p: 2 }
+   75 Release { rid: 10 }
+   76 Erase { p: 2, cust: 0 }
+   77 FirstStart { p: 2 }
+   78 Erase { p: 1, cust: 1 }
+   79 Abandon { p: 2 }
+   80 GcClosedServer { p: 2, min_age_ms: 0 }
+   81 Write { p: 0, ops: [(2, 5, false), (3, 8, false), (3, 20, false), (1, 21, false), (5, 11, false), (2, 22, false), (0, 8, false), (5, 13, false)] }
+   82 Hold { p: 1, class: FxVersion, op: Some(Put), skip: 0, land: false, all: false, rid: 11 }
+  ! reader: c00msgs/d/00008 acknowledged write lost: expected s525-e81-6 (event 81, slot 0, issue 4), read the older absent (event 76, slot 2)
+  ! reader: c01msgs/d/00021 acknowledged write lost: expected s525-e81-3 (event 81, slot 0), read absent
+  ! reader: c02msgs/d/00005 acknowledged write lost: expected s525-e81-0 (event 81, slot 0), read absent
+  ! reader: c02msgs/d/00022 acknowledged write lost: expected s525-e81-5 (event 81, slot 0), read absent
+  ! reader: c03msgs/d/00008 acknowledged write lost: expected s525-e81-1 (event 81, slot 0), read absent
+  ! reader: c03msgs/d/00020 acknowledged write lost: expected s525-e81-2 (event 81, slot 0), read absent
+  ! reader: c05msgs/d/00011 acknowledged write lost: expected s525-e81-4 (event 81, slot 0), read absent
+  ! reader: c05msgs/d/00013 acknowledged write lost: expected s525-e81-7 (event 81, slot 0), read absent
+  ! writer: c00msgs/d/00008 acknowledged write lost: expected s525-e81-6 (event 81, slot 0, issue 4), read the older absent (event 76, slot 2)
+  ! writer: c01msgs/d/00021 acknowledged write lost: expected s525-e81-3 (event 81, slot 0), read absent
+  ! writer: c02msgs/d/00005 acknowledged write lost: expected s525-e81-0 (event 81, slot 0), read absent
+  ! writer: c02msgs/d/00022 acknowledged write lost: expected s525-e81-5 (event 81, slot 0), read absent
+  ! writer: c03msgs/d/00008 acknowledged write lost: expected s525-e81-1 (event 81, slot 0), read absent
+  ! writer: c03msgs/d/00020 acknowledged write lost: expected s525-e81-2 (event 81, slot 0), read absent
+  ! writer: c05msgs/d/00011 acknowledged write lost: expected s525-e81-4 (event 81, slot 0), read absent
+  ! writer: c05msgs/d/00013 acknowledged write lost: expected s525-e81-7 (event 81, slot 0), read absent
+
+TRACE OF THE MINIMAL RUN
+  [0] seed 525 knobs 0 profile Profile { delay_ppm: 300000, delay_max_ms: 30, fail_ppm: 0, timeout_before_ppm: 0, timeout_after_ppm: 0, timeout_ms: 0 }
+  [0] [0] Open { p: 0, writer: true } -> opened (life 0, writer epoch Some(1))
+  [68] hold rule 10 armed: life 1 Some(Put) FxVersion skip 1 land true all false
+  [69] [69] FirstStart { p: 1 } -> not open (skipped)
+  [70] [70] Open { p: 2, writer: true } -> opened (life 2, writer epoch Some(2))
+  [71] [71] Flush { p: 2 } -> flushed
+  [72] [72] Write { p: 2, ops: [(3, 19, false), (4, 0, false), (1, 9, false), (4, 12, false), (0, 17, false), (2, 2, false), (3, 0,  -> acked 7 keys
+  [73] [73] Write { p: 2, ops: [(5, 10, false), (3, 0, false), (2, 10, true), (5, 4, false)] } -> acked 4 keys
+  [74] [74] Flush { p: 2 } -> flushed
+  [75] hold rule 10 released (0 waiting)
+  [76] [76] Erase { p: 2, cust: 0 } -> deletes acked; erasure 00000000000000000003-fc2cb828 registered, S_e 3
+  [77] [77] FirstStart { p: 2 } -> first build started
+  [78] [78] Erase { p: 1, cust: 1 } -> not open (skipped)
+  [79] [79] Abandon { p: 2 } -> abandoned (close done true)
+  [80] [80] GcClosedServer { p: 2, min_age_ms: 0 } -> slate closed gc: 7 deletes; fx closed gc pass
+  [81] [81] Write { p: 0, ops: [(2, 5, false), (3, 8, false), (3, 20, false), (1, 21, false), (5, 11, false), (2, 22, false), (0, 8, -> acked 8 keys
+  [82] hold rule 11 armed: life 1 Some(Put) FxVersion skip 0 land false all false
+  [4294967295] settle: slot 0 close Ok(Err("close of tenant sim-525-274: the memtable flush failed (Closed error: detected newer DB client); no clean marker"))
+  [4294967295] oracle: incarnation 0 versions []: 
+
+FULL SCRIPT
+seed 525 knobs 0 profile Profile { delay_ppm: 300000, delay_max_ms: 30, fail_ppm: 0, timeout_before_ppm: 0, timeout_after_ppm: 0, timeout_ms: 0 }
+    0 Open { p: 0, writer: true }
+    1 FirstPoll { p: 0 }
+    2 Hold { p: 0, class: Other, op: Some(Multipart), skip: 2, land: true, all: true, rid: 1 }
+    3 Sleep { ms: 278 }
+    4 Close { p: 0 }
+    5 Release { rid: 1 }
+    6 Retire { p: 1 }
+    7 GcClosed { p: 0 }
+    8 Open { p: 0, writer: true }
+    9 Kill { p: 0 }
+   10 Open { p: 0, writer: true }
+   11 Write { p: 0, ops: [(0, 7, false), (0, 6, false), (4, 4, false), (5, 7, false), (5, 13, false), (3, 16, false), (4, 6, false), (2, 6, false), (3, 7, false), (2, 7, false), (1, 7, false)] }
+   12 Publish { p: 0 }
+   13 ReadCheck { p: 0, cust: 5, scan: false }
+   14 Write { p: 0, ops: [(0, 3, false), (4, 0, false), (2, 1, true), (4, 11, false), (3, 0, true)] }
+   15 Write { p: 0, ops: [(5, 7, false), (2, 13, false), (0, 13, false), (2, 13, false), (0, 20, false), (2, 5, false), (4, 3, false), (2, 18, false), (4, 13, true), (1, 18, true), (5, 10, false)] }
+   16 Hold { p: 0, class: FxOther, op: Some(Put), skip: 0, land: false, all: false, rid: 2 }
+   17 Publish { p: 0 }
+   18 Open { p: 1, writer: true }
+   19 CompStart { p: 1 }
+   20 Erase { p: 1, cust: 2 }
+   21 Flush { p: 1 }
+   22 Release { rid: 2 }
+   23 Write { p: 1, ops: [(2, 19, false), (4, 3, false), (1, 21, false)] }
+   24 Kill { p: 0 }
+   25 Open { p: 0, writer: true }
+   26 Hold { p: 0, class: Other, op: Some(Get), skip: 0, land: true, all: true, rid: 3 }
+   27 Hold { p: 0, class: FxRun, op: Some(Get), skip: 1, land: true, all: true, rid: 4 }
+   28 Hold { p: 0, class: FxVersion, op: Some(Get), skip: 1, land: true, all: true, rid: 5 }
+   29 Sleep { ms: 402 }
+   30 ReadCheck { p: 0, cust: 1, scan: true }
+   31 ReadCheck { p: 0, cust: 3, scan: false }
+   32 Release { rid: 3 }
+   33 Release { rid: 4 }
+   34 Release { rid: 5 }
+   35 Sleep { ms: 300 }
+   36 ReadCheck { p: 0, cust: 4, scan: false }
+   37 Hold { p: 0, class: FxVersion, op: None, skip: 2, land: false, all: false, rid: 6 }
+   38 Publish { p: 0 }
+   39 Write { p: 0, ops: [(2, 17, false), (2, 13, false), (3, 16, false), (1, 21, false), (0, 16, false), (2, 11, false), (3, 7, false), (0, 22, false), (3, 3, false), (3, 5, false)] }
+   40 CompStart { p: 0 }
+   41 Flush { p: 1 }
+   42 Write { p: 0, ops: [(4, 12, false), (0, 10, true), (5, 19, false), (1, 21, false), (1, 5, true), (5, 14, false), (2, 6, false), (3, 2, false), (5, 7, false)] }
+   43 CompDrain { p: 0 }
+   44 Open { p: 2, writer: true }
+   45 Abandon { p: 0 }
+   46 Write { p: 2, ops: [(4, 18, true), (3, 16, false), (4, 10, false), (2, 20, false), (1, 23, false), (1, 17, false), (5, 17, false), (0, 8, true), (1, 0, false), (5, 14, false)] }
+   47 Hold { p: 2, class: FxErasure, op: None, skip: 2, land: true, all: false, rid: 7 }
+   48 Open { p: 0, writer: false }
+   49 Hold { p: 2, class: Other, op: Some(Get), skip: 1, land: true, all: true, rid: 8 }
+   50 Hold { p: 2, class: FxRun, op: Some(Get), skip: 0, land: true, all: true, rid: 9 }
+   51 Write { p: 2, ops: [(1, 8, false), (0, 15, false)] }
+   52 ReadCheck { p: 2, cust: 5, scan: true }
+   53 Release { rid: 8 }
+   54 Release { rid: 9 }
+   55 Sleep { ms: 300 }
+   56 ReadCheck { p: 2, cust: 0, scan: false }
+   57 ErasePass { p: 1 }
+   58 Write { p: 2, ops: [(1, 4, false), (3, 3, false), (4, 18, false)] }
+   59 Release { rid: 6 }
+   60 Sleep { ms: 103 }
+   61 Write { p: 2, ops: [(0, 10, false), (2, 8, false), (5, 23, false), (4, 22, false), (4, 11, false), (2, 11, false), (3, 9, false), (1, 7, false), (2, 23, false)] }
+   62 Close { p: 2 }
+   63 Sleep { ms: 395 }
+   64 Abandon { p: 0 }
+   65 Kill { p: 1 }
+   66 Open { p: 0, writer: true }
+   67 Open { p: 1, writer: true }
+   68 Hold { p: 1, class: FxVersion, op: Some(Put), skip: 1, land: true, all: false, rid: 10 }
+   69 FirstStart { p: 1 }
+   70 Open { p: 2, writer: true }
+   71 Flush { p: 2 }
+   72 Write { p: 2, ops: [(3, 19, false), (4, 0, false), (1, 9, false), (4, 12, false), (0, 17, false), (2, 2, false), (3, 0, false)] }
+   73 Write { p: 2, ops: [(5, 10, false), (3, 0, false), (2, 10, true), (5, 4, false)] }
+   74 Flush { p: 2 }
+   75 Release { rid: 10 }
+   76 Erase { p: 2, cust: 0 }
+   77 FirstStart { p: 2 }
+   78 Erase { p: 1, cust: 1 }
+   79 Abandon { p: 2 }
+   80 GcClosedServer { p: 2, min_age_ms: 0 }
+   81 Write { p: 0, ops: [(2, 5, false), (3, 8, false), (3, 20, false), (1, 21, false), (5, 11, false), (2, 22, false), (0, 8, false), (5, 13, false)] }
+   82 Hold { p: 1, class: FxVersion, op: Some(Put), skip: 0, land: false, all: false, rid: 11 }
+   83 Flush { p: 0 }
+   84 GcClosed { p: 2 }
+   85 Hold { p: 0, class: Other, op: Some(Multipart), skip: 0, land: false, all: true, rid: 12 }
+   86 Write { p: 0, ops: [(1, 2, false), (3, 11, false), (3, 0, false), (0, 3, false), (3, 20, false), (1, 7, false)] }
+   87 Close { p: 0 }
+   88 Open { p: 0, writer: true }
+   89 Open { p: 2, writer: true }
