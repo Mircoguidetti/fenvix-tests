@@ -1,0 +1,724 @@
+# step 9 takeovers, engine dfdd685dcc654a67f75948c1629b9a25f41c89ce
+
+Run: https://github.com/Mircoguidetti/fenvix-tests/actions/runs/43555548075
+
+## log on
+
+{"log": "on", "n": 50, "rc": 0, "seconds": 1839, "harness": "703c2a9a8095e17220e2f61be17a0e66b463830b"}
+
+```
+{
+ "n": 50,
+ "writers": 8,
+ "lease_ttl_s": 4,
+ "log": "on",
+ "takeovers": [
+  {
+   "i": 1,
+   "killed": "A",
+   "takeover_s": 19.78,
+   "acked_before": 6449
+  },
+  {
+   "i": 2,
+   "killed": "B",
+   "takeover_s": 16.912,
+   "acked_before": 14619
+  },
+  {
+   "i": 3,
+   "killed": "A",
+   "takeover_s": 16.969,
+   "acked_before": 22488
+  },
+  {
+   "i": 4,
+   "killed": "B",
+   "takeover_s": 17.538,
+   "acked_before": 32110
+  },
+  {
+   "i": 5,
+   "killed": "A",
+   "takeover_s": 17.543,
+   "acked_before": 40755
+  },
+  {
+   "i": 6,
+   "killed": "B",
+   "takeover_s": 17.872,
+   "acked_before": 50301
+  },
+  {
+   "i": 7,
+   "killed": "A",
+   "takeover_s": 17.83,
+   "acked_before": 59275
+  },
+  {
+   "i": 8,
+   "killed": "B",
+   "takeover_s": 16.354,
+   "acked_before": 67057
+  },
+  {
+   "i": 9,
+   "killed": "A",
+   "takeover_s": 16.898,
+   "acked_before": 75600
+  },
+  {
+   "i": 10,
+   "killed": "B",
+   "takeover_s": 17.346,
+   "acked_before": 84399
+  },
+  {
+   "i": 11,
+   "killed": "A",
+   "takeover_s": 17.953,
+   "acked_before": 94259
+  },
+  {
+   "i": 12,
+   "killed": "B",
+   "takeover_s": 17.231,
+   "acked_before": 102389
+  },
+  {
+   "i": 13,
+   "killed": "A",
+   "takeover_s": 18.671,
+   "acked_before": 112087
+  },
+  {
+   "i": 14,
+   "killed": "B",
+   "takeover_s": 18.279,
+   "acked_before": 121064
+  },
+  {
+   "i": 15,
+   "killed": "A",
+   "takeover_s": 17.117,
+   "acked_before": 130005
+  },
+  {
+   "i": 16,
+   "killed": "B",
+   "takeover_s": 17.226,
+   "acked_before": 139098
+  },
+  {
+   "i": 17,
+   "killed": "A",
+   "takeover_s": 17.153,
+   "acked_before": 147740
+  },
+  {
+   "i": 18,
+   "killed": "B",
+   "takeover_s": 17.443,
+   "acked_before": 156575
+  },
+  {
+   "i": 19,
+   "killed": "A",
+   "takeover_s": 17.645,
+   "acked_before": 164621
+  },
+  {
+   "i": 20,
+   "killed": "B",
+   "takeover_s": 18.091,
+   "acked_before": 173930
+  },
+  {
+   "i": 21,
+   "killed": "A",
+   "takeover_s": 19.247,
+   "acked_before": 183745
+  },
+  {
+   "i": 22,
+   "killed": "B",
+   "takeover_s": 17.176,
+   "acked_before": 192249
+  },
+  {
+   "i": 23,
+   "killed": "A",
+   "takeover_s": 17.419,
+   "acked_before": 200742
+  },
+  {
+   "i": 24,
+   "killed": "B",
+   "takeover_s": 16.933,
+   "acked_before": 208740
+  },
+  {
+   "i": 25,
+   "killed": "A",
+   "takeover_s": 17.451,
+   "acked_before": 215882
+  },
+  {
+   "i": 26,
+   "killed": "B",
+   "takeover_s": 17.977,
+   "acked_before": 224829
+  },
+  {
+   "i": 27,
+   "killed": "A",
+   "takeover_s": 18.139,
+   "acked_before": 233119
+  },
+  {
+   "i": 28,
+   "killed": "B",
+   "takeover_s": 17.546,
+   "acked_before": 241571
+  },
+  {
+   "i": 29,
+   "killed": "A",
+   "takeover_s": 15.53,
+   "acked_before": 248346
+  },
+  {
+   "i": 30,
+   "killed": "B",
+   "takeover_s": 16.591,
+   "acked_before": 256043
+  },
+  {
+   "i": 31,
+   "killed": "A",
+   "takeover_s": 16.751,
+   "acked_before": 263634
+  },
+  {
+   "i": 32,
+   "killed": "B",
+   "takeover_s": 16.826,
+   "acked_before": 270780
+  },
+  {
+   "i": 33,
+   "killed": "A",
+   "takeover_s": 16.423,
+   "acked_before": 277374
+  },
+  {
+   "i": 34,
+   "killed": "B",
+   "takeover_s": 17.823,
+   "acked_before": 286281
+  },
+  {
+   "i": 35,
+   "killed": "A",
+   "takeover_s": 17.849,
+   "acked_before": 294937
+  },
+  {
+   "i": 36,
+   "killed": "B",
+   "takeover_s": 15.595,
+   "acked_before": 302121
+  },
+  {
+   "i": 37,
+   "killed": "A",
+   "takeover_s": 17.249,
+   "acked_before": 309895
+  },
+  {
+   "i": 38,
+   "killed": "B",
+   "takeover_s": 17.105,
+   "acked_before": 318200
+  },
+  {
+   "i": 39,
+   "killed": "A",
+   "takeover_s": 17.041,
+   "acked_before": 326708
+  },
+  {
+   "i": 40,
+   "killed": "B",
+   "takeover_s": 17.031,
+   "acked_before": 334530
+  },
+  {
+   "i": 41,
+   "killed": "A",
+   "takeover_s": 17.366,
+   "acked_before": 342639
+  },
+  {
+   "i": 42,
+   "killed": "B",
+   "takeover_s": 16.597,
+   "acked_before": 349501
+  },
+  {
+   "i": 43,
+   "killed": "A",
+   "takeover_s": 17.17,
+   "acked_before": 356273
+  },
+  {
+   "i": 44,
+   "killed": "B",
+   "takeover_s": 29.369,
+   "acked_before": 362509
+  },
+  {
+   "i": 45,
+   "killed": "A",
+   "takeover_s": 16.388,
+   "acked_before": 369539
+  },
+  {
+   "i": 46,
+   "killed": "B",
+   "takeover_s": 17.01,
+   "acked_before": 377337
+  },
+  {
+   "i": 47,
+   "killed": "A",
+   "takeover_s": 17.062,
+   "acked_before": 385374
+  },
+  {
+   "i": 48,
+   "killed": "B",
+   "takeover_s": 17.412,
+   "acked_before": 394167
+  },
+  {
+   "i": 49,
+   "killed": "A",
+   "takeover_s": 17.155,
+   "acked_before": 402842
+  },
+  {
+   "i": 50,
+   "killed": "B",
+   "takeover_s": 17.366,
+   "acked_before": 410484
+  }
+ ],
+ "verify_error": null,
+ "missing_by_read": {
+  "at_once": 0,
+  "after_settle": 0,
+  "after_clean_restart": 0
+ },
+ "done": 50,
+ "acknowledged": 413023,
+ "lost": 0,
+ "lost_ids_first": [],
+ "confirmed_after_kill": 0,
+ "failed_writes": 3104,
+ "survivor": "A",
+ "takeover_s_p50": 17.231,
+ "takeover_s_p99": 29.369,
+ "takeover_s_max": 29.369,
+ "verdict": "PASS"
+}
+```
+
+harness.log, last lines:
+```
+== 0. docker image of the machines, MinIO
+== 1. fake Atlas and the shrunk kitchen (fake_atlas.sh)
+fake Atlas m10p     app_data_3: 204 clients, 81 dormant, loaded 29.64%
+fake Atlas m30p     app_data_6: 204 clients, 81 dormant, loaded 29.71%
+fake Atlas m10s     app_data_1: 204 clients, 99 dormant, loaded 43.94%
+fake Atlas vecchio  fenvix_p1: 204 clients, 61 dormant, loaded 100.11%
+fake Atlas m30s     app_data_4: 204 clients, 99 dormant, loaded 43.76%
+fake Atlas ready: CATENA.txt m10p m10s m30p m30s vecchio 
+== round takeovers-on: {"mode": "run", "data": "atlas", "log": "m7i.large", "phases": ["load", "measure", "extras"], "pantry": "new", "programs": ["takeovers"], "takeovers_args": "--n 50 --writers 8 --between-s 3 --lease-ttl 4 --log on", "takeovers_off_args": "", "ceiling_min": 150}
+mode=run
+engine=integration
+data=atlas
+pantry_mode=new
+vcpu_peak=10
+vcpu_peaks={'load': 8, 'measure (m30)': 6, 'extras': 10}
+x86=1
+arm=0
+run.py: code 0 in 1711 s; outcome: FINITO; {"load": "LOADED", "client": "LOADED_ONLY", "extras": "takeovers:rc=0"}
+2026-11-14T05:16:47Z SPESA: 0.92 $ so far at 28 minutes (upper bound; machines 0.26 $, alive: none; S3 0.67 $ from the servers' counters, storage and margin), cap 5.00 $
+teardown: code 0
+secrets check: no secret in the files (2 pieces searched, password included)
+RIMASTO: niente (final check: machines, disks, IP addresses, buckets, security groups or containers)
+final check: code 0
+total time: 1838 s
+```
+
+## log off
+
+{"log": "off", "n": 50, "rc": 0, "seconds": 1449, "harness": "703c2a9a8095e17220e2f61be17a0e66b463830b"}
+
+```
+{
+ "n": 50,
+ "writers": 8,
+ "lease_ttl_s": 4,
+ "log": "off",
+ "takeovers": [
+  {
+   "i": 1,
+   "killed": "A",
+   "takeover_s": 13.007,
+   "acked_before": 7341
+  },
+  {
+   "i": 2,
+   "killed": "B",
+   "takeover_s": 12.3,
+   "acked_before": 18459
+  },
+  {
+   "i": 3,
+   "killed": "A",
+   "takeover_s": 13.274,
+   "acked_before": 28892
+  },
+  {
+   "i": 4,
+   "killed": "B",
+   "takeover_s": 12.986,
+   "acked_before": 38961
+  },
+  {
+   "i": 5,
+   "killed": "A",
+   "takeover_s": 12.06,
+   "acked_before": 49898
+  },
+  {
+   "i": 6,
+   "killed": "B",
+   "takeover_s": 13.366,
+   "acked_before": 60436
+  },
+  {
+   "i": 7,
+   "killed": "A",
+   "takeover_s": 12.78,
+   "acked_before": 71035
+  },
+  {
+   "i": 8,
+   "killed": "B",
+   "takeover_s": 12.126,
+   "acked_before": 81337
+  },
+  {
+   "i": 9,
+   "killed": "A",
+   "takeover_s": 13.533,
+   "acked_before": 92033
+  },
+  {
+   "i": 10,
+   "killed": "B",
+   "takeover_s": 12.896,
+   "acked_before": 103061
+  },
+  {
+   "i": 11,
+   "killed": "A",
+   "takeover_s": 12.125,
+   "acked_before": 113539
+  },
+  {
+   "i": 12,
+   "killed": "B",
+   "takeover_s": 13.722,
+   "acked_before": 123647
+  },
+  {
+   "i": 13,
+   "killed": "A",
+   "takeover_s": 12.81,
+   "acked_before": 134226
+  },
+  {
+   "i": 14,
+   "killed": "B",
+   "takeover_s": 12.156,
+   "acked_before": 144111
+  },
+  {
+   "i": 15,
+   "killed": "A",
+   "takeover_s": 13.886,
+   "acked_before": 155244
+  },
+  {
+   "i": 16,
+   "killed": "B",
+   "takeover_s": 13.058,
+   "acked_before": 165788
+  },
+  {
+   "i": 17,
+   "killed": "A",
+   "takeover_s": 12.104,
+   "acked_before": 175552
+  },
+  {
+   "i": 18,
+   "killed": "B",
+   "takeover_s": 13.557,
+   "acked_before": 185659
+  },
+  {
+   "i": 19,
+   "killed": "A",
+   "takeover_s": 13.541,
+   "acked_before": 194929
+  },
+  {
+   "i": 20,
+   "killed": "B",
+   "takeover_s": 12.459,
+   "acked_before": 205494
+  },
+  {
+   "i": 21,
+   "killed": "A",
+   "takeover_s": 13.089,
+   "acked_before": 214821
+  },
+  {
+   "i": 22,
+   "killed": "B",
+   "takeover_s": 13.01,
+   "acked_before": 225193
+  },
+  {
+   "i": 23,
+   "killed": "A",
+   "takeover_s": 13.772,
+   "acked_before": 234442
+  },
+  {
+   "i": 24,
+   "killed": "B",
+   "takeover_s": 13.379,
+   "acked_before": 243930
+  },
+  {
+   "i": 25,
+   "killed": "A",
+   "takeover_s": 12.207,
+   "acked_before": 253040
+  },
+  {
+   "i": 26,
+   "killed": "B",
+   "takeover_s": 13.521,
+   "acked_before": 263677
+  },
+  {
+   "i": 27,
+   "killed": "A",
+   "takeover_s": 12.671,
+   "acked_before": 274066
+  },
+  {
+   "i": 28,
+   "killed": "B",
+   "takeover_s": 12.117,
+   "acked_before": 284201
+  },
+  {
+   "i": 29,
+   "killed": "A",
+   "takeover_s": 14.178,
+   "acked_before": 295160
+  },
+  {
+   "i": 30,
+   "killed": "B",
+   "takeover_s": 12.773,
+   "acked_before": 305648
+  },
+  {
+   "i": 31,
+   "killed": "A",
+   "takeover_s": 11.983,
+   "acked_before": 315401
+  },
+  {
+   "i": 32,
+   "killed": "B",
+   "takeover_s": 13.173,
+   "acked_before": 323888
+  },
+  {
+   "i": 33,
+   "killed": "A",
+   "takeover_s": 12.68,
+   "acked_before": 332703
+  },
+  {
+   "i": 34,
+   "killed": "B",
+   "takeover_s": 14.114,
+   "acked_before": 343517
+  },
+  {
+   "i": 35,
+   "killed": "A",
+   "takeover_s": 12.938,
+   "acked_before": 353116
+  },
+  {
+   "i": 36,
+   "killed": "B",
+   "takeover_s": 13.067,
+   "acked_before": 362480
+  },
+  {
+   "i": 37,
+   "killed": "A",
+   "takeover_s": 13.353,
+   "acked_before": 372864
+  },
+  {
+   "i": 38,
+   "killed": "B",
+   "takeover_s": 12.734,
+   "acked_before": 379581
+  },
+  {
+   "i": 39,
+   "killed": "A",
+   "takeover_s": 13.596,
+   "acked_before": 389396
+  },
+  {
+   "i": 40,
+   "killed": "B",
+   "takeover_s": 13.214,
+   "acked_before": 399080
+  },
+  {
+   "i": 41,
+   "killed": "A",
+   "takeover_s": 11.994,
+   "acked_before": 408270
+  },
+  {
+   "i": 42,
+   "killed": "B",
+   "takeover_s": 13.491,
+   "acked_before": 418579
+  },
+  {
+   "i": 43,
+   "killed": "A",
+   "takeover_s": 12.501,
+   "acked_before": 427205
+  },
+  {
+   "i": 44,
+   "killed": "B",
+   "takeover_s": 13.839,
+   "acked_before": 436402
+  },
+  {
+   "i": 45,
+   "killed": "A",
+   "takeover_s": 13.317,
+   "acked_before": 445369
+  },
+  {
+   "i": 46,
+   "killed": "B",
+   "takeover_s": 12.109,
+   "acked_before": 454952
+  },
+  {
+   "i": 47,
+   "killed": "A",
+   "takeover_s": 13.797,
+   "acked_before": 465958
+  },
+  {
+   "i": 48,
+   "killed": "B",
+   "takeover_s": 12.435,
+   "acked_before": 475346
+  },
+  {
+   "i": 49,
+   "killed": "A",
+   "takeover_s": 14.234,
+   "acked_before": 484190
+  },
+  {
+   "i": 50,
+   "killed": "B",
+   "takeover_s": 13.001,
+   "acked_before": 493909
+  }
+ ],
+ "verify_error": null,
+ "missing_by_read": {
+  "at_once": 0,
+  "after_settle": 0,
+  "after_clean_restart": 0
+ },
+ "done": 50,
+ "acknowledged": 495591,
+ "lost": 0,
+ "lost_ids_first": [],
+ "confirmed_after_kill": 0,
+ "failed_writes": 2800,
+ "survivor": "A",
+ "takeover_s_p50": 13.007,
+ "takeover_s_p99": 14.234,
+ "takeover_s_max": 14.234,
+ "verdict": "PASS"
+}
+```
+
+harness.log, last lines:
+```
+== 0. docker image of the machines, MinIO
+== 1. fake Atlas and the shrunk kitchen (fake_atlas.sh)
+fake Atlas vecchio  fenvix_p1: 204 clients, 61 dormant, loaded 100.11%
+fake Atlas m30s     app_data_4: 204 clients, 99 dormant, loaded 43.76%
+fake Atlas m10p     app_data_3: 204 clients, 81 dormant, loaded 29.58%
+fake Atlas m30p     app_data_6: 204 clients, 81 dormant, loaded 29.70%
+fake Atlas m10s     app_data_1: 204 clients, 99 dormant, loaded 43.94%
+fake Atlas ready: CATENA.txt m10p m10s m30p m30s vecchio 
+== round takeovers-off: {"mode": "run", "data": "atlas", "log": "m7i.large", "phases": ["load", "measure", "extras"], "pantry": "new", "programs": ["takeovers"], "takeovers_args": "--n 50 --writers 8 --between-s 3 --lease-ttl 4 --log off", "takeovers_off_args": "", "ceiling_min": 150}
+mode=run
+engine=integration
+data=atlas
+pantry_mode=new
+vcpu_peak=10
+vcpu_peaks={'load': 8, 'measure (m30)': 6, 'extras': 10}
+x86=1
+arm=0
+run.py: code 0 in 1348 s; outcome: FINITO; {"load": "LOADED", "client": "LOADED_ONLY", "extras": "takeovers:rc=0"}
+2026-11-14T05:11:14Z SPESA: 0.87 $ so far at 22 minutes (upper bound; machines 0.20 $, alive: none; S3 0.67 $ from the servers' counters, storage and margin), cap 5.00 $
+teardown: code 0
+secrets check: no secret in the files (2 pieces searched, password included)
+RIMASTO: niente (final check: machines, disks, IP addresses, buckets, security groups or containers)
+final check: code 0
+total time: 1449 s
+```
+
