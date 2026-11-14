@@ -1,0 +1,73 @@
+cpu: the process may use 2 core(s) and runs on CPU(s) [0, 1]
+memory budget: limit 8192 MiB (cgroup2), caches 3584 MiB (block 1612, meta 537, sealed 1433), memtable 8 MiB, first course 512 MiB, change log 32 MiB, L0 reads at once 4
+box disk floor: 4096 MiB in /tmp/fenvix-box-floor-27018
+memory budget (review round): box 179 MiB per customer, 358 MiB in flight; memtables of every database 1024 MiB (writes wait past 1536 MiB); merge read-ahead 256 MiB; absorption 16 L0 SSTs
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+quaderno: writes are acknowledged by the replicated log at 172.18.0.2:7200,172.18.0.4:7200,172.18.0.5:7200
+quaderno: restart read 1059 records of 1 databases from the log
+LEASE process_lease tenant=- holder=tk-spare-16 unix_ms=1794626624754 inc=117223fea0985064 gen=1
+local log: replay of database tk_app failed (tenant tk_app is owned by server process tk-server-1-16 (lease valid for another 2757 ms); retry); its 1059 records are kept, the database is refused until they are applied
+quaderno: database tk_app: its replay was refused before it took the lease; its 1059 records stay in the log as they are (no copies)
+local log: 1 databases kept their records; retried in the background
+quaderno: restart applied 0 records to 0 databases in 0.3 s
+mongo-server listening on 0.0.0.0:27018 (idle close after 60 s, holder tk-spare-16, lease ttl 4 s)
+local log: retry of database tk_app failed (tenant tk_app is owned by server process tk-server-1-16 (lease valid for another 2934 ms); retry); retried later
+local log: retry of database tk_app failed (tenant tk_app is owned by server process tk-server-1-16 (lease valid for another 3483 ms); retry); retried later
+quaderno: database tk_app: not the lease holder: the log is told only up to position 117612650458775552, the highest this process read at its start
+local log: database tk_app: kept records applied by the retry; the database is open again
+SLOW hello db=admin ms=10000 ok=true
+SLOW hello db=admin ms=10001 ok=true
+SLOW hello db=admin ms=10000 ok=true
+SLOW hello db=admin ms=10001 ok=true
+LEASE process_lease_revoked tenant=admin holder=tk-spare-16 unix_ms=1794626640633 of=tk-server-1-16
+LEASE acquired tenant=admin holder=tk-spare-16 unix_ms=1794626640635 takeover_from=tk-server-1-16
+LEASE takeover_wake tenant=admin holder=tk-spare-16 unix_ms=1794626640644 unclean=true takeover_from=tk-server-1-16
+LEASE acquired tenant=tk_app holder=tk-spare-16 unix_ms=1794626640654 takeover_from=tk-server-1-16
+LEASE takeover_wake tenant=tk_app holder=tk-spare-16 unix_ms=1794626640696 unclean=true takeover_from=tk-server-1-16
+FXC not started db=tk_app reason=not_writer unix_ms=1794626641487
+REPLAY_RAISE db=tk_app l0=6 wal_bytes=649488 raise=1298976 cap=1073741824: the writer's unflushed limit is raised for its open
+LEASE writer_open tenant=tk_app holder=tk-spare-16 unix_ms=1794626641595 
+quaderno: takeover of tk_app: 1064 records applied from the log (after record 117612650708336641)
+SLATE_JOB start u=1794626641645.8887 db=tk_app l0_srcs=4 l0_mib=7 srs_mib=[] l0_now=6 runs_now=0 job=1794626641646 beside_merge=0
+SLOW insert db=tk_app ms=998 ok=true
+SLOW insert db=tk_app ms=985 ok=true
+SLOW insert db=tk_app ms=1001 ok=true
+SLOW insert db=tk_app ms=1012 ok=true
+SLOW insert db=tk_app ms=1012 ok=true
+SLOW insert db=tk_app ms=1009 ok=true
+SLOW insert db=tk_app ms=1005 ok=true
+SLOW insert db=tk_app ms=1005 ok=true
+SLATE_JOB end u=1794626642291.5566 db=tk_app ms=645 rows=41843 l0_srcs=4 l0_mib=7 srs_mib=[] l0_now=6 runs_now=0 job=1794626641646 beside_merge=0
+L0_TRACE u=1794626642632.4165 db=tk_app l0=6 unabs=2 absorbing=1 slate_jobs=1/1 slate_job=986ms l0_srcs=4 l0_mib=7 srs_mib=[] l0_now=6 runs_now=0 job=1794626641646 beside_merge=0
+L0_RECOGNISE db=tk_app read=2 absorbed=0 ms=1059 off_lock=1
+SLATE_JOB end u=1794626642821.214 db=tk_app ms=1175 rows=91153 l0_srcs=4 l0_mib=7 srs_mib=[] l0_now=6 runs_now=0 job=1794626641646 beside_merge=0
+SLATE_JOB end u=1794626642866.7698 db=tk_app ms=1220 rows=93663 l0_srcs=4 l0_mib=7 srs_mib=[] l0_now=6 runs_now=0 job=1794626641646 beside_merge=0
+SLATE_JOB end u=1794626643063.9924 db=tk_app ms=1418 rows=172763 l0_srcs=4 l0_mib=7 srs_mib=[] l0_now=6 runs_now=0 job=1794626641646 beside_merge=0
+ABSORB u=1794626643622.7217 db=tk_app ssts=2 rows=202259 raw_kib=9875 committed=1 l0_start=6 l0_end=2 lock_ms=0 read_ms=808 write_ms=123 commit_ms=6 total_ms=938
+L0_TRACE u=1794626643667.6223 db=tk_app l0=2 unabs=0 absorbing=0 slate_jobs=4/1 slate_job=2021ms l0_srcs=4 l0_mib=7 srs_mib=[] l0_now=6 runs_now=0 job=1794626641646 beside_merge=0
+L0_TRACE u=1794626644697.8774 db=tk_app l0=2 unabs=0 absorbing=0 slate_jobs=4/1 slate_job=3051ms l0_srcs=4 l0_mib=7 srs_mib=[] l0_now=6 runs_now=0 job=1794626641646 beside_merge=0
+SLOW insert db=tk_app ms=589 ok=true
+SLOW insert db=tk_app ms=589 ok=true
+SLOW insert db=tk_app ms=587 ok=true
+SLOW insert db=tk_app ms=587 ok=true
+SLOW insert db=tk_app ms=588 ok=true
+SLOW insert db=tk_app ms=588 ok=true
+SLOW insert db=tk_app ms=587 ok=true
+SLOW insert db=tk_app ms=588 ok=true
+ABSORB u=1794626645007.152 db=tk_app ssts=1 rows=12315 raw_kib=601 committed=1 l0_start=3 l0_end=3 lock_ms=0 read_ms=19 write_ms=6 commit_ms=3 total_ms=29
+LEASE writer_close tenant=tk_app holder=tk-spare-16 unix_ms=1794626645017 
+LEASE release_begin tenant=tk_app holder=tk-spare-16 unix_ms=1794626645018 
+LEASE release tenant=tk_app holder=tk-spare-16 unix_ms=1794626645020 ok=true
+REPLAY_RAISE_DROPPED db=tk_app raise=1298976: L0 drained; closed, the next command opens it with the normal limit
+LEASE acquired tenant=tk_app holder=tk-spare-16 unix_ms=1794626645023 takeover_from=-
+FXC not started db=tk_app reason=not_writer unix_ms=1794626645040
+LEASE writer_open tenant=tk_app holder=tk-spare-16 unix_ms=1794626645080 
+SLOW insert db=tk_app ms=1128 ok=true
+SLOW insert db=tk_app ms=1131 ok=true
+SLOW insert db=tk_app ms=1131 ok=true
+SLOW insert db=tk_app ms=1233 ok=true
+SLOW insert db=tk_app ms=1132 ok=true
+SLOW insert db=tk_app ms=1237 ok=true
+SLOW insert db=tk_app ms=911 ok=true
+SLOW insert db=tk_app ms=1137 ok=true
+L0_RECOGNISE db=tk_app read=3 absorbed=3 ms=620 off_lock=1
