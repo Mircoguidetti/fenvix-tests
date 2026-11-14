@@ -1,0 +1,27 @@
+TEST FAULT INJECTION ON (/tmp/tmpz_sxlen_.faults): never use this in production
+memory budget: limit 15701 MiB (memtotal), caches 7338 MiB (block 3302, meta 1100, sealed 2935), memtable 8 MiB, first course 981 MiB, change log 32 MiB, L0 reads at once 4
+box disk floor: 4096 MiB in /tmp/fenvix-box-floor-38387
+memory budget (review round): box 366 MiB per customer, 733 MiB in flight; memtables of every database 1962 MiB (writes wait past 2944 MiB); merge read-ahead 490 MiB; absorption 16 L0 SSTs
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+LEASE process_lease tenant=- holder=E1 unix_ms=1794644047574 inc=96896328e6a62a92 gen=1
+LEASE acquired tenant=e holder=E1 unix_ms=1794644047578 takeover_from=-
+LEASE takeover_wake tenant=e holder=E1 unix_ms=1794644047586 unclean=true takeover_from=-
+FAULT hang_put tenants/e/wal/00000000000000000002.sst
+LEASE writer_open tenant=e holder=E1 unix_ms=1794644047798 
+local log: database e: 6 records applied again (after record 0)
+local log: restart applied 6 records to 1 databases in 0.2 s
+admin interface listening on 127.0.0.1:32330 (bearer token required)
+mongo-server listening on 127.0.0.1:38387 (idle close after 600 s, holder E1, lease ttl 4 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:36098
+shutting down: closing tenants cleanly
+LEASE writer_close tenant=e holder=E1 unix_ms=1794644047853 
+LEASE release_begin tenant=e holder=E1 unix_ms=1794644047853 
+LEASE release tenant=e holder=E1 unix_ms=1794644047855 ok=true
+maintenance shutdown: waiting for the L0 watch unix_ms=1794644047855
+maintenance shutdown: waiting for the dispatcher unix_ms=1794644048570
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794644048570
+maintenance shutdown: waiting for the GC task unix_ms=1794644048570
+maintenance shutdown: done unix_ms=1794644049569
+TIMING shutdown close_ms=9 aborts_ms=0 tail_ms=1714 deadline_cuts=0 left_behind=0 held_at_deadline=0 optional_skipped=0
+tenants closed; stopping maintenance (done with the steps above)
+maintenance stopped (1723 ms)

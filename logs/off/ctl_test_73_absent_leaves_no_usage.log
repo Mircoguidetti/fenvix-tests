@@ -1,0 +1,44 @@
+F..                                                                      [100%]
+=================================== FAILURES ===================================
+________ test_fork_of_an_erased_source_leaves_nothing_under_the_target _________
+test_73_absent_leaves_no_usage.py:47: in test_fork_of_an_erased_source_leaves_nothing_under_the_target
+    assert left == {"src": [], "src_k": []}, left
+E   AssertionError: {'src': ['tenants/src/wal/00000000000000000001.sst', 'tenants/src/wal/00000000000000000002.sst'], 'src_k': []}
+E   assert {'src': ['ten..., 'src_k': []} == {'src': [], 'src_k': []}
+E     
+E     Omitting 1 identical items, use -vv to show
+E     Differing items:
+E     {'src': ['tenants/src/wal/00000000000000000001.sst', 'tenants/src/wal/00000000000000000002.sst']} != {'src': []}
+E     
+E     Full diff: (-: missing in left side, +: extra in left side)
+E       {
+E     -     'src': [],
+E     ?             --
+E     +     'src': [
+E     +         'tenants/src/wal/00000000000000000001.sst',
+E     +         'tenants/src/wal/00000000000000000002.sst',
+E     +     ],
+E           'src_k': [],
+E       }
+----------------------------- Captured stdout call -----------------------------
+fork after the erase: 404 {'error': {'code': 'not_found', 'message': 'database src does not exist'}}
+objects left: {'src': ['tenants/src/wal/00000000000000000001.sst', 'tenants/src/wal/00000000000000000002.sst'], 'src_k': []}
+=========================== short test summary info ============================
+FAILED test_73_absent_leaves_no_usage.py::test_fork_of_an_erased_source_leaves_nothing_under_the_target - AssertionError: {'src': ['tenants/src/wal/00000000000000000001.sst', 'tenants/src/wal/00000000000000000002.sst'], 'src_k': []}
+assert {'src': ['ten..., 'src_k': []} == {'src': [], 'src_k': []}
+  
+  Omitting 1 identical items, use -vv to show
+  Differing items:
+  {'src': ['tenants/src/wal/00000000000000000001.sst', 'tenants/src/wal/00000000000000000002.sst']} != {'src': []}
+  
+  Full diff: (-: missing in left side, +: extra in left side)
+    {
+  -     'src': [],
+  ?             --
+  +     'src': [
+  +         'tenants/src/wal/00000000000000000001.sst',
+  +         'tenants/src/wal/00000000000000000002.sst',
+  +     ],
+        'src_k': [],
+    }
+1 failed, 2 passed in 26.32s

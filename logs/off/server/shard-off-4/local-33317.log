@@ -1,0 +1,56 @@
+memory budget: limit 15701 MiB (memtotal), caches 7338 MiB (block 3302, meta 1100, sealed 2935), memtable 8 MiB, first course 981 MiB, change log 32 MiB, L0 reads at once 4
+box disk floor: 4096 MiB in /tmp/fenvix-box-floor-33317
+memory budget (review round): box 366 MiB per customer, 733 MiB in flight; memtables of every database 1962 MiB (writes wait past 2944 MiB); merge read-ahead 490 MiB; absorption 16 L0 SSTs
+admin interface listening on 127.0.0.1:35372 (bearer token required)
+mongo-server listening on 127.0.0.1:33317 (idle close after 60 s, holder loc33317, lease ttl 6 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:56210
+LEASE process_lease tenant=- holder=loc33317 unix_ms=1794643966236 inc=095377f26649aefa gen=1
+LEASE acquired tenant=admin holder=loc33317 unix_ms=1794643966236 takeover_from=-
+LEASE acquired tenant=lc1 holder=loc33317 unix_ms=1794643966237 takeover_from=-
+LEASE acquired tenant=lc1 holder=loc33317 unix_ms=1794643966237 takeover_from=- new=true
+LEASE writer_open tenant=lc1 holder=loc33317 unix_ms=1794643966238 
+ADMIN POST /v1/databases -> 201 3 ms peer=127.0.0.1:56220
+LEASE writer_close tenant=lc1 holder=loc33317 unix_ms=1794643966245 
+LEASE release_begin tenant=lc1 holder=loc33317 unix_ms=1794643966245 
+LEASE release tenant=lc1 holder=loc33317 unix_ms=1794643966245 ok=true
+LEASE release_begin tenant=lc1 holder=loc33317 unix_ms=1794643966247 
+LEASE release tenant=lc1 holder=loc33317 unix_ms=1794643966247 ok=true
+LEASE release_begin tenant=lcf_clone holder=loc33317 unix_ms=1794643966248 
+LEASE release tenant=lcf_clone holder=loc33317 unix_ms=1794643966248 ok=true
+ADMIN POST /v1/databases/lc1/fork -> 201 5 ms peer=127.0.0.1:56230
+LEASE acquired tenant=lcf_clone holder=loc33317 unix_ms=1794643966249 takeover_from=-
+LEASE writer_open tenant=lcf_clone holder=loc33317 unix_ms=1794643966257 
+LEASE acquired tenant=lc1 holder=loc33317 unix_ms=1794643966258 takeover_from=-
+LEASE release_begin tenant=lc1 holder=loc33317 unix_ms=1794643966266 
+LEASE release tenant=lc1 holder=loc33317 unix_ms=1794643966266 ok=true
+LEASE release_begin tenant=lc1 holder=loc33317 unix_ms=1794643966267 
+LEASE release tenant=lc1 holder=loc33317 unix_ms=1794643966268 ok=true
+LEASE release_begin tenant=lcf_copy holder=loc33317 unix_ms=1794643966268 
+LEASE release tenant=lcf_copy holder=loc33317 unix_ms=1794643966268 ok=true
+ADMIN POST /v1/databases/lc1/fork -> 201 3 ms peer=127.0.0.1:56238
+LEASE acquired tenant=lcf_copy holder=loc33317 unix_ms=1794643966269 takeover_from=-
+LEASE writer_open tenant=lcf_copy holder=loc33317 unix_ms=1794643966277 
+LEASE acquired tenant=lc1 holder=loc33317 unix_ms=1794643966277 takeover_from=-
+ADMIN PUT /v1/databases/lc1/keep-awake -> 200 1 ms peer=127.0.0.1:56248
+ADMIN DELETE /v1/databases/lc1/keep-awake -> 200 0 ms peer=127.0.0.1:56258
+LEASE release_begin tenant=lc1 holder=loc33317 unix_ms=1794643966287 
+LEASE release tenant=lc1 holder=loc33317 unix_ms=1794643966287 ok=true
+ADMIN PUT /v1/databases/lc1/retention -> 200 1 ms peer=127.0.0.1:56266
+LEASE release_begin tenant=lc1 holder=loc33317 unix_ms=1794643966290 
+LEASE release tenant=lc1 holder=loc33317 unix_ms=1794643966290 ok=true
+ADMIN POST /v1/databases/lc1/exports -> 201 2 ms peer=127.0.0.1:56268
+TIMING abandon db=lcf_clone stop_fxc_ms=0 tenant_abandon_ms=0 closed=true
+LEASE writer_close tenant=lcf_clone holder=loc33317 unix_ms=1794643966291 
+ADMIN DELETE /v1/databases/lcf_clone -> 200 4 ms peer=127.0.0.1:56284
+TIMING abandon db=lcf_copy stop_fxc_ms=0 tenant_abandon_ms=0 closed=true
+LEASE writer_close tenant=lcf_copy holder=loc33317 unix_ms=1794643966296 
+ADMIN DELETE /v1/databases/lcf_copy -> 200 3 ms peer=127.0.0.1:56286
+shutting down: closing tenants cleanly
+maintenance shutdown: waiting for the L0 watch unix_ms=1794643966299
+maintenance shutdown: waiting for the dispatcher unix_ms=1794643967048
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794643967048
+maintenance shutdown: waiting for the GC task unix_ms=1794643967048
+maintenance shutdown: done unix_ms=1794643968049
+TIMING shutdown close_ms=0 aborts_ms=0 tail_ms=1749 deadline_cuts=0 left_behind=0 held_at_deadline=0 optional_skipped=0
+tenants closed; stopping maintenance (done with the steps above)
+maintenance stopped (1749 ms)

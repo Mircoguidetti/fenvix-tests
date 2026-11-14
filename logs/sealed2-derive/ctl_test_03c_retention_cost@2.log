@@ -1,0 +1,151 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_____________________________ test_retention_cost ______________________________
+test_03c_retention_cost.py:105: in test_retention_cost
+    assert b["restore_points"] >= 3
+E   assert 2 >= 3
+----------------------------- Captured stdout call -----------------------------
+{
+ "without_retention": {
+  "bucket_bytes": 5219287,
+  "objects": 51,
+  "by_directory": {
+   "_clean": {
+    "objects": 1,
+    "bytes": 7
+   },
+   "_lease": {
+    "objects": 1,
+    "bytes": 50
+   },
+   "compacted": {
+    "objects": 5,
+    "bytes": 2138128
+   },
+   "compactions": {
+    "objects": 1,
+    "bytes": 698
+   },
+   "fx": {
+    "objects": 32,
+    "bytes": 3078265
+   },
+   "gc": {
+    "objects": 2,
+    "bytes": 4
+   },
+   "manifest": {
+    "objects": 1,
+    "bytes": 1426
+   },
+   "wal": {
+    "objects": 8,
+    "bytes": 709
+   }
+  },
+  "restore_points": 0,
+  "requests": {
+   "LIST": 153,
+   "GET": 657,
+   "PUT": 628,
+   "HEAD": 80,
+   "MP_CREATE": 29,
+   "PUT_PART": 29,
+   "MP_COMPLETE": 29,
+   "GET_RANGE": 1498
+  }
+ },
+ "with_retention": {
+  "bucket_bytes": 7941346,
+  "objects": 548,
+  "by_directory": {
+   "_clean": {
+    "objects": 1,
+    "bytes": 7
+   },
+   "_lease": {
+    "objects": 1,
+    "bytes": 50
+   },
+   "compacted": {
+    "objects": 6,
+    "bytes": 3277636
+   },
+   "compactions": {
+    "objects": 1,
+    "bytes": 698
+   },
+   "fx": {
+    "objects": 35,
+    "bytes": 3233552
+   },
+   "gc": {
+    "objects": 2,
+    "bytes": 4
+   },
+   "manifest": {
+    "objects": 2,
+    "bytes": 2220
+   },
+   "wal": {
+    "objects": 500,
+    "bytes": 1427179
+   }
+  },
+  "restore_points": 2,
+  "requests": {
+   "LIST": 220,
+   "GET": 1059,
+   "PUT": 685,
+   "HEAD": 85,
+   "MP_CREATE": 29,
+   "PUT_PART": 29,
+   "MP_COMPLETE": 29,
+   "GET_RANGE": 1642
+  }
+ },
+ "extra_bytes": 2722059,
+ "extra_objects": 497
+}
+----------------------------- Captured stderr call -----------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 47336)
+Traceback (most recent call last):
+  File "/home/runner/.fenvix-judge/env/lib/python3.12/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/home/runner/.fenvix-judge/env/lib/python3.12/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "/home/runner/.fenvix-judge/env/lib/python3.12/socketserver.py", line 766, in __init__
+    self.handle()
+  File "/home/runner/.fenvix-judge/env/lib/python3.12/http/server.py", line 442, in handle
+    self.handle_one_request()
+  File "/home/runner/.fenvix-judge/env/lib/python3.12/http/server.py", line 428, in handle_one_request
+    method()
+  File "/home/runner/work/fenvix-tests/fenvix-tests/engine/ctl-tests/proxy.py", line 116, in _do
+    self.wfile.write(data)
+  File "/home/runner/.fenvix-judge/env/lib/python3.12/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 50532)
+Traceback (most recent call last):
+  File "/home/runner/.fenvix-judge/env/lib/python3.12/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/home/runner/.fenvix-judge/env/lib/python3.12/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "/home/runner/.fenvix-judge/env/lib/python3.12/socketserver.py", line 766, in __init__
+    self.handle()
+  File "/home/runner/.fenvix-judge/env/lib/python3.12/http/server.py", line 442, in handle
+    self.handle_one_request()
+  File "/home/runner/.fenvix-judge/env/lib/python3.12/http/server.py", line 428, in handle_one_request
+    method()
+  File "/home/runner/work/fenvix-tests/fenvix-tests/engine/ctl-tests/proxy.py", line 116, in _do
+    self.wfile.write(data)
+  File "/home/runner/.fenvix-judge/env/lib/python3.12/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+=========================== short test summary info ============================
+FAILED test_03c_retention_cost.py::test_retention_cost - assert 2 >= 3
+1 failed in 116.03s (0:01:56)

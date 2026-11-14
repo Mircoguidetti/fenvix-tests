@@ -1,0 +1,46 @@
+TEST FAULT INJECTION ON (/tmp/tmpsvqr3308.faults): never use this in production
+memory budget: limit 15983 MiB (memtotal), caches 7479 MiB (block 3365, meta 1121, sealed 2991), memtable 8 MiB, first course 998 MiB, change log 32 MiB, L0 reads at once 4
+box disk floor: 4096 MiB in /tmp/fenvix-box-floor-25552
+memory budget (review round): box 373 MiB per customer, 747 MiB in flight; memtables of every database 1997 MiB (writes wait past 2996 MiB); merge read-ahead 499 MiB; absorption 16 L0 SSTs
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+admin interface listening on 127.0.0.1:31094 (bearer token required)
+mongo-server listening on 127.0.0.1:25552 (idle close after 600 s, holder Hinc5once, lease ttl 2 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:45688
+LEASE process_lease tenant=- holder=Hinc5once unix_ms=1794650813032 inc=25bf9a20ded14f16 gen=1
+LEASE acquired tenant=inc5 holder=Hinc5once unix_ms=1794650813034 takeover_from=-
+LEASE acquired tenant=inc5 holder=Hinc5once unix_ms=1794650813037 takeover_from=- new=true
+LEASE writer_open tenant=inc5 holder=Hinc5once unix_ms=1794650813046 
+FXC not started db=inc5 reason=no_version_of_our_manifest unix_ms=1794650813046
+TEST commit wait held 12000 ms db=inc5
+FIRST_PUBLISH u=1794650813058 db=inc5 version=1 x_d=3 rows=8 build_ms=10 off_lock=1
+L0_TRACE u=1794650814086.3096 db=inc5 l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794650815110.9976 db=inc5 l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794650816133.6482 db=inc5 l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794650817158.0967 db=inc5 l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794650818182.5093 db=inc5 l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794650819206.9749 db=inc5 l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794650820230.5142 db=inc5 l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794650821255.273 db=inc5 l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794650822277.7378 db=inc5 l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+SLOW hello db=admin ms=10000 ok=true
+L0_TRACE u=1794650823301.188 db=inc5 l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794650824323.9983 db=inc5 l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+SLOW insert db=inc5 ms=12018 ok=true
+TEST commit wait held 12000 ms db=inc5
+L0_TRACE u=1794650825348.8894 db=inc5 l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+FAULT delay_put processes/Hinc5once/_lease 3500
+L0_TRACE u=1794650826374.718 db=inc5 l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794650827399.604 db=inc5 l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794650828423.942 db=inc5 l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+LEASE process_lease_late tenant=- holder=Hinc5once unix_ms=1794650829260 abandoned=1
+LEASE lost tenant=inc5 holder=Hinc5once unix_ms=1794650829260 process_lease_late
+TIMING abandon db=inc5 stop_fxc_ms=2 tenant_abandon_ms=1 closed=true
+LEASE writer_close tenant=inc5 holder=Hinc5once unix_ms=1794650829264 
+LEASE process_lease_lapsed tenant=- holder=Hinc5once unix_ms=1794650829356 gen=2 abandoned=0
+SLOW hello db=admin ms=10001 ok=true
+SLOW update db=inc5 ms=12001 ok=false
+LEASE acquired tenant=inc5 holder=Hinc5once unix_ms=1794650837131 takeover_from=-
+LEASE takeover_wake tenant=inc5 holder=Hinc5once unix_ms=1794650837140 unclean=true takeover_from=-
+TEST commit wait held 12000 ms db=inc5
+SLOW hello db=admin ms=10001 ok=true
+SLOW update db=inc5 ms=12093 ok=true

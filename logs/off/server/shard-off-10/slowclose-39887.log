@@ -1,0 +1,62 @@
+memory budget: limit 15983 MiB (memtotal), caches 7479 MiB (block 3365, meta 1121, sealed 2991), memtable 8 MiB, first course 998 MiB, change log 32 MiB, L0 reads at once 4
+box disk floor: 4096 MiB in /tmp/fenvix-box-floor-39887
+memory budget (review round): box 373 MiB per customer, 747 MiB in flight; memtables of every database 1997 MiB (writes wait past 2996 MiB); merge read-ahead 499 MiB; absorption 16 L0 SSTs
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+admin interface listening on 127.0.0.1:31874 (bearer token required)
+mongo-server listening on 127.0.0.1:39887 (idle close after 600 s, holder slowclose-39887, lease ttl 6 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:60600
+LEASE process_lease tenant=- holder=slowclose-39887 unix_ms=1794652148541 inc=8d26c7007547ee27 gen=1
+LEASE acquired tenant=slowa holder=slowclose-39887 unix_ms=1794652148626 takeover_from=-
+LEASE acquired tenant=slowa holder=slowclose-39887 unix_ms=1794652148796 takeover_from=- new=true
+LEASE writer_open tenant=slowa holder=slowclose-39887 unix_ms=1794652149014 
+SLOW insert db=slowa ms=520 ok=true
+LEASE acquired tenant=slowb holder=slowclose-39887 unix_ms=1794652149225 takeover_from=-
+LEASE acquired tenant=slowb holder=slowclose-39887 unix_ms=1794652149394 takeover_from=- new=true
+LEASE writer_open tenant=slowb holder=slowclose-39887 unix_ms=1794652149613 
+LEASE acquired tenant=slowc holder=slowclose-39887 unix_ms=1794652149807 takeover_from=-
+LEASE acquired tenant=slowc holder=slowclose-39887 unix_ms=1794652149976 takeover_from=- new=true
+LEASE writer_open tenant=slowc holder=slowclose-39887 unix_ms=1794652150195 
+shutting down: closing tenants cleanly
+SLOW_PUT u=1794652154319 db=slowb kind=wal ms=1002 bytes=360
+SLOW insert db=slowb ms=1003 ok=true
+SLOW_PUT u=1794652154327 db=slowa kind=l0 ms=1003 bytes=195891
+SLOW_PUT u=1794652154327 db=slowc kind=l0 ms=1002 bytes=195787
+SLOW_PUT u=1794652154327 db=slowb kind=l0 ms=1003 bytes=195989
+SLOW_PUT u=1794652155330 db=slowc kind=other ms=1002 bytes=466
+SLOW_PUT u=1794652155330 db=slowa kind=other ms=1003 bytes=466
+SLOW_PUT u=1794652155330 db=slowb kind=other ms=1002 bytes=466
+SLOW hello db=admin ms=10001 ok=true
+SLOW_PUT u=1794652159461 db=slowa kind=other ms=1002 bytes=466
+SLOW_PUT u=1794652159461 db=slowb kind=other ms=1003 bytes=466
+SLOW_PUT u=1794652159461 db=slowc kind=other ms=1003 bytes=466
+close of tenant slowc: final flush did not finish in 6.99990688s; closing without it (unclean)
+close of tenant slowb: final flush did not finish in 6.99987393s; closing without it (unclean)
+close of tenant slowa: final flush did not finish in 6.999850776s; closing without it (unclean)
+TIMING close db=slowa hint_ms=0 fxc_ms=0 tenant_ms=7001 ok=false stopped=true
+LEASE writer_close tenant=slowa holder=slowclose-39887 unix_ms=1794652160317 
+LEASE release_begin tenant=slowa holder=slowclose-39887 unix_ms=1794652160317 
+TIMING close db=slowb hint_ms=0 fxc_ms=0 tenant_ms=7001 ok=false stopped=true
+LEASE writer_close tenant=slowb holder=slowclose-39887 unix_ms=1794652160317 
+LEASE release_begin tenant=slowb holder=slowclose-39887 unix_ms=1794652160317 
+TIMING close db=slowc hint_ms=0 fxc_ms=0 tenant_ms=7001 ok=false stopped=true
+LEASE writer_close tenant=slowc holder=slowclose-39887 unix_ms=1794652160317 
+LEASE release_begin tenant=slowc holder=slowclose-39887 unix_ms=1794652160317 
+close of slowa: the lease release did not finish before the close's deadline; it runs out by itself
+close of slowa failed: final flush timed out
+close of slowb: the lease release did not finish before the close's deadline; it runs out by itself
+close of slowb failed: final flush timed out
+close of slowc: the lease release did not finish before the close's deadline; it runs out by itself
+close of slowc failed: final flush timed out
+maintenance shutdown: waiting for the L0 watch unix_ms=1794652161317
+maintenance shutdown: waiting for the dispatcher unix_ms=1794652161329
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794652161329
+maintenance shutdown: waiting for the GC task unix_ms=1794652161329
+SLOW hello db=admin ms=10001 ok=true
+SLOW hello db=admin ms=10000 ok=true
+SLOW hello db=admin ms=10000 ok=true
+maintenance shutdown: done unix_ms=1794652162323
+shutdown: the pins and the last usage counters were not written in time
+shutdown: the process lease was not released in time; it runs out by itself
+TIMING shutdown close_ms=8001 aborts_ms=0 tail_ms=2000 deadline_cuts=3 left_behind=0 held_at_deadline=0 optional_skipped=0
+tenants closed; stopping maintenance (done with the steps above)
+maintenance stopped (10001 ms)

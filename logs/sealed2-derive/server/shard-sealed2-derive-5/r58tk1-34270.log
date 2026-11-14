@@ -1,0 +1,37 @@
+TEST FAULT INJECTION ON (/tmp/tmptrxut2g3.faults): never use this in production
+memory budget: limit 15983 MiB (memtotal), caches 7479 MiB (block 3365, meta 1121, sealed 2991), memtable 8 MiB, first course 998 MiB, change log 32 MiB, L0 reads at once 4
+box disk floor: 4096 MiB in /tmp/fenvix-box-floor-34270
+memory budget (review round): box 373 MiB per customer, 747 MiB in flight; memtables of every database 1997 MiB (writes wait past 2996 MiB); merge read-ahead 499 MiB; absorption 16 L0 SSTs
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+admin interface listening on 127.0.0.1:26818 (bearer token required)
+mongo-server listening on 127.0.0.1:34270 (idle close after 600 s, holder Q1, lease ttl 3 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:36736
+LEASE process_lease tenant=- holder=Q1 unix_ms=1794644962333 inc=5777cb9a734d05fe gen=1
+LEASE acquired tenant=d holder=Q1 unix_ms=1794644962335 takeover_from=-
+LEASE acquired tenant=d holder=Q1 unix_ms=1794644962357 takeover_from=- new=true
+LEASE writer_open tenant=d holder=Q1 unix_ms=1794644962366 
+FXC not started db=d reason=no_version_of_our_manifest unix_ms=1794644962366
+FIRST_PUBLISH u=1794644962428 db=d version=1 x_d=3 rows=10005 build_ms=50 off_lock=1
+FAULT delay_put processes/Q1/_lease 4500
+L0_TRACE u=1794644963458.8442 db=d l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794644964480.6707 db=d l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794644965505.2014 db=d l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794644966528.7305 db=d l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+LEASE invalid tenant=d holder=Q1 unix_ms=1794644967266 
+fx drop: SlateDB compactor of d: Closed error: detected newer DB client
+TIMING abandon db=d stop_fxc_ms=2 tenant_abandon_ms=2 closed=true
+LEASE writer_close tenant=d holder=Q1 unix_ms=1794644967271 
+LEASE process_lease_lost tenant=- holder=Q1 unix_ms=1794644967850 abandoned=0
+LEASE process_lease tenant=- holder=Q1 unix_ms=1794644968277 inc=e5bf12d9170feb2a gen=2
+LEASE acquired tenant=d holder=Q1 unix_ms=1794644970287 takeover_from=-
+shutting down: closing tenants cleanly
+LEASE release_begin tenant=d holder=Q1 unix_ms=1794644970357 
+LEASE release tenant=d holder=Q1 unix_ms=1794644970359 ok=true
+maintenance shutdown: waiting for the L0 watch unix_ms=1794644970359
+maintenance shutdown: waiting for the dispatcher unix_ms=1794644971158
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794644971158
+maintenance shutdown: waiting for the GC task unix_ms=1794644971158
+maintenance shutdown: done unix_ms=1794644972153
+TIMING shutdown close_ms=2 aborts_ms=0 tail_ms=1793 deadline_cuts=0 left_behind=0 held_at_deadline=0 optional_skipped=0
+tenants closed; stopping maintenance (done with the steps above)
+maintenance stopped (1795 ms)

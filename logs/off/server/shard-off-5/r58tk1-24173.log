@@ -1,0 +1,30 @@
+TEST FAULT INJECTION ON (/tmp/tmp1y4llbdy.faults): never use this in production
+memory budget: limit 15701 MiB (memtotal), caches 7338 MiB (block 3302, meta 1100, sealed 2935), memtable 8 MiB, first course 981 MiB, change log 32 MiB, L0 reads at once 4
+box disk floor: 4096 MiB in /tmp/fenvix-box-floor-24173
+memory budget (review round): box 366 MiB per customer, 733 MiB in flight; memtables of every database 1962 MiB (writes wait past 2944 MiB); merge read-ahead 490 MiB; absorption 16 L0 SSTs
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+admin interface listening on 127.0.0.1:31848 (bearer token required)
+mongo-server listening on 127.0.0.1:24173 (idle close after 600 s, holder Q1, lease ttl 3 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:58536
+LEASE process_lease tenant=- holder=Q1 unix_ms=1794642515647 inc=143912364f9a3867 gen=1
+LEASE acquired tenant=d holder=Q1 unix_ms=1794642515649 takeover_from=-
+LEASE acquired tenant=d holder=Q1 unix_ms=1794642515672 takeover_from=- new=true
+LEASE writer_open tenant=d holder=Q1 unix_ms=1794642515680 
+FAULT delay_put processes/Q1/_lease 4500
+LEASE invalid tenant=d holder=Q1 unix_ms=1794642520535 
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=107 closed=true
+LEASE writer_close tenant=d holder=Q1 unix_ms=1794642520643 
+LEASE process_lease_lost tenant=- holder=Q1 unix_ms=1794642521161 abandoned=0
+LEASE process_lease tenant=- holder=Q1 unix_ms=1794642521650 inc=234a701bc8914333 gen=2
+LEASE acquired tenant=d holder=Q1 unix_ms=1794642522657 takeover_from=-
+shutting down: closing tenants cleanly
+LEASE release_begin tenant=d holder=Q1 unix_ms=1794642522803 
+LEASE release tenant=d holder=Q1 unix_ms=1794642522804 ok=true
+maintenance shutdown: waiting for the L0 watch unix_ms=1794642522804
+maintenance shutdown: waiting for the dispatcher unix_ms=1794642523467
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794642523467
+maintenance shutdown: waiting for the GC task unix_ms=1794642523467
+maintenance shutdown: done unix_ms=1794642525463
+TIMING shutdown close_ms=1 aborts_ms=0 tail_ms=2658 deadline_cuts=0 left_behind=0 held_at_deadline=0 optional_skipped=0
+tenants closed; stopping maintenance (done with the steps above)
+maintenance stopped (2660 ms)

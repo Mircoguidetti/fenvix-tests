@@ -1,0 +1,357 @@
+TEST FAULT INJECTION ON (/tmp/tmpls6xfbja.faults): never use this in production
+memory budget: limit 15983 MiB (memtotal), caches 7479 MiB (block 3365, meta 1121, sealed 2991), memtable 8 MiB, first course 998 MiB, change log 32 MiB, L0 reads at once 4
+box disk floor: 4096 MiB in /tmp/fenvix-box-floor-21348
+memory budget (review round): box 373 MiB per customer, 747 MiB in flight; memtables of every database 1997 MiB (writes wait past 2996 MiB); merge read-ahead 499 MiB; absorption 16 L0 SSTs
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+admin interface listening on 127.0.0.1:31551 (bearer token required)
+mongo-server listening on 127.0.0.1:21348 (idle close after 600 s, holder M1, lease ttl 2 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:55636
+LEASE process_lease tenant=- holder=M1 unix_ms=1794651225340 inc=52bfc60ca5128ce4 gen=1
+LEASE acquired tenant=d holder=M1 unix_ms=1794651225342 takeover_from=-
+LEASE acquired tenant=d holder=M1 unix_ms=1794651225345 takeover_from=- new=true
+LEASE writer_open tenant=d holder=M1 unix_ms=1794651225359 
+FXC not started db=d reason=no_version_of_our_manifest unix_ms=1794651225359
+FIRST_PUBLISH u=1794651225374 db=d version=1 x_d=3 rows=5 build_ms=12 off_lock=1
+L0_TRACE u=1794651226403.6194 db=d l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794651227427.4187 db=d l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+FAULT delay_put processes/M1/_lease 3500
+L0_TRACE u=1794651228451.0654 db=d l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+LEASE invalid tenant=d holder=M1 unix_ms=1794651228530 
+TIMING abandon db=d stop_fxc_ms=2 tenant_abandon_ms=2 closed=true
+LEASE writer_close tenant=d holder=M1 unix_ms=1794651228535 
+LEASE acquired tenant=d holder=M1 unix_ms=1794651228539 takeover_from=-
+LEASE takeover_wake tenant=d holder=M1 unix_ms=1794651229167 unclean=true takeover_from=-
+LEASE invalid tenant=d holder=M1 unix_ms=1794651229167 
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=3 closed=true
+LEASE acquired tenant=d holder=M1 unix_ms=1794651229177 takeover_from=-
+LEASE takeover_wake tenant=d holder=M1 unix_ms=1794651229773 unclean=true takeover_from=-
+LEASE invalid tenant=d holder=M1 unix_ms=1794651229773 
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=3 closed=true
+LEASE acquired tenant=d holder=M1 unix_ms=1794651229782 takeover_from=-
+LEASE takeover_wake tenant=d holder=M1 unix_ms=1794651230400 unclean=true takeover_from=-
+LEASE invalid tenant=d holder=M1 unix_ms=1794651230400 
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=2 closed=true
+LEASE acquired tenant=d holder=M1 unix_ms=1794651230409 takeover_from=-
+LEASE takeover_wake tenant=d holder=M1 unix_ms=1794651231010 unclean=true takeover_from=-
+SLOW insert db=d ms=2258 ok=false
+SLOW insert db=d ms=2261 ok=false
+LEASE invalid tenant=d holder=M1 unix_ms=1794651231013 
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=1 closed=true
+LEASE acquired tenant=d holder=M1 unix_ms=1794651231020 takeover_from=-
+LEASE process_lease_late tenant=- holder=M1 unix_ms=1794651231191 abandoned=1
+LEASE lost tenant=d holder=M1 unix_ms=1794651231191 process_lease_late
+LEASE process_lease_lapsed tenant=- holder=M1 unix_ms=1794651231263 gen=2 abandoned=0
+LEASE takeover_wake tenant=d holder=M1 unix_ms=1794651231661 unclean=true takeover_from=-
+LEASE invalid tenant=d holder=M1 unix_ms=1794651231661 
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=3 closed=true
+LEASE acquired tenant=d holder=M1 unix_ms=1794651231669 takeover_from=-
+LEASE takeover_wake tenant=d holder=M1 unix_ms=1794651232283 unclean=true takeover_from=-
+LEASE writer_open tenant=d holder=M1 unix_ms=1794651232894 
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=3 closed=true
+LEASE writer_close tenant=d holder=M1 unix_ms=1794651232898 
+LEASE acquired tenant=d holder=M1 unix_ms=1794651232903 takeover_from=-
+LEASE takeover_wake tenant=d holder=M1 unix_ms=1794651233495 unclean=true takeover_from=-
+FXC not started db=d reason=not_writer unix_ms=1794651233512
+LEASE writer_open tenant=d holder=M1 unix_ms=1794651234141 
+SLOW insert db=d ms=4617 ok=true
+SLOW insert db=d ms=3189 ok=false
+SLOW insert db=d ms=3191 ok=false
+SLOW insert db=d ms=4679 ok=true
+SLOW update db=d ms=5678 ok=true
+SLOW update db=d ms=5577 ok=true
+L0_TRACE u=1794651235221.3108 db=d l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+SLOW hello db=admin ms=10000 ok=true
+SLOW hello db=admin ms=10001 ok=true
+SLOW hello db=admin ms=10000 ok=true
+SLOW hello db=admin ms=10001 ok=true
+SLOW hello db=admin ms=10001 ok=true
+SLOW hello db=admin ms=10001 ok=true
+SLOW hello db=admin ms=10001 ok=true
+FAULT delay_put processes/M1/_lease 3500
+L0_TRACE u=1794651236243.0254 db=d l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+LEASE invalid tenant=d holder=M1 unix_ms=1794651236931 
+TIMING abandon db=d stop_fxc_ms=3 tenant_abandon_ms=2 closed=true
+LEASE writer_close tenant=d holder=M1 unix_ms=1794651236936 
+LEASE acquired tenant=d holder=M1 unix_ms=1794651236940 takeover_from=-
+LEASE takeover_wake tenant=d holder=M1 unix_ms=1794651238040 unclean=true takeover_from=-
+LEASE invalid tenant=d holder=M1 unix_ms=1794651238040 
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=4 closed=true
+LEASE acquired tenant=d holder=M1 unix_ms=1794651238048 takeover_from=-
+LEASE takeover_wake tenant=d holder=M1 unix_ms=1794651239106 unclean=true takeover_from=-
+LEASE invalid tenant=d holder=M1 unix_ms=1794651239106 
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=6 closed=true
+LEASE acquired tenant=d holder=M1 unix_ms=1794651239119 takeover_from=-
+LEASE process_lease_late tenant=- holder=M1 unix_ms=1794651239580 abandoned=1
+LEASE lost tenant=d holder=M1 unix_ms=1794651239580 process_lease_late
+LEASE process_lease_lapsed tenant=- holder=M1 unix_ms=1794651239663 gen=3 abandoned=0
+LEASE takeover_wake tenant=d holder=M1 unix_ms=1794651240206 unclean=true takeover_from=-
+SLOW insert db=d ms=3247 ok=false
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=4 closed=true
+SLOW insert db=d ms=3254 ok=false
+LEASE acquired tenant=d holder=M1 unix_ms=1794651240218 takeover_from=-
+LEASE takeover_wake tenant=d holder=M1 unix_ms=1794651241328 unclean=true takeover_from=-
+LEASE writer_open tenant=d holder=M1 unix_ms=1794651242463 
+SLOW insert db=d ms=2256 ok=true
+SLOW insert db=d ms=2249 ok=true
+SLOW insert db=d ms=5222 ok=true
+SLOW insert db=d ms=5302 ok=true
+SLOW update db=d ms=5480 ok=true
+SLOW update db=d ms=5583 ok=true
+L0_TRACE u=1794651243503.282 db=d l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+ABSORB u=1794651243899.768 db=d ssts=1 rows=27705 raw_kib=1744 committed=1 l0_start=1 l0_end=1 lock_ms=0 read_ms=124 write_ms=11 commit_ms=3 total_ms=139
+FAULT delay_put processes/M1/_lease 3500
+L0_TRACE u=1794651244527.848 db=d l0=1 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+LEASE invalid tenant=d holder=M1 unix_ms=1794651245330 
+SLOW hello db=admin ms=10001 ok=true
+TIMING abandon db=d stop_fxc_ms=3 tenant_abandon_ms=3 closed=true
+LEASE writer_close tenant=d holder=M1 unix_ms=1794651245336 
+LEASE acquired tenant=d holder=M1 unix_ms=1794651245340 takeover_from=-
+SLOW hello db=admin ms=10001 ok=true
+SLOW hello db=admin ms=10001 ok=true
+SLOW hello db=admin ms=10000 ok=true
+SLOW hello db=admin ms=10000 ok=true
+SLOW hello db=admin ms=10001 ok=true
+SLOW hello db=admin ms=10005 ok=true
+LEASE takeover_wake tenant=d holder=M1 unix_ms=1794651245686 unclean=true takeover_from=-
+LEASE invalid tenant=d holder=M1 unix_ms=1794651245686 
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=0 closed=true
+LEASE acquired tenant=d holder=M1 unix_ms=1794651245690 takeover_from=-
+LEASE takeover_wake tenant=d holder=M1 unix_ms=1794651245998 unclean=true takeover_from=-
+LEASE invalid tenant=d holder=M1 unix_ms=1794651245998 
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=1 closed=true
+LEASE acquired tenant=d holder=M1 unix_ms=1794651246003 takeover_from=-
+LEASE takeover_wake tenant=d holder=M1 unix_ms=1794651246340 unclean=true takeover_from=-
+SLOW commitTransaction db=admin ms=765 ok=false
+LEASE invalid tenant=d holder=M1 unix_ms=1794651246341 
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=0 closed=true
+LEASE acquired tenant=d holder=M1 unix_ms=1794651246346 takeover_from=-
+LEASE takeover_wake tenant=d holder=M1 unix_ms=1794651246655 unclean=true takeover_from=-
+LEASE invalid tenant=d holder=M1 unix_ms=1794651246655 
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=0 closed=true
+LEASE acquired tenant=d holder=M1 unix_ms=1794651246659 takeover_from=-
+LEASE takeover_wake tenant=d holder=M1 unix_ms=1794651246999 unclean=true takeover_from=-
+SLOW insert db=d ms=1319 ok=false
+LEASE invalid tenant=d holder=M1 unix_ms=1794651247319 
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=3 closed=true
+LEASE acquired tenant=d holder=M1 unix_ms=1794651247325 takeover_from=-
+LEASE takeover_wake tenant=d holder=M1 unix_ms=1794651247672 unclean=true takeover_from=-
+LEASE invalid tenant=d holder=M1 unix_ms=1794651247672 
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=1 closed=true
+LEASE acquired tenant=d holder=M1 unix_ms=1794651247676 takeover_from=-
+LEASE process_lease_late tenant=- holder=M1 unix_ms=1794651247973 abandoned=1
+LEASE lost tenant=d holder=M1 unix_ms=1794651247973 process_lease_late
+LEASE takeover_wake tenant=d holder=M1 unix_ms=1794651247983 unclean=true takeover_from=-
+LEASE invalid tenant=d holder=M1 unix_ms=1794651247983 
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=0 closed=true
+LEASE acquired tenant=d holder=M1 unix_ms=1794651247988 takeover_from=-
+LEASE process_lease_lapsed tenant=- holder=M1 unix_ms=1794651248065 gen=4 abandoned=1
+LEASE lost tenant=d holder=M1 unix_ms=1794651248065 process_lease_lapsed
+LEASE takeover_wake tenant=d holder=M1 unix_ms=1794651248331 unclean=true takeover_from=-
+LEASE invalid tenant=d holder=M1 unix_ms=1794651248331 
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=0 closed=true
+LEASE acquired tenant=d holder=M1 unix_ms=1794651248335 takeover_from=-
+LEASE takeover_wake tenant=d holder=M1 unix_ms=1794651248638 unclean=true takeover_from=-
+LEASE writer_open tenant=d holder=M1 unix_ms=1794651248984 
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=2 closed=true
+LEASE writer_close tenant=d holder=M1 unix_ms=1794651248987 
+LEASE acquired tenant=d holder=M1 unix_ms=1794651248990 takeover_from=-
+LEASE takeover_wake tenant=d holder=M1 unix_ms=1794651249293 unclean=true takeover_from=-
+FXC not started db=d reason=not_writer unix_ms=1794651249317
+LEASE writer_open tenant=d holder=M1 unix_ms=1794651249672 
+SLOW insert db=d ms=4067 ok=true
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=5 closed=true
+LEASE writer_close tenant=d holder=M1 unix_ms=1794651249679 
+LEASE acquired tenant=d holder=M1 unix_ms=1794651249682 takeover_from=-
+LEASE takeover_wake tenant=d holder=M1 unix_ms=1794651249990 unclean=true takeover_from=-
+SLOW insert db=d ms=3648 ok=false
+FXC not started db=d reason=not_writer unix_ms=1794651249992
+LEASE writer_open tenant=d holder=M1 unix_ms=1794651250346 
+SLOW insert db=d ms=3027 ok=false
+SLOW update db=d ms=4912 ok=true
+SLOW insert db=d ms=4861 ok=true
+SLOW update db=d ms=5144 ok=true
+L0_RECOGNISE db=d read=1 absorbed=1 ms=103 off_lock=1
+L0_TRACE u=1794651251484.0557 db=d l0=1 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794651252505.9783 db=d l0=1 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+FAULT delay_put processes/M1/_lease 3500
+L0_TRACE u=1794651253529.2334 db=d l0=1 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+LEASE invalid tenant=d holder=M1 unix_ms=1794651253731 
+TIMING abandon db=d stop_fxc_ms=2 tenant_abandon_ms=3 closed=true
+LEASE writer_close tenant=d holder=M1 unix_ms=1794651253736 
+LEASE acquired tenant=d holder=M1 unix_ms=1794651253739 takeover_from=-
+LEASE takeover_wake tenant=d holder=M1 unix_ms=1794651254685 unclean=true takeover_from=-
+LEASE invalid tenant=d holder=M1 unix_ms=1794651254685 
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=2 closed=true
+LEASE acquired tenant=d holder=M1 unix_ms=1794651254691 takeover_from=-
+SLOW hello db=admin ms=10002 ok=true
+SLOW hello db=admin ms=10002 ok=true
+SLOW hello db=admin ms=10000 ok=true
+SLOW hello db=admin ms=10001 ok=true
+SLOW hello db=admin ms=10000 ok=true
+SLOW hello db=admin ms=10001 ok=true
+SLOW hello db=admin ms=10000 ok=true
+LEASE takeover_wake tenant=d holder=M1 unix_ms=1794651255607 unclean=true takeover_from=-
+LEASE invalid tenant=d holder=M1 unix_ms=1794651255607 
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=2 closed=true
+LEASE acquired tenant=d holder=M1 unix_ms=1794651255614 takeover_from=-
+LEASE process_lease_late tenant=- holder=M1 unix_ms=1794651256412 abandoned=1
+LEASE lost tenant=d holder=M1 unix_ms=1794651256412 process_lease_late
+LEASE process_lease_lapsed tenant=- holder=M1 unix_ms=1794651256465 gen=5 abandoned=0
+LEASE takeover_wake tenant=d holder=M1 unix_ms=1794651256561 unclean=true takeover_from=-
+LEASE invalid tenant=d holder=M1 unix_ms=1794651256561 
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=2 closed=true
+LEASE acquired tenant=d holder=M1 unix_ms=1794651256567 takeover_from=-
+LEASE takeover_wake tenant=d holder=M1 unix_ms=1794651257473 unclean=true takeover_from=-
+SLOW insert db=d ms=3639 ok=false
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=3 closed=true
+SLOW insert db=d ms=3645 ok=false
+LEASE acquired tenant=d holder=M1 unix_ms=1794651257484 takeover_from=-
+LEASE takeover_wake tenant=d holder=M1 unix_ms=1794651258420 unclean=true takeover_from=-
+LEASE writer_open tenant=d holder=M1 unix_ms=1794651259375 
+SLOW insert db=d ms=1932 ok=true
+SLOW insert db=d ms=1926 ok=true
+SLOW insert db=d ms=5623 ok=true
+SLOW findAndModify db=d ms=5685 ok=true
+SLOW findAndModify db=d ms=5581 ok=true
+SLOW insert db=d ms=4862 ok=true
+L0_RECOGNISE db=d read=1 absorbed=1 ms=96 off_lock=1
+L0_TRACE u=1794651260423.5483 db=d l0=1 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+FAULT delay_put processes/M1/_lease 3500
+L0_TRACE u=1794651261446.4382 db=d l0=1 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+ABSORB u=1794651261901.893 db=d ssts=1 rows=40065 raw_kib=2569 committed=1 l0_start=2 l0_end=2 lock_ms=0 read_ms=127 write_ms=16 commit_ms=3 total_ms=147
+LEASE invalid tenant=d holder=M1 unix_ms=1794651262130 
+TIMING abandon db=d stop_fxc_ms=2 tenant_abandon_ms=4 closed=true
+LEASE writer_close tenant=d holder=M1 unix_ms=1794651262136 
+LEASE acquired tenant=d holder=M1 unix_ms=1794651262140 takeover_from=-
+LEASE takeover_wake tenant=d holder=M1 unix_ms=1794651262241 unclean=true takeover_from=-
+LEASE invalid tenant=d holder=M1 unix_ms=1794651262241 
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=0 closed=true
+LEASE acquired tenant=d holder=M1 unix_ms=1794651262246 takeover_from=-
+LEASE takeover_wake tenant=d holder=M1 unix_ms=1794651262344 unclean=true takeover_from=-
+LEASE invalid tenant=d holder=M1 unix_ms=1794651262344 
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=0 closed=true
+LEASE acquired tenant=d holder=M1 unix_ms=1794651262348 takeover_from=-
+LEASE takeover_wake tenant=d holder=M1 unix_ms=1794651262444 unclean=true takeover_from=-
+LEASE invalid tenant=d holder=M1 unix_ms=1794651262445 
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=0 closed=true
+LEASE acquired tenant=d holder=M1 unix_ms=1794651262449 takeover_from=-
+LEASE takeover_wake tenant=d holder=M1 unix_ms=1794651262548 unclean=true takeover_from=-
+LEASE invalid tenant=d holder=M1 unix_ms=1794651262548 
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=0 closed=true
+LEASE acquired tenant=d holder=M1 unix_ms=1794651262552 takeover_from=-
+LEASE takeover_wake tenant=d holder=M1 unix_ms=1794651262663 unclean=true takeover_from=-
+LEASE invalid tenant=d holder=M1 unix_ms=1794651262663 
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=0 closed=true
+LEASE acquired tenant=d holder=M1 unix_ms=1794651262668 takeover_from=-
+LEASE takeover_wake tenant=d holder=M1 unix_ms=1794651262763 unclean=true takeover_from=-
+LEASE invalid tenant=d holder=M1 unix_ms=1794651262857 
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=2 closed=true
+LEASE acquired tenant=d holder=M1 unix_ms=1794651262863 takeover_from=-
+LEASE takeover_wake tenant=d holder=M1 unix_ms=1794651262960 unclean=true takeover_from=-
+SLOW insert db=d ms=613 ok=false
+LEASE invalid tenant=d holder=M1 unix_ms=1794651263059 
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=2 closed=true
+LEASE acquired tenant=d holder=M1 unix_ms=1794651263065 takeover_from=-
+LEASE takeover_wake tenant=d holder=M1 unix_ms=1794651263159 unclean=true takeover_from=-
+LEASE invalid tenant=d holder=M1 unix_ms=1794651263257 
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=2 closed=true
+LEASE acquired tenant=d holder=M1 unix_ms=1794651263263 takeover_from=-
+LEASE takeover_wake tenant=d holder=M1 unix_ms=1794651263394 unclean=true takeover_from=-
+LEASE invalid tenant=d holder=M1 unix_ms=1794651263394 
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=0 closed=true
+LEASE acquired tenant=d holder=M1 unix_ms=1794651263398 takeover_from=-
+LEASE takeover_wake tenant=d holder=M1 unix_ms=1794651263504 unclean=true takeover_from=-
+LEASE invalid tenant=d holder=M1 unix_ms=1794651263504 
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=0 closed=true
+LEASE acquired tenant=d holder=M1 unix_ms=1794651263509 takeover_from=-
+LEASE takeover_wake tenant=d holder=M1 unix_ms=1794651263610 unclean=true takeover_from=-
+LEASE invalid tenant=d holder=M1 unix_ms=1794651263610 
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=0 closed=true
+LEASE acquired tenant=d holder=M1 unix_ms=1794651263614 takeover_from=-
+LEASE takeover_wake tenant=d holder=M1 unix_ms=1794651263712 unclean=true takeover_from=-
+LEASE invalid tenant=d holder=M1 unix_ms=1794651263712 
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=0 closed=true
+LEASE acquired tenant=d holder=M1 unix_ms=1794651263716 takeover_from=-
+LEASE takeover_wake tenant=d holder=M1 unix_ms=1794651263820 unclean=true takeover_from=-
+SLOW insert db=d ms=876 ok=false
+LEASE invalid tenant=d holder=M1 unix_ms=1794651263937 
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=2 closed=true
+LEASE acquired tenant=d holder=M1 unix_ms=1794651263943 takeover_from=-
+LEASE takeover_wake tenant=d holder=M1 unix_ms=1794651264040 unclean=true takeover_from=-
+SLOW insert db=d ms=885 ok=false
+LEASE invalid tenant=d holder=M1 unix_ms=1794651264144 
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=2 closed=true
+LEASE acquired tenant=d holder=M1 unix_ms=1794651264149 takeover_from=-
+LEASE takeover_wake tenant=d holder=M1 unix_ms=1794651264245 unclean=true takeover_from=-
+LEASE invalid tenant=d holder=M1 unix_ms=1794651264347 
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=2 closed=true
+LEASE acquired tenant=d holder=M1 unix_ms=1794651264354 takeover_from=-
+LEASE takeover_wake tenant=d holder=M1 unix_ms=1794651264452 unclean=true takeover_from=-
+LEASE invalid tenant=d holder=M1 unix_ms=1794651264452 
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=0 closed=true
+LEASE acquired tenant=d holder=M1 unix_ms=1794651264456 takeover_from=-
+LEASE takeover_wake tenant=d holder=M1 unix_ms=1794651264555 unclean=true takeover_from=-
+LEASE invalid tenant=d holder=M1 unix_ms=1794651264555 
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=0 closed=true
+LEASE acquired tenant=d holder=M1 unix_ms=1794651264560 takeover_from=-
+LEASE takeover_wake tenant=d holder=M1 unix_ms=1794651264669 unclean=true takeover_from=-
+LEASE invalid tenant=d holder=M1 unix_ms=1794651264669 
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=0 closed=true
+LEASE acquired tenant=d holder=M1 unix_ms=1794651264674 takeover_from=-
+LEASE process_lease_late tenant=- holder=M1 unix_ms=1794651264801 abandoned=1
+LEASE lost tenant=d holder=M1 unix_ms=1794651264801 process_lease_late
+LEASE takeover_wake tenant=d holder=M1 unix_ms=1794651264804 unclean=true takeover_from=-
+LEASE invalid tenant=d holder=M1 unix_ms=1794651264804 
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=0 closed=true
+LEASE acquired tenant=d holder=M1 unix_ms=1794651264809 takeover_from=-
+LEASE process_lease_lapsed tenant=- holder=M1 unix_ms=1794651264864 gen=6 abandoned=1
+LEASE lost tenant=d holder=M1 unix_ms=1794651264864 process_lease_lapsed
+LEASE takeover_wake tenant=d holder=M1 unix_ms=1794651264905 unclean=true takeover_from=-
+SLOW insert db=d ms=860 ok=false
+LEASE invalid tenant=d holder=M1 unix_ms=1794651265005 
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=3 closed=true
+LEASE acquired tenant=d holder=M1 unix_ms=1794651265011 takeover_from=-
+LEASE takeover_wake tenant=d holder=M1 unix_ms=1794651265109 unclean=true takeover_from=-
+LEASE writer_open tenant=d holder=M1 unix_ms=1794651265208 
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=2 closed=true
+LEASE writer_close tenant=d holder=M1 unix_ms=1794651265211 
+LEASE acquired tenant=d holder=M1 unix_ms=1794651265215 takeover_from=-
+LEASE takeover_wake tenant=d holder=M1 unix_ms=1794651265312 unclean=true takeover_from=-
+SLOW hello db=admin ms=10001 ok=true
+SLOW hello db=admin ms=10001 ok=true
+SLOW hello db=admin ms=10000 ok=true
+SLOW hello db=admin ms=10001 ok=true
+SLOW hello db=admin ms=10001 ok=true
+SLOW hello db=admin ms=10000 ok=true
+SLOW hello db=admin ms=10000 ok=true
+LEASE writer_open tenant=d holder=M1 unix_ms=1794651265411 
+SLOW insert db=d ms=2919 ok=true
+SLOW findAndModify db=d ms=3319 ok=true
+SLOW insert db=d ms=2960 ok=true
+TIMING abandon db=d stop_fxc_ms=2 tenant_abandon_ms=7 closed=true
+LEASE writer_close tenant=d holder=M1 unix_ms=1794651265487 
+LEASE acquired tenant=d holder=M1 unix_ms=1794651265491 takeover_from=-
+LEASE takeover_wake tenant=d holder=M1 unix_ms=1794651265597 unclean=true takeover_from=-
+SLOW insert db=d ms=1249 ok=false
+SLOW insert db=d ms=594 ok=false
+LEASE writer_open tenant=d holder=M1 unix_ms=1794651265741 
+SLOW findAndModify db=d ms=3514 ok=true
+L0_TRACE u=1794651266766.4856 db=d l0=2 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794651267791.8694 db=d l0=2 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794651268816.5557 db=d l0=2 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+SLOW getMore db=d ms=575 ok=true
+L0_TRACE u=1794651269842.2646 db=d l0=2 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+SLOW getMore db=d ms=501 ok=true
+shutting down: closing tenants cleanly
+ABSORB u=1794651270057.931 db=d ssts=1 rows=24705 raw_kib=1586 committed=1 l0_start=3 l0_end=3 lock_ms=0 read_ms=27 write_ms=9 commit_ms=3 total_ms=40
+LEASE writer_close tenant=d holder=M1 unix_ms=1794651270068 
+LEASE release_begin tenant=d holder=M1 unix_ms=1794651270068 
+LEASE release tenant=d holder=M1 unix_ms=1794651270070 ok=true
+maintenance shutdown: waiting for the L0 watch unix_ms=1794651270070
+maintenance shutdown: waiting for the dispatcher unix_ms=1794651270328
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794651270328
+maintenance shutdown: waiting for the GC task unix_ms=1794651270328
+maintenance shutdown: done unix_ms=1794651270506
+TIMING shutdown close_ms=82 aborts_ms=0 tail_ms=435 deadline_cuts=0 left_behind=0 held_at_deadline=0 optional_skipped=0
+tenants closed; stopping maintenance (done with the steps above)
+maintenance stopped (517 ms)

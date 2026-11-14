@@ -1,0 +1,40 @@
+TEST FAULT INJECTION ON (/tmp/tmp67c2t0r1.faults): never use this in production
+memory budget: limit 15983 MiB (memtotal), caches 7479 MiB (block 3365, meta 1121, sealed 2991), memtable 8 MiB, first course 998 MiB, change log 32 MiB, L0 reads at once 4
+box disk floor: 4096 MiB in /tmp/fenvix-box-floor-33152
+memory budget (review round): box 373 MiB per customer, 747 MiB in flight; memtables of every database 1997 MiB (writes wait past 2996 MiB); merge read-ahead 499 MiB; absorption 16 L0 SSTs
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+admin interface listening on 127.0.0.1:34519 (bearer token required)
+mongo-server listening on 127.0.0.1:33152 (idle close after 600 s, holder T1, lease ttl 2 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:39426
+LEASE process_lease tenant=- holder=T1 unix_ms=1794650977023 inc=77b5add33d7267d9 gen=1
+LEASE acquired tenant=d holder=T1 unix_ms=1794650977025 takeover_from=-
+LEASE acquired tenant=d holder=T1 unix_ms=1794650977027 takeover_from=- new=true
+LEASE writer_open tenant=d holder=T1 unix_ms=1794650977034 
+FXC not started db=d reason=no_version_of_our_manifest unix_ms=1794650977034
+FIRST_PUBLISH u=1794650977046 db=d version=1 x_d=3 rows=26 build_ms=9 off_lock=1
+FAULT delay_put processes/T1/_lease 3500
+L0_TRACE u=1794650978071.6533 db=d l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794650979096.8447 db=d l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794650980120.087 db=d l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+L0_TRACE u=1794650981141.7178 db=d l0=0 unabs=0 absorbing=0 slate_jobs=0/0 slate_job=-
+LEASE process_lease_late tenant=- holder=T1 unix_ms=1794650981250 abandoned=1
+LEASE lost tenant=d holder=T1 unix_ms=1794650981250 process_lease_late
+TIMING abandon db=d stop_fxc_ms=1 tenant_abandon_ms=2 closed=true
+LEASE writer_close tenant=d holder=T1 unix_ms=1794650981253 
+LEASE process_lease_lapsed tenant=- holder=T1 unix_ms=1794650981346 gen=2 abandoned=0
+LEASE acquired tenant=d holder=T1 unix_ms=1794650984349 takeover_from=-
+LEASE takeover_wake tenant=d holder=T1 unix_ms=1794650984356 unclean=true takeover_from=-
+LEASE writer_open tenant=d holder=T1 unix_ms=1794650984366 
+shutting down: closing tenants cleanly
+ABSORB u=1794650984381.3252 db=d ssts=1 rows=7 raw_kib=0 committed=1 l0_start=1 l0_end=1 lock_ms=0 read_ms=0 write_ms=3 commit_ms=1 total_ms=5
+LEASE writer_close tenant=d holder=T1 unix_ms=1794650984385 
+LEASE release_begin tenant=d holder=T1 unix_ms=1794650984385 
+LEASE release tenant=d holder=T1 unix_ms=1794650984386 ok=true
+maintenance shutdown: waiting for the L0 watch unix_ms=1794650984386
+maintenance shutdown: waiting for the dispatcher unix_ms=1794650984956
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794650984956
+maintenance shutdown: waiting for the GC task unix_ms=1794650984956
+maintenance shutdown: done unix_ms=1794650986950
+TIMING shutdown close_ms=15 aborts_ms=0 tail_ms=2564 deadline_cuts=0 left_behind=0 held_at_deadline=0 optional_skipped=0
+tenants closed; stopping maintenance (done with the steps above)
+maintenance stopped (2579 ms)

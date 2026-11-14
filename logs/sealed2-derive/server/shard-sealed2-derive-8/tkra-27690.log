@@ -1,0 +1,51 @@
+TEST FAULT INJECTION ON (/tmp/tkrfaz3dzeg61): never use this in production
+memory budget: limit 15983 MiB (memtotal), caches 7479 MiB (block 3365, meta 1121, sealed 2991), memtable 8 MiB, first course 998 MiB, change log 32 MiB, L0 reads at once 4
+box disk floor: 4096 MiB in /tmp/fenvix-box-floor-27690
+memory budget (review round): box 373 MiB per customer, 747 MiB in flight; memtables of every database 1997 MiB (writes wait past 2996 MiB); merge read-ahead 499 MiB; absorption 16 L0 SSTs
+quaderno: writes are acknowledged by the replicated log at 127.0.0.1:25805,127.0.0.1:34097,127.0.0.1:31954
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+quaderno: restart read 120 records of 1 databases from the log
+LEASE process_lease tenant=- holder=tkra-27690 unix_ms=1794647555636 inc=5448536377112266 gen=1
+local log: replay of database tkr failed (tenant tkr is owned by server process tkrb-32405 (lease valid for another 5098 ms); retry); its 120 records are kept, the database is refused until they are applied
+FAULT hold_kept_records tkr
+FAULT hold_kept_records released tkr
+quaderno: database tkr: its replay was refused before it took the lease; its 120 records stay in the log as they are (no copies)
+local log: 1 databases kept their records; retried in the background
+quaderno: restart applied 0 records to 0 databases in 6.0 s
+admin interface listening on 127.0.0.1:23112 (bearer token required)
+mongo-server listening on 127.0.0.1:27690 (idle close after 600 s, holder tkra-27690, lease ttl 6 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:33622
+quaderno: database tkr: not the lease holder: the log is told only up to position 117614022202097664, the highest this process read at its start
+local log: database tkr: kept records applied by the retry; the database is open again
+LEASE process_lease_revoked tenant=tkr holder=tkra-27690 unix_ms=1794647570799 of=tkrb-32405
+LEASE acquired tenant=tkr holder=tkra-27690 unix_ms=1794647570801 takeover_from=tkrb-32405
+LEASE takeover_wake tenant=tkr holder=tkra-27690 unix_ms=1794647570817 unclean=true takeover_from=tkrb-32405
+FXC not started db=tkr reason=not_writer unix_ms=1794647570882
+LEASE writer_open tenant=tkr holder=tkra-27690 unix_ms=1794647570904 
+quaderno: takeover of tkr: 120 records applied from the log (after record 117614022202097664)
+shutting down: closing tenants cleanly
+ABSORB u=1794647570940.5342 db=tkr ssts=1 rows=721 raw_kib=44 committed=1 l0_start=1 l0_end=1 lock_ms=0 read_ms=1 write_ms=5 commit_ms=2 total_ms=9
+LEASE writer_close tenant=tkr holder=tkra-27690 unix_ms=1794647570949 
+LEASE release_begin tenant=tkr holder=tkra-27690 unix_ms=1794647570949 
+LEASE release tenant=tkr holder=tkra-27690 unix_ms=1794647570951 ok=true
+maintenance shutdown: waiting for the L0 watch unix_ms=1794647570951
+maintenance shutdown: waiting for the dispatcher unix_ms=1794647571625
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794647571625
+maintenance shutdown: waiting for the GC task unix_ms=1794647571625
+maintenance shutdown: done unix_ms=1794647573619
+TIMING shutdown close_ms=29 aborts_ms=0 tail_ms=2668 deadline_cuts=0 left_behind=0 held_at_deadline=0 optional_skipped=0
+tenants closed; stopping maintenance (done with the steps above)
+maintenance stopped (2697 ms)
+TEST FAULT INJECTION ON (/tmp/tkrfaz3dzeg61): never use this in production
+memory budget: limit 15983 MiB (memtotal), caches 7479 MiB (block 3365, meta 1121, sealed 2991), memtable 8 MiB, first course 998 MiB, change log 32 MiB, L0 reads at once 4
+box disk floor: 4096 MiB in /tmp/fenvix-box-floor-27690
+memory budget (review round): box 373 MiB per customer, 747 MiB in flight; memtables of every database 1997 MiB (writes wait past 2996 MiB); merge read-ahead 499 MiB; absorption 16 L0 SSTs
+quaderno: writes are acknowledged by the replicated log at 127.0.0.1:25805,127.0.0.1:34097,127.0.0.1:31954
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+quaderno: restart read 0 records of 0 databases from the log
+quaderno: restart applied 0 records to 0 databases in 0.0 s
+admin interface listening on 127.0.0.1:23112 (bearer token required)
+mongo-server listening on 127.0.0.1:27690 (idle close after 600 s, holder tkra-27690, lease ttl 6 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:39444
+LEASE process_lease tenant=- holder=tkra-27690 unix_ms=1794647573749 inc=4213d5bbc26a3783 gen=1
+LEASE acquired tenant=tkr holder=tkra-27690 unix_ms=1794647573754 takeover_from=-

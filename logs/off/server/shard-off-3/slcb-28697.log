@@ -1,0 +1,20 @@
+TEST FAULT INJECTION ON (/tmp/slcfb6sukukbz): never use this in production
+memory budget: limit 15982 MiB (memtotal), caches 7479 MiB (block 3365, meta 1121, sealed 2991), memtable 8 MiB, first course 998 MiB, change log 32 MiB, L0 reads at once 4
+box disk floor: 4096 MiB in /tmp/fenvix-box-floor-28697
+memory budget (review round): box 373 MiB per customer, 747 MiB in flight; memtables of every database 1997 MiB (writes wait past 2996 MiB); merge read-ahead 499 MiB; absorption 16 L0 SSTs
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+quaderno: writes are acknowledged by the replicated log at 127.0.0.1:38909,127.0.0.1:25463,127.0.0.1:22195
+quaderno: restart read 0 records of 0 databases from the log
+quaderno: restart applied 0 records to 0 databases in 0.0 s
+admin interface listening on 127.0.0.1:38523 (bearer token required)
+mongo-server listening on 127.0.0.1:28697 (idle close after 600 s, holder slcb-28697, lease ttl 6 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:43082
+LEASE process_lease tenant=- holder=slcb-28697 unix_ms=1794651737986 inc=6ff9291506dfd392 gen=1
+LEASE acquired tenant=tkr holder=slcb-28697 unix_ms=1794651738277 takeover_from=-
+LEASE acquired tenant=tkr holder=slcb-28697 unix_ms=1794651738280 takeover_from=- new=true
+LEASE writer_open tenant=tkr holder=slcb-28697 unix_ms=1794651738427 
+SLOW insert db=tkr ms=745 ok=true
+FAULT hang_put tenants/tkr/wal/00000000000000000003.sst
+PUTLOG ok tenants/tkr/wal/00000000000000000003.sst
+SLOW hello db=admin ms=10001 ok=true
+FAULT hang_put tenants/tkr/wal/00000000000000000004.sst

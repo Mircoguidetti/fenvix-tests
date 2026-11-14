@@ -1,0 +1,27 @@
+TEST FAULT INJECTION ON (/tmp/htrfaa32mgoas): never use this in production
+memory budget: limit 15983 MiB (memtotal), caches 7479 MiB (block 3365, meta 1121, sealed 2991), memtable 8 MiB, first course 998 MiB, change log 32 MiB, L0 reads at once 4
+box disk floor: 4096 MiB in /tmp/fenvix-box-floor-22438
+memory budget (review round): box 373 MiB per customer, 747 MiB in flight; memtables of every database 1997 MiB (writes wait past 2996 MiB); merge read-ahead 499 MiB; absorption 16 L0 SSTs
+quaderno: writes are acknowledged by the replicated log at 127.0.0.1:39755,127.0.0.1:30889,127.0.0.1:27678
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+quaderno: restart read 0 records of 0 databases from the log
+quaderno: restart applied 0 records to 0 databases in 0.0 s
+admin interface listening on 127.0.0.1:27799 (bearer token required)
+mongo-server listening on 127.0.0.1:22438 (idle close after 600 s, holder htra-22438, lease ttl 6 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:49532
+LEASE process_lease tenant=- holder=htra-22438 unix_ms=1794651795692 inc=f485c975864fa986 gen=1
+LEASE process_lease_revoked tenant=tkr holder=htra-22438 unix_ms=1794651801728 of=htrb-25935
+LEASE acquired tenant=tkr holder=htra-22438 unix_ms=1794651801730 takeover_from=htrb-25935
+LEASE takeover_wake tenant=tkr holder=htra-22438 unix_ms=1794651801738 unclean=true takeover_from=htrb-25935
+FXC not started db=tkr reason=not_writer unix_ms=1794651801779
+PUTLOG ok tenants/tkr/wal/00000000000000000004.sst
+FAULT fail_put tenants/tkr/fx/manifest/00000000000000000002
+LEASE writer_open tenant=tkr holder=htra-22438 unix_ms=1794651801791 
+TIMING abandon db=tkr stop_fxc_ms=0 tenant_abandon_ms=1 closed=true
+LEASE writer_close tenant=tkr holder=htra-22438 unix_ms=1794651801793 
+LEASE acquired tenant=tkr holder=htra-22438 unix_ms=1794651801799 takeover_from=-
+LEASE takeover_wake tenant=tkr holder=htra-22438 unix_ms=1794651801807 unclean=true takeover_from=-
+quaderno: database tkr: 120 records from a writer older than the stored one (epoch 2) were confirmed after a later replay read the log: never acknowledged, dropped
+FXC not started db=tkr reason=not_writer unix_ms=1794651801846
+LEASE writer_open tenant=tkr holder=htra-22438 unix_ms=1794651801860 
+quaderno: takeover of tkr: 120 records applied from the log (after record 117614299752431616)

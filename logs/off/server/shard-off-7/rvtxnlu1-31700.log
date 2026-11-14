@@ -1,0 +1,33 @@
+TEST FAULT INJECTION ON (/tmp/tmp9cj9btrt.faults): never use this in production
+memory budget: limit 15983 MiB (memtotal), caches 7479 MiB (block 3365, meta 1121, sealed 2991), memtable 8 MiB, first course 998 MiB, change log 32 MiB, L0 reads at once 4
+box disk floor: 4096 MiB in /tmp/fenvix-box-floor-31700
+memory budget (review round): box 373 MiB per customer, 747 MiB in flight; memtables of every database 1997 MiB (writes wait past 2996 MiB); merge read-ahead 499 MiB; absorption 16 L0 SSTs
+uploads: 0 unfinished multipart uploads under tenants/, 0 older than 3600s aborted
+admin interface listening on 127.0.0.1:36829 (bearer token required)
+mongo-server listening on 127.0.0.1:31700 (idle close after 600 s, holder P1, lease ttl 2 s)
+ADMIN GET /v1/health -> 200 0 ms peer=127.0.0.1:47048
+LEASE process_lease tenant=- holder=P1 unix_ms=1794651179229 inc=82a9680087fa9ade gen=1
+LEASE acquired tenant=d holder=P1 unix_ms=1794651179231 takeover_from=-
+LEASE acquired tenant=d holder=P1 unix_ms=1794651179233 takeover_from=- new=true
+LEASE writer_open tenant=d holder=P1 unix_ms=1794651179240 
+FAULT delay_put processes/P1/_lease 3500
+LEASE process_lease_late tenant=- holder=P1 unix_ms=1794651183553 abandoned=1
+LEASE lost tenant=d holder=P1 unix_ms=1794651183553 process_lease_late
+TIMING abandon db=d stop_fxc_ms=0 tenant_abandon_ms=1 closed=true
+LEASE writer_close tenant=d holder=P1 unix_ms=1794651183555 
+LEASE process_lease_lapsed tenant=- holder=P1 unix_ms=1794651183650 gen=2 abandoned=0
+FAULT delay_put processes/P1/_lease 3500
+LEASE process_lease_lost tenant=- holder=P1 unix_ms=1794651187152 abandoned=0
+LEASE process_lease tenant=- holder=P1 unix_ms=1794651187280 inc=8e9baa9fad9c7b62 gen=3
+LEASE acquired tenant=d holder=P1 unix_ms=1794651187282 takeover_from=-
+shutting down: closing tenants cleanly
+LEASE release_begin tenant=d holder=P1 unix_ms=1794651187287 
+LEASE release tenant=d holder=P1 unix_ms=1794651187289 ok=true
+maintenance shutdown: waiting for the L0 watch unix_ms=1794651187289
+maintenance shutdown: waiting for the dispatcher unix_ms=1794651188058
+maintenance shutdown: waiting for the running passes (0 running) unix_ms=1794651188058
+maintenance shutdown: waiting for the GC task unix_ms=1794651188058
+maintenance shutdown: done unix_ms=1794651189054
+TIMING shutdown close_ms=1 aborts_ms=0 tail_ms=1765 deadline_cuts=0 left_behind=0 held_at_deadline=0 optional_skipped=0
+tenants closed; stopping maintenance (done with the steps above)
+maintenance stopped (1767 ms)
